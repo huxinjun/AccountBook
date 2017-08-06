@@ -1,10 +1,44 @@
 <!--index.wxml-->
 <view class="container">
-  <view  bindtap="bindViewTap" class="userinfo">
+
+<view class="banner">
+</view>
+
+
+
+
+
+  <view bindtap="bindViewTap" class="userinfo" abc="aaa">
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
+    <text class="user-motto">{{xinjun}}</text>
   </view>
+
+  <view wx:for="{{list}}">
+  {{index}}: {{item}}
+  </view>
+
+
+
+  <view class="bottom_bar">
+
+    <view class="tab" bindtap="tabMainClick">
+      <image src="{{tab_main_src}}"></image>
+      <text style="color:{{text_color_home}}">主页</text>
+
+    </view>
+    <view class="tab" bindtap="tabMeClick">
+      <image src="{{tab_me_src}}"></image>
+      <text style="color:{{text_color_me}}">我的</text>
+    </view>
+
+
+
+  </view>
+
+
+
 </view>

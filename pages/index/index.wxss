@@ -1,4 +1,16 @@
 /**index.wxss**/
+
+.banner{
+  width: 750rpx;
+  height: 250rpx;
+  position: fixed;
+  background-color: #eee;
+  top: 0;
+}
+
+
+
+
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -17,5 +29,47 @@
 }
 
 .usermotto {
-  margin-top: 200px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.myview {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  background-color: chartreuse;
+}
+
+.bottom_bar {
+  width: 100%;
+  height: 105rpx;
+  position: fixed;
+  bottom: 0px;
+  border-top: 1px solid #ccc;
+  background: #eee;
+}
+
+.tab {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+}
+
+.tab image {
+  width: 50rpx;
+  height: 50rpx;
+  display: block;
+  margin-top: 10rpx;
+  margin: 10rpx auto 0 auto;
+  background-size: 50rpx 50rpx;
+}
+
+
+
+.tab text {
+  width: 100%;
+  font-size: 20rpx;
+  display: block;
+  margin-top: 10rpx;
+  text-align: center;
 }
