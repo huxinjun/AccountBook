@@ -18,7 +18,7 @@
             <image class="item_icon" src="/img/head.jpg"></image>
 
             <view class="item_title">
-                <text class="item_name">新军</text>
+                <span class="item_name">新军</span>
                 <image class="item_gender" src="/img/boy.png"></image>
             </view>
             

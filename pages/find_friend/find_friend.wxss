@@ -55,10 +55,10 @@
     top: 25rpx;
     left: 2%;
     border-radius: 20rpx;
+    
 }
 
 .item_title {
-    height: 50rpx;
     position: absolute;
     top: 25rpx;
     left: 180rpx;
@@ -70,14 +70,15 @@
 .item_name {
     max-width: 400rpx;
     overflow: hidden;
-    margin-top: 0rpx;
     background-color: #f00;
+    vertical-align: middle;
 }
 /*TODO 真机没有居中问题*/
 .item_gender {
     width: 30rpx;
     height: 30rpx;
     margin-left: 10rpx;
+    vertical-align: middle;
     
 }
 
