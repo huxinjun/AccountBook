@@ -1,14 +1,15 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/find_friend/find_friend"
   ],
   "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "你麻痹",
-    "navigationBarTextStyle":"black",
-    "enablePullDownRefresh":true
+    "navigationBarBackgroundColor": "#2BA245",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#eeeeee",
+    "backgroundTextStyle": "light"
 
   }
+  
 }

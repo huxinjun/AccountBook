@@ -5,8 +5,8 @@ Page({
     data: {
         motto: 'Hello World123',
         xinjun: 'hjuxinjun',
-        tab_main_src: '../img/main_press.png',
-        tab_me_src: '../img/me.png',
+        tab_main_src: '/img/main_press.png',
+        tab_me_src: '/img/me.png',
         currTab: 0,
 
         text_color_home: '#2BA245',
@@ -63,6 +63,9 @@ Page({
     },
     onTabMeSelected: function () {
         console.log("选择我的了")
+        wx.navigateTo({
+            url: '/pages/find_friend/find_friend?id=nimade',
+        })
 
     },
 
@@ -70,8 +73,8 @@ Page({
 
         if (this.data.currTab != 0) {
             this.setData({
-                tab_main_src: '../img/main_press.png',
-                tab_me_src: '../img/me.png',
+                tab_main_src: '/img/main_press.png',
+                tab_me_src: '/img/me.png',
                 text_color_home: '#2BA245',
                 text_color_me: '#272636'
 
@@ -86,8 +89,8 @@ Page({
 
         if (this.data.currTab != 1) {
             this.setData({
-                tab_main_src: '../img/main.png',
-                tab_me_src: '../img/me_press.png',
+                tab_main_src: '/img/main.png',
+                tab_me_src: '/img/me_press.png',
                 text_color_home: '#272636',
                 text_color_me: '#2BA245'
             })

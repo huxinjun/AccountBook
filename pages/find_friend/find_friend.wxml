@@ -1,0 +1,45 @@
+<view class="container">
+
+    <view class="searcher">
+        <input placeholder="输入小账用户昵称" focus="true" confirm-type='{{confirm_txt}}' bindconfirm='intputCompleted' value="{{search_txt}}" />
+
+        <view class="go" bindtap="search">
+            <image src="/img/search_go.png"></image>
+        </view>
+
+    </view>
+
+
+
+    <scroll-view>
+        <text class="test">{{text}}</text>
+        <view class="item">
+
+            <image class="item_icon" src="/img/head.jpg"></image>
+
+            <view class="item_title">
+                <text class="item_name">新军</text>
+                <image class="item_gender" src="/img/boy.png"></image>
+            </view>
+            
+            
+            <view class="item_location">
+                <text class="item_country">中国</text>
+                <text class="item_province">陕西</text>
+                <text class="item_city">宝鸡</text>
+            </view>
+
+            <view class="btn_invitation" hover-class="btn_invitation_hover">
+                邀请
+            </view>
+            
+        </view>
+
+        
+       
+
+
+
+    </scroll-view>
+
+</view>

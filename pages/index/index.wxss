@@ -45,7 +45,7 @@
   height: 105rpx;
   position: fixed;
   bottom: 0px;
-  border-top: 1px solid #ccc;
+  border-top: 0.5px solid #ccc;
   background: #eee;
 }
 

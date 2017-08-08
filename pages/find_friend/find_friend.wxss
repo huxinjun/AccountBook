@@ -1,0 +1,126 @@
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    text-align: center;
+}
+
+.searcher {
+    width: 96%;
+    height: 100rpx;
+    margin: 2%;
+    position: relative;
+    border: 5rpx solid #2ba245;
+    border-radius: 10rpx;
+    box-sizing: border-box;
+}
+
+.searcher input {
+    width: 595rpx;
+    height: 100%;
+    line-height: 100%;
+}
+
+.go {
+    width: 100rpx;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    background-color: #2ba245;
+}
+
+.go image {
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    top: 25rpx;
+    right: 25rpx;
+}
+
+.item {
+    width: 720rpx;
+    height: 200rpx;
+    margin-top: 1px;
+    background-color: #efefef;
+    position: relative;
+    margin-left: 15rpx;
+    margin-right: 15rpx;
+}
+
+.item_icon {
+    width: 150rpx;
+    height: 150rpx;
+    position: absolute;
+    top: 25rpx;
+    left: 2%;
+    border-radius: 20rpx;
+}
+
+.item_title {
+    height: 50rpx;
+    position: absolute;
+    top: 25rpx;
+    left: 180rpx;
+    background-color: #0f0;
+    overflow: hidden
+
+}
+
+.item_name {
+    max-width: 400rpx;
+    overflow: hidden;
+    margin-top: 0rpx;
+    background-color: #f00;
+}
+/*TODO 真机没有居中问题*/
+.item_gender {
+    width: 30rpx;
+    height: 30rpx;
+    margin-left: 10rpx;
+    
+}
+
+.item_location {
+    width: 300rpx;
+    height: 100rpx;
+    position: absolute;
+    top: 100rpx;
+    left: 180rpx;
+    font-size: 25rpx;
+    text-align: left;
+}
+
+.item_country {
+    position: relative;
+    display: block;
+}
+
+.item_province {
+    position: relative;
+    margin-right: 10rpx;
+}
+
+.item_city {
+    position: relative;
+}
+
+.btn_invitation {
+    width: 120rpx;
+    height: 60rpx;
+    position: absolute;
+    right: 20rpx;
+    top: 75rpx;
+    font-size: 28rpx;
+    background-color: white;
+    border: 2rpx #2ba245 solid;
+    color: #2ba245;
+    
+    text-align: center;
+    line-height: 60rpx;
+    border-radius: 10rpx;
+}
+.btn_invitation_hover{
+    background-color: #2ba245;
+    color: white;
+}
