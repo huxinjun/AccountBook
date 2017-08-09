@@ -1,15 +1,17 @@
 
-var app = getApp()
+var APP = getApp()
 
 Page({
     data: {
         confirm_txt:'search',
         text:'搜索结果',
-        search_txt:'新军'
+        search_txt:'新军',
+
+        searchResulr:null
 
     },
 
-    onLoad: function (option,haha) {
+    onLoad: function (option) {
         console.log('onLoad' + option)
         var that = this
 
@@ -24,7 +26,21 @@ Page({
     },
 
     search:function(){
-        console.log('搜索' + this.data.search_txt);
+        var that=this;
+        wx.request({
+            url: APP.globalData.BaseUrl +'/user/search',
+            data: {
+                name: that.data.search_txt,
+                token: APP.globalData.token
+            },
+            
+            success: function(res) {
+                
+                if (res.data.status == 0){
+                    console.log(res.data);
+                }
+            }
+        })
     }
 
 

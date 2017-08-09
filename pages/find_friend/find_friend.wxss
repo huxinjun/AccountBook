@@ -62,7 +62,6 @@
     position: absolute;
     top: 25rpx;
     left: 180rpx;
-    background-color: #0f0;
     overflow: hidden
 
 }
@@ -70,7 +69,6 @@
 .item_name {
     max-width: 400rpx;
     overflow: hidden;
-    background-color: #f00;
     vertical-align: middle;
 }
 /*TODO 真机没有居中问题*/
