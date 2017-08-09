@@ -13,20 +13,20 @@
 
     <scroll-view>
         <text class="test">{{text}}</text>
-        <view class="item">
+        <view class="item" wx:for="{{users}}" >
 
-            <image class="item_icon" src="/img/head.jpg"></image>
+            <image class="item_icon" src="{{item.avatarUrl}}"></image>
 
             <view class="item_title">
-                <span class="item_name">新军</span>
-                <image class="item_gender" src="/img/boy.png"></image>
+                <span class="item_name">{{item.nickname}}</span>
+                <image class="item_gender" src="{{item.genderPath}}"></image>
             </view>
             
             
             <view class="item_location">
-                <text class="item_country">中国</text>
-                <text class="item_province">陕西</text>
-                <text class="item_city">宝鸡</text>
+                <text class="item_country">{{item.country}}</text>
+                <text class="item_province">{{item.province}}</text>
+                <text class="item_city">{{item.city}}</text>
             </view>
 
             <view class="btn_invitation" hover-class="btn_invitation_hover">

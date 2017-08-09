@@ -7,7 +7,7 @@ Page({
         text:'搜索结果',
         search_txt:'新军',
 
-        searchResulr:null
+        users:null
 
     },
 
@@ -26,21 +26,29 @@ Page({
     },
 
     search:function(){
-        var that=this;
-        wx.request({
-            url: APP.globalData.BaseUrl +'/user/search',
+        APP.ajax({
+          url: APP.globalData.BaseUrl +'/user/search',
+            
             data: {
-                name: that.data.search_txt,
-                token: APP.globalData.token
+              nickname: this.data.search_txt,
+              token: APP.globalData.token
             },
             
             success: function(res) {
-                
                 if (res.data.status == 0){
-                    console.log(res.data);
+                  res.data.users.forEach(function(v,i){
+                    if(v.gender==0)
+                      v.genderPath="/img/girl.png"
+                    else
+                      v.genderPath = "/img/boy.png"
+                  })
+                    this.setData({
+                      users : res.data.users
+                    })
+                    
                 }
             }
-        })
+        },this)
     }
 
 
