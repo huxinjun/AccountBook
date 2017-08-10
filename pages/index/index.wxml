@@ -1,7 +1,10 @@
 <!--index.wxml-->
 <view class="container">
 
-    <view id="bbbb" style="left:{{left}}rpx" class="banner" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend">
+
+    <view id="bbbb" class="banner" animation='{{slideAnimData}}' >
+      <view class="item" style="left:{{left}}rpx" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend" touchcancel="touchcancel"></view>
+      <view class="delete">删除</view>
     </view>
 
 

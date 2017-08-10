@@ -3,9 +3,26 @@
 .banner{
   width: 750rpx;
   height: 250rpx;
-  position: fixed;
-  background-color: #eee;
+  text-align: center;
+  line-height: 250rpx;
   top: 0;
+}
+.item{
+  width: 750rpx;
+  height: 250rpx;
+  position: absolute;
+  background-color: #eee;
+  z-index: 2;
+  
+}
+.delete{
+  width: 250rpx;
+  height: 250rpx;
+  background-color: #f00;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 

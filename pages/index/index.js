@@ -18,7 +18,8 @@ Page({
         list: [1, 2, 3],
 
         left:0,
-        animationData:{}
+        animationData:{},
+        slideAnimData:null
 
     },
 
@@ -33,14 +34,15 @@ Page({
         this.setData({
             animationData: animation.export()
         })
+        
 
         setTimeout(function () {
             var animation = wx.createAnimation({
                 duration: 1000,
                 timingFunction: 'ease',
             })
-            animation.scale(0, 0).rotate(-45).step()
-            animation.translate(30).step()
+            // animation.scale(0, 0).rotate(-45).step()
+            animation.translate(100).scale(2, 2).rotate(45).step()
             this.setData({
                 animationData: animation.export()
             })
@@ -134,6 +136,7 @@ Page({
     
 
     startX: 0,
+    preX: 0,
     touchstart:function(e){
         console.log(e)
         this.startX=e.touches[0].pageX;
@@ -142,13 +145,31 @@ Page({
     touchmove: function (e) {
         var currX = e.touches[0].pageX;
         var moveX = currX - this.startX;
-        console.log(moveX)
+        var deltaX = currX - this.preX;
+        console.log(moveX + "--------" + deltaX)
+        this.preX = currX;
+        if (this.data.left<=-250 && deltaX<0){
+          this.startX=currX+250;
+          return
+        }
+        if (this.data.left >=0 && deltaX > 0) {
+          this.startX = currX;
+          return
+        }
+
+        moveX = moveX<-250?-250:moveX>0?0:moveX;
         this.setData({
             left:moveX
         })
+
+        
     },
     touchend: function (e) {
         console.log(e)
+    },
+    touchcancel:function(e){
+      console.log(e)
     }
+
 })
 
