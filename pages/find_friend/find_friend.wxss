@@ -62,8 +62,7 @@
     position: absolute;
     top: 25rpx;
     left: 180rpx;
-    overflow: hidden
-
+    overflow: hidden;
 }
 
 .item_name {
@@ -77,7 +76,7 @@
     height: 30rpx;
     margin-left: 10rpx;
     vertical-align: middle;
-    
+    margin-top: -5rpx;
 }
 
 .item_location {

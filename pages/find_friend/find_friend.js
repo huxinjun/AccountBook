@@ -11,6 +11,33 @@ Page({
 
     },
 
+    /**
+     * 邀请用户
+     */
+    invite: function (e) {
+        wx.login({
+            success: function (res) {
+                APP.ajax({
+                    url: APP.globalData.BaseUrl + "/user/invite",
+                    data: {
+                        formId:e.detail.formId,
+                        token: wx.getStorageSync('token'),
+                        code: res.code,
+                        openid: "oCBrx0FreB-L8pIQM5_RYDGoWOKQ"
+                    },
+                    success: function (res) {
+                        
+                    }
+
+                }, this)
+            }
+        })
+
+    },
+
+
+
+
     onLoad: function (option) {
         console.log('onLoad' + option)
         var that = this
@@ -35,7 +62,7 @@ Page({
             },
             
             success: function(res) {
-                if (res.data.status == 0){
+                if (res.data.status == APP.globalData.resultcode.SUCCESS){
                   res.data.users.forEach(function(v,i){
                     if(v.gender==0)
                       v.genderPath="/img/girl.png"
@@ -46,7 +73,15 @@ Page({
                       users : res.data.users
                     })
                     
+                } else if (res.data.status == APP.globalData.resultcode.INVALID_TOKEN) {
+                    APP.reLogin({
+                        context:this,
+                        success:function(){
+                            this.search();
+                        }
+                    });
                 }
+                    
             }
         },this)
     }

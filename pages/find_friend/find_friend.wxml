@@ -11,9 +11,9 @@
 
 
 
-    <scroll-view>
+    <form bindsubmit="invite" report-submit="true">
         <text class="test">{{text}}</text>
-        <view class="item" wx:for="{{users}}" >
+        <view class="item" wx:for="{{users}}" wx:key="*this" >
 
             <image class="item_icon" src="{{item.avatarUrl}}"></image>
 
@@ -29,9 +29,9 @@
                 <text class="item_city">{{item.city}}</text>
             </view>
 
-            <view class="btn_invitation" hover-class="btn_invitation_hover">
+            <button class="btn_invitation" hover-class="btn_invitation_hover" form-type="submit">
                 邀请
-            </view>
+            </button>
             
         </view>
 
@@ -40,6 +40,6 @@
 
 
 
-    </scroll-view>
+    </form>
 
 </view>

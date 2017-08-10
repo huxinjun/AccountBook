@@ -9,8 +9,9 @@ App({
         // console.log("before:"+wx.getStorageSync('token'))
         // wx.removeStorageSync('token')
         // console.log(wx.getStorageSync('token'))
-
     },
+
+    
 
 
 
@@ -39,7 +40,7 @@ App({
         }
     },
 
-    login:function(){
+    login: function (success){
         // wx.showToast({
         //     title: '正在登陆...',
         //     icon: 'loading',
@@ -51,14 +52,14 @@ App({
         wx.login({
             success: function (res) {
                 //首先拿到js_code
-                console.log(res.code)//这就是code 
-                that.loginInMyServer(res.code)
+                // console.log(res.code)
+                that.loginInMyServer(res.code, success)
             }
         })
     },
 
     //在我的服务器上登录,获取token
-    loginInMyServer: function (code) {
+    loginInMyServer: function (code, success) {
         console.log('loginInMyServer')
         wx.showLoading({
           title: '正在登陆中请稍后...',
@@ -80,7 +81,7 @@ App({
                     })
                     return
                 }
-                wx.hideLoading()
+                this.onLoginSuccess(success);
             }
         },this)
     },
@@ -97,20 +98,47 @@ App({
             },
             success: function (res) {
                 console.log(res.data)
-                wx.hideLoading()
+                that.onLoginSuccess();
             }
         },this)
+    },
+
+    /**
+     * 更换设备导致token失效时需要重新登录
+     */
+    reLogin: function (success){
+        wx.removeStorageSync("token");
+        this.login(success);
+    },
+
+    /**
+     * 登录成功回调
+     */
+    onLoginSuccess: function (success){
+        wx.hideLoading()
+        wx.showToast({
+            title: '登陆成功!',
+            icon: 'loading',
+            duration: 2000
+        })
+        
+        if(success!=undefined)
+            success.success.call(success.context);
     },
 
 
 
     globalData: {
-        // BaseUrl: 'http://192.168.10.228:8080/AccountBook',
+        BaseUrl: 'http://192.168.10.228:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
-        BaseUrl: 'http://192.168.1.103:8080/AccountBook',
+        // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         userInfo: null,
-        token: null
+        token: null,
+        resultcode:{
+            SUCCESS:0,
+            INVALID_TOKEN:1
+        }
     },
 
 
