@@ -15,9 +15,40 @@ Page({
         userInfo: {},
 
 
-        list: [1, 2, 3]
+        list: [1, 2, 3],
+
+        left:0,
+        animationData:{}
 
     },
+
+    test:function(e){
+        var animation = wx.createAnimation({
+            duration: 1000,
+            timingFunction: 'ease',
+        })
+
+        animation.scale(2, 2).rotate(45).step()
+
+        this.setData({
+            animationData: animation.export()
+        })
+
+        setTimeout(function () {
+            var animation = wx.createAnimation({
+                duration: 1000,
+                timingFunction: 'ease',
+            })
+            animation.scale(0, 0).rotate(-45).step()
+            animation.translate(30).step()
+            this.setData({
+                animationData: animation.export()
+            })
+        }.bind(this), 1000)
+    },
+
+
+
 
     onPullDownRefresh: function () {
         wx.stopPullDownRefresh()
@@ -98,5 +129,26 @@ Page({
             this.onTabMeSelected();
         }
 
+    },
+
+    
+
+    startX: 0,
+    touchstart:function(e){
+        console.log(e)
+        this.startX=e.touches[0].pageX;
+        console.log(this.startX)
+    },
+    touchmove: function (e) {
+        var currX = e.touches[0].pageX;
+        var moveX = currX - this.startX;
+        console.log(moveX)
+        this.setData({
+            left:moveX
+        })
+    },
+    touchend: function (e) {
+        console.log(e)
     }
 })
+

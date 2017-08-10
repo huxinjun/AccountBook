@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
 
-    <view class="banner">
+    <view id="bbbb" style="left:{{left}}rpx" class="banner" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend">
     </view>
 
 
@@ -9,7 +9,7 @@
 
 
     <view bindtap="bindViewTap" class="userinfo" abc="aaa">
-        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" animation="{{animationData}}" catchtap="test"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </view>
     <view class="usermotto">
