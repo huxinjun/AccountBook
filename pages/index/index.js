@@ -1,10 +1,10 @@
 //index.js
 //获取应用实例
+var slider = require('../../utils/slider.js')
 var app = getApp()
 Page({
     data: {
-        motto: 'Hello World123',
-        xinjun: 'hjuxinjun',
+        motto: 'Hello World',
         tab_main_src: '/img/main_press.png',
         tab_me_src: '/img/me.png',
         currTab: 0,
@@ -17,9 +17,7 @@ Page({
 
         list: [1, 2, 3],
 
-        left:0,
         animationData:{},
-        slideAnimData:null
 
     },
 
@@ -53,7 +51,7 @@ Page({
 
 
     onPullDownRefresh: function () {
-        wx.stopPullDownRefresh()
+        
         console.log("r");
         for (let i = 0; i < 6; i++) {
             this.data.list.push(this.data.list.length);
@@ -88,7 +86,7 @@ Page({
                 userInfo: userInfo
             })
         })
-
+        
     },
 
     onTabMainSelected: function () {
@@ -133,42 +131,18 @@ Page({
 
     },
 
-    
-
-    startX: 0,
-    preX: 0,
+ 
     touchstart:function(e){
-        console.log(e)
-        this.startX=e.touches[0].pageX;
-        console.log(this.startX)
+        slider.start.call(this,e)
     },
     touchmove: function (e) {
-        var currX = e.touches[0].pageX;
-        var moveX = currX - this.startX;
-        var deltaX = currX - this.preX;
-        console.log(moveX + "--------" + deltaX)
-        this.preX = currX;
-        if (this.data.left<=-250 && deltaX<0){
-          this.startX=currX+250;
-          return
-        }
-        if (this.data.left >=0 && deltaX > 0) {
-          this.startX = currX;
-          return
-        }
-
-        moveX = moveX<-250?-250:moveX>0?0:moveX;
-        this.setData({
-            left:moveX
-        })
-
-        
+        slider.move.call(this, e)
     },
     touchend: function (e) {
-        console.log(e)
+        slider.end.call(this, e)
     },
     touchcancel:function(e){
-      console.log(e)
+        slider.cancel.call(this, e)
     }
 
 })

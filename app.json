@@ -8,7 +8,8 @@
     "navigationBarBackgroundColor": "#2BA245",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#eeeeee",
-    "backgroundTextStyle": "light"
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh":true
 
   }
   

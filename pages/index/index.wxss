@@ -3,6 +3,7 @@
 .banner{
   width: 750rpx;
   height: 250rpx;
+  position: relative;
   text-align: center;
   line-height: 250rpx;
   top: 0;

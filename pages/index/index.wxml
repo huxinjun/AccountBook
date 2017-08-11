@@ -2,22 +2,21 @@
 <view class="container">
 
 
-    <view id="bbbb" class="banner" animation='{{slideAnimData}}' >
-      <view class="item" style="left:{{left}}rpx" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend" touchcancel="touchcancel"></view>
-      <view class="delete">删除</view>
+    <view class="banner">
+        <view class="item" style="left:{{left}}rpx;" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" animation='{{slideAnimData}}'></view>
+        <view class="delete">删除</view>
     </view>
 
 
 
 
 
-    <view bindtap="bindViewTap" class="userinfo" abc="aaa">
+    <view class="userinfo" abc="aaa">
         <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" animation="{{animationData}}" catchtap="test"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </view>
     <view class="usermotto">
-        <text class="user-motto">{{motto}}</text>
-        <text class="user-motto">{{xinjun}}</text>
+        <text class="user-motto" bindtap="bindViewTap">{{motto}}</text>
     </view>
 
     <view wx:for="{{list}}" wx:key="*this">
