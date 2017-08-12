@@ -13,10 +13,8 @@ var eventEnd = false
 function start(e) {
 
     // console.log(this)
-    
+    closeAll.call(this)
     var index = e.target.dataset.index
-    if (this.data.list[index].left == undefined)
-        this.data.list[index].left = 0
     
 
     eventEnd = false;
@@ -25,7 +23,7 @@ function start(e) {
     startLeft = this.data.list[index].left;
     // console.log(startLeft)
 
-    closeAll.call(this)
+    
 }
 function move(e) {
     if (eventEnd)
@@ -39,10 +37,10 @@ function move(e) {
 
     //获取滑动角度
     var a = angle({ X: startX, Y: startY }, { X: currX, Y: currY });
-    // console.log(a)
+    console.log(a)
     if (Math.abs(a) > 30){
         eventEnd = true
-        closeAll.call(this)
+        end.call(this,e)
         return
     }
 
@@ -72,6 +70,7 @@ function move(e) {
     this.setData({
         list: this.data.list
     })
+
     
 
 
@@ -93,11 +92,12 @@ function end(e) {
 /**
  * 关闭所有打开的抽屉
  */
-function closeAll(e) {
-    
+function closeAll() {
+    console.log('closeAll')
+    console.log(this)
     var that=this
     this.data.list.forEach(function(v,i){
-        console.log(i)
+        
         that.data.list[i].left = 0
         that.data.list[i].slider = 'left:0';
     })

@@ -2,14 +2,4 @@
 html{
   height: 100%;
 }
-.container {
-  
-  height: 1000rpx;
-  /* display: flex; */
-  /* flex-direction: column;
-  align-items: center;
-  justify-content: space-between; */
-  box-sizing: border-box;
-  font-family: "微软雅黑";
-  color: #272636;
-} 
+

@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container" scroll-y="true">
+<view class="container">
 
 
 
@@ -19,13 +19,19 @@
     <view wx:for="{{list}}" wx:key="*this">
         {{index}}: {{item.value}}
 
-        <view class="banner">
+        <view class="listitem">
             <view class="item" style="{{item.slider}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}"></view>
             <view class="delete" bindtap="delete" data-index="{{index}}">删除</view>
         </view>
     </view>
 
 
+
+
+
+
+
+</view>
 
     <view class="bottom_bar">
 
@@ -39,10 +45,4 @@
             <text style="color:{{text_color_me}}">我的</text>
         </view>
 
-
-
     </view>
-
-
-
-</view>

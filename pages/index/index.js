@@ -71,7 +71,9 @@ Page({
         
         console.log("r");
         for (let i = 0; i < 6; i++) {
-            this.data.list.push(this.data.list.length);
+            this.data.list.push({
+                "value": 'add'
+            });
             console.log("push");
         }
         this.setData({
