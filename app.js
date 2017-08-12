@@ -94,7 +94,7 @@ App({
             },
             success: function (res) {
                 console.log(res.data)
-                that.onLoginSuccess();
+                this.onLoginSuccess();
             }
         },this)
     },

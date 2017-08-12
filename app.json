@@ -2,7 +2,8 @@
   "pages":[
     "pages/index/index",
     "pages/logs/logs",
-    "pages/find_friend/find_friend"
+    "pages/find_friend/find_friend",
+    "pages/msg_invite/msg_invite"
   ],
   "window":{
     "navigationBarBackgroundColor": "#2BA245",

@@ -1,7 +1,7 @@
 <view class="container">
 
     <view class="searcher">
-        <input placeholder="输入小账用户昵称" focus="true" confirm-type='{{confirm_txt}}' bindconfirm='intputCompleted' value="{{search_txt}}" />
+        <input placeholder="输入小账用户昵称" focus="true" confirm-type='{{confirm_txt}}' bindinput='searchValueChanged' bindconfirm='intputCompleted' value="{{search_txt}}" />
 
         <view class="go" bindtap="search">
             <image src="/img/search_go.png"></image>

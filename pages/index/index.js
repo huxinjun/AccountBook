@@ -24,30 +24,6 @@ Page({
             },
             {
                 "value": 'C'
-            },
-            {
-                "value": 'D'
-            },
-            {
-                "value":'E'
-            },
-            {
-                "value": 'F'
-            },
-            {
-                "value": 'G'
-            },
-            {
-                "value": 'H'
-            },
-            {
-                "value": 'I'
-            },
-            {
-                "value": 'J'
-            },
-            {
-                "value": 'K'
             }
 
         ],

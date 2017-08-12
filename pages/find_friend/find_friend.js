@@ -11,6 +11,13 @@ Page({
 
     },
 
+    searchValueChanged:function(e){
+      console.log(e)
+      this.setData({
+        search_txt:e.detail.value
+      })
+    },
+
     /**
      * 邀请用户
      */
