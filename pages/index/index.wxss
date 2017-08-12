@@ -14,6 +14,7 @@
   position: absolute;
   background-color: #eee;
   z-index: 2;
+  transition: left 0.2s ease
   
 }
 .delete{

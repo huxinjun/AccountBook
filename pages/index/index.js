@@ -15,39 +15,56 @@ Page({
         userInfo: {},
 
 
-        list: [1, 2, 3],
+        list: [
+            {
+                "value":'A'
+            },
+            {
+                "value": 'B'
+            },
+            {
+                "value": 'C'
+            },
+            {
+                "value": 'D'
+            },
+            {
+                "value":'E'
+            },
+            {
+                "value": 'F'
+            },
+            {
+                "value": 'G'
+            },
+            {
+                "value": 'H'
+            },
+            {
+                "value": 'I'
+            },
+            {
+                "value": 'J'
+            },
+            {
+                "value": 'K'
+            }
 
-        animationData:{},
-
+        ],
     },
 
-    test:function(e){
-        var animation = wx.createAnimation({
-            duration: 1000,
-            timingFunction: 'ease',
-        })
-
-        animation.scale(2, 2).rotate(45).step()
-
+    //点击删除按钮事件
+    delete: function (e) {
+        //获取列表中要删除项的下标
+        var index = e.target.dataset.index;
+        var list = this.data.list;
+        //移除列表中下标为index的项
+        list.splice(index, 1);
+        //更新列表的状态
         this.setData({
-            animationData: animation.export()
-        })
-        
-
-        setTimeout(function () {
-            var animation = wx.createAnimation({
-                duration: 1000,
-                timingFunction: 'ease',
-            })
-            // animation.scale(0, 0).rotate(-45).step()
-            animation.translate(100).scale(2, 2).rotate(45).step()
-            this.setData({
-                animationData: animation.export()
-            })
-        }.bind(this), 1000)
+            list: list
+        });
     },
-
-
 
 
     onPullDownRefresh: function () {

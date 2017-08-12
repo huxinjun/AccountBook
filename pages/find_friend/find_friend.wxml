@@ -13,7 +13,7 @@
 
     <form bindsubmit="invite" report-submit="true">
         <text class="test">{{text}}</text>
-        <view class="item" wx:for="{{users}}" wx:key="*this" >
+        <view class="item" wx:for="{{users}}" wx:key="{{item.index}}" >
 
             <image class="item_icon" src="{{item.avatarUrl}}"></image>
 

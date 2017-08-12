@@ -1,11 +1,8 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container" scroll-y="true">
 
 
-    <view class="banner">
-        <view class="item" style="left:{{left}}rpx;" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" animation='{{slideAnimData}}'></view>
-        <view class="delete">删除</view>
-    </view>
+
 
 
 
@@ -20,7 +17,12 @@
     </view>
 
     <view wx:for="{{list}}" wx:key="*this">
-        {{index}}: {{item}}
+        {{index}}: {{item.value}}
+
+        <view class="banner">
+            <view class="item" style="{{item.slider}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}"></view>
+            <view class="delete" bindtap="delete" data-index="{{index}}">删除</view>
+        </view>
     </view>
 
 

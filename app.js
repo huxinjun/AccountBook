@@ -6,9 +6,7 @@ App({
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())
         wx.setStorageSync('logs', logs)
-        // console.log("before:"+wx.getStorageSync('token'))
-        // wx.removeStorageSync('token')
-        // console.log(wx.getStorageSync('token'))
+        wx.removeStorageSync("token")
     },
 
     
@@ -41,11 +39,7 @@ App({
     },
 
     login: function (success){
-        // wx.showToast({
-        //     title: '正在登陆...',
-        //     icon: 'loading',
-        //     duration: 2000
-        // })
+        
         
 
         var that = this
@@ -82,7 +76,9 @@ App({
                     return
                 }
                 this.onLoginSuccess(success);
-            }
+            },
+            
+            
         },this)
     },
 
@@ -187,6 +183,13 @@ App({
                 console.log("");
                 if (obj.fail != undefined)
                     obj.fail.call(context, res);
+
+                wx.showToast({
+                title: '网络错误',
+                icon: 'loading',
+                duration: 1000
+            })
+                
             },
             complete: function (res) {
                 if (obj.complete != undefined)
