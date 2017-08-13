@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-var slider = require('../../utils/slider.js')
+var slider
 var app = getApp()
 Page({
     data: {
@@ -26,11 +26,19 @@ Page({
                 "value": 'F'
             }
         ],
+        
     },
 
     //点击删除按钮事件
-    delete: function (e) {
-        slider.deleteItem.call(this,e)
+    _delete: function (e) {
+        slider.deleteItem(e)
+    },
+
+    acceptInvite: function (e) {
+        slider.close(e.target.dataset.index)
+    },
+    refuseInvite: function (e) {
+        slider.close(e.target.dataset.index)
     },
 
     
@@ -41,6 +49,8 @@ Page({
         success: function (res) {
           console.log(res.model)
           console.log(res.pixelRatio)
+          console.log(res.screenWidth)
+          console.log(res.screenHeight)
           console.log(res.windowWidth)
           console.log(res.windowHeight)
           console.log(res.language)
@@ -48,31 +58,32 @@ Page({
           console.log(res.platform)
 
           that.setData({
-            containerHeight: res.pixelRatio * res.windowHeight
+            containerHeight: res.windowHeight
           })
         }
       })
-      
+      slider = require('../../utils/slider.js').init(this, 300, false)
         
     },
 
     touchstart:function(e){
-        slider.start.call(this,e)
+        slider.start(e)
     },
     touchmove: function (e) {
-        slider.move.call(this, e)
+        slider.move(e)
     },
     touchend: function (e) {
-        slider.end.call(this, e)
+        slider.end(e)
     },
     touchcancel:function(e){
-        slider.cancel.call(this, e)
+        slider.cancel(e)
     },
     outterScroll: function (e) {
-      // console.log(e)
+      console.log(e)
+      slider.breakOnce();
     },
     innerScroll: function (e) {
-      // console.log(e)
+      console.log(e)
     }
 
 })

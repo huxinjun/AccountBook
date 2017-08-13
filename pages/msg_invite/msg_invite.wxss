@@ -30,19 +30,23 @@
   position: absolute;
   background-color: #eee;
   z-index: 2;
-  
-  
 }
-.delete{
-  width: 250rpx;
+
+.accept{
   height: 100%;
-  background-color: #f00;
+  background-color: #2BA245;
   color: white;
   position: absolute;
   top: 0;
   right: 0;
+  text-shadow: 2rpx 2rpx 1rpx black
 }
-.test{
-    
-    vertical-align: middle;
+.refuse{
+  height: 100%;
+  background-color: #cdcdcd;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 150rpx;
+  text-shadow: 2rpx 2rpx 1rpx black
 }
