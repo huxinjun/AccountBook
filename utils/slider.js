@@ -42,12 +42,12 @@ function start(e) {
 
     this.closeAll()
     var index = e.target.dataset.index
-
+    // console.log(e)
 
     this.eventEnd = false;
     this.startX = e.touches[0].pageX;
     this.startY = e.touches[0].pageY;
-    this.startLeft = this.page.data.list[index].left;
+    this.startLeft = this.page.data.datas[index].left;
     // console.log(startLeft)
 
 
@@ -86,11 +86,11 @@ function move(e, checkAngle) {
 
 
     //已经抽出,还往左滑,忽略后面的事件
-    if (this.page.data.list[index].left <= -250 && deltaX < 0)
+    if (this.page.data.datas[index].left <= -250 && deltaX < 0)
         return
 
     //已经合上,还往右滑,忽略后面的事件
-    if (this.page.data.list[index].left >= 0 && deltaX > 0)
+    if (this.page.data.datas[index].left >= 0 && deltaX > 0)
         return
 
 
@@ -101,10 +101,10 @@ function move(e, checkAngle) {
     moveX = moveX < -this.sliderWidth ? -this.sliderWidth : moveX
     moveX = moveX > 0 ? 0 : moveX
     
-    this.page.data.list[index].left = moveX
-    this.page.data.list[index].itemStyle = 'left:' + this.page.data.list[index].left + 'rpx';
+    this.page.data.datas[index].left = moveX
+    this.page.data.datas[index].itemStyle = 'left:' + this.page.data.datas[index].left + 'rpx';
     this.page.setData({
-        list: this.page.data.list
+        datas: this.page.data.datas
     })
 
 
@@ -120,12 +120,12 @@ function end(e) {
 
     this.eventEnd = true
     var index = e.target.dataset.index
-    var endX = this.page.data.list[index].left < -this.sliderWidth / 3 ? -this.sliderWidth : 0;
+    var endX = this.page.data.datas[index].left < -this.sliderWidth / 3 ? -this.sliderWidth : 0;
 
-    this.page.data.list[index].left = endX
-    this.page.data.list[index].itemStyle = 'left:' + (this.page.data.list[index].left+3) + 'rpx;transition: left 0.2s ease ';
+    this.page.data.datas[index].left = endX
+    this.page.data.datas[index].itemStyle = 'left:' + (this.page.data.datas[index].left+3) + 'rpx;transition: left 0.2s ease ';
     this.page.setData({
-        list: this.page.data.list
+        datas: this.page.data.datas
     })
 }
 
@@ -135,14 +135,14 @@ function end(e) {
 function closeAll() {
     // console.log('closeAll')
     var that=this
-    this.page.data.list.forEach(function (v, i) {
+    this.page.data.datas.forEach(function (v, i) {
 
-        that.page.data.list[i].left = 0
-        that.page.data.list[i].itemStyle = 'left:0;transition:all 0.2s ease ';
+        that.page.data.datas[i].left = 0
+        that.page.data.datas[i].itemStyle = 'left:0;transition:all 0.2s ease ';
     })
 
     this.page.setData({
-        list: this.page.data.list
+        datas: this.page.data.datas
     })
 }
 
@@ -150,9 +150,9 @@ function closeAll() {
  * 关闭某个索引的抽屉
  */
 function close(index) {
-    this.page.data.list[index].itemStyle = 'left:0rpx;transition: left 0.2s ease ';
+    this.page.data.datas[index].itemStyle = 'left:0rpx;transition: left 0.2s ease ';
     this.page.setData({
-        list: this.page.data.list
+        datas: this.page.data.datas
     })
 }
 
@@ -183,7 +183,7 @@ function cancel(e) {
 function deleteItem(e) {
     //获取列表中要删除项的下标
     var index = e.target.dataset.index;
-    var list = this.page.data.list;
+    var datas = this.page.data.datas;
 
     var animation = wx.createAnimation({
         duration: 300,
@@ -192,10 +192,10 @@ function deleteItem(e) {
     animation.opacity(0).step().height(0).step()
 
 
-    list[index].deleteAnimData = animation.export()
+    datas[index].deleteAnimData = animation.export()
     
     page.setData({
-        list: list
+        datas: datas
     });
     /**
      * 删除数据：有一个bug没法解决，暂时不删除dom中的元素了
@@ -207,11 +207,11 @@ function deleteItem(e) {
     //     console.log(this)
         
     //     //移除列表中下标为index的项
-    //     list.splice(index, 1);
-    //     this.data.list[index].containerStyle = 'transition:all 0.5s ease !important';
+    //     datas.splice(index, 1);
+    //     data.datas[index].containerStyle = 'transition:all 0.5s ease !important';
     //     //更新列表的状态
     //     this.setData({
-    //         list: list
+    //         datas: datas
     //     });
         
 

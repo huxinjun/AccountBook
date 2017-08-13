@@ -1,15 +1,34 @@
 <!--index.wxml-->
 <scroll-view class="container" scroll-y bindscroll='outterScroll' style="height:{{containerHeight}}px;">
 
-    <view wx:for="{{list}}" wx:key="*this" >
-        {{index}}: {{item.value}}
+    <view wx:for="{{datas}}" wx:key="*this">
+        <!-- {{index}}: {{item.value}} -->
 
-        <scroll-view class="listitem" scroll-x bindscroll='innerScroll'  animation="{{item.deleteAnimData}}">
+        <scroll-view class="listitem" scroll-x bindscroll='innerScroll' animation="{{item.deleteAnimData}}">
 
-            <view class="item" style="{{item.itemStyle}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}"></view> 
-            <view class="accept" bindtap="acceptInvite" data-index="{{index}}" style="width:150rpx;">接受</view>
-            <view class="refuse" bindtap="refuseInvite" data-index="{{index}}" style="width:150rpx;">拒绝</view>
-            
+            <view class="item" style="{{item.itemStyle}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+                <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
+
+                <view class="content" data-index="{{index}}">
+                    <text class="name" data-index="{{index}}">邀请人：{{item.nickname}}</text>
+
+
+                    <text class="msg" data-index="{{index}}">{{item.msg}}</text>
+                    <text class="time" data-index="{{index}}">{{item.time}}</text>
+
+                </view>
+                <text class="status" data-index="{{index}}" style="color:{{item.statusColor}}">{{item.statusStr}}</text>
+
+
+            </view>
+
+
+            <view class="slider">
+
+                <view class="accept" bindtap="acceptInvite" data-index="{{index}}">接受</view>
+                <view class="refuse" bindtap="refuseInvite" data-index="{{index}}">拒绝</view>
+
+            </view>
         </scroll-view>
     </view>
 

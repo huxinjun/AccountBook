@@ -7,7 +7,7 @@ Page({
         text:'搜索结果',
         search_txt:'新军',
 
-        users:null
+        datas:null
 
     },
 
@@ -65,19 +65,19 @@ Page({
             
             data: {
               nickname: this.data.search_txt,
-              token: APP.globalData.token
+              token: wx.getStorageSync("token")
             },
             
             success: function(res) {
                 if (res.data.status == APP.globalData.resultcode.SUCCESS){
-                  res.data.users.forEach(function(v,i){
+                    res.data.datas.forEach(function(v,i){
                     if(v.gender==0)
                       v.genderPath="/img/girl.png"
                     else
                       v.genderPath = "/img/boy.png"
                   })
                     this.setData({
-                      users : res.data.users
+                        datas: res.data.datas
                     })
                     
                 } else if (res.data.status == APP.globalData.resultcode.INVALID_TOKEN) {

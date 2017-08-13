@@ -6,7 +6,7 @@ App({
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())
         wx.setStorageSync('logs', logs)
-        wx.removeStorageSync("token")
+        // wx.removeStorageSync("token")
     },
 
     
@@ -28,7 +28,6 @@ App({
                     typeof cb == "function" && cb(that.globalData.userInfo)
                     if (wx.getStorageSync('token') !='') {
                         console.log('使用本地token')
-                        that.globalData.token = wx.getStorageSync('token')
                         return
                     }
                     that.login()
@@ -89,7 +88,7 @@ App({
 
             url: this.globalData.BaseUrl+'/user/updateInfo',
             data: {
-                token: this.globalData.token,
+                token: wx.getStorageSync("token"),
                 info: this.globalData.userInfo
             },
             success: function (res) {
@@ -130,10 +129,10 @@ App({
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
         BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         userInfo: null,
-        token: null,
         resultcode:{
             SUCCESS:0,
-            INVALID_TOKEN:1
+            INVALID_TOKEN:1,
+            INVALID_COMMAND:2
         }
     },
 
