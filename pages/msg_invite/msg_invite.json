@@ -1,7 +1,3 @@
 {
-    "navigationBarBackgroundColor": "#2BA245",
-    "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "小账本本",
-    "backgroundColor": "#eeeeee",
-    "backgroundTextStyle": "light"
+    "navigationBarTitleText": "邀请消息"
 }

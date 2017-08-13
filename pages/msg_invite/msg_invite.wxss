@@ -10,6 +10,7 @@
   justify-content: space-between; */
   box-sizing: border-box;
   font-family: "微软雅黑";
+  position: absolute;
   color: #272636;
 } 
 
@@ -40,4 +41,8 @@
   position: absolute;
   top: 0;
   right: 0;
+}
+.test{
+    
+    vertical-align: middle;
 }

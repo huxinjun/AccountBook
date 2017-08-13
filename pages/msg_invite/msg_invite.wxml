@@ -1,11 +1,11 @@
 <!--index.wxml-->
 <scroll-view class="container" scroll-y bindscroll='innerScroll' style="height:{{containerHeight}}rpx;">
-
-    <view wx:for="{{list}}" wx:key="*this">
+    <view wx:for="{{list}}" wx:key="*this" >
         {{index}}: {{item.value}}
 
-        <scroll-view class="listitem" scroll-x bindscroll='innerScroll'>
-             <view class="item" style="{{item.slider}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}"></view> 
+        <scroll-view class="listitem" scroll-x bindscroll='innerScroll'  animation="{{item.deleteAnimData}}">
+
+             <view class="item" style="{{item.itemStyle}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}"></view> 
             <view class="delete" bindtap="delete" data-index="{{index}}">删除</view>
             
         </scroll-view>
