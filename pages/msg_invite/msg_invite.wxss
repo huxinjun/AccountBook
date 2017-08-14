@@ -85,7 +85,7 @@
 
 
 
-.slider {
+/* .slider {
     width: 300rpx;
     height: 100%;
     line-height: 200rpx;
@@ -113,4 +113,4 @@
     top: 0;
     right: 150rpx;
     text-shadow: 2rpx 2rpx 1rpx black;
-}
+} */

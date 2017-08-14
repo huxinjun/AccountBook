@@ -10,14 +10,23 @@ Page({
 
     },
 
+
+
     //点击删除按钮事件
     _delete: function (e) {
         slider.deleteItem(e)
     },
 
     acceptInvite: function (e) {
+        this.option(e, "accept")
+    },
+    refuseInvite: function (e) {
+        this.option(e, "refuse")
+    },
+
+    option: function (e, opt) {
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/msg/invite/accept',
+            url: APP.globalData.BaseUrl + '/msg/invite/' + opt,
 
             data: {
                 token: wx.getStorageSync("token"),
@@ -27,9 +36,18 @@ Page({
             success: function (res) {
                 switch (res.data.status) {
                     case APP.globalData.resultcode.SUCCESS:
-                        this.data.datas[e.target.dataset.index].status = 11
-                        this.data.datas[e.target.dataset.index].statusStr = "已接受"
-                        this.data.datas[e.target.dataset.index].statusColor = "green"
+                        var item = this.data.datas[e.target.dataset.index]
+                        if (opt == "accept") {
+                            item.status = 11
+                            item.statusStr = "已接受"
+                            item.statusColor = "green"
+                        } else {
+                            item.status = 12
+                            item.statusStr = "已拒绝"
+                            item.statusColor = "red"
+                        }
+
+                        item.canOpen = false
                         console.log(this)
                         this.setData({
                             datas: this.data.datas
@@ -40,7 +58,7 @@ Page({
                         APP.reLogin({
                             context: this,
                             success: function () {
-                                this.acceptInvite();
+                                this.option(e, opt);
                             }
                         });
                         break;
@@ -52,12 +70,11 @@ Page({
 
 
             }
+
         }, this)
 
     },
-    refuseInvite: function (e) {
-        slider.close(e.target.dataset.index)
-    },
+
 
 
     onLoad: function () {
@@ -80,7 +97,47 @@ Page({
                 })
             }
         })
-        slider = require('../../utils/slider.js').init(this, 300, false)
+        var slidersInfo = {
+            //page：page对象
+            page: this,
+            //checkAngle：是否要检查水平滑动的角度，默认大于15度将认为抽屉时间中断
+            checkAngle: false,
+            //条目高度
+            height:200,
+            //N种状态
+            layers: [
+                {
+                    name: "状态一",
+                    buttons: [
+                        {
+                            text: "接受",
+                            color: "red",
+                            onClick: "acceptInvite",
+                            width: 150
+                        },
+                        {
+                            text: "拒绝",
+                            color: "red",
+                            onClick: "refuse",
+                            width: 150
+                        }
+                    ]
+                },
+                {
+                    name: "状态二",
+                    buttons: [
+                        {
+                            text: "删除",
+                            color: "red",
+                            onClick: "refuseInvite",
+                            width: 150
+                        }
+                    ]
+                }
+            ]
+        }
+        slider = require('../../utils/slider.js').init(slidersInfo)
+   
         this.initData()
     },
 
@@ -94,20 +151,25 @@ Page({
 
             success: function (res) {
                 if (res.data.status == APP.globalData.resultcode.SUCCESS) {
+
                     res.data.datas.forEach(function (v, i) {
                         switch (v.status) {
                             case 0:
                             case 1:
                                 v.statusStr = "未处理"
                                 v.statusColor = "blue"
+                                v.canOpen = true
+                                v.itemStyle = "width:752rpx;"
                                 break;
                             case 11:
                                 v.statusStr = "已接受"
                                 v.statusColor = "green"
+                                v.canOpen = false
                                 break;
                             case 12:
                                 v.statusStr = "已拒绝"
                                 v.statusColor = "red"
+                                v.canOpen = false
                                 break;
                         }
 
@@ -130,18 +192,29 @@ Page({
     },
 
 
+    canOpen: function (e) {
+        return this.data.datas[e.target.dataset.index].canOpen;
+    },
 
 
     touchstart: function (e) {
+        if (!this.canOpen(e))
+            return
         slider.start(e)
     },
     touchmove: function (e) {
+        if (!this.canOpen(e))
+            return
         slider.move(e)
     },
     touchend: function (e) {
+        if (!this.canOpen(e))
+            return
         slider.end(e)
     },
     touchcancel: function (e) {
+        if (!this.canOpen(e))
+            return
         slider.cancel(e)
     },
     outterScroll: function (e) {
@@ -153,4 +226,17 @@ Page({
     }
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 

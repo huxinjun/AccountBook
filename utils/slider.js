@@ -12,27 +12,237 @@ var startY = 0
 var preX = 0
 /**标识事件是否已经中断 */
 var eventEnd = false
-/**抽屉内容大小 */
-var sliderWidth=0
-/**page对象 */
-var page
-/**是否检查手势水平角度 */
-var checkAngle
 
+
+var slidersInfo
+var currSliderIndex;
 //-----------------------------------------------------------------------------------------------
 
 /**
  * ！！！使用require实例化时务必调用init方法初始化需要的参数
- * page：page对象
- * sliderWidth：抽屉内容的大小，不要超出父容器宽度
- * checkAngle：是否要检查水平滑动的角度，默认大于15度将认为抽屉时间中断
+ * 描述信息
  */
-function init(page, sliderWidth,checkAngle) {
-    this.page=page
-    this.sliderWidth = sliderWidth
-    this.checkAngle = checkAngle
-
+function init(slidersInfo) {
+    this.slidersInfo = slidersInfo
+    this.setSlide(0)
     return this
+}
+
+/**
+ * 获取当前抽屉内容宽度
+ */
+function getCurrSliderWidth() {
+    var width=0;
+    this.slidersInfo.layers[this.currSliderIndex].buttons.forEach(function(v,i){
+        width += v.width
+    })
+    return width;
+}
+
+
+/**
+ * 设置当前要显示的slider
+ */
+function setSlide(index) {
+    this.currSliderIndex = index
+    //更新界面绑定的数据
+    var p1 = "width:" + this.getCurrSliderWidth() + "rpx;"
+    var p2 = "height:" + this.slidersInfo.height+"rpx;"
+    var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
+    var p4 = "vertical-align:middle;"
+    var p5 = "text-align:center;"
+
+    var sliderStyle = p1+p2+p3+p4+p5
+    this.slidersInfo.page.setData({
+        sliderStyle: sliderStyle
+    })
+
+
+    var that=this
+    //处理每一种状态元素的element.style
+    this.slidersInfo.layers.forEach(function (outterValue, outterIndex) {
+        var right=0
+        outterValue.buttons.forEach(function(innerValue,innerIndex){
+            // height: 100 %;
+            // width: 150rpx;
+            // background - color: #2ba245;
+            // color: white;
+            // position: absolute;
+            // top: 0;
+            // right: 0;
+            // text - shadow: 2rpx 2rpx 1rpx black;
+            
+            var p1 ="height:100%;"
+            var p2 = innerValue.width+"rpx;"
+            var p3 = "color:" + innerValue.color+";"
+            var p4 = "background-color:" + innerValue.colorBg + ";"
+            var p5 = "text-shadow:2rpx 2rpx 1rpx " + innerValue.colorShadow + ";"
+            var p6 = "position: absolute;"
+            var p7 = "top:0;"
+            var p8 = "right:" + right + "rpx;"
+            right+=innerWidth;
+
+            var styleName = "layerStyle_" + outterIndex + "_" + innerIndex
+            var styleValue=p1+p2+p3+p4+p5+p6+p7+p8
+
+            /**
+             * 由于小程序不支持动态检索变量名,暂时用这个笨办法
+             * 目前支持五种状态,每种状态最多五个按钮,完全够用
+             */
+            switch(outterIndex){
+                case 0:
+                    switch (innerIndex) {
+                        case 0:
+                            that.slidersInfo.page.setData({
+                                layerStyle_0_0: styleValue
+                            })
+                            break;
+                        case 1:
+                            that.slidersInfo.page.setData({
+                                layerStyle_0_1: styleValue
+                            })
+                            break;
+                        case 2:
+                            that.slidersInfo.page.setData({
+                                layerStyle_0_2: styleValue
+                            })
+                            break;
+                        case 3:
+                            that.slidersInfo.page.setData({
+                                layerStyle_0_3: styleValue
+                            })
+                            break;
+                        case 4:
+                            that.slidersInfo.page.setData({
+                                layerStyle_0_4: styleValue
+                            })
+                            break;
+                    }
+                    break;
+                case 1:
+                    switch (innerIndex) {
+                        case 0:
+                            that.slidersInfo.page.setData({
+                                layerStyle_1_0: styleValue
+                            })
+                            break;
+                        case 1:
+                            that.slidersInfo.page.setData({
+                                layerStyle_1_1: styleValue
+                            })
+                            break;
+                        case 2:
+                            that.slidersInfo.page.setData({
+                                layerStyle_1_2: styleValue
+                            })
+                            break;
+                        case 3:
+                            that.slidersInfo.page.setData({
+                                layerStyle_1_3: styleValue
+                            })
+                            break;
+                        case 4:
+                            that.slidersInfo.page.setData({
+                                layerStyle_1_4: styleValue
+                            })
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (innerIndex) {
+                        case 0:
+                            that.slidersInfo.page.setData({
+                                layerStyle_2_0: styleValue
+                            })
+                            break;
+                        case 1:
+                            that.slidersInfo.page.setData({
+                                layerStyle_2_1: styleValue
+                            })
+                            break;
+                        case 2:
+                            that.slidersInfo.page.setData({
+                                layerStyle_2_2: styleValue
+                            })
+                            break;
+                        case 3:
+                            that.slidersInfo.page.setData({
+                                layerStyle_2_3: styleValue
+                            })
+                            break;
+                        case 4:
+                            that.slidersInfo.page.setData({
+                                layerStyle_2_4: styleValue
+                            })
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (innerIndex) {
+                        case 0:
+                            that.slidersInfo.page.setData({
+                                layerStyle_3_0: styleValue
+                            })
+                            break;
+                        case 1:
+                            that.slidersInfo.page.setData({
+                                layerStyle_3_1: styleValue
+                            })
+                            break;
+                        case 2:
+                            that.slidersInfo.page.setData({
+                                layerStyle_3_2: styleValue
+                            })
+                            break;
+                        case 3:
+                            that.slidersInfo.page.setData({
+                                layerStyle_3_3: styleValue
+                            })
+                            break;
+                        case 4:
+                            that.slidersInfo.page.setData({
+                                layerStyle_3_4: styleValue
+                            })
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (innerIndex) {
+                        case 0:
+                            that.slidersInfo.page.setData({
+                                layerStyle_4_0: styleValue
+                            })
+                            break;
+                        case 1:
+                            that.slidersInfo.page.setData({
+                                layerStyle_4_1: styleValue
+                            })
+                            break;
+                        case 2:
+                            that.slidersInfo.page.setData({
+                                layerStyle_4_2: styleValue
+                            })
+                            break;
+                        case 3:
+                            that.slidersInfo.page.setData({
+                                layerStyle_4_3: styleValue
+                            })
+                            break;
+                        case 4:
+                            that.slidersInfo.page.setData({
+                                layerStyle_4_4: styleValue
+                            })
+                            break;
+                    }
+                    break;
+            }
+            
+        })
+    })
+
+
+
+
 }
 
 /**
@@ -47,7 +257,7 @@ function start(e) {
     this.eventEnd = false;
     this.startX = e.touches[0].pageX;
     this.startY = e.touches[0].pageY;
-    this.startLeft = this.page.data.datas[index].left;
+    this.startLeft = this.slidersInfo.page.data.datas[index].left;
     // console.log(startLeft)
 
 
@@ -59,7 +269,7 @@ function start(e) {
 function move(e, checkAngle) {
     if (this.eventEnd)
         return
-        
+
     var index = e.target.dataset.index
 
     var currX = e.touches[0].pageX;
@@ -67,7 +277,8 @@ function move(e, checkAngle) {
     var moveX = currX - this.startX;
     var moveY = currY - this.startY;
 
-    if (checkAngle) {
+ 
+    if (this.slidersInfo.checkAngle) {
         //获取滑动角度
         var a = angle({ X: this.startX, Y: this.startY }, { X: currX, Y: currY });
         console.log(a)
@@ -86,11 +297,11 @@ function move(e, checkAngle) {
 
 
     //已经抽出,还往左滑,忽略后面的事件
-    if (this.page.data.datas[index].left <= -250 && deltaX < 0)
+    if (this.slidersInfo.page.data.datas[index].left <= -250 && deltaX < 0)
         return
 
     //已经合上,还往右滑,忽略后面的事件
-    if (this.page.data.datas[index].left >= 0 && deltaX > 0)
+    if (this.slidersInfo.page.data.datas[index].left >= 0 && deltaX > 0)
         return
 
 
@@ -98,13 +309,13 @@ function move(e, checkAngle) {
     moveX += this.startLeft;
     // console.log("-------------" + moveX)
     //避免快速滑动时两个move事件x距离太大,抽屉滑过头了
-    moveX = moveX < -this.sliderWidth ? -this.sliderWidth : moveX
+    moveX = moveX < -this.getCurrSliderWidth() ? -this.getCurrSliderWidth() : moveX
     moveX = moveX > 0 ? 0 : moveX
-    
-    this.page.data.datas[index].left = moveX
-    this.page.data.datas[index].itemStyle = 'left:' + this.page.data.datas[index].left + 'rpx';
-    this.page.setData({
-        datas: this.page.data.datas
+
+    this.slidersInfo.page.data.datas[index].left = moveX
+    this.slidersInfo.page.data.datas[index].itemStyle = 'left:' + this.slidersInfo.page.data.datas[index].left + 'rpx';
+    this.slidersInfo.page.setData({
+        datas: this.slidersInfo.page.data.datas
     })
 
 
@@ -120,12 +331,12 @@ function end(e) {
 
     this.eventEnd = true
     var index = e.target.dataset.index
-    var endX = this.page.data.datas[index].left < -this.sliderWidth / 3 ? -this.sliderWidth : 0;
+    var endX = this.slidersInfo.page.data.datas[index].left < -this.getCurrSliderWidth() / 3 ? -this.getCurrSliderWidth() : 0;
 
-    this.page.data.datas[index].left = endX
-    this.page.data.datas[index].itemStyle = 'left:' + (this.page.data.datas[index].left+3) + 'rpx;transition: left 0.2s ease ';
-    this.page.setData({
-        datas: this.page.data.datas
+    this.slidersInfo.page.data.datas[index].left = endX
+    this.slidersInfo.page.data.datas[index].itemStyle = 'left:' + (this.slidersInfo.page.data.datas[index].left + 3) + 'rpx;transition: left 0.2s ease ';
+    this.slidersInfo.page.setData({
+        datas: this.slidersInfo.page.data.datas
     })
 }
 
@@ -134,15 +345,15 @@ function end(e) {
  */
 function closeAll() {
     // console.log('closeAll')
-    var that=this
-    this.page.data.datas.forEach(function (v, i) {
+    var that = this
+    this.slidersInfo.page.data.datas.forEach(function (v, i) {
 
-        that.page.data.datas[i].left = 0
-        that.page.data.datas[i].itemStyle = 'left:0;transition:all 0.2s ease ';
+        that.slidersInfo.page.data.datas[i].left = 0
+        that.slidersInfo.page.data.datas[i].itemStyle = 'left:0;transition:all 0.2s ease ';
     })
 
-    this.page.setData({
-        datas: this.page.data.datas
+    this.slidersInfo.page.setData({
+        datas: this.slidersInfo.page.data.datas
     })
 }
 
@@ -150,9 +361,9 @@ function closeAll() {
  * 关闭某个索引的抽屉
  */
 function close(index) {
-    this.page.data.datas[index].itemStyle = 'left:0rpx;transition: left 0.2s ease ';
-    this.page.setData({
-        datas: this.page.data.datas
+    this.slidersInfo.page.data.datas[index].itemStyle = 'left:0rpx;transition: left 0.2s ease ';
+    this.slidersInfo.page.setData({
+        datas: this.slidersInfo.page.data.datas
     })
 }
 
@@ -173,7 +384,7 @@ function breakOnce() {
  */
 function cancel(e) {
     this.end(e)
-    
+
 }
 
 
@@ -183,7 +394,7 @@ function cancel(e) {
 function deleteItem(e) {
     //获取列表中要删除项的下标
     var index = e.target.dataset.index;
-    var datas = this.page.data.datas;
+    var datas = this.slidersInfo.page.data.datas;
 
     var animation = wx.createAnimation({
         duration: 300,
@@ -193,8 +404,8 @@ function deleteItem(e) {
 
 
     datas[index].deleteAnimData = animation.export()
-    
-    page.setData({
+
+    this.slidersInfo.page.setData({
         datas: datas
     });
     /**
@@ -205,7 +416,7 @@ function deleteItem(e) {
     // setTimeout(function () {
     //     console.log("setTimeout删除："+index)
     //     console.log(this)
-        
+
     //     //移除列表中下标为index的项
     //     datas.splice(index, 1);
     //     data.datas[index].containerStyle = 'transition:all 0.5s ease !important';
@@ -213,10 +424,10 @@ function deleteItem(e) {
     //     this.setData({
     //         datas: datas
     //     });
-        
+
 
     // }.bind(this), 700)
-    
+
 }
 
 
@@ -243,15 +454,17 @@ function angle(start, end) {
 
 module.exports = {
     init: init,
+
     start: start,
     move: move,
     end: end,
     breakOnce: breakOnce,
-    close:close,
-    closeAll:closeAll,
+    close: close,
+    closeAll: closeAll,
     cancel: cancel,
     angle: angle,
-    deleteItem: deleteItem
+    deleteItem: deleteItem,
 
-
+    setSlide: setSlide,
+    getCurrSliderWidth: getCurrSliderWidth
 }
