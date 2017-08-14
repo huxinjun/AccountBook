@@ -68,8 +68,7 @@
     bottom: 0rpx;
 }
 
-.status {
-    
+.status { 
     position: absolute;
     right: 20rpx;
     line-height: 200rpx;

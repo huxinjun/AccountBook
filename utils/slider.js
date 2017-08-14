@@ -15,7 +15,6 @@ var eventEnd = false
 
 
 var slidersInfo
-var currSliderIndex;
 //-----------------------------------------------------------------------------------------------
 
 /**
@@ -24,29 +23,81 @@ var currSliderIndex;
  */
 function init(slidersInfo) {
     this.slidersInfo = slidersInfo
-    this.setSlide(0)
     return this
 }
 
 /**
  * 获取当前抽屉内容宽度
+ * index:item索引
  */
-function getCurrSliderWidth() {
+function getSliderWidthByIndex(index) {
+    if (!this.hasSlider(index))
+        return 0
+    var layerIndex = layerStateRecorder._get(index)
     var width=0;
-    this.slidersInfo.layers[this.currSliderIndex].buttons.forEach(function(v,i){
+    this.slidersInfo.layers[layerIndex].buttons.forEach(function(v,i){
         width += v.width
     })
     return width;
 }
+/**
+ * 检查配置的信息是否能拉开
+ * index:item索引
+ */
+function hasSlider(index){
+    var layerIndex = layerStateRecorder._get(index)
 
-
+    if (this.slidersInfo.layers == undefined || 
+        this.slidersInfo.layers.length == 0 || 
+        this.slidersInfo.layers[layerIndex].buttons == undefined ||
+        this.slidersInfo.layers[layerIndex].buttons.length == 0) {
+        
+        return false
+    }
+    return true
+}
+/**
+ * item的layer索引记录器
+ */
+var layerStateRecorder={
+    status:[],
+    _put: function (index, layerIndex){
+        this.status.forEach(function(v,i){
+            if(v.index==index){
+                v.layerIndex=layerIndex
+                return
+            }
+        })
+        this.status.push({
+            index:index,
+            layerIndex: layerIndex
+        })
+    },
+    _get: function (index) {
+        var result=-1
+        this.status.forEach(function (v, i) {
+            if (v.index == index){ 
+                result = v.layerIndex
+                return
+            }
+        })
+        return result
+    }
+}
 /**
  * 设置当前要显示的slider
+ * index:item索引
+ * layerIndex：layer索引
  */
-function setSlide(index) {
-    this.currSliderIndex = index
+function setLayer(index,layerIndex) {
+    layerStateRecorder._put(index, layerIndex)
+    //配置可拖动视图
+    if (!this.hasSlider(index)) {
+        //没有配置任何状态层，不需要拉开
+        return
+    }
     //更新界面绑定的数据
-    var p1 = "width:" + this.getCurrSliderWidth() + "rpx;"
+    var p1 = "width:" + this.getSliderWidthByIndex(index) + "rpx;"
     var p2 = "height:" + this.slidersInfo.height+"rpx;"
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
@@ -59,31 +110,30 @@ function setSlide(index) {
 
 
     var that=this
+    
     //处理每一种状态元素的element.style
     this.slidersInfo.layers.forEach(function (outterValue, outterIndex) {
+        
+        if (outterValue.buttons == undefined)
+            return
         var right=0
+        
         outterValue.buttons.forEach(function(innerValue,innerIndex){
-            // height: 100 %;
-            // width: 150rpx;
-            // background - color: #2ba245;
-            // color: white;
-            // position: absolute;
-            // top: 0;
-            // right: 0;
-            // text - shadow: 2rpx 2rpx 1rpx black;
             
-            var p1 ="height:100%;"
-            var p2 = innerValue.width+"rpx;"
+            var p1 = "height:" + that.slidersInfo.height+"rpx; "
+            var p2 = "width:"+innerValue.width+"rpx;"
             var p3 = "color:" + innerValue.color+";"
             var p4 = "background-color:" + innerValue.colorBg + ";"
             var p5 = "text-shadow:2rpx 2rpx 1rpx " + innerValue.colorShadow + ";"
             var p6 = "position: absolute;"
             var p7 = "top:0;"
             var p8 = "right:" + right + "rpx;"
-            right+=innerWidth;
+            right += innerValue.width;
+            //是否显示
+            var p9 = outterIndex != layerIndex ? "display:none;" : "display:inherit;"
 
             var styleName = "layerStyle_" + outterIndex + "_" + innerIndex
-            var styleValue=p1+p2+p3+p4+p5+p6+p7+p8
+            var styleValue=p1+p2+p3+p4+p5+p6+p7+p8+p9
 
             /**
              * 由于小程序不支持动态检索变量名,暂时用这个笨办法
@@ -249,9 +299,13 @@ function setSlide(index) {
  * 按下时触发
  */
 function start(e) {
-
-    this.closeAll()
     var index = e.target.dataset.index
+    if (!this.hasSlider(index))
+        return
+    var layerIndex = layerStateRecorder._get(index)
+    this.setLayer(index, layerIndex)
+    this.closeAll()
+    
     // console.log(e)
 
     this.eventEnd = false;
@@ -267,10 +321,14 @@ function start(e) {
  * 移动时触发
  */
 function move(e, checkAngle) {
+    var index = e.target.dataset.index
+
+    if (!this.hasSlider(index))
+        return
     if (this.eventEnd)
         return
 
-    var index = e.target.dataset.index
+    
 
     var currX = e.touches[0].pageX;
     var currY = e.touches[0].pageY;
@@ -309,7 +367,7 @@ function move(e, checkAngle) {
     moveX += this.startLeft;
     // console.log("-------------" + moveX)
     //避免快速滑动时两个move事件x距离太大,抽屉滑过头了
-    moveX = moveX < -this.getCurrSliderWidth() ? -this.getCurrSliderWidth() : moveX
+    moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
     moveX = moveX > 0 ? 0 : moveX
 
     this.slidersInfo.page.data.datas[index].left = moveX
@@ -327,11 +385,15 @@ function move(e, checkAngle) {
  * 结束时触发
  */
 function end(e) {
+    var index = e.target.dataset.index
+
+    if (!this.hasSlider(index))
+        return
     // console.log(e)
 
     this.eventEnd = true
-    var index = e.target.dataset.index
-    var endX = this.slidersInfo.page.data.datas[index].left < -this.getCurrSliderWidth() / 3 ? -this.getCurrSliderWidth() : 0;
+    
+    var endX = this.slidersInfo.page.data.datas[index].left < -this.getSliderWidthByIndex(index) / 3 ? -this.getSliderWidthByIndex(index) : 0;
 
     this.slidersInfo.page.data.datas[index].left = endX
     this.slidersInfo.page.data.datas[index].itemStyle = 'left:' + (this.slidersInfo.page.data.datas[index].left + 3) + 'rpx;transition: left 0.2s ease ';
@@ -361,6 +423,7 @@ function closeAll() {
  * 关闭某个索引的抽屉
  */
 function close(index) {
+    
     this.slidersInfo.page.data.datas[index].itemStyle = 'left:0rpx;transition: left 0.2s ease ';
     this.slidersInfo.page.setData({
         datas: this.slidersInfo.page.data.datas
@@ -465,6 +528,8 @@ module.exports = {
     angle: angle,
     deleteItem: deleteItem,
 
-    setSlide: setSlide,
-    getCurrSliderWidth: getCurrSliderWidth
+    setLayer: setLayer,
+    getSliderWidthByIndex: getSliderWidthByIndex,
+    hasSlider: hasSlider
+
 }

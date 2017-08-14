@@ -46,13 +46,12 @@ Page({
                             item.statusStr = "已拒绝"
                             item.statusColor = "red"
                         }
-
-                        item.canOpen = false
                         console.log(this)
                         this.setData({
                             datas: this.data.datas
                         })
                         slider.close(e.target.dataset.index)
+                        slider.switchToLayer(1)
                         break;
                     case APP.globalData.resultcode.INVALID_TOKEN:
                         APP.reLogin({
@@ -111,13 +110,17 @@ Page({
                     buttons: [
                         {
                             text: "接受",
-                            color: "red",
+                            color: "white",
+                            colorBg: "#2ba245",
+                            colorShadow: "black",
                             onClick: "acceptInvite",
                             width: 150
                         },
                         {
                             text: "拒绝",
-                            color: "red",
+                            color: "white",
+                            colorBg: "#cdcdcd",
+                            colorShadow: "black",
                             onClick: "refuse",
                             width: 150
                         }
@@ -128,16 +131,20 @@ Page({
                     buttons: [
                         {
                             text: "删除",
-                            color: "red",
+                            color: "white",
+                            colorBg:"#f00",
+                            colorShadow:"black",
                             onClick: "refuseInvite",
                             width: 150
                         }
                     ]
+                },
+                {
+                    name: "状态三",
                 }
             ]
         }
         slider = require('../../utils/slider.js').init(slidersInfo)
-   
         this.initData()
     },
 
@@ -158,18 +165,18 @@ Page({
                             case 1:
                                 v.statusStr = "未处理"
                                 v.statusColor = "blue"
-                                v.canOpen = true
-                                v.itemStyle = "width:752rpx;"
+
+                                slider.setLayer(i,0)
                                 break;
                             case 11:
                                 v.statusStr = "已接受"
                                 v.statusColor = "green"
-                                v.canOpen = false
+                                slider.setLayer(i,1)
                                 break;
                             case 12:
                                 v.statusStr = "已拒绝"
                                 v.statusColor = "red"
-                                v.canOpen = false
+                                slider.setLayer(i,1)
                                 break;
                         }
 
@@ -198,23 +205,15 @@ Page({
 
 
     touchstart: function (e) {
-        if (!this.canOpen(e))
-            return
         slider.start(e)
     },
     touchmove: function (e) {
-        if (!this.canOpen(e))
-            return
         slider.move(e)
     },
     touchend: function (e) {
-        if (!this.canOpen(e))
-            return
         slider.end(e)
     },
     touchcancel: function (e) {
-        if (!this.canOpen(e))
-            return
         slider.cancel(e)
     },
     outterScroll: function (e) {
