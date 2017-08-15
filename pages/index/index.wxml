@@ -32,17 +32,3 @@
 
 
 </view>
-
-    <view class="bottom_bar">
-
-        <view class="tab" bindtap="tabMainClick">
-            <image src="{{tab_main_src}}"></image>
-            <text style="color:{{text_color_home}}">主页</text>
-
-        </view>
-        <view class="tab" bindtap="tabMeClick">
-            <image src="{{tab_me_src}}"></image>
-            <text style="color:{{text_color_me}}">我的</text>
-        </view>
-
-    </view>
