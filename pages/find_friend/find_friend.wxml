@@ -29,7 +29,7 @@
                 <text class="item_city">{{item.city}}</text>
             </view>
 
-            <button class="btn_invitation" hover-class="btn_invitation_hover" form-type="submit">
+            <button class="btn_invitation" hover-class="btn_invitation_hover" form-type="submit" style="display:{{item.flag}};">
                 邀请
             </button>
             
