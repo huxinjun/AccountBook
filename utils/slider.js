@@ -31,11 +31,11 @@ function init(slidersInfo) {
  * index:item索引
  */
 function getSliderWidthByIndex(layerIndex) {
-    
+
     if (!this.hasSlider(layerIndex))
         return 0
-    var width=0;
-    this.slidersInfo.layers[layerIndex].buttons.forEach(function(v,i){
+    var width = 0;
+    this.slidersInfo.layers[layerIndex].buttons.forEach(function (v, i) {
         width += v.width
     })
     return width;
@@ -52,13 +52,13 @@ function getLayerIndexByIndex(index) {
  * 检查配置的信息是否能拉开
  * index:item索引
  */
-function hasSlider(layerIndex){
+function hasSlider(layerIndex) {
 
-    if (this.slidersInfo.layers == undefined || 
-        this.slidersInfo.layers.length == 0 || 
+    if (this.slidersInfo.layers == undefined ||
+        this.slidersInfo.layers.length == 0 ||
         this.slidersInfo.layers[layerIndex].buttons == undefined ||
         this.slidersInfo.layers[layerIndex].buttons.length == 0) {
-        
+
         return false
     }
     return true
@@ -69,7 +69,7 @@ function hasSlider(layerIndex){
  * index:item索引
  * layerIndex：layer索引
  */
-function setLayer(item,layerIndex) {
+function setLayer(item, layerIndex) {
     item.layerIndex = layerIndex
     //配置可拖动视图
     if (!this.hasSlider(layerIndex)) {
@@ -80,28 +80,28 @@ function setLayer(item,layerIndex) {
     item.styleWidth = "width:752rpx;"
     //更新界面绑定的数据
     var p1 = "width:" + this.getSliderWidthByIndex(layerIndex) + "rpx;"
-    var p2 = "height:" + this.slidersInfo.height+"rpx;"
+    var p2 = "height:" + this.slidersInfo.height + "rpx;"
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
 
-    item.sliderStyle = p1+p2+p3+p4+p5
+    item.sliderStyle = p1 + p2 + p3 + p4 + p5
 
 
-    var that=this
-    
+    var that = this
+
     //处理每一种状态元素的element.style
     this.slidersInfo.layers.forEach(function (outterValue, outterIndex) {
-        
+
         if (outterValue.buttons == undefined)
             return
-        var right=0
-        
-        outterValue.buttons.forEach(function(innerValue,innerIndex){
-            
-            var p1 = "height:" + that.slidersInfo.height+"rpx; "
-            var p2 = "width:"+innerValue.width+"rpx;"
-            var p3 = "color:" + innerValue.color+";"
+        var right = 0
+
+        outterValue.buttons.forEach(function (innerValue, innerIndex) {
+
+            var p1 = "height:" + that.slidersInfo.height + "rpx; "
+            var p2 = "width:" + innerValue.width + "rpx;"
+            var p3 = "color:" + innerValue.color + ";"
             var p4 = "background-color:" + innerValue.colorBg + ";"
             var p5 = "text-shadow:2rpx 2rpx 1rpx " + innerValue.colorShadow + ";"
             var p6 = "position: absolute;"
@@ -113,7 +113,7 @@ function setLayer(item,layerIndex) {
 
             var styleName = "layerStyle_" + outterIndex + "_" + innerIndex
             var tapName = "layerTap_" + outterIndex + "_" + innerIndex
-            var styleValue=p1+p2+p3+p4+p5+p6+p7+p8+p9
+            var styleValue = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9
 
             item[styleName] = styleValue
             item[tapName] = innerValue.onClick
@@ -133,7 +133,7 @@ function start(e) {
     if (!this.hasSlider(this.getLayerIndexByIndex(index)))
         return
     this.closeAll()
-    
+
     // console.log(e)
 
     this.eventEnd = false;
@@ -156,14 +156,14 @@ function move(e, checkAngle) {
     if (this.eventEnd)
         return
 
-    
+
 
     var currX = e.touches[0].pageX;
     var currY = e.touches[0].pageY;
     var moveX = currX - this.startX;
     var moveY = currY - this.startY;
 
- 
+
     if (this.slidersInfo.checkAngle) {
         //获取滑动角度
         var a = angle({ X: this.startX, Y: this.startY }, { X: currX, Y: currY });
@@ -217,17 +217,17 @@ function end(e) {
 
     if (!this.hasSlider(this.getLayerIndexByIndex(index)))
         return
-    // console.log(e)
 
     this.eventEnd = true
-    
-    var endX = this.slidersInfo.page.data.datas[index].left < -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) / 3 ? -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) : 0;
 
-    this.slidersInfo.page.data.datas[index].left = endX
-    this.slidersInfo.page.data.datas[index].styleLeft = 'left:' + (this.slidersInfo.page.data.datas[index].left + 3) + 'rpx;transition: left 0.2s ease ';
-    this.slidersInfo.page.setData({
-        datas: this.slidersInfo.page.data.datas
-    })
+    var isOpen = this.slidersInfo.page.data.datas[index].left < -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) / 3 ? true : false;
+
+    console.log(this.slidersInfo.page.data.datas[index].left)
+
+    if (isOpen)
+        this.open(index)
+    else
+        this.close(index)
 }
 
 /**
@@ -237,7 +237,6 @@ function closeAll() {
     // console.log('closeAll')
     var that = this
     this.slidersInfo.page.data.datas.forEach(function (v, i) {
-
         that.slidersInfo.page.data.datas[i].left = 0
         that.slidersInfo.page.data.datas[i].styleLeft = 'left:0;transition:all 0.2s ease ';
     })
@@ -251,8 +250,18 @@ function closeAll() {
  * 关闭某个索引的抽屉
  */
 function close(index) {
-    
+    this.slidersInfo.page.data.datas[index].left = 0
     this.slidersInfo.page.data.datas[index].styleLeft = 'left:0rpx;transition: left 0.2s ease ';
+    this.slidersInfo.page.setData({
+        datas: this.slidersInfo.page.data.datas
+    })
+}
+/**
+ * 关闭某个索引的抽屉
+ */
+function open(index) {
+    this.slidersInfo.page.data.datas[index].left = -this.getSliderWidthByIndex
+    this.slidersInfo.page.data.datas[index].styleLeft = 'left:' + -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) + 'rpx;transition: left 0.2s ease ';
     this.slidersInfo.page.setData({
         datas: this.slidersInfo.page.data.datas
     })
@@ -352,6 +361,7 @@ module.exports = {
     breakOnce: breakOnce,
     close: close,
     closeAll: closeAll,
+    open: open,
     cancel: cancel,
     angle: angle,
     deleteItem: deleteItem,
