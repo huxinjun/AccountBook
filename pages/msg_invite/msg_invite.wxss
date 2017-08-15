@@ -15,10 +15,9 @@
     width: 750rpx;
     height: 200rpx;
     position: relative;
-    top: 0;
+    top: 0rpx;
     overflow-x: hidden;
     z-index: 3;
-    border-top: 10rpx solid white
 }
 
 .item {
@@ -27,6 +26,7 @@
     position: absolute;
     background-color: #eee;
     z-index: 2;
+    border-top: 10rpx solid white;
 }
 
 .icon {
@@ -54,7 +54,7 @@
 .msg {
     width: 450rpx;
     font-size: 24rpx;
-    color: #666;
+    color: #006400;
     position: absolute;
     bottom:50rpx;
     text-overflow: ellipsis;
@@ -63,7 +63,7 @@
 }
 .time {
     font-size: 24rpx;
-    color: #666;
+    color: #000;
     position: absolute;
     bottom: 0rpx;
 }
@@ -73,9 +73,8 @@
     right: 20rpx;
     line-height: 200rpx;
     vertical-align: middle;
-    font-size: 30rpx;
-    color: white;
-    text-shadow: 2rpx 2rpx 1rpx #2ba245;
+    font-size: 20rpx;
+    color: #777;
     
 }
 

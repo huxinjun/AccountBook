@@ -80,13 +80,6 @@ Page({
                         datas: res.data.datas
                     })
                     
-                } else if (res.data.status == APP.globalData.resultcode.INVALID_TOKEN) {
-                    APP.reLogin({
-                        context:this,
-                        success:function(){
-                            this.search();
-                        }
-                    });
                 }
                     
             }

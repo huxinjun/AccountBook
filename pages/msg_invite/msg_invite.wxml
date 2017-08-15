@@ -6,7 +6,7 @@
 
         <scroll-view class="listitem" scroll-x bindscroll='innerScroll' animation="{{item.deleteAnimData}}">
 
-            <view class="item" style="{{item.styleWidth}}{{item.styleLeft}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+            <view class="item" style="{{item.styleWidth}}{{item.styleLeft}}{{item.styleBorder}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
                 <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
 
                 <view class="content" data-index="{{index}}">
@@ -17,7 +17,7 @@
                     <text class="time" data-index="{{index}}">{{item.time}}</text>
 
                 </view>
-                <text class="status" data-index="{{index}}" style="color:{{item.statusColor}}">{{item.statusStr}}</text>
+                <text class="status" data-index="{{index}}">{{item.statusStr}}</text>
 
 
             </view>

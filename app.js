@@ -149,7 +149,8 @@ App({
      * 代理wx.request方法
      */
     ajax: function (obj,context) {
-    
+        var that=this
+        wx.showNavigationBarLoading()
         wx.request({
             url: obj.url,
             data: obj.data,
@@ -167,6 +168,17 @@ App({
                 console.log("");
                 console.log("");
                 console.log("");
+                if (res.data.status == that.globalData.resultcode.INVALID_TOKEN){
+                    that.reLogin({
+                        context: this,
+                        success: function () {
+                            obj.data.token = wx.getStorageSync("token")
+                            that.ajax(obj, context);
+                        }
+                    });
+                    return
+                }
+
                 if (obj.success != undefined)
                     obj.success.call(context, res);
             },
@@ -191,6 +203,7 @@ App({
                 
             },
             complete: function (res) {
+                wx.hideNavigationBarLoading()
                 if (obj.complete != undefined)
                     obj.complete.call(context, res);
             }

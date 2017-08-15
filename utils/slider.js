@@ -84,6 +84,7 @@ function setLayer(item, layerIndex) {
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
+    
 
     item.sliderStyle = p1 + p2 + p3 + p4 + p5
 
@@ -110,10 +111,11 @@ function setLayer(item, layerIndex) {
             right += innerValue.width;
             //是否显示
             var p9 = outterIndex != layerIndex ? "display:none;" : "display:inherit;"
+            var p10 = "border-top:" + innerValue.borderTop
 
             var styleName = "layerStyle_" + outterIndex + "_" + innerIndex
             var tapName = "layerTap_" + outterIndex + "_" + innerIndex
-            var styleValue = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9
+            var styleValue = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10
 
             item[styleName] = styleValue
             item[tapName] = innerValue.onClick
@@ -291,15 +293,15 @@ function cancel(e) {
 /**
  * 点击删除按钮事件
  */
-function deleteItem(e) {
-    //获取列表中要删除项的下标
-    var index = e.target.dataset.index;
+function deleteItem(index) {
     var datas = this.slidersInfo.page.data.datas;
 
+    datas[index].styleBorder = "border:none;"
     var animation = wx.createAnimation({
-        duration: 300,
+        duration: 450,
         timingFunction: 'ease',
     })
+
     animation.opacity(0).step().height(0).step()
 
 

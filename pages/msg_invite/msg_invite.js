@@ -15,7 +15,7 @@ Page({
     //点击删除按钮事件
     _delete: function (e) {
         console.log("delete")
-        // slider.deleteItem(e)
+        this.option(e, "delete")
     },
 
     acceptInvite: function (e) {
@@ -35,36 +35,26 @@ Page({
             },
 
             success: function (res) {
+                var index = e.target.dataset.index
                 switch (res.data.status) {
                     case APP.globalData.resultcode.SUCCESS:
-                        var item = this.data.datas[e.target.dataset.index]
+                        var item = this.data.datas[index]
                         slider.setLayer(item, 1)
                         if (opt == "accept") {
                             item.status = 11
                             item.statusStr = "已接受"
-                            item.statusColor = "green"
-                        } else {
+                        } else if (opt == "refuse"){
                             item.status = 12
                             item.statusStr = "已拒绝"
-                            item.statusColor = "red"
+                        }else{
+                            slider.deleteItem(index)
+                            return
                         }
-                        console.log(this)
-                        this.setData({
-                            datas: this.data.datas
-                        })
-                        slider.close(e.target.dataset.index)
-                        break;
-                    case APP.globalData.resultcode.INVALID_TOKEN:
-                        APP.reLogin({
-                            context: this,
-                            success: function () {
-                                this.option(e, opt);
-                            }
-                        });
+                        slider.close(index)
                         break;
                     case APP.globalData.resultcode.INVALID_COMMAND:
                         //已经是好友关系了
-                        slider.close(e.target.dataset.index)
+                        slider.close(index)
                         break;
                 }
 
@@ -104,6 +94,7 @@ Page({
             checkAngle: false,
             //条目高度
             height:200,
+            
             //N种状态
             layers: [
                 {
@@ -115,7 +106,8 @@ Page({
                             colorBg: "#2ba245",
                             colorShadow: "black",
                             onClick: "acceptInvite",
-                            width: 150
+                            width: 150,
+                            borderTop: "10rpx solid white",
                         },
                         {
                             text: "拒绝",
@@ -123,7 +115,8 @@ Page({
                             colorBg: "#cdcdcd",
                             colorShadow: "black",
                             onClick: "refuseInvite",
-                            width: 150
+                            width: 150,
+                            borderTop: "10rpx solid white",
                         }
                     ]
                 },
@@ -136,6 +129,7 @@ Page({
                             colorBg:"#f00",
                             colorShadow:"black",
                             onClick: "_delete",
+                            borderTop: "10rpx solid white",
                             width: 150
                         }
                     ]
@@ -164,18 +158,14 @@ Page({
                         switch (v.status) {
                             case 0:
                             case 1:
-                                v.statusStr = "未处理"
-                                v.statusColor = "blue"
                                 slider.setLayer(v,0)
                                 break;
                             case 11:
                                 v.statusStr = "已接受"
-                                v.statusColor = "green"
                                 slider.setLayer(v,1)
                                 break;
                             case 12:
                                 v.statusStr = "已拒绝"
-                                v.statusColor = "red"
                                 slider.setLayer(v,1)
                                 break;
                         }
@@ -185,13 +175,6 @@ Page({
                         datas: res.data.datas
                     })
 
-                } else if (res.data.status == APP.globalData.resultcode.INVALID_TOKEN) {
-                    APP.reLogin({
-                        context: this,
-                        success: function () {
-                            this.initData();
-                        }
-                    });
                 }
 
             }
