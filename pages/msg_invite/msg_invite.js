@@ -14,7 +14,8 @@ Page({
 
     //点击删除按钮事件
     _delete: function (e) {
-        slider.deleteItem(e)
+        console.log("delete")
+        // slider.deleteItem(e)
     },
 
     acceptInvite: function (e) {
@@ -37,6 +38,7 @@ Page({
                 switch (res.data.status) {
                     case APP.globalData.resultcode.SUCCESS:
                         var item = this.data.datas[e.target.dataset.index]
+                        slider.setLayer(item, 1)
                         if (opt == "accept") {
                             item.status = 11
                             item.statusStr = "已接受"
@@ -51,7 +53,6 @@ Page({
                             datas: this.data.datas
                         })
                         slider.close(e.target.dataset.index)
-                        slider.switchToLayer(1)
                         break;
                     case APP.globalData.resultcode.INVALID_TOKEN:
                         APP.reLogin({
@@ -121,7 +122,7 @@ Page({
                             color: "white",
                             colorBg: "#cdcdcd",
                             colorShadow: "black",
-                            onClick: "refuse",
+                            onClick: "refuseInvite",
                             width: 150
                         }
                     ]
@@ -134,7 +135,7 @@ Page({
                             color: "white",
                             colorBg:"#f00",
                             colorShadow:"black",
-                            onClick: "refuseInvite",
+                            onClick: "_delete",
                             width: 150
                         }
                     ]
@@ -165,18 +166,17 @@ Page({
                             case 1:
                                 v.statusStr = "未处理"
                                 v.statusColor = "blue"
-
-                                slider.setLayer(i,0)
+                                slider.setLayer(v,0)
                                 break;
                             case 11:
                                 v.statusStr = "已接受"
                                 v.statusColor = "green"
-                                slider.setLayer(i,1)
+                                slider.setLayer(v,1)
                                 break;
                             case 12:
                                 v.statusStr = "已拒绝"
                                 v.statusColor = "red"
-                                slider.setLayer(i,1)
+                                slider.setLayer(v,1)
                                 break;
                         }
 
@@ -205,6 +205,8 @@ Page({
 
 
     touchstart: function (e) {
+        var a=this
+        // debugger
         slider.start(e)
     },
     touchmove: function (e) {

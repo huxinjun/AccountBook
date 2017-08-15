@@ -1,12 +1,12 @@
 <!--index.wxml-->
 <scroll-view class="container" scroll-y bindscroll='outterScroll' style="height:{{containerHeight}}px;">
 
-    <view wx:for="{{datas}}" wx:key="*this">
+    <view wx:for="{{datas}}" wx:key="{{index}}">
         <!-- {{index}}: {{item.value}} -->
 
         <scroll-view class="listitem" scroll-x bindscroll='innerScroll' animation="{{item.deleteAnimData}}">
 
-            <view class="item" style="{{item.itemStyle}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+            <view class="item" style="{{item.styleWidth}}{{item.styleLeft}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
                 <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
 
                 <view class="content" data-index="{{index}}">
@@ -30,11 +30,11 @@
 
             </view> -->
 
-            <view style="{{sliderStyle}}">
+            <view style="{{item.sliderStyle}}">
 
-                <view style="{{layerStyle_0_0}}" bindtap="{{layerTap_0_0}}" data-index="{{index}}">接受</view>
-                <view style="{{layerStyle_0_1}}" bindtap="{{layerTap_0_1}}" data-index="{{index}}">拒绝</view>
-                <view style="{{layerStyle_1_0}}" bindtap="{{layerTap_1_0}}" data-index="{{index}}">删除</view>
+                <view style="{{item.layerStyle_0_0}}" bindtap="{{item.layerTap_0_0}}" data-index="{{index}}">接受</view>
+                <view style="{{item.layerStyle_0_1}}" bindtap="{{item.layerTap_0_1}}" data-index="{{index}}">拒绝</view>
+                <view style="{{item.layerStyle_1_0}}" bindtap="{{item.layerTap_1_0}}" data-index="{{index}}">删除</view>
             </view>
         </scroll-view>
     </view>
