@@ -1,6 +1,21 @@
 //app.js
 
 App({
+    globalData: {
+        BaseUrl: 'http://192.168.10.228:8080/AccountBook',
+        // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
+        // BaseUrl: 'http://oceanboss.tech/AccountBook',
+        // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
+        userInfo: null,
+        resultcode: {
+            SUCCESS: 0,
+            INVALID_TOKEN: 1,
+            INVALID_COMMAND: 2
+        }
+    },
+
+
+
     onLaunch: function () {
         //调用API从本地缓存中获取数据
         var logs = wx.getStorageSync('logs') || []
@@ -123,18 +138,7 @@ App({
 
 
 
-    globalData: {
-        // BaseUrl: 'http://192.168.10.228:8080/AccountBook',
-        // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
-        // BaseUrl: 'http://oceanboss.tech/AccountBook',
-        BaseUrl: 'http://192.168.1.103:8080/AccountBook',
-        userInfo: null,
-        resultcode:{
-            SUCCESS:0,
-            INVALID_TOKEN:1,
-            INVALID_COMMAND:2
-        }
-    },
+
 
 
     

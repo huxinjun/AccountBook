@@ -1,0 +1,14 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="title">
+        <image class="icon" src="/img/type/gray_accounts.png"></image>
+        <input class="name" />
+    </view>
+
+    <view class="desc">
+        <text>备注</text>
+        <input/>
+        <image class="addPic" src="/img/boy.png"></image>
+    </view>
+
+</view>

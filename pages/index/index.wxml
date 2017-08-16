@@ -1,34 +1,15 @@
 <!--index.wxml-->
 <view class="container">
+    <view class="content" wx:for="{{list}}" wx:key="{{index}}" >
 
+        <view class="item" hover-class="item_hover">
 
+            <image class="icon" src="{{item.icon}}"></image>
+            <text class="name">{{item.name}}</text>
 
-
-
-
-
-
-    <view class="userinfo" abc="aaa">
-        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" animation="{{animationData}}" catchtap="test"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </view>
-    <view class="usermotto">
-        <text class="user-motto" bindtap="bindViewTap">{{motto}}</text>
-    </view>
-
-    <view wx:for="{{list}}" wx:key="*this">
-        {{index}}: {{item.value}}
-
-        <view class="listitem">
-            <view class="item" style="{{item.slider}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}"></view>
-            <view class="delete" bindtap="delete" data-index="{{index}}">删除</view>
         </view>
+
+
     </view>
-
-
-
-
-
-
 
 </view>
