@@ -1,14 +1,13 @@
-
 <view class="container">
     <view class="title">
         <image src="/img/type/gray_accounts.png"></image>
-        <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class"/>
-        <text >￥0.00</text>
+        <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
+        <text>￥0.00</text>
     </view>
 
-     <view class="desc">
+    <view class="desc">
         <image class="desc_icon" src="/img/desc.png"></image>
-        <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class"/>
+        <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" />
         <image class="desc_add_pic" src="/img/camera.png"></image>
         <image class="desc_delete_pic" src="/img/delete.png"></image>
 
@@ -28,13 +27,13 @@
 
     <view class="date">
         <image class="date_icon" src="/img/date.png"></image>
-        <input type="date" value="2015-09-24"/>
+        <input type="date" value="2015-09-24" />
         <span class="date_today">今天</span>
     </view>
 
     <view class="loc">
         <image class="loc_icon" src="/img/loc.png"></image>
-        <input type="text" placeholder="位置" placeholder-class="placeholder_class"/>
+        <input type="text" placeholder="位置" placeholder-class="placeholder_class" />
         <image class="loc_get" src="/img/get_loc.png"></image>
     </view>
 
@@ -46,6 +45,26 @@
             <text class="members_title_add">+</text>
 
         </view>
+
+        <view wx:for="{{account.members}}">
+            <view class="member">
+            
+                <image class="member_icon" src="/img/type/gray_accounts.png"></image>
+
+                <view class="member_content">
+                    <text class="member_name">新军</text>
+
+                    <view class="member_tags">
+                        <text class="member_name">AA制</text>
+                        <text class="member_name">自费10元</text>
+                    </view>
+                    
+                </view>
+
+            </view>
+
+        </view>
+
 
     </view>
 

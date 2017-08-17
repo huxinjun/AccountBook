@@ -204,3 +204,61 @@
     position: absolute;
     right: 20rpx;
 }
+
+
+/**成员条目*/
+.member{
+    width: 750rpx;
+    background-color: chartreuse;
+    padding-left: 20rpx;
+    border-bottom: 1rpx dashed #000;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.member_icon{
+    width: 100rpx;
+    height: 100rpx;
+    padding: 20rpx;
+    padding-left: 0;
+    
+}
+/**中间区域:名称,标签*/
+.member_content{
+    flex-grow: 1;
+    height: 100rpx;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+/**成员规则和其他标签*/
+.member_tags{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+/**标签*/
+.member_tags text{
+    margin-right: 20rpx;
+    font-size: 28rpx;
+    border: 1px solid #000;
+    border-radius: 10rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**支付方案---------------------------------------------------------------------------*/

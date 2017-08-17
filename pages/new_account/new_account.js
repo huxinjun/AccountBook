@@ -3,61 +3,30 @@
 var APP = getApp()
 Page({
     data: {
-        list: [
-            {
-                "id":0,
-                "name":"吃饭",
-                "icon":"/img/type/gray_food.png"
-            }, 
-            {
-                "id": 1,
-                "name": "租房",
-                "icon": "/img/type/gray_housing.png"
-            },
-            {
-                "id": 2,
-                "name": "公交",
-                "icon": "/img/type/gray_traffic.png"
-            },
-            {
-                "id": 3,
-                "name": "打车",
-                "icon": "/img/type/gray_car.png"
-            },
-            {
-                "id": 4,
-                "name": "信用卡还钱",
-                "icon": "/img/type/gray_refund.png"
-            },
-            {
-                "id": 5,
-                "name": "请客",
-                "icon": "/img/type/gray_gam.png"
-            },
-            {
-                "id": 6,
-                "name": "零食",
-                "icon": "/img/type/gray_snacks.png"
-            },
-            {
-                "id": 6,
-                "name": "购物",
-                "icon": "/img/type/gray_shopping.png"
-            },
-            {
-                "id": 7,
-                "name": "其他",
-                "icon": "/img/type/gray_other.png"
-            }
+        account:{
 
-        ],
+            name:"火锅",
+
+
+            members:[{
+                id:"abc",
+                name:"新军",
+                icon:"/img/head.jpg",
+                paid_in:88.8,
+                pay_rule:{
+                    type:0,
+                    number:0.2
+                },
+                money_for_self:20.5
+                
+            },{
+                
+            }]
+        }
     },
     
     onLoad: function () {
         var that = this
-        this.setData({
-            list:this.data.list
-        })
     },
 
     longtap:function(e){
