@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container">
-    <view class="content" wx:for="{{list}}" wx:key="{{index}}" >
+    <view class="content" wx:for="{{list}}" wx:key="{{index}}">
 
         <view class="item" hover-class="item_hover">
 

@@ -1,39 +1,99 @@
 /**index.wxss**/
 
 .container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    font-family: "微软雅黑";
-    color: #272636;
-}
-.item{
-    width: 250rpx;
-    height: 250rpx;
-    border-right: 1rpx solid #ddd;
-    border-bottom: 1rpx solid #ddd;
-    box-sizing: border-box;
-    
+    height: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: "微软雅黑";
+    color: #272636;
+    
+}
+.placeholder_class{
+    color: #ccc;
+    font-size: 25rpx;
+}
+
+.title {
+    width: 750rpx;
+    height: 100rpx;
+    flex-flow: row nowrap;
+    display: flex;
     align-items: center;
-    text-align: center;
-    justify-content: center;
+    
+    justify-content: space-between;
+    border-bottom: 1rpx solid #ddd;
 
-}
-.item_hover{
-    background-color: #ddd;
+    padding-left: 10rpx;
 }
 
-.icon{
-    width: 80rpx;
-    height: 80rpx;
+.title image {
+    width: 50rpx;
+    height: 50rpx;
 }
-.name{
-    font-size: 26rpx;
-    color: #667489;
-    margin-top: 10rpx;
+
+.title input{
+    flex-grow: 1;
+    text-align: start;
+    padding-left: 20rpx;
 }
+
+.title text {
+    align-self: center;
+    margin-right: 20rpx;
+    color: #f00;
+    font-size: 50rpx;
+}
+
+.desc{
+    width: 750rpx;
+    height: 100rpx;
+    flex-flow: row wrap;
+    display: flex;
+    align-items: center;
+    
+    justify-content: space-between;
+
+
+    padding-left: 10rpx;
+}
+.desc_icon{
+     width: 50rpx;
+    height: 50rpx;
+}
+.desc input{
+    flex-grow: 1;
+    text-align: start;
+    padding-left: 20rpx;
+}
+.desc_add_pic {
+    width: 40rpx;
+    height: 40rpx;
+    align-self: center;
+    margin-right: 20rpx;
+}
+.desc_delete_pic{
+    width: 40rpx;
+    height: 40rpx;
+    align-self: center;
+    margin-right: 20rpx;
+}
+
+.pics{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-bottom: 1rpx solid #ddd;
+    background-color: #efefef
+    
+}
+.pics image{
+    width: 210rpx;
+    height: 157.5rpx;
+    margin: 20rpx;
+}
+

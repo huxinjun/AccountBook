@@ -58,6 +58,11 @@ Page({
         this.setData({
             list:this.data.list
         })
+    },
+
+    longtap:function(e){
+        console.log(e)
     }
+
 })
 

@@ -3,5 +3,6 @@
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "小账本本",
     "backgroundColor": "#eeeeee",
-    "backgroundTextStyle": "light"
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false
 }
