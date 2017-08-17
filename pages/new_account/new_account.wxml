@@ -7,10 +7,10 @@
     </view>
 
      <view class="desc">
-        <image class="desc_icon" src="/img/boy.png"></image>
+        <image class="desc_icon" src="/img/desc.png"></image>
         <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class"/>
-        <image class="desc_add_pic" src="/img/boy.png"></image>
-        <image class="desc_delete_pic" src="/img/boy.png"></image>
+        <image class="desc_add_pic" src="/img/camera.png"></image>
+        <image class="desc_delete_pic" src="/img/delete.png"></image>
 
     </view>
 
@@ -26,18 +26,27 @@
 
     </view>
 
-    <!--<view class="date">
-        <image class="date_icon" src="/img/boy.png"></image>
-        <text>日期</text>
-        <text>2017-8-17</text>
-        <text>今天</text>
+    <view class="date">
+        <image class="date_icon" src="/img/date.png"></image>
+        <input type="date" value="2015-09-24"/>
+        <span class="date_today">今天</span>
     </view>
 
     <view class="loc">
-        <image class="loc_icon" src="/img/boy.png"></image>
-        <text>位置</text>
-        <text>不记录位置</text>
-        <image class="loc_get" src="/img/boy.png"></image>
-    </view> -->
+        <image class="loc_icon" src="/img/loc.png"></image>
+        <input type="text" placeholder="位置" placeholder-class="placeholder_class"/>
+        <image class="loc_get" src="/img/get_loc.png"></image>
+    </view>
+
+
+    <view class="members">
+
+        <view class="members_title" hover-class="members_title_hover">
+            <text class="members_title_txt">参与者</text>
+            <text class="members_title_add">+</text>
+
+        </view>
+
+    </view>
 
 </view>

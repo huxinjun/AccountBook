@@ -9,12 +9,14 @@
     justify-content: flex-start;
     font-family: "微软雅黑";
     color: #272636;
-    
 }
-.placeholder_class{
+
+.placeholder_class {
     color: #ccc;
     font-size: 25rpx;
 }
+
+/**标题---------------------------------------------------------------------------*/
 
 .title {
     width: 750rpx;
@@ -22,11 +24,10 @@
     flex-flow: row nowrap;
     display: flex;
     align-items: center;
-    
     justify-content: space-between;
-    border-bottom: 1rpx solid #ddd;
-
-    padding-left: 10rpx;
+    padding-left: 20rpx;
+    border-bottom: 1rpx dashed #ddd;
+    box-sizing: border-box;
 }
 
 .title image {
@@ -34,7 +35,7 @@
     height: 50rpx;
 }
 
-.title input{
+.title input {
     flex-grow: 1;
     text-align: start;
     padding-left: 20rpx;
@@ -42,58 +43,164 @@
 
 .title text {
     align-self: center;
-    margin-right: 20rpx;
     color: #f00;
     font-size: 50rpx;
+    margin-right: 10rpx;
+    
 }
 
-.desc{
+/**备注---------------------------------------------------------------------------*/
+
+.desc {
     width: 750rpx;
     height: 100rpx;
     flex-flow: row wrap;
     display: flex;
     align-items: center;
-    
     justify-content: space-between;
-
-
-    padding-left: 10rpx;
+    padding-left: 20rpx;
+    border-bottom: 1rpx dashed #ddd;
+    box-sizing: border-box;
 }
-.desc_icon{
-     width: 50rpx;
+
+.desc_icon {
+    width: 50rpx;
     height: 50rpx;
+    margin-top: -7rpx;
 }
-.desc input{
+
+.desc input {
     flex-grow: 1;
     text-align: start;
     padding-left: 20rpx;
 }
+
 .desc_add_pic {
-    width: 40rpx;
-    height: 40rpx;
-    align-self: center;
-    margin-right: 20rpx;
-}
-.desc_delete_pic{
-    width: 40rpx;
-    height: 40rpx;
+    width: 45rpx;
+    height: 45rpx;
     align-self: center;
     margin-right: 20rpx;
 }
 
-.pics{
+.desc_delete_pic {
+    width: 40rpx;
+    height: 40rpx;
+    align-self: center;
+    margin-right: 10rpx;
+}
+
+.pics {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
     align-items: flex-start;
     justify-content: flex-start;
-    border-bottom: 1rpx solid #ddd;
-    background-color: #efefef
-    
+    border-bottom: 1rpx dashed #ddd;
+    background-color: #efefef;
 }
-.pics image{
+
+.pics image {
     width: 210rpx;
     height: 157.5rpx;
     margin: 20rpx;
 }
 
+/**日期---------------------------------------------------------------------------*/
+
+.date {
+    width: 750rpx;
+    height: 100rpx;
+    flex-flow: row wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20rpx;
+    border-bottom: 1rpx dashed #ddd;
+    box-sizing: border-box;
+}
+
+.date_icon {
+    width: 50rpx;
+    height: 50rpx;
+    margin-top: -7rpx;
+}
+
+.date input {
+    flex-grow: 1;
+    text-align: start;
+    padding-left: 20rpx;
+}
+
+.date_today {
+    align-self: center;
+    margin-right: 20rpx;
+    font-size: 25rpx;
+    color: white;
+    background-color: #2ba245;
+    border-radius: 5rpx;
+    padding: 5rpx 10rpx;
+}
+
+/**位置---------------------------------------------------------------------------*/
+
+.loc {
+    width: 750rpx;
+    height: 100rpx;
+    flex-flow: row wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20rpx;
+    box-sizing: border-box;
+}
+
+.loc_icon {
+    width: 55rpx;
+    height: 55rpx;
+    margin-top: -7rpx;
+}
+
+.loc input {
+    flex-grow: 1;
+    text-align: start;
+    padding-left: 20rpx;
+}
+
+.loc_get {
+    width: 45rpx;
+    height: 45rpx;
+    align-self: center;
+    margin-right: 20rpx;
+}
+
+/**成员---------------------------------------------------------------------------*/
+.members{
+    width: 750rpx;
+    flex-flow: column wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.members_title{
+    width: 750rpx;
+    height: 50rpx;
+    position: relative;
+    background-color: #2ba245;
+    text-align: center;
+    color: whitesmoke;
+    line-height: 50rpx;
+}
+.members_title_hover{
+    background-color: #2be245;
+}
+.members_title_txt{
+    position: absolute;
+    font-size: 25rpx;
+    margin-left: -35rpx;
+}
+.members_title_add{
+    position: absolute;
+    right: 20rpx;
+}
