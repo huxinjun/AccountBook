@@ -50,10 +50,10 @@
             <view class="memeber" style="{{item.style.member}}">
                 <view class="member_item">
 
-                    <image class="member_icon" src="/img/type/gray_accounts.png"></image>
+                    <image class="member_icon" src="/img/head.jpg" mode="aspectFill"></image>
 
                     <view class="member_content">
-                        <text class="member_name">新军</text>
+                        <text class="member_name">新军{{index}}</text>
 
                         <view class="member_tags">
                             <text class="member_name" bindtap="hideRule" data-index="{{index}}" style="{{item.style.tag0}}">{{item.text.tag0}}</text>

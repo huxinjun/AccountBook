@@ -3,30 +3,30 @@
 var APP = getApp()
 Page({
     data: {
-        containerHeight:0,
+        containerHeight: 0,
 
-        account:{
+        account: {
 
-            name:"火锅",
+            name: "火锅",
 
 
-            members:[
+            members: [
                 {
 
-                    style:{
+                    style: {
                         member: "height:140rpx;",
                         memberRule: "height:0;",
                         memberRuleType: "height:0;",
-                        tag0:"",
-                        tag1:"",
+                        tag0: "",
+                        tag1: "",
                         tag2: ""
                     },
-                    text:{
+                    text: {
                         tag0: "个人账单",
                         tag1: "AA制",
                         tag2: "自费10元"
                     }
-                    
+
                 }
             ]
         },
@@ -39,56 +39,74 @@ Page({
     /**
      * 添加成员
      */
-    addMember:function(){
+    addMember: function () {
         this.data.account.members.unshift({
-            style:{
-                member: "height:0;",
-                memberRule: "height:0;",
+            style: {
+                member: "height:0;opacity:0;",
+                memberRule: "height:0;opacity:0;",
             },
-            text:{
+            text: {
                 tag1: "AA制"
             }
         })
 
         this.setData({
-            account:this.data.account
+            account: this.data.account
         })
-        setTimeout(function(){
+        setTimeout(function () {
+
             this.data.account.members[0].style.member = "height:140rpx;opacity:1;transition:height 0.5s ease;"
             this.setData({
                 scrollToView: "members_title",
                 account: this.data.account
+
             })
-        }.bind(this),50)
-        
-        
-        
+            
+        }.bind(this), 50)
+
+        setTimeout(function () {
+
+            this.data.account.members[0].style.member = "height:140rpx;opacity:1;"
+            this.setData({
+                account: this.data.account
+
+            })
+
+        }.bind(this), 500)
+
+
+
     },
     /**
      * 移除成员
      */
     removeMember: function () {
-        
+
     },
 
     /**
      * 显示特殊规则编辑框
      */
-    showRule:function(e){
+    showRule: function (e) {
         var index = e.target.dataset.index
         var members = this.data.account.members
         members[index].style.member = "height:410rpx;opacity:1;transition:height 0.5s ease;"
         members[index].style.memberRule = "height:270rpx;opacity:1;transition:height 0.5s ease;"
         members[index].style.memberRuleType = "height:60rpx;opacity:1;transition:height 0.5s ease;"
+
         this.setData({
             account: this.data.account
         })
-        
-        setTimeout(function(){
+
+        setTimeout(function () {
+            this.data.account.members[index].style.member = "height:410rpx;opacity:1;"
+            this.data.account.members[index].style.memberRule = "height:270rpx;opacity:1;"
+            this.data.account.members[index].style.memberRuleType = "height:60rpx;opacity:1;"
             this.setData({
-                scrollToView: "members_title"
+                scrollToView: "members_title",
+                account: this.data.account
             })
-        }.bind(this),550)
+        }.bind(this), 500)
     },
     /**
      * 隐藏规则编辑框
@@ -122,12 +140,12 @@ Page({
 
 
 
-    
+
     onLoad: function () {
         this.caclContainerHeight()
     },
 
-    caclContainerHeight:function(){
+    caclContainerHeight: function () {
         var that = this
         wx.getSystemInfo({
             success: function (res) {
@@ -138,7 +156,7 @@ Page({
         })
     },
 
-    longtap:function(e){
+    longtap: function (e) {
         console.log(e)
     },
     radioChange: function (e) {

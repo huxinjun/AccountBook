@@ -298,7 +298,7 @@ function deleteItem(index) {
 
     datas[index].styleBorder = "border:none;"
     var animation = wx.createAnimation({
-        duration: 450,
+        duration: 500,
         timingFunction: 'ease',
     })
 
@@ -306,10 +306,18 @@ function deleteItem(index) {
 
 
     datas[index].deleteAnimData = animation.export()
+ 
 
     this.slidersInfo.page.setData({
         datas: datas
     });
+
+    // setTimeout(function () {
+    //     datas[index].deleteAnimData=null
+    //     this.slidersInfo.page.setData({
+    //         datas: datas
+    //     });
+    // }.bind(this), 550)
     /**
      * 删除数据：有一个bug没法解决，暂时不删除dom中的元素了
      * bug:删除index的数据，更新dom后，界面上该index下一个元素有本次的动画style,导致下一个（即将成为本item）item
@@ -321,15 +329,12 @@ function deleteItem(index) {
 
     //     //移除列表中下标为index的项
     //     datas.splice(index, 1);
-    //     data.datas[index].containerStyle = 'transition:all 0.5s ease !important';
+        
     //     //更新列表的状态
-    //     this.setData({
+    //     this.slidersInfo.page.setData({
     //         datas: datas
     //     });
-
-
-    // }.bind(this), 700)
-
+    // }.bind(this), 800)
 }
 
 
