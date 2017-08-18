@@ -1,4 +1,4 @@
-<view class="container">
+<scroll-view class="container" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;">
     <view class="title">
         <image src="/img/type/gray_accounts.png"></image>
         <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
@@ -14,20 +14,20 @@
     </view>
 
     <view class="pics">
-        <image src="/img/head.jpg" bindlongtap="longtap"></image>
-        <image src="/img/head.jpg"></image>
-        <image src="/img/head.jpg"></image>
-        <image src="/img/head.jpg"></image>
-        <image src="/img/head.jpg"></image>
-        <image src="/img/head.jpg"></image>
-        <image src="/img/head.jpg"></image>
-        <image src="/img/head.jpg"></image>
+        <image src="/img/head.jpg" mode="scaleToFill" bindlongtap="longtap"></image>
+        <image src="/img/head.jpg" mode="aspectFit"></image>
+        <image src="/img/head.jpg" mode="aspectFill"></image>
+        <image src="/img/head.jpg" mode="widthFix"></image>
+        <image src="/img/head.jpg" mode="top"></image>
+        <image src="/img/head.jpg" mode="bottom"></image>
+        <image src="/img/head.jpg" mode="center"></image>
+        <image src="/img/head.jpg" mode="left"></image>
 
     </view>
 
     <view class="date">
         <image class="date_icon" src="/img/date.png"></image>
-        <input type="date" value="2015-09-24" />
+        <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">2017-8-18</picker>
         <span class="date_today">今天</span>
     </view>
 
@@ -40,25 +40,42 @@
 
     <view class="members">
 
-        <view class="members_title" hover-class="members_title_hover">
+        <view class="members_title" hover-class="members_title_hover" bindtap="addMember" id="members_title">
             <text class="members_title_txt">参与者</text>
             <text class="members_title_add">+</text>
 
         </view>
 
-        <view wx:for="{{account.members}}">
-            <view class="member">
-            
-                <image class="member_icon" src="/img/type/gray_accounts.png"></image>
+        <view wx:for="{{account.members}}" wx:key="{{index}}">
+            <view class="memeber" style="{{item.memberStyle}}">
+                <view class="member_item" style="{{item.memberItemStyle}}">
 
-                <view class="member_content">
-                    <text class="member_name">新军</text>
+                    <image class="member_icon" src="/img/type/gray_accounts.png"></image>
 
-                    <view class="member_tags">
-                        <text class="member_name">AA制</text>
-                        <text class="member_name">自费10元</text>
+                    <view class="member_content">
+                        <text class="member_name">新军</text>
+
+                        <view class="member_tags">
+                            <text class="member_name" bindtap="hideRule" data-index="{{index}}">个人账单</text>
+                            <text class="member_name" bindtap="showRule" data-index="{{index}}">AA制</text>
+                            <text class="member_name" bindtap="hideRuleTypeRadio" data-index="{{index}}">自费10元</text>
+                        </view>
+
                     </view>
-                    
+
+
+
+                </view>
+
+                <view class="member_rule" style="{{item.memberRuleStyle}}">
+
+                    <radio-group bindchange="radioChange" style="{{item.memberRuleTypeStyle}}">
+                        <label class="member_rule_label" wx:for="{{items}}" wx:key="{{index}}">
+                                <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+                         </label>
+                    </radio-group>
+                    <input type="text" placeholder="请输入数值" placeholder-class="placeholder_class" />
+                    <button>保存</button>
                 </view>
 
             </view>
@@ -68,4 +85,4 @@
 
     </view>
 
-</view>
+</scroll-view> 

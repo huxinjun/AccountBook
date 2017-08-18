@@ -1,7 +1,6 @@
 /**index.wxss**/
 
 .container {
-    height: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -125,7 +124,7 @@
     margin-top: -7rpx;
 }
 
-.date input {
+.date picker {
     flex-grow: 1;
     text-align: start;
     padding-left: 20rpx;
@@ -187,7 +186,7 @@
     width: 750rpx;
     height: 50rpx;
     position: relative;
-    background-color: #2ba245;
+    background-color: #2bc345;
     text-align: center;
     color: whitesmoke;
     line-height: 50rpx;
@@ -207,16 +206,29 @@
 
 
 /**成员条目*/
-.member{
+.memeber{
     width: 750rpx;
     background-color: chartreuse;
-    padding-left: 20rpx;
-    border-bottom: 1rpx dashed #000;
-    box-sizing: border-box;
     display: flex;
+    flex-flow: column nowrap;
+
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+    border-bottom: 1rpx solid #000;
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+}
+/**成员主内容*/
+.member_item{
+    
+    display: flex;
+    flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
 }
+
 .member_icon{
     width: 100rpx;
     height: 100rpx;
@@ -246,7 +258,41 @@
     margin-right: 20rpx;
     font-size: 28rpx;
     border: 1px solid #000;
-    border-radius: 10rpx;
+    border-radius: 20rpx;
+    padding-left: 10rpx;
+    padding-right: 10rpx;
+}
+
+
+
+/**成员规则编辑框*/
+.member_rule{
+    width: 100%;
+    overflow: hidden;
+    background-color: rebeccapurple;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+}
+.member_rule radio-group{
+    height: 60rpx;
+    display: block;
+    overflow: hidden;
+}
+.member_rule_label{
+    margin-right: 50rpx;
+}
+.member_rule input{
+    display: block;
+    margin-bottom: 20rpx;
+    margin-top: 20rpx;
+    border-bottom: 1rpx dashed #000
+}
+.member_rule button{
+    width: 100%;
+    margin-top: 20rpx;
+    margin-bottom: 20rpx;
 }
 
 
