@@ -47,8 +47,8 @@
         </view>
 
         <view wx:for="{{account.members}}" wx:key="{{index}}">
-            <view class="memeber" style="{{item.memberStyle}}">
-                <view class="member_item" style="{{item.memberItemStyle}}">
+            <view class="memeber" style="{{item.style.member}}">
+                <view class="member_item">
 
                     <image class="member_icon" src="/img/type/gray_accounts.png"></image>
 
@@ -56,9 +56,9 @@
                         <text class="member_name">新军</text>
 
                         <view class="member_tags">
-                            <text class="member_name" bindtap="hideRule" data-index="{{index}}">个人账单</text>
-                            <text class="member_name" bindtap="showRule" data-index="{{index}}">AA制</text>
-                            <text class="member_name" bindtap="hideRuleTypeRadio" data-index="{{index}}">自费10元</text>
+                            <text class="member_name" bindtap="hideRule" data-index="{{index}}" style="{{item.style.tag0}}">{{item.text.tag0}}</text>
+                            <text class="member_name" bindtap="showRule" data-index="{{index}}" style="{{item.style.tag1}}">{{item.text.tag1}}</text>
+                            <text class="member_name" bindtap="hideRuleTypeRadio" data-index="{{index}}" style="{{item.style.tag2}}">{{item.text.tag2}}</text>
                         </view>
 
                     </view>
@@ -67,9 +67,9 @@
 
                 </view>
 
-                <view class="member_rule" style="{{item.memberRuleStyle}}">
+                <view class="member_rule" style="{{item.style.memberRule}}">
 
-                    <radio-group bindchange="radioChange" style="{{item.memberRuleTypeStyle}}">
+                    <radio-group bindchange="radioChange" style="{{item.style.memberRuleType}}">
                         <label class="member_rule_label" wx:for="{{items}}" wx:key="{{index}}">
                                 <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
                          </label>

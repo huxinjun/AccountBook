@@ -208,13 +208,12 @@
 /**成员条目*/
 .memeber{
     width: 750rpx;
-    background-color: chartreuse;
     display: flex;
     flex-flow: column nowrap;
 
     padding-left: 20rpx;
     padding-right: 20rpx;
-    border-bottom: 1rpx solid #000;
+    border-bottom: 1rpx solid #999;
     box-sizing: border-box;
 
     overflow: hidden;
@@ -269,7 +268,6 @@
 .member_rule{
     width: 100%;
     overflow: hidden;
-    background-color: rebeccapurple;
 
     display: flex;
     flex-flow: column nowrap;

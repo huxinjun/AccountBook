@@ -12,9 +12,21 @@ Page({
 
             members:[
                 {
-                    memberStyle: "height:140rpx;",
-                    memberRuleStyle:"height:0;",
-                    memberRuleTypeStyle : "height:60rpx;",
+
+                    style:{
+                        member: "height:140rpx;",
+                        memberRule: "height:0;",
+                        memberRuleType: "height:0;",
+                        tag0:"",
+                        tag1:"",
+                        tag2: ""
+                    },
+                    text:{
+                        tag0: "个人账单",
+                        tag1: "AA制",
+                        tag2: "自费10元"
+                    }
+                    
                 }
             ]
         },
@@ -29,17 +41,26 @@ Page({
      */
     addMember:function(){
         this.data.account.members.unshift({
-            memberStyle: "height:0;opacity:0;",
-            memberRuleStyle: "height:0;opacity:0;"
+            style:{
+                member: "height:0;",
+                memberRule: "height:0;",
+            },
+            text:{
+                tag1: "AA制"
+            }
         })
+
         this.setData({
             account:this.data.account
         })
-        this.data.account.members[0].memberStyle = "height:140rpx;opacity:1;transition:height 0.5s ease;"
-        this.setData({
-            scrollToView:"members_title",
-            account: this.data.account
-        })
+        setTimeout(function(){
+            this.data.account.members[0].style.member = "height:140rpx;opacity:1;transition:height 0.5s ease;"
+            this.setData({
+                scrollToView: "members_title",
+                account: this.data.account
+            })
+        }.bind(this),50)
+        
         
         
     },
@@ -55,9 +76,10 @@ Page({
      */
     showRule:function(e){
         var index = e.target.dataset.index
-        this.data.account.members[0].memberStyle = "height:410rpx;opacity:1;transition:height 0.5s ease;"
-        this.data.account.members[0].memberRuleStyle = "height:270rpx;opacity:1;transition:height 0.5s ease;"
-        this.data.account.members[0].memberRuleTypeStyle = "height:60rpx;opacity:1;transition:height 0.5s ease;"
+        var members = this.data.account.members
+        members[index].style.member = "height:410rpx;opacity:1;transition:height 0.5s ease;"
+        members[index].style.memberRule = "height:270rpx;opacity:1;transition:height 0.5s ease;"
+        members[index].style.memberRuleType = "height:60rpx;opacity:1;transition:height 0.5s ease;"
         this.setData({
             account: this.data.account
         })
@@ -72,9 +94,10 @@ Page({
      * 隐藏规则编辑框
      */
     hideRule: function (e) {
-
-        this.data.account.members[0].memberStyle = "height:140rpx;opacity:1;transition:height 0.5s ease;"
-        this.data.account.members[0].memberRuleStyle = "height:0;opacity:1;transition:height 0.5s ease;"
+        var index = e.target.dataset.index
+        var members = this.data.account.members
+        members[index].style.member = "height:140rpx;opacity:1;transition:height 0.5s ease;"
+        members[index].style.memberRule = "height:0;opacity:1;transition:height 0.5s ease;"
         this.setData({
             account: this.data.account
         })
@@ -83,9 +106,11 @@ Page({
      * 转换为自费编辑框
      */
     hideRuleTypeRadio: function (e) {
-        this.data.account.members[0].memberStyle = "height:350rpx;opacity:1;transition:height 0.5s ease;"
-        this.data.account.members[0].memberRuleStyle = "height:210rpx;opacity:1;transition:height 0.5s ease;"
-        this.data.account.members[0].memberRuleTypeStyle = "height:0;opacity:1;transition:height 0.5s ease;"
+        var index = e.target.dataset.index
+        var members = this.data.account.members
+        members[index].style.member = "height:350rpx;opacity:1;transition:height 0.5s ease;"
+        members[index].style.memberRule = "height:210rpx;opacity:1;transition:height 0.5s ease;"
+        members[index].style.memberRuleType = "height:0;opacity:1;transition:height 0.5s ease;"
         this.setData({
             account: this.data.account
         })
