@@ -84,7 +84,7 @@ function setLayer(item, layerIndex) {
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
-    
+
 
     item.sliderStyle = p1 + p2 + p3 + p4 + p5
 
@@ -306,7 +306,7 @@ function deleteItem(index) {
 
 
     datas[index].deleteAnimData = animation.export()
- 
+
 
     this.slidersInfo.page.setData({
         datas: datas
@@ -329,12 +329,49 @@ function deleteItem(index) {
 
     //     //移除列表中下标为index的项
     //     datas.splice(index, 1);
-        
+
     //     //更新列表的状态
     //     this.slidersInfo.page.setData({
     //         datas: datas
     //     });
     // }.bind(this), 800)
+}
+
+/**
+ * 点击删除按钮事件:transition动画
+ */
+function deleteItem2(index) {
+    var datas = this.slidersInfo.page.data.datas;
+
+    //先是透明度动画
+    datas[index].styleBorder = "border:none;"
+    datas[index].deleteTrans = "alpha:1;transition:all 0.2s ease;"
+
+    this.slidersInfo.page.setData({
+        datas: datas
+    });
+    //继续进行高度动画
+    setTimeout(function () {
+        datas[index].deleteTrans = "height:0;transition:all 0.3s ease;"
+        this.slidersInfo.page.setData({
+            datas: datas
+        });
+        //最后删除元素
+        setTimeout(function () {
+            console.log("setTimeout删除：" + index)
+            console.log(this)
+
+            //移除列表中下标为index的项
+            datas.remove(index, 1);
+
+            //更新列表的状态
+            this.slidersInfo.page.setData({
+                datas: datas
+            });
+        }.bind(this), 300)
+
+    }.bind(this), 200)
+
 }
 
 
@@ -372,6 +409,7 @@ module.exports = {
     cancel: cancel,
     angle: angle,
     deleteItem: deleteItem,
+    deleteItem2: deleteItem2,
 
     setLayer: setLayer,
     getSliderWidthByIndex: getSliderWidthByIndex,

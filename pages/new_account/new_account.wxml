@@ -47,7 +47,7 @@
         </view>
 
         <view wx:for="{{account.members}}" wx:key="{{index}}">
-            <view class="memeber" style="{{item.style.member}}">
+            <view class="memeber" style="{{item.style.member}}{{item.style.memberTrans}}">
                 <view class="member_item">
 
                     <image class="member_icon" src="/img/head.jpg" mode="aspectFill"></image>
@@ -67,9 +67,9 @@
 
                 </view>
 
-                <view class="member_rule" style="{{item.style.memberRule}}">
+                <view class="member_rule" style="{{item.style.memberRule}}{{item.style.memberRuleTrans}}">
 
-                    <radio-group bindchange="radioChange" style="{{item.style.memberRuleType}}">
+                    <radio-group bindchange="radioChange" style="{{item.style.memberRuleType}}{{item.style.memberRuleTypeTrans}}">
                         <label class="member_rule_label" wx:for="{{items}}" wx:key="{{index}}">
                                 <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
                          </label>

@@ -4,7 +4,7 @@
     <view wx:for="{{datas}}" wx:key="{{index}}">
         <!-- {{index}}: {{item.value}} -->
 
-        <scroll-view class="listitem" scroll-x bindscroll='innerScroll' animation="{{item.deleteAnimData}}">
+        <scroll-view class="listitem" scroll-x bindscroll='innerScroll' animation="{{item.deleteAnimData}}" style="{{item.deleteTrans}}">
 
             <view class="item" style="{{item.styleWidth}}{{item.styleLeft}}{{item.styleBorder}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
                 <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
