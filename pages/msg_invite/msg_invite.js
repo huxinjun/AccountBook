@@ -47,7 +47,7 @@ Page({
                             item.status = 12
                             item.statusStr = "已拒绝"
                         }else{
-                            slider.deleteItem2(index)
+                            slider.deleteItem(index)
                             return
                         }
                         slider.close(index)

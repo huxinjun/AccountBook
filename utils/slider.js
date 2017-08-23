@@ -290,69 +290,24 @@ function cancel(e) {
 }
 
 
-/**
- * 点击删除按钮事件
- */
-function deleteItem(index) {
-    var datas = this.slidersInfo.page.data.datas;
 
-    datas[index].styleBorder = "border:none;"
-    var animation = wx.createAnimation({
-        duration: 500,
-        timingFunction: 'ease',
-    })
-
-    animation.opacity(0).step().height(0).step()
-
-
-    datas[index].deleteAnimData = animation.export()
-
-
-    this.slidersInfo.page.setData({
-        datas: datas
-    });
-
-    // setTimeout(function () {
-    //     datas[index].deleteAnimData=null
-    //     this.slidersInfo.page.setData({
-    //         datas: datas
-    //     });
-    // }.bind(this), 550)
-    /**
-     * 删除数据：有一个bug没法解决，暂时不删除dom中的元素了
-     * bug:删除index的数据，更新dom后，界面上该index下一个元素有本次的动画style,导致下一个（即将成为本item）item
-     * 的opacity和height都是0,看不见了
-     */
-    // setTimeout(function () {
-    //     console.log("setTimeout删除："+index)
-    //     console.log(this)
-
-    //     //移除列表中下标为index的项
-    //     datas.splice(index, 1);
-
-    //     //更新列表的状态
-    //     this.slidersInfo.page.setData({
-    //         datas: datas
-    //     });
-    // }.bind(this), 800)
-}
 
 /**
  * 点击删除按钮事件:transition动画
  */
-function deleteItem2(index) {
+function deleteItem(index) {
     var datas = this.slidersInfo.page.data.datas;
 
     //先是透明度动画
     datas[index].styleBorder = "border:none;"
-    datas[index].deleteTrans = "alpha:1;transition:all 0.2s ease;"
+    datas[index].deleteTrans = "opacity:0;transition:opacity 0.2s ease;"
 
     this.slidersInfo.page.setData({
         datas: datas
     });
     //继续进行高度动画
     setTimeout(function () {
-        datas[index].deleteTrans = "height:0;transition:all 0.3s ease;"
+        datas[index].deleteTrans = "opacity:0;height:0;transition:height 0.3s ease;"
         this.slidersInfo.page.setData({
             datas: datas
         });
@@ -360,10 +315,16 @@ function deleteItem2(index) {
         setTimeout(function () {
             console.log("setTimeout删除：" + index)
             console.log(this)
+            datas[index].deleteTrans = "display:none;"
+            this.slidersInfo.page.setData({
+                datas: datas
+            });
 
             //移除列表中下标为index的项
             datas.remove(index, 1);
-
+            datas.forEach(function(v,i){
+                v.styleLeft="0"
+            })
             //更新列表的状态
             this.slidersInfo.page.setData({
                 datas: datas
@@ -409,7 +370,6 @@ module.exports = {
     cancel: cancel,
     angle: angle,
     deleteItem: deleteItem,
-    deleteItem2: deleteItem2,
 
     setLayer: setLayer,
     getSliderWidthByIndex: getSliderWidthByIndex,

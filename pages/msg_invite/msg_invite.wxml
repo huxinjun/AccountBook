@@ -4,7 +4,7 @@
     <view wx:for="{{datas}}" wx:key="{{index}}">
         <!-- {{index}}: {{item.value}} -->
 
-        <scroll-view class="listitem" scroll-x bindscroll='innerScroll' animation="{{item.deleteAnimData}}" style="{{item.deleteTrans}}">
+        <scroll-view class="listitem" scroll-x bindscroll='innerScroll' style="{{item.deleteTrans}}">
 
             <view class="item" style="{{item.styleWidth}}{{item.styleLeft}}{{item.styleBorder}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
                 <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
@@ -23,12 +23,6 @@
             </view>
 
 
-            <!-- <view class="slider" style="">
-
-                <view class="accept" bindtap="acceptInvite" data-index="{{index}}">接受</view>
-                <view class="refuse" bindtap="refuseInvite" data-index="{{index}}">拒绝</view>
-
-            </view> -->
 
             <view style="{{item.sliderStyle}}">
 
