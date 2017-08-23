@@ -45,7 +45,8 @@ function getSliderWidthByIndex(layerIndex) {
  * index:item索引
  */
 function getLayerIndexByIndex(index) {
-    return this.slidersInfo.page.data.datas[index].layerIndex
+    var item=this.slidersInfo.page.getSliderData(index)
+    return item.value.layerIndex
 }
 
 /**
@@ -70,7 +71,11 @@ function hasSlider(layerIndex) {
  * layerIndex：layer索引
  */
 function setLayer(item, layerIndex) {
-    item.layerIndex = layerIndex
+    if(item.value==undefined)
+        item.value={}
+    if (item.style == undefined)
+        item.style = {}
+    item.value.layerIndex = layerIndex
     //配置可拖动视图
     if (!this.hasSlider(layerIndex)) {
         //没有配置任何状态层，不需要拉开
@@ -86,7 +91,7 @@ function setLayer(item, layerIndex) {
     var p5 = "text-align:center;"
 
 
-    item.sliderStyle = p1 + p2 + p3 + p4 + p5
+    item.style.sliderStyle = p1 + p2 + p3 + p4 + p5
 
 
     var that = this
@@ -117,8 +122,8 @@ function setLayer(item, layerIndex) {
             var tapName = "layerTap_" + outterIndex + "_" + innerIndex
             var styleValue = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10
 
-            item[styleName] = styleValue
-            item[tapName] = innerValue.onClick
+            item.style[styleName] = styleValue
+            item.style[tapName] = innerValue.onClick
         })
     })
 
@@ -132,6 +137,8 @@ function setLayer(item, layerIndex) {
  */
 function start(e) {
     var index = e.target.dataset.index
+    var item = this.slidersInfo.page.getSliderData(index)
+
     if (!this.hasSlider(this.getLayerIndexByIndex(index)))
         return
     this.closeAll()
@@ -141,7 +148,8 @@ function start(e) {
     this.eventEnd = false;
     this.startX = e.touches[0].pageX;
     this.startY = e.touches[0].pageY;
-    this.startLeft = this.slidersInfo.page.data.datas[index].left;
+
+    this.startLeft = item.value.left;
     // console.log(startLeft)
 
 
@@ -152,6 +160,7 @@ function start(e) {
  */
 function move(e, checkAngle) {
     var index = e.target.dataset.index
+    var item = this.slidersInfo.page.getSliderData(index)
 
     if (!this.hasSlider(this.getLayerIndexByIndex(index)))
         return
@@ -185,11 +194,11 @@ function move(e, checkAngle) {
 
 
     //已经抽出,还往左滑,忽略后面的事件
-    if (this.slidersInfo.page.data.datas[index].left <= -250 && deltaX < 0)
+    if (item.value.left <= -250 && deltaX < 0)
         return
 
     //已经合上,还往右滑,忽略后面的事件
-    if (this.slidersInfo.page.data.datas[index].left >= 0 && deltaX > 0)
+    if (item.value.left >= 0 && deltaX > 0)
         return
 
 
@@ -200,11 +209,9 @@ function move(e, checkAngle) {
     moveX = moveX < -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) ? -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) : moveX
     moveX = moveX > 0 ? 0 : moveX
 
-    this.slidersInfo.page.data.datas[index].left = moveX
-    this.slidersInfo.page.data.datas[index].styleLeft = 'left:' + this.slidersInfo.page.data.datas[index].left + 'rpx';
-    this.slidersInfo.page.setData({
-        datas: this.slidersInfo.page.data.datas
-    })
+    item.value.left = moveX
+    item.style.styleLeft = 'left:' + item.value.left + 'rpx';
+    this.slidersInfo.page.refreshSliderData()
 
 
 
@@ -216,15 +223,16 @@ function move(e, checkAngle) {
  */
 function end(e) {
     var index = e.target.dataset.index
+    var item = this.slidersInfo.page.getSliderData(index)
 
     if (!this.hasSlider(this.getLayerIndexByIndex(index)))
         return
 
     this.eventEnd = true
 
-    var isOpen = this.slidersInfo.page.data.datas[index].left < -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) / 3 ? true : false;
+    var isOpen = item.value.left < -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) / 3 ? true : false;
 
-    console.log(this.slidersInfo.page.data.datas[index].left)
+    console.log(item.value.left)
 
     if (isOpen)
         this.open(index)
@@ -237,36 +245,37 @@ function end(e) {
  */
 function closeAll() {
     // console.log('closeAll')
+    var datas = this.slidersInfo.page.getSliderData()
     var that = this
-    this.slidersInfo.page.data.datas.forEach(function (v, i) {
-        that.slidersInfo.page.data.datas[i].left = 0
-        that.slidersInfo.page.data.datas[i].styleLeft = 'left:0;transition:all 0.2s ease ';
+    datas.forEach(function (v, i) {
+        // that.slidersInfo.page.data.datas[i].left = 0
+        // that.slidersInfo.page.data.datas[i].styleLeft = 'left:0;transition:all 0.2s ease ';
+        v.value.left = 0
+        v.style.styleLeft = 'left:0;transition:all 0.2s ease ';
     })
 
-    this.slidersInfo.page.setData({
-        datas: this.slidersInfo.page.data.datas
-    })
+    this.slidersInfo.page.refreshSliderData()
 }
 
 /**
  * 关闭某个索引的抽屉
  */
 function close(index) {
-    this.slidersInfo.page.data.datas[index].left = 0
-    this.slidersInfo.page.data.datas[index].styleLeft = 'left:0rpx;transition: left 0.2s ease ';
-    this.slidersInfo.page.setData({
-        datas: this.slidersInfo.page.data.datas
-    })
+    var item = this.slidersInfo.page.getSliderData(index)
+
+    item.value.left = 0
+    item.style.styleLeft = 'left:0rpx;transition: left 0.2s ease ';
+    this.slidersInfo.page.refreshSliderData()
 }
 /**
  * 关闭某个索引的抽屉
  */
 function open(index) {
-    this.slidersInfo.page.data.datas[index].left = -this.getSliderWidthByIndex
-    this.slidersInfo.page.data.datas[index].styleLeft = 'left:' + -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) + 'rpx;transition: left 0.2s ease ';
-    this.slidersInfo.page.setData({
-        datas: this.slidersInfo.page.data.datas
-    })
+    var item = this.slidersInfo.page.getSliderData(index)
+
+    item.value.left = -this.getSliderWidthByIndex
+    item.style.styleLeft = 'left:' + -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) + 'rpx;transition: left 0.2s ease ';
+    this.slidersInfo.page.refreshSliderData()
 }
 
 /**
@@ -296,39 +305,36 @@ function cancel(e) {
  * 点击删除按钮事件:transition动画
  */
 function deleteItem(index) {
-    var datas = this.slidersInfo.page.data.datas;
+    var item = this.slidersInfo.page.getSliderData(index)
 
     //先是透明度动画
-    datas[index].styleBorder = "border:none;"
-    datas[index].deleteTrans = "opacity:0;transition:opacity 0.2s ease;"
+    item.style.styleBorder = "border:none;"
+    item.style.deleteTrans = "opacity:0;transition:opacity 0.2s ease;"
 
-    this.slidersInfo.page.setData({
-        datas: datas
-    });
+    this.slidersInfo.page.refreshSliderData()
     //继续进行高度动画
     setTimeout(function () {
-        datas[index].deleteTrans = "opacity:0;height:0;transition:height 0.3s ease;"
-        this.slidersInfo.page.setData({
-            datas: datas
-        });
+        item = this.slidersInfo.page.getSliderData(index)
+        item.style.deleteTrans = "opacity:0;height:0;transition:height 0.3s ease;"
+        this.slidersInfo.page.refreshSliderData()
+
         //最后删除元素
         setTimeout(function () {
             console.log("setTimeout删除：" + index)
             console.log(this)
-            datas[index].deleteTrans = "display:none;"
-            this.slidersInfo.page.setData({
-                datas: datas
-            });
+            item = this.slidersInfo.page.getSliderData(index)
+            item.style.deleteTrans = "display:none;opacity:0;height:0;"
+            this.slidersInfo.page.refreshSliderData()
 
+            var datas = this.slidersInfo.page.getSliderData()
             //移除列表中下标为index的项
             datas.remove(index, 1);
-            datas.forEach(function(v,i){
-                v.styleLeft="0"
+            datas.forEach(function (v, i) {
+                v.value.left = 0
+                v.style.styleLeft = ""
             })
             //更新列表的状态
-            this.slidersInfo.page.setData({
-                datas: datas
-            });
+            this.slidersInfo.page.refreshSliderData()
         }.bind(this), 300)
 
     }.bind(this), 200)

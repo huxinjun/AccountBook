@@ -6,8 +6,19 @@ Page({
     data: {
         containerHeight: 0,
 
-        datas: null
+        datas:null
 
+    },
+
+    getSliderData:function(index){
+        if(index==undefined)
+            return this.data.datas
+        return this.data.datas[index]
+    },
+    refreshSliderData: function () {
+        this.setData({
+            datas:this.data.datas
+        })
     },
 
 
@@ -139,6 +150,7 @@ Page({
                 }
             ]
         }
+
         slider = require('../../utils/slider.js').init(slidersInfo)
         this.initData()
     },

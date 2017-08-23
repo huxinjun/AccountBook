@@ -47,8 +47,8 @@
         </view>
 
         <view wx:for="{{account.members}}" wx:key="{{index}}">
-            <view class="memeber" style="{{item.style.member}}{{item.style.memberTrans}}">
-                <view class="member_item">
+            <scroll-view class="memeber" scroll-x style="{{item.style.member}}{{item.style.memberTrans}}{{item.deleteTrans}}">
+                <view class="member_item" style="{{item.style.styleWidth}}{{item.style.styleLeft}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
 
                     <image class="member_icon" src="/img/head.jpg" mode="aspectFill"></image>
 
@@ -78,11 +78,15 @@
                     <button>保存</button>
                 </view>
 
-            </view>
+                <view style="{{item.sliderStyle}}">
+                    <view style="{{item.layerStyle_0_0}}" bindtap="{{item.layerTap_0_0}}" data-index="{{index}}">按钮1</view>
+                    <view style="{{item.layerStyle_0_1}}" bindtap="{{item.layerTap_0_1}}" data-index="{{index}}">按钮2</view>
+                    <view style="{{item.layerStyle_1_0}}" bindtap="{{item.layerTap_1_0}}" data-index="{{index}}">按钮3</view>
+                </view>
+
+            </scroll-view>
+
 
         </view>
-
-
     </view>
-
-</scroll-view> 
+</scroll-view>
