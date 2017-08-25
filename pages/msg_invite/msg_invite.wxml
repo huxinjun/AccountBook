@@ -26,9 +26,9 @@
 
             <view style="{{item.style.sliderStyle}}">
 
-                <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.style.layerTap_0_0}}" data-index="{{index}}">接受</view>
-                <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.style.layerTap_0_1}}" data-index="{{index}}">拒绝</view>
-                <view style="{{item.style.layerStyle_1_0}}" bindtap="{{item.style.layerTap_1_0}}" data-index="{{index}}">删除</view>
+                <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
+                <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
+                <view style="{{item.style.layerStyle_1_0}}" bindtap="{{item.value.layerTap_1_0}}" data-index="{{index}}">{{item.value.layerText_1_0}}</view>
             </view>
         </scroll-view>
     </view>

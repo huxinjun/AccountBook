@@ -31,12 +31,23 @@ App({
             this.onSizeChanged(this.length)
         }
         Array.prototype.remove = function (i) {
-            this.splice(i,1)
+            this.splice(i, 1)
             this.onSizeChanged(this.length)
         }
+        //重写属性
+        Array.prototype.overide = function (arr) {
+
+            this.forEach(function(oldObj,i){
+                var newObj=arr[i]
+                for (var attr in newObj) {
+                    oldObj[attr] = newObj[attr];
+                }
+            })
+        }
+
     },
 
-    
+
 
 
 
@@ -53,7 +64,7 @@ App({
                 success: function (res) {
                     that.globalData.userInfo = res.userInfo
                     typeof cb == "function" && cb(that.globalData.userInfo)
-                    if (wx.getStorageSync('token') !='') {
+                    if (wx.getStorageSync('token') != '') {
                         console.log('使用本地token')
                         return
                     }
@@ -64,9 +75,9 @@ App({
         }
     },
 
-    login: function (success){
-        
-        
+    login: function (success) {
+
+
 
         var that = this
         wx.login({
@@ -82,10 +93,10 @@ App({
     loginInMyServer: function (code, success) {
         console.log('loginInMyServer')
         wx.showLoading({
-          title: '正在登陆中请稍后...',
+            title: '正在登陆中请稍后...',
         })
         this.ajax({
-            url: this.globalData.BaseUrl +'/login/fromWX',
+            url: this.globalData.BaseUrl + '/login/fromWX',
             data: {
                 code: code
             },
@@ -97,15 +108,15 @@ App({
                     //完善个人信息
                     this.setUserInfo();
                     wx.showLoading({
-                      title: '正在完善用户信息请稍后...',
+                        title: '正在完善用户信息请稍后...',
                     })
                     return
                 }
                 this.onLoginSuccess(success);
             },
-            
-            
-        },this)
+
+
+        }, this)
     },
 
     //第一次在我的服务器上登录,需要完善用户信息
@@ -113,7 +124,7 @@ App({
         console.log('uploadUserInfo')
         this.ajax({
 
-            url: this.globalData.BaseUrl+'/user/updateInfo',
+            url: this.globalData.BaseUrl + '/user/updateInfo',
             data: {
                 token: wx.getStorageSync("token"),
                 info: this.globalData.userInfo
@@ -122,13 +133,13 @@ App({
                 console.log(res.data)
                 this.onLoginSuccess();
             }
-        },this)
+        }, this)
     },
 
     /**
      * 更换设备导致token失效时需要重新登录
      */
-    reLogin: function (success){
+    reLogin: function (success) {
         wx.removeStorageSync("token");
         this.login(success);
     },
@@ -136,15 +147,15 @@ App({
     /**
      * 登录成功回调
      */
-    onLoginSuccess: function (success){
+    onLoginSuccess: function (success) {
         wx.hideLoading()
         wx.showToast({
             title: '登陆成功!',
             icon: 'loading',
             duration: 2000
         })
-        
-        if(success!=undefined)
+
+        if (success != undefined)
             success.success.call(success.context);
     },
 
@@ -153,19 +164,19 @@ App({
 
 
 
-    
 
 
 
-//*************************************************************************************************************/
+
+    //*************************************************************************************************************/
 
     /**
      * 1.为了在请求回调实例中更方便的使用外层的数据
      * 2.请求集中打印log
      * 代理wx.request方法
      */
-    ajax: function (obj,context) {
-        var that=this
+    ajax: function (obj, context) {
+        var that = this
         wx.showNavigationBarLoading()
         wx.request({
             url: obj.url,
@@ -184,7 +195,7 @@ App({
                 console.log("");
                 console.log("");
                 console.log("");
-                if (res.data.status == that.globalData.resultcode.INVALID_TOKEN){
+                if (res.data.status == that.globalData.resultcode.INVALID_TOKEN) {
                     that.reLogin({
                         context: this,
                         success: function () {
@@ -212,11 +223,11 @@ App({
                     obj.fail.call(context, res);
 
                 wx.showToast({
-                title: '网络错误',
-                icon: 'loading',
-                duration: 1000
-            })
-                
+                    title: '网络错误',
+                    icon: 'loading',
+                    duration: 1000
+                })
+
             },
             complete: function (res) {
                 wx.hideNavigationBarLoading()

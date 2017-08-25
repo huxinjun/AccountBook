@@ -26,7 +26,13 @@ Page({
     //点击删除按钮事件
     _delete: function (e) {
         console.log("delete")
-        this.option(e, "delete")
+        var index = e.target.dataset.index
+        slider.updateLayer(index,[
+            {
+                text:"成功!!!"
+            }
+        ])
+        // this.option(e, "delete")
     },
 
     acceptInvite: function (e) {
@@ -112,7 +118,7 @@ Page({
                     name: "状态一",
                     buttons: [
                         {
-                            text: "接受",
+                            text: "接受1",
                             color: "white",
                             colorBg: "#2ba245",
                             colorShadow: "black",
@@ -121,7 +127,7 @@ Page({
                             borderTop: "10rpx solid white",
                         },
                         {
-                            text: "拒绝",
+                            text: "拒绝2",
                             color: "white",
                             colorBg: "#cdcdcd",
                             colorShadow: "black",
@@ -135,7 +141,7 @@ Page({
                     name: "状态二",
                     buttons: [
                         {
-                            text: "删除",
+                            text: "删除3",
                             color: "white",
                             colorBg:"#f00",
                             colorShadow:"black",
@@ -165,20 +171,20 @@ Page({
 
             success: function (res) {
                 if (res.data.status == APP.globalData.resultcode.SUCCESS) {
-
+                    this.data.datas = res.data.datas
                     res.data.datas.forEach(function (v, i) {
                         switch (v.status) {
                             case 0:
                             case 1:
-                                slider.setLayer(v,0)
+                                slider.setLayer(i,0)
                                 break;
                             case 11:
                                 v.statusStr = "已接受"
-                                slider.setLayer(v,1)
+                                slider.setLayer(i,1)
                                 break;
                             case 12:
                                 v.statusStr = "已拒绝"
-                                slider.setLayer(v,1)
+                                slider.setLayer(i,1)
                                 break;
                         }
 

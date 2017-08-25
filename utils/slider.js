@@ -30,61 +30,77 @@ function init(slidersInfo) {
  * 获取当前抽屉内容宽度
  * index:item索引
  */
-function getSliderWidthByIndex(layerIndex) {
-
-    if (!this.hasSlider(layerIndex))
+function getSliderWidthByIndex(index) {
+    var item = this.slidersInfo.page.getSliderData(index)
+    if (!this.hasSlider(index))
         return 0
     var width = 0;
-    this.slidersInfo.layers[layerIndex].buttons.forEach(function (v, i) {
+    item.value.layerInfo.buttons.forEach(function (v, i) {
         width += v.width
     })
     return width;
-}
-/**
- * 获取数组数据中配置的layer索引
- * index:item索引
- */
-function getLayerIndexByIndex(index) {
-    var item=this.slidersInfo.page.getSliderData(index)
-    return item.value.layerIndex
 }
 
 /**
  * 检查配置的信息是否能拉开
  * index:item索引
  */
-function hasSlider(layerIndex) {
-
-    if (this.slidersInfo.layers == undefined ||
-        this.slidersInfo.layers.length == 0 ||
-        this.slidersInfo.layers[layerIndex].buttons == undefined ||
-        this.slidersInfo.layers[layerIndex].buttons.length == 0) {
-
+function hasSlider(index) {
+    var item = this.slidersInfo.page.getSliderData(index)
+    if (item.value.layerInfo == undefined ||
+        item.value.layerInfo.buttons == undefined ||
+        item.value.layerInfo.buttons.length == 0) {
         return false
     }
     return true
 }
+/**
+ * 配置特有的layer,layerInfo中的属性将会覆盖声明的LayerInfo
+ */
+function updateLayer(index, newInfo) {
+    var item = this.slidersInfo.page.getSliderData(index)
 
+    if (newInfo==undefined){
+        console.log("删除layerInfo属性")
+        delete item.value.layerInfo
+        return
+    }
+    //覆盖属性
+    item.value.layerInfo.buttons.overide(newInfo)
+    //重写更新界面关联的属性
+    this.setLayer(index)
+    //更新界面
+    this.slidersInfo.page.refreshSliderData()
+}
 /**
  * 设置当前要显示的slider
  * index:item索引
  * layerIndex：layer索引
  */
-function setLayer(item, layerIndex) {
+function setLayer(index, layerIndex) {
+
+    var item = this.slidersInfo.page.getSliderData(index)
+
     if(item.value==undefined)
         item.value={}
     if (item.style == undefined)
         item.style = {}
-    item.value.layerIndex = layerIndex
+
+    //复制一个layer对象,为的是每个item之后可以更新layer的状态
+    if (layerIndex!=undefined){
+        item.value.layerInfo = clone(this.slidersInfo.layers[layerIndex])
+        item.value.layerIndex = layerIndex
+    }
+
     //配置可拖动视图
-    if (!this.hasSlider(layerIndex)) {
+    if (!this.hasSlider(index)) {
         //没有配置任何状态层，不需要拉开
         item.styleWidth = "width:750rpx;"
         return
     }
     item.styleWidth = "width:752rpx;"
     //更新界面绑定的数据
-    var p1 = "width:" + this.getSliderWidthByIndex(layerIndex) + "rpx;"
+    var p1 = "width:" + this.getSliderWidthByIndex(index) + "rpx;"
     var p2 = "height:" + this.slidersInfo.height + "rpx;"
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
@@ -103,7 +119,13 @@ function setLayer(item, layerIndex) {
             return
         var right = 0
 
+        //使用item自带的layerInfo
+        if (outterIndex == item.value.layerIndex)
+            outterValue = item.value.layerInfo
+
         outterValue.buttons.forEach(function (innerValue, innerIndex) {
+
+            
 
             var p1 = "height:" + that.slidersInfo.height + "rpx; "
             var p2 = "width:" + innerValue.width + "rpx;"
@@ -115,22 +137,24 @@ function setLayer(item, layerIndex) {
             var p8 = "right:" + right + "rpx;"
             right += innerValue.width;
             //是否显示
-            var p9 = outterIndex != layerIndex ? "display:none;" : "display:inherit;"
+            var p9 = outterIndex != item.value.layerIndex ? "display:none;" : "display:inherit;"
             var p10 = "border-top:" + innerValue.borderTop
 
             var styleName = "layerStyle_" + outterIndex + "_" + innerIndex
             var tapName = "layerTap_" + outterIndex + "_" + innerIndex
+            var textName = "layerText_" + outterIndex + "_" + innerIndex
             var styleValue = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10
 
             item.style[styleName] = styleValue
-            item.style[tapName] = innerValue.onClick
+            item.value[tapName] = innerValue.onClick
+            item.value[textName] = innerValue.text
         })
     })
-
-
-
-
 }
+
+
+
+
 
 /**
  * 按下时触发
@@ -139,7 +163,7 @@ function start(e) {
     var index = e.target.dataset.index
     var item = this.slidersInfo.page.getSliderData(index)
 
-    if (!this.hasSlider(this.getLayerIndexByIndex(index)))
+    if (!this.hasSlider(index))
         return
     this.closeAll()
 
@@ -162,7 +186,7 @@ function move(e, checkAngle) {
     var index = e.target.dataset.index
     var item = this.slidersInfo.page.getSliderData(index)
 
-    if (!this.hasSlider(this.getLayerIndexByIndex(index)))
+    if (!this.hasSlider(index))
         return
     if (this.eventEnd)
         return
@@ -206,7 +230,7 @@ function move(e, checkAngle) {
     moveX += this.startLeft;
     // console.log("-------------" + moveX)
     //避免快速滑动时两个move事件x距离太大,抽屉滑过头了
-    moveX = moveX < -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) ? -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) : moveX
+    moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
     moveX = moveX > 0 ? 0 : moveX
 
     item.value.left = moveX
@@ -225,12 +249,12 @@ function end(e) {
     var index = e.target.dataset.index
     var item = this.slidersInfo.page.getSliderData(index)
 
-    if (!this.hasSlider(this.getLayerIndexByIndex(index)))
+    if (!this.hasSlider(index))
         return
 
     this.eventEnd = true
 
-    var isOpen = item.value.left < -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) / 3 ? true : false;
+    var isOpen = item.value.left < -this.getSliderWidthByIndex(index) / 3 ? true : false;
 
     console.log(item.value.left)
 
@@ -273,8 +297,8 @@ function close(index) {
 function open(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
-    item.value.left = -this.getSliderWidthByIndex
-    item.style.styleLeft = 'left:' + -this.getSliderWidthByIndex(this.getLayerIndexByIndex(index)) + 'rpx;transition: left 0.2s ease ';
+    item.value.left = -this.getSliderWidthByIndex(index)
+    item.style.styleLeft = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease ';
     this.slidersInfo.page.refreshSliderData()
 }
 
@@ -360,6 +384,50 @@ function angle(start, end) {
     return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
 }
 
+/**
+ * 克隆一个对象(所有属性)
+ */
+function clone(obj) {
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj){
+        //基础类型string,number,boolean等等
+        return obj;
+    } 
+
+    // Handle Date
+    if (obj instanceof Date) {
+        var copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        var copy = [];
+        for (var i = 0, len = obj.length; i < len; ++i) {
+            copy[i] = clone(obj[i]);
+        }
+        return copy;
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        var copy = {};
+        for (var attr in obj) {
+            
+            if (obj.hasOwnProperty(attr)) {
+                
+                copy[attr] = clone(obj[attr]);
+            }
+        }
+        
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+}
+
 
 
 
@@ -377,9 +445,11 @@ module.exports = {
     angle: angle,
     deleteItem: deleteItem,
 
+    updateLayer: updateLayer,
     setLayer: setLayer,
     getSliderWidthByIndex: getSliderWidthByIndex,
-    getLayerIndexByIndex: getLayerIndexByIndex,
-    hasSlider: hasSlider
+    hasSlider: hasSlider,
+
+    clone:clone
 
 }
