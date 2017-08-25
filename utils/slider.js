@@ -36,7 +36,9 @@ function getSliderWidthByIndex(index) {
         return 0
     var width = 0;
     item.value.layerInfo.buttons.forEach(function (v, i) {
-        width += v.width
+        var visible = v.visible
+        visible = visible == undefined ? true : visible
+        width += visible?v.width:0
     })
     return width;
 }
@@ -135,9 +137,12 @@ function setLayer(index, layerIndex) {
             var p6 = "position: absolute;"
             var p7 = "top:0;"
             var p8 = "right:" + right + "rpx;"
-            right += innerValue.width;
+            var visible = innerValue.visible
+            visible=visible==undefined?true:visible
+            right += visible?innerValue.width:0;
             //是否显示
-            var p9 = outterIndex != item.value.layerIndex ? "display:none;" : "display:inherit;"
+            var p9 = outterIndex != item.value.layerIndex ? "display:none;" : "display:" + (visible?"inherit":"none") +";"
+
             var p10 = "border-top:" + innerValue.borderTop
 
             var styleName = "layerStyle_" + outterIndex + "_" + innerIndex

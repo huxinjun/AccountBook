@@ -222,10 +222,13 @@
 /**成员主内容*/
 .member_item{
     
-    display: flex;
+    /* display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    align-items: center;
+    align-items: center; */
+    position: relative;
+    background-color: #eee;
+    z-index: 2;
 }
 
 .member_icon{
@@ -237,12 +240,16 @@
 }
 /**中间区域:名称,标签*/
 .member_content{
-    flex-grow: 1;
+    position: absolute;
+    left: 100rpx;
+    top: 0;
+
+     flex-grow: 1;
     height: 100rpx;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start; 
 
 }
 /**成员规则和其他标签*/

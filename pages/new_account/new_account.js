@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
 var APP = getApp()
+var slider
 Page({
     data: {
         containerHeight: 0,
@@ -25,7 +26,7 @@ Page({
                         tag1: "",
                         tag2: ""
                     },
-                    text: {
+                    value: {
                         tag0: "个人账单",
                         tag1: "AA制",
                         tag2: "自费10元"
@@ -37,7 +38,22 @@ Page({
         items: [
             { name: '百分比付款', value: '0' },
             { name: '固定值付款', value: '1', checked: 'true' }
-        ]
+        ],
+
+
+        
+    },
+
+
+    getSliderData: function (index) {
+        if (index == undefined)
+            return this.data.account.members
+        return this.data.account.members[index]
+    },
+    refreshSliderData: function () {
+        this.setData({
+            account: this.data.account
+        })
     },
 
     /**
@@ -58,13 +74,13 @@ Page({
                 member: "height:0;opacity:0;",
                 memberRule: "height:0;opacity:0;",
             },
-            text: {
+            value: {
                 tag0: "个人账单",
                 tag1: "AA制",
                 tag2: "自费10元"
             }
         })
-
+        slider.setLayer(0,0)
         this.setData({
             account: this.data.account
         })
@@ -163,6 +179,52 @@ Page({
             }
 
         }
+
+        var slidersInfo = {
+            //page：page对象
+            page: this,
+            //checkAngle：是否要检查水平滑动的角度，默认大于15度将认为抽屉时间中断
+            checkAngle: false,
+            //条目高度
+            height: 200,
+
+            //N种状态
+            layers: [
+                {
+                    name: "状态一",
+                    buttons: [
+                        {
+                            text: "删除成员",
+                            color: "white",
+                            colorBg: "#2ba245",
+                            colorShadow: "black",
+                            onClick: "acceptInvite",
+                            width: 150
+                        },
+                        {
+                            text: "添加自费",
+                            color: "white",
+                            colorBg: "#cdcdcd",
+                            colorShadow: "black",
+                            onClick: "refuseInvite",
+                            width: 150
+                        },
+                        {
+                            text: "添加规则",
+                            color: "white",
+                            colorBg: "#cdcdcd",
+                            colorShadow: "black",
+                            onClick: "refuseInvite",
+                            width: 150
+                        }
+                    ]
+                }
+            ]
+        }
+
+        slider = require('../../utils/slider.js').init(slidersInfo)
+
+
     },
 
     caclContainerHeight: function () {
@@ -181,6 +243,30 @@ Page({
     },
     radioChange: function (e) {
         console.log('radio发生change事件，携带value值为：', e.detail.value)
+    },
+
+
+
+    touchstart: function (e) {
+        var a = this
+        // debugger
+        slider.start(e)
+    },
+    touchmove: function (e) {
+        slider.move(e)
+    },
+    touchend: function (e) {
+        slider.end(e)
+    },
+    touchcancel: function (e) {
+        slider.cancel(e)
+    },
+    outterScroll: function (e) {
+        //   console.log(e)
+        slider.breakOnce();
+    },
+    innerScroll: function (e) {
+        //   console.log(e)
     }
 
 })

@@ -125,6 +125,7 @@ Page({
                             onClick: "acceptInvite",
                             width: 150,
                             borderTop: "10rpx solid white",
+                            visible:false
                         },
                         {
                             text: "拒绝2",
@@ -199,10 +200,6 @@ Page({
         }, this)
     },
 
-
-    canOpen: function (e) {
-        return this.data.datas[e.target.dataset.index].canOpen;
-    },
 
 
     touchstart: function (e) {
