@@ -121,8 +121,10 @@ Page({
         members[index].style.memberRuleTypeTrans = "transition:all 0.5s ease;"
 
         this.setData({
+            scrollToView: "members",
             account: this.data.account
         })
+        slider.close(index)
     },
     /**
      * 隐藏规则编辑框
@@ -138,11 +140,12 @@ Page({
         this.setData({
             account: this.data.account
         })
+
     },
     /**
      * 自费编辑框
      */
-    hideRuleTypeRadio: function (e) {
+    showRulePaySelf: function (e) {
         var index = e.target.dataset.index
         var members = this.data.account.members
         members[index].style.member = "height:350rpx;opacity:1;"
@@ -155,6 +158,7 @@ Page({
         this.setData({
             account: this.data.account
         })
+        slider.close(index)
     },
 
 
@@ -223,7 +227,23 @@ Page({
         }
 
         slider = require('../../utils/slider.js').init(slidersInfo)
-
+        slider.setLayer(0, 0)
+        slider.updateLayer(0,[
+            {
+                text: "添加规则",
+                onClick:"showRule",
+                visible:true
+            },
+            {
+                text:"添加自费",
+                onClick: "showRulePaySelf",
+                visible: true
+            },
+            {
+                
+                visible: false
+            }
+        ])
 
     },
 

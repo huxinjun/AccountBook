@@ -274,13 +274,15 @@
 /**成员规则编辑框*/
 
 .member_rule {
-    width: 100%;
+    width: 710rpx;
     overflow: hidden;
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
     position: absolute;
     top: 140rpx;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
 }
 
 .member_rule radio-group {
