@@ -48,26 +48,23 @@
 
         <view wx:for="{{account.members}}" wx:key="{{index}}">
             <view class="memeber" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}">
-                <scroll-view class="member_item"  scroll-x style="{{item.style.styleWidth}}{{item.style.styleLeft}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+                <scroll-view scroll-x bindscroll='innerScroll' style="{{item.style.deleteTrans}}">
 
-                    <image class="member_icon" src="/img/head.jpg" mode="aspectFill"></image>
+                    <view class="member_main" style="{{item.style.styleWidth}}{{item.style.styleLeft}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+                        <image class="member_icon" src="/img/head.jpg" mode="aspectFill" data-index="{{index}}"></image>
 
-                    <view class="member_content">
-                        <text class="member_name" data-index="{{index}}">新军{{index}}</text>
+                        <view class="member_content" data-index="{{index}}">
+                            <text class="member_name" data-index="{{index}}">新军{{index}}</text>
 
-                        <view class="member_tags">
-                            <text class="member_name" bindtap="hideRule" data-index="{{index}}" style="{{item.style.tag0}}">{{item.value.tag0}}</text>
-                            <text class="member_name" bindtap="showRule" data-index="{{index}}" style="{{item.style.tag1}}">{{item.value.tag1}}</text>
-                            <text class="member_name" bindtap="hideRuleTypeRadio" data-index="{{index}}" style="{{item.style.tag2}}">{{item.value.tag2}}</text>
+                            <view class="member_tags">
+                                <text class="member_name" bindtap="hideRule" data-index="{{index}}" style="{{item.style.tag0}}">{{item.value.tag0}}</text>
+                                <text class="member_name" bindtap="showRule" data-index="{{index}}" style="{{item.style.tag1}}">{{item.value.tag1}}</text>
+                                <text class="member_name" bindtap="hideRuleTypeRadio" data-index="{{index}}" style="{{item.style.tag2}}">{{item.value.tag2}}</text>
+                            </view>
+
                         </view>
 
                     </view>
-
-                    <!-- <view style="{{item.style.sliderStyle}}">
-                        <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
-                        <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
-                        <view style="{{item.style.layerStyle_0_2}}" bindtap="{{item.value.layerTap_0_2}}" data-index="{{index}}">{{item.value.layerText_0_2}}</view>
-                    </view> -->
 
                 </scroll-view>
 
@@ -83,6 +80,12 @@
                 </view>
 
 
+
+                <view style="{{item.style.sliderStyle}}">
+                    <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
+                    <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
+                    <view style="{{item.style.layerStyle_0_2}}" bindtap="{{item.value.layerTap_0_2}}" data-index="{{index}}">{{item.value.layerText_0_2}}</view>
+                </view>
 
             </view>
 

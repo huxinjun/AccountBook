@@ -45,7 +45,6 @@
     color: #f00;
     font-size: 50rpx;
     margin-right: 10rpx;
-    
 }
 
 /**备注---------------------------------------------------------------------------*/
@@ -173,16 +172,16 @@
 }
 
 /**成员---------------------------------------------------------------------------*/
-.members{
+
+.members {
     width: 750rpx;
     flex-flow: column wrap;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
 }
 
-.members_title{
+.members_title {
     width: 750rpx;
     height: 50rpx;
     position: relative;
@@ -191,76 +190,79 @@
     color: whitesmoke;
     line-height: 50rpx;
 }
-.members_title_hover{
+
+.members_title_hover {
     background-color: #2be245;
 }
-.members_title_txt{
+
+.members_title_txt {
     position: absolute;
     font-size: 25rpx;
     margin-left: -35rpx;
 }
-.members_title_add{
+
+.members_title_add {
     position: absolute;
     right: 20rpx;
 }
 
-
 /**成员条目*/
-.memeber{
-    width: 750rpx;
-    display: flex;
-    flex-flow: column nowrap;
 
-    padding-left: 20rpx;
-    padding-right: 20rpx;
+.memeber {
+    width: 750rpx;
     border-bottom: 1rpx solid #999;
     box-sizing: border-box;
-
+    background-color: #eee;
+    position: relative;
     overflow: hidden;
-
 }
+
+
 /**成员主内容*/
-.member_item{
-    
-    /* display: flex;
+
+.member_main {
+    display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    align-items: center; */
-    position: relative;
-    background-color: #eee;
+    align-items: center;
     z-index: 2;
+    background-color: #efefef;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+    position: relative;
+    left: 0;
 }
 
-.member_icon{
+.member_icon {
     width: 100rpx;
     height: 100rpx;
     padding: 20rpx;
     padding-left: 0;
-    
 }
-/**中间区域:名称,标签*/
-.member_content{
-    position: absolute;
-    left: 100rpx;
-    top: 0;
 
-     flex-grow: 1;
+/**中间区域:名称,标签*/
+
+.member_content {
+    flex-grow: 1;
     height: 100rpx;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    align-items: flex-start; 
-
+    align-items: flex-start;
 }
+
 /**成员规则和其他标签*/
-.member_tags{
+
+.member_tags {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;
 }
+
 /**标签*/
-.member_tags text{
+
+.member_tags text {
     margin-right: 20rpx;
     font-size: 28rpx;
     border: 1px solid #000;
@@ -269,47 +271,39 @@
     padding-right: 10rpx;
 }
 
-
-
 /**成员规则编辑框*/
-.member_rule{
+
+.member_rule {
     width: 100%;
     overflow: hidden;
-
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
+    position: absolute;
+    top: 140rpx;
 }
-.member_rule radio-group{
+
+.member_rule radio-group {
     height: 60rpx;
     display: block;
     overflow: hidden;
 }
-.member_rule_label{
+
+.member_rule_label {
     margin-right: 50rpx;
 }
-.member_rule input{
+
+.member_rule input {
     display: block;
     margin-bottom: 20rpx;
     margin-top: 20rpx;
-    border-bottom: 1rpx dashed #000
+    border-bottom: 1rpx dashed #000;
 }
-.member_rule button{
+
+.member_rule button {
     width: 100%;
     margin-top: 20rpx;
     margin-bottom: 20rpx;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**支付方案---------------------------------------------------------------------------*/

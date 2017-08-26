@@ -186,7 +186,7 @@ Page({
             //checkAngle：是否要检查水平滑动的角度，默认大于15度将认为抽屉时间中断
             checkAngle: false,
             //条目高度
-            height: 200,
+            height: 140,
 
             //N种状态
             layers: [
@@ -194,7 +194,7 @@ Page({
                     name: "状态一",
                     buttons: [
                         {
-                            text: "删除成员",
+                            text: "成员",
                             color: "white",
                             colorBg: "#2ba245",
                             colorShadow: "black",
@@ -202,7 +202,7 @@ Page({
                             width: 150
                         },
                         {
-                            text: "添加自费",
+                            text: "自费",
                             color: "white",
                             colorBg: "#cdcdcd",
                             colorShadow: "black",
@@ -210,7 +210,7 @@ Page({
                             width: 150
                         },
                         {
-                            text: "添加规则",
+                            text: "规则",
                             color: "white",
                             colorBg: "#cdcdcd",
                             colorShadow: "black",
