@@ -58,19 +58,22 @@ Page({
     /**
      * 添加规则
      */
-    addRule:function(index,type,number){
+    addRule:function(index,tp,num){
         var member = getSliderData(index)
         member.pay_rule={
-            type: type,
-            number: number
+            type: tp,
+            number: num
         }
+        getSliderData(index).style.tag1 = "display:inherit;"
     },
     /**
      * 删除规则
      */
-    removeRule: function (index, tp, number) {
+    removeRule: function (index) {
         var member=getSliderData(index)
         member.pay_rule.delete()
+        getSliderData(index).style.tag1 = "display:none;"
+
     },
     /**
      * 是否有特殊规则
@@ -85,13 +88,15 @@ Page({
     addMoneyForSelf: function (index,num) {
         var member = getSliderData(index)
         member.money_for_self=num
+        getSliderData(index).style.tag2 = "display:inherit;"
     },
     /**
      * 删除自费
      */
-    removeMoneyForSelf: function (index, number) {
+    removeMoneyForSelf: function (index) {
         var member = getSliderData(index)
         member.money_for_self.delete()
+        getSliderData(index).style.tag2 = "display:none;"
     },
     /**
      * 是否有自费
@@ -99,6 +104,39 @@ Page({
     hasMoneyForSelf: function (index) {
         var member = getSliderData(index)
         return member.money_for_self == undefined
+    },
+
+    /**
+     * 根据索引配置抽屉需要显示的按钮
+     */
+    updateMemberSliderButton:function(index){
+        var info=[{},{},{}]
+        if(this.hasRule(index)){
+          info[0].visible=true
+          info[0].text="删除规则"
+          info[0].onClick ="removeRule"
+        }else{
+          info[0].visible = false
+        }
+
+        if (this.hasMoneyForSelf(index)) {
+          info[1].visible = true
+          info[1].text = "删除自费"
+          info[1].onClick = "removeMoneyForSelf"
+        } else {
+          info[1].visible = false
+        }
+
+        if (index!=this.getSliderData().length-1) {
+          info[1].visible = true
+          info[1].text = "删除成员"
+          info[1].onClick = "removeMoneyForSelf"
+        } else {
+          info[1].visible = false
+        }
+
+        slider.updateLayer(info)
+
     },
 
 
@@ -333,7 +371,7 @@ Page({
     touchstart: function (e) {
         //拉开时确定要显示的按钮
         var index = e.target.dataset.index
-
+        this.updateMemberSliderButton(index)
         slider.start(e)
     },
     touchmove: function (e) {
