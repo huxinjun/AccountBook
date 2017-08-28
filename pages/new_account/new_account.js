@@ -14,6 +14,18 @@ Page({
             members: [
                 {
 
+                    //account data----------------------------------
+                    id: "abc",
+                    name:"新军",
+                    icon:["/img/head.jpg"],
+                    paid_in:88.8,
+                    pay_rule:{
+                        type: 0,    //0:百分比  1:固定数额
+                        number:0.2
+                    },
+                    money_for_self: 20.5,
+
+                    //binding data----------------------------------
                     style: {
                         member: "height:140rpx;",
                         memberRule: "height:0;",
@@ -43,13 +55,64 @@ Page({
 
         
     },
+    /**
+     * 添加规则
+     */
+    addRule:function(index,type,number){
+        var member = getSliderData(index)
+        member.pay_rule={
+            type: type,
+            number: number
+        }
+    },
+    /**
+     * 删除规则
+     */
+    removeRule: function (index, tp, number) {
+        var member=getSliderData(index)
+        member.pay_rule.delete()
+    },
+    /**
+     * 是否有特殊规则
+     */
+    hasRule: function (index) {
+        var member = getSliderData(index)
+        return member.pay_rule==undefined
+    },
+    /**
+     * 添加自费
+     */
+    addMoneyForSelf: function (index,num) {
+        var member = getSliderData(index)
+        member.money_for_self=num
+    },
+    /**
+     * 删除自费
+     */
+    removeMoneyForSelf: function (index, number) {
+        var member = getSliderData(index)
+        member.money_for_self.delete()
+    },
+    /**
+     * 是否有自费
+     */
+    hasMoneyForSelf: function (index) {
+        var member = getSliderData(index)
+        return member.money_for_self == undefined
+    },
 
 
+    /**
+     * 获取某个抽屉数据附加的list条目对象
+     */
     getSliderData: function (index) {
         if (index == undefined)
             return this.data.account.members
         return this.data.account.members[index]
     },
+    /**
+     * 刷新抽屉数据
+     */
     refreshSliderData: function () {
         this.setData({
             account: this.data.account
@@ -268,8 +331,9 @@ Page({
 
 
     touchstart: function (e) {
-        var a = this
-        // debugger
+        //拉开时确定要显示的按钮
+        var index = e.target.dataset.index
+
         slider.start(e)
     },
     touchmove: function (e) {
@@ -297,12 +361,3 @@ Page({
 
 
 
-// id: "abc",
-//     name:"新军",
-//         icon:"/img/head.jpg",
-//             paid_in:88.8,
-//                 pay_rule:{
-//     type: 0,
-//         number:0.2
-// },
-// money_for_self: 20.5,
