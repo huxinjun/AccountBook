@@ -59,7 +59,7 @@ Page({
      * 添加规则
      */
     addRule:function(index,tp,num){
-        var member = getSliderData(index)
+        var member = this.getSliderData(index)
         member.pay_rule={
             type: tp,
             number: num
@@ -70,8 +70,8 @@ Page({
      * 删除规则
      */
     removeRule: function (index) {
-        var member=getSliderData(index)
-        member.pay_rule.delete()
+        var member = this.getSliderData(index)
+        delete member.pay_rule
         getSliderData(index).style.tag1 = "display:none;"
 
     },
@@ -79,14 +79,14 @@ Page({
      * 是否有特殊规则
      */
     hasRule: function (index) {
-        var member = getSliderData(index)
+        var member = this.getSliderData(index)
         return member.pay_rule==undefined
     },
     /**
      * 添加自费
      */
     addMoneyForSelf: function (index,num) {
-        var member = getSliderData(index)
+        var member = this.getSliderData(index)
         member.money_for_self=num
         getSliderData(index).style.tag2 = "display:inherit;"
     },
@@ -94,15 +94,15 @@ Page({
      * 删除自费
      */
     removeMoneyForSelf: function (index) {
-        var member = getSliderData(index)
-        member.money_for_self.delete()
+        var member = this.getSliderData(index)
+        delete member.money_for_self
         getSliderData(index).style.tag2 = "display:none;"
     },
     /**
      * 是否有自费
      */
     hasMoneyForSelf: function (index) {
-        var member = getSliderData(index)
+        var member = this.getSliderData(index)
         return member.money_for_self == undefined
     },
 
@@ -128,14 +128,14 @@ Page({
         }
 
         if (index!=this.getSliderData().length-1) {
-          info[1].visible = true
-          info[1].text = "删除成员"
-          info[1].onClick = "removeMoneyForSelf"
+          info[2].visible = true
+          info[2].text = "删除成员"
+          info[2].onClick = "removeMoneyForSelf"
         } else {
-          info[1].visible = false
+          info[2].visible = false
         }
 
-        slider.updateLayer(info)
+        slider.updateLayer(index,info)
 
     },
 
