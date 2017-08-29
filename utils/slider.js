@@ -54,7 +54,14 @@ function hasSlider(index) {
         item.value.layerInfo.buttons.length == 0) {
         return false
     }
-    return true
+    var result=false
+    item.value.layerInfo.buttons.forEach(function (v, i) {
+      if(result)
+        return
+      if(v.visible)
+        result=true
+    })
+    return result
 }
 /**
  * 配置特有的layer,layerInfo中的属性将会覆盖声明的LayerInfo
@@ -97,10 +104,10 @@ function setLayer(index, layerIndex) {
     //配置可拖动视图
     if (!this.hasSlider(index)) {
         //没有配置任何状态层，不需要拉开
-        item.styleWidth = "width:750rpx;"
+        item.style.styleWidth = "width:750rpx;"
         return
     }
-    item.styleWidth = "width:752rpx;"
+    item.style.styleWidth = "width:752rpx;"
     //更新界面绑定的数据
     var p1 = "width:" + this.getSliderWidthByIndex(index) + "rpx;"
     var p2 = "height:" + this.slidersInfo.height + "rpx;"

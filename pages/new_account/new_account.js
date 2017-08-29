@@ -35,8 +35,8 @@ Page({
                         memberRuleTrans: "",
                         memberRuleTrans: "",
                         tag0: "",
-                        tag1: "",
-                        tag2: ""
+                        tag1: "display:none;",
+                        tag2: "display:none;"
                     },
                     value: {
                         tag0: "个人账单",
@@ -80,7 +80,7 @@ Page({
      */
     hasRule: function (index) {
         var member = this.getSliderData(index)
-        return member.pay_rule==undefined
+        return member.pay_rule!=undefined
     },
     /**
      * 添加自费
@@ -103,7 +103,7 @@ Page({
      */
     hasMoneyForSelf: function (index) {
         var member = this.getSliderData(index)
-        return member.money_for_self == undefined
+        return member.money_for_self != undefined
     },
 
     /**
@@ -112,11 +112,11 @@ Page({
     updateMemberSliderButton:function(index){
         var info=[{},{},{}]
         if(this.hasRule(index)){
-          info[0].visible=true
-          info[0].text="删除规则"
-          info[0].onClick ="removeRule"
+          info[2].visible=true
+          info[2].text="删除规则"
+          info[2].onClick ="removeRule"
         }else{
-          info[0].visible = false
+          info[2].visible = false
         }
 
         if (this.hasMoneyForSelf(index)) {
@@ -124,15 +124,17 @@ Page({
           info[1].text = "删除自费"
           info[1].onClick = "removeMoneyForSelf"
         } else {
-          info[1].visible = false
+          info[1].visible = true
+          info[1].text = "添加自费"
+          info[1].onClick = "addMoneyForSelf"
         }
 
         if (index!=this.getSliderData().length-1) {
-          info[2].visible = true
-          info[2].text = "删除成员"
-          info[2].onClick = "removeMoneyForSelf"
+          info[0].visible = true
+          info[0].text = "删除成员"
+          info[0].onClick = "removeMember"
         } else {
-          info[2].visible = false
+          info[0].visible = false
         }
 
         slider.updateLayer(index,info)
@@ -174,6 +176,9 @@ Page({
             style: {
                 member: "height:0;opacity:0;",
                 memberRule: "height:0;opacity:0;",
+                tag0: "",
+                tag1: "display:inherit;",
+                tag2: "display:none;"
             },
             value: {
                 tag0: "个人账单",
@@ -203,8 +208,9 @@ Page({
     /**
      * 移除成员
      */
-    removeMember: function () {
-
+    removeMember: function (e) {
+      var index=e.target.dataset.index
+      slider.deleteItem(index);
     },
 
     /**
@@ -274,11 +280,14 @@ Page({
         this.data.account.members.onSizeChanged=function(size){
             if(size==1){
                 this[0].style.tag0="display:inherit;"
+                this[0].style.tag1 = "display:none;"
+                this[0].style.tag2 = "display:none;"
                 return
             }
             if(size>=2){
                 this.forEach(function(v,i){
                     v.style.tag0 = "display:none;"
+                    v.style.tag1 = "display:inherit;"
                 })
                 return
             }
