@@ -19,11 +19,11 @@ Page({
                     name:"新军",
                     icon:["/img/head.jpg"],
                     paid_in:88.8,
-                    pay_rule:{
-                        type: 0,    //0:百分比  1:固定数额
-                        number:0.2
-                    },
-                    money_for_self: 20.5,
+                    // pay_rule:{
+                    //     type: 0,    //0:百分比  1:固定数额
+                    //     number:0.2
+                    // },
+                    // money_for_self: 20.5,
 
                     //binding data----------------------------------
                     style: {
@@ -110,6 +110,15 @@ Page({
      * 根据索引配置抽屉需要显示的按钮
      */
     updateMemberSliderButton:function(index){
+        if (this.getSliderData().length == 1) {
+          slider.updateLayer(0, [
+            { visible: false },
+            { visible: false },
+            { visible: false }
+          ])
+          return
+        }
+
         var info=[{},{},{}]
         if(this.hasRule(index)){
           info[2].visible=true
@@ -136,6 +145,8 @@ Page({
         } else {
           info[0].visible = false
         }
+
+        
 
         slider.updateLayer(index,info)
 
@@ -282,6 +293,7 @@ Page({
                 this[0].style.tag0="display:inherit;"
                 this[0].style.tag1 = "display:none;"
                 this[0].style.tag2 = "display:none;"
+                
                 return
             }
             if(size>=2){
@@ -393,11 +405,11 @@ Page({
         slider.cancel(e)
     },
     outterScroll: function (e) {
-        //   console.log(e)
+        console.log("outterScroll")
         slider.breakOnce();
     },
     innerScroll: function (e) {
-        //   console.log(e)
+        console.log("innerScroll")
     }
 
 })

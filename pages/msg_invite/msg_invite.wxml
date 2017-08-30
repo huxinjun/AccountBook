@@ -4,9 +4,9 @@
     <view wx:for="{{datas}}" wx:key="{{index}}">
         <!-- {{index}}: {{item.value}} -->
 
-        <scroll-view class="listitem" scroll-x bindscroll='innerScroll' style="{{item.style.deleteTrans}}">
+        <scroll-view class="listitem" scroll-x bindscroll='innerScroll' style="{{item.style.width}}{{item.style.deleteTrans}}">
 
-            <view class="item" style="{{item.style.styleWidth}}{{item.style.styleLeft}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+            <view class="item" style="{{item.style.width}}{{item.style.left}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
                 <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
 
                 <view class="content" data-index="{{index}}">
@@ -22,15 +22,17 @@
 
             </view>
 
-
-
-            <view style="{{item.style.sliderStyle}}">
+            <view style="{{item.style.slider}}">
 
                 <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
                 <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
                 <view style="{{item.style.layerStyle_1_0}}" bindtap="{{item.value.layerTap_1_0}}" data-index="{{index}}">{{item.value.layerText_1_0}}</view>
             </view>
+
+            
         </scroll-view>
+
+        
     </view>
 
 

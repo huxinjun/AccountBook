@@ -225,12 +225,12 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    z-index: 2;
     background-color: #efefef;
     padding-left: 20rpx;
     padding-right: 20rpx;
     position: relative;
     left: 0;
+    top:0;
 }
 
 .member_icon {

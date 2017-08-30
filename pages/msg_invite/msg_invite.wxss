@@ -15,7 +15,7 @@
     width: 750rpx;
     height: 200rpx;
     position: relative;
-    top: 0rpx;
+    top: 0;
     overflow-x: hidden;
     z-index: 3;
 }

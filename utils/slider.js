@@ -104,19 +104,21 @@ function setLayer(index, layerIndex) {
     //配置可拖动视图
     if (!this.hasSlider(index)) {
         //没有配置任何状态层，不需要拉开
-        item.style.styleWidth = "width:750rpx;"
+        item.style.width = "width:750rpx;"
         return
     }
-    item.style.styleWidth = "width:752rpx;"
+    item.style.width = "width:752rpx;"
     //更新界面绑定的数据
     var p1 = "width:" + this.getSliderWidthByIndex(index) + "rpx;"
     var p2 = "height:" + this.slidersInfo.height + "rpx;"
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
+    var p6 = "position:absolute;right:0;top:0;z-index:0;"
 
 
-    item.style.sliderStyle = p1 + p2 + p3 + p4 + p5
+    item.style.position ="position:absolute;left:0;top:0;z-index:0;z-index:1;"
+    item.style.slider = p1 + p2 + p3 + p4 + p5 + p6
 
 
     var that = this
@@ -247,7 +249,7 @@ function move(e, checkAngle) {
     moveX = moveX > 0 ? 0 : moveX
 
     item.value.left = moveX
-    item.style.styleLeft = 'left:' + item.value.left + 'rpx';
+    item.style.left = 'left:' + item.value.left + 'rpx';
     this.slidersInfo.page.refreshSliderData()
 
 
@@ -285,10 +287,8 @@ function closeAll() {
     var datas = this.slidersInfo.page.getSliderData()
     var that = this
     datas.forEach(function (v, i) {
-        // that.slidersInfo.page.data.datas[i].left = 0
-        // that.slidersInfo.page.data.datas[i].styleLeft = 'left:0;transition:all 0.2s ease ';
         v.value.left = 0
-        v.style.styleLeft = 'left:0;transition:all 0.2s ease ';
+        v.style.left = 'left:0;transition:all 0.2s ease ';
     })
 
     this.slidersInfo.page.refreshSliderData()
@@ -301,7 +301,7 @@ function close(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
     item.value.left = 0
-    item.style.styleLeft = 'left:0rpx;transition: left 0.2s ease ';
+    item.style.left = 'left:0rpx;transition: left 0.2s ease ';
     this.slidersInfo.page.refreshSliderData()
 }
 /**
@@ -311,7 +311,7 @@ function open(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
     item.value.left = -this.getSliderWidthByIndex(index)
-    item.style.styleLeft = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease ';
+    item.style.left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease ';
     this.slidersInfo.page.refreshSliderData()
 }
 
@@ -368,7 +368,7 @@ function deleteItem(index) {
             datas.remove(index, 1);
             datas.forEach(function (v, i) {
                 v.value.left = 0
-                v.style.styleLeft = ""
+                v.style.left = ""
             })
             //更新列表的状态
             this.slidersInfo.page.refreshSliderData()

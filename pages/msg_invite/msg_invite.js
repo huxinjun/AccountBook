@@ -125,7 +125,7 @@ Page({
                             onClick: "acceptInvite",
                             width: 150,
                             borderTop: "10rpx solid white",
-                            visible:false
+                            visible:true
                         },
                         {
                             text: "拒绝2",
@@ -135,6 +135,7 @@ Page({
                             onClick: "refuseInvite",
                             width: 150,
                             borderTop: "10rpx solid white",
+                            visible: true
                         }
                     ]
                 },
@@ -148,7 +149,8 @@ Page({
                             colorShadow:"black",
                             onClick: "_delete",
                             borderTop: "10rpx solid white",
-                            width: 150
+                            width: 150,
+                            visible: true
                         }
                     ]
                 },
