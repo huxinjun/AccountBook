@@ -221,6 +221,7 @@ Page({
      */
     removeMember: function (e) {
       var index=e.target.dataset.index
+      console.log("delete:"+index);
       slider.deleteItem(index);
     },
 

@@ -114,10 +114,10 @@ function setLayer(index, layerIndex) {
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
-    var p6 = "position:absolute;right:0;top:0;z-index:0;"
+    var p6 = "position:absolute;right:0;top:0;"
 
 
-    item.style.position ="position:absolute;left:0;top:0;z-index:0;z-index:1;"
+    item.style.position ="position:absolute;left:0;top:0;"
     item.style.slider = p1 + p2 + p3 + p4 + p5 + p6
 
 
