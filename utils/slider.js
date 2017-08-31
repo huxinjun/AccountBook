@@ -2,16 +2,7 @@
  * 左滑删除
  * Created by xinjun on 2017/8/11 14:10
  */
-/**按下时item的left */
-var startLeft = 0
-/**按下x */
-var startX = 0
-/**按下y */
-var startY = 0
-/**上一次move事件的x */
-var preX = 0
-/**标识事件是否已经中断 */
-var eventEnd = false
+
 
 
 var slidersInfo
@@ -78,8 +69,7 @@ function updateLayer(index, newInfo) {
     item.value.layerInfo.buttons.overide(newInfo)
     //重写更新界面关联的属性
     this.setLayer(index)
-    //更新界面
-    this.slidersInfo.page.refreshSliderData()
+    
 }
 /**
  * 设置当前要显示的slider
@@ -113,19 +103,16 @@ function setLayer(index, layerIndex) {
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
 
-    
-    var p6 = "position:absolute;top:0;"
     var left = 750 - this.getSliderWidthByIndex(index)
-    var p7 = "left:" + left + "rpx;"
+    var p6 = "position:absolute;top:0;left:" + left + "rpx;"
+    
 
 
-    item.style.sv = "width:750rpx;position:relative;"
-    item.style.sv_main = "z-index:1;position: relative;"
+    item.style.sv = "width:750rpx;position:absolute;z-index:1;"
+    item.style.sv_main = "position: relative;"
     //ph:placeholder占位
-    item.style.sv_ph = p1 + p2+"position:absolute;left:750rpx;top:0;opacity:0;"
+    item.style.sv_ph = p1 + p2 +"position:absolute;left:750rpx;top:0;opacity:0;"
     item.style.sv_slider = p1 + p2 + p3 + p4 + p5 + p6
-    item.style.sv_slider_left = p7
-    item.value.sv_slider_left=left
 
     var that = this
 
@@ -171,6 +158,8 @@ function setLayer(index, layerIndex) {
             item.value[textName] = innerValue.text
         })
     })
+    //更新界面
+    this.slidersInfo.page.refreshSliderData()
 }
 
 
@@ -181,6 +170,7 @@ function setLayer(index, layerIndex) {
  * 按下时触发
  */
 function start(e) {
+    console.log("start")
     var index = e.target.dataset.index
     var item = this.slidersInfo.page.getSliderData(index)
 
@@ -189,29 +179,21 @@ function start(e) {
     this.closeAll()
 
     // console.log(e)
-
-    this.eventEnd = false;
-    this.startX = e.touches[0].pageX;
-    this.startY = e.touches[0].pageY;
-
-    this.startLeft = item.value.left;
-    // console.log(startLeft)
+    
 
 
 }
 
 function scroll(e){
+    console.log("scroll")
     var index = e.target.dataset.index
     var scrollLeft = e.detail.scrollLeft
+    var scrollWidth = e.detail.scrollWidth
     var item = this.slidersInfo.page.getSliderData(index)
 
-    var currLeft = item.value.sv_slider_left + scrollLeft 
-    console.log( "sv_slider_left--------" + item.value.sv_slider_left) 
-  console.log(scrollLeft+"--------"+currLeft)    
-    
-    var leftStr = "left:" + currLeft + "rpx;"
-    item.style.sv_slider_left = leftStr
-    this.slidersInfo.page.refreshSliderData()
+    item.value.scroll_left = scrollLeft
+    item.value.scroll_width = scrollWidth
+
 }
 
 /**
@@ -224,11 +206,12 @@ function end(e) {
     if (!this.hasSlider(index))
         return
 
-    this.eventEnd = true
+    var sliderWidthPx=item.value.scroll_width - this.slidersInfo.windowWidth
 
-    var isOpen = item.value.left < -this.getSliderWidthByIndex(index) / 3 ? true : false;
 
-    // console.log(item.value.left)
+    var isOpen = item.value.scroll_left > sliderWidthPx/2 ? true : false;
+
+    console.log(item.value.scroll_left + "---------------" + sliderWidthPx)
 
     if (isOpen)
         this.open(index)
@@ -237,15 +220,27 @@ function end(e) {
 }
 
 /**
+ * 打开某个索引的抽屉
+ */
+function open(index) {
+    console.log("open")
+    var item = this.slidersInfo.page.getSliderData(index)
+
+    var sliderWidthPx = item.value.scroll_width - this.slidersInfo.windowWidth
+    item.value.scroll_left = sliderWidthPx
+
+    this.slidersInfo.page.refreshSliderData()
+}
+
+/**
  * 关闭所有打开的抽屉
  */
 function closeAll() {
-    // console.log('closeAll')
+    console.log('closeAll')
     var datas = this.slidersInfo.page.getSliderData()
     var that = this
     datas.forEach(function (v, i) {
-        v.value.left = 0
-        v.style.left = 'left:0;transition:all 0.2s ease ';
+        v.value.scroll_left = 0
     })
 
     this.slidersInfo.page.refreshSliderData()
@@ -255,30 +250,20 @@ function closeAll() {
  * 关闭某个索引的抽屉
  */
 function close(index) {
+    console.log("close")
     var item = this.slidersInfo.page.getSliderData(index)
 
-    item.value.left = 0
-    item.style.left = 'left:0rpx;transition: left 0.2s ease ';
-    this.slidersInfo.page.refreshSliderData()
-}
-/**
- * 关闭某个索引的抽屉
- */
-function open(index) {
-    var item = this.slidersInfo.page.getSliderData(index)
+    item.value.scroll_left = 0
 
-    item.value.left = -this.getSliderWidthByIndex(index)
-    item.style.left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease ';
     this.slidersInfo.page.refreshSliderData()
 }
+
 
 /**
  * 强制中断本次抽屉事件
  */
 function breakOnce() {
-    if (this.eventEnd)
-        return
-    this.eventEnd = true
+    console.log('breakOnce')
     this.closeAll()
 }
 
@@ -335,24 +320,6 @@ function deleteItem(index) {
 
 }
 
-
-
-
-
-
-
-
-/**
- * 计算滑动角度
- * @param {Object} start 起点坐标
- * @param {Object} end 终点坐标
- */
-function angle(start, end) {
-    var _X = end.X - start.X,
-        _Y = end.Y - start.Y
-    //返回角度 /Math.atan()返回数字的反正切值
-    return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
-}
 
 /**
  * 克隆一个对象(所有属性)
@@ -412,7 +379,6 @@ module.exports = {
     closeAll: closeAll,
     open: open,
     cancel: cancel,
-    angle: angle,
     deleteItem: deleteItem,
 
     updateLayer: updateLayer,

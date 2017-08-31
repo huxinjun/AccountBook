@@ -4,7 +4,8 @@ var APP = getApp()
 var slider
 Page({
     data: {
-        containerHeight: 0,
+        windowHeight: 0,
+        windowWidth:0,
 
         account: {
 
@@ -312,11 +313,9 @@ Page({
         var slidersInfo = {
             //page：page对象
             page: this,
-            //checkAngle：是否要检查水平滑动的角度，默认大于15度将认为抽屉时间中断
-            checkAngle: false,
             //条目高度
             height: 140,
-
+            windowWidth: this.data.windowWidth,
             //N种状态
             layers: [
                 {
@@ -375,8 +374,10 @@ Page({
         var that = this
         wx.getSystemInfo({
             success: function (res) {
+                console.log(res)
                 that.setData({
-                    containerHeight: res.windowHeight
+                    windowHeight: res.windowHeight,
+                    windowWidth: res.windowWidth
                 })
             }
         })
@@ -397,26 +398,18 @@ Page({
         this.updateMemberSliderButton(index)
         slider.start(e)
         console.log("touchstart:"+index)
-        console.log(e)
-    },
-    touchmove: function (e) {
-        // slider.move(e)
     },
     touchend: function (e) {
-        // slider.end(e)
-        console.log(e)
+        slider.end(e)
     },
     touchcancel: function (e) {
-        // slider.cancel(e)
-        console.log(e)
+        slider.cancel(e)
     },
     outterScroll: function (e) {
-        console.log("outterScroll")
-        slider.breakOnce();
+        
     },
     innerScroll: function (e) {
-        console.log(e)
-        // slider.scroll(e)
+        slider.scroll(e)
     }
 
 })
