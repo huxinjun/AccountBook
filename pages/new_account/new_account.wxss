@@ -213,14 +213,17 @@
     border-bottom: 1rpx solid #999;
     box-sizing: border-box;
     background-color: #eee;
-    position: relative;
-    overflow: hidden;
+    
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
 }
 
 
 /**成员主内容*/
 
 .member_main {
+    width: 750rpx;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -228,9 +231,8 @@
     background-color: #efefef;
     padding-left: 20rpx;
     padding-right: 20rpx;
-    position: relative;
-    left: 0;
-    top:0;
+    box-sizing: border-box;
+    
 }
 
 .member_icon {
@@ -279,8 +281,6 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
-    position: absolute;
-    top: 140rpx;
     padding-left: 20rpx;
     padding-right: 20rpx;
 }

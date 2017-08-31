@@ -174,6 +174,7 @@ Page({
      * 添加成员
      */
     addMember: function () {
+        
         /**
          * 不把其他元素的动画取消,会导致顶部元素动画时,打开编辑框的条目也在进行height动画
          */
@@ -201,6 +202,7 @@ Page({
         this.setData({
             account: this.data.account
         })
+       
         setTimeout(function () {
 
             this.data.account.members[0].style.member = "height:140rpx;opacity:1;"
@@ -348,7 +350,6 @@ Page({
                 }
             ]
         }
-
         slider = require('../../utils/slider.js').init(slidersInfo)
         slider.setLayer(0, 0)
         slider.updateLayer(0,[
@@ -395,22 +396,27 @@ Page({
         var index = e.target.dataset.index
         this.updateMemberSliderButton(index)
         slider.start(e)
+        console.log("touchstart:"+index)
+        console.log(e)
     },
     touchmove: function (e) {
-        slider.move(e)
+        // slider.move(e)
     },
     touchend: function (e) {
-        slider.end(e)
+        // slider.end(e)
+        console.log(e)
     },
     touchcancel: function (e) {
-        slider.cancel(e)
+        // slider.cancel(e)
+        console.log(e)
     },
     outterScroll: function (e) {
         console.log("outterScroll")
         slider.breakOnce();
     },
     innerScroll: function (e) {
-        console.log("innerScroll")
+        console.log(e)
+        // slider.scroll(e)
     }
 
 })

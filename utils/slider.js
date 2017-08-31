@@ -104,22 +104,28 @@ function setLayer(index, layerIndex) {
     //配置可拖动视图
     if (!this.hasSlider(index)) {
         //没有配置任何状态层，不需要拉开
-        item.style.width = "width:750rpx;"
         return
     }
-    item.style.width = "width:752rpx;"
     //更新界面绑定的数据
     var p1 = "width:" + this.getSliderWidthByIndex(index) + "rpx;"
     var p2 = "height:" + this.slidersInfo.height + "rpx;"
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
-    var p6 = "position:absolute;right:0;top:0;"
+
+    
+    var p6 = "position:absolute;top:0;"
+    var left = 750 - this.getSliderWidthByIndex(index)
+    var p7 = "left:" + left + "rpx;"
 
 
-    item.style.position ="position:absolute;left:0;top:0;"
-    item.style.slider = p1 + p2 + p3 + p4 + p5 + p6
-
+    item.style.sv = "width:750rpx;position:relative;"
+    item.style.sv_main = "z-index:1;position: relative;"
+    //ph:placeholder占位
+    item.style.sv_ph = p1 + p2+"position:absolute;left:750rpx;top:0;opacity:0;"
+    item.style.sv_slider = p1 + p2 + p3 + p4 + p5 + p6
+    item.style.sv_slider_left = p7
+    item.value.sv_slider_left=left
 
     var that = this
 
@@ -194,67 +200,18 @@ function start(e) {
 
 }
 
-/**
- * 移动时触发
- */
-function move(e, checkAngle) {
+function scroll(e){
     var index = e.target.dataset.index
+    var scrollLeft = e.detail.scrollLeft
     var item = this.slidersInfo.page.getSliderData(index)
 
-    if (!this.hasSlider(index))
-        return
-    if (this.eventEnd)
-        return
-
-
-
-    var currX = e.touches[0].pageX;
-    var currY = e.touches[0].pageY;
-    var moveX = currX - this.startX;
-    var moveY = currY - this.startY;
-
-
-    if (this.slidersInfo.checkAngle) {
-        //获取滑动角度
-        var a = angle({ X: this.startX, Y: this.startY }, { X: currX, Y: currY });
-        console.log(a)
-        if (Math.abs(a) > 15) {
-            this.eventEnd = true
-            this.closeAll()
-            return
-        }
-
-    }
-
-
-
-    var deltaX = currX - this.preX;
-    this.preX = currX;
-
-
-    //已经抽出,还往左滑,忽略后面的事件
-    if (item.value.left <= -250 && deltaX < 0)
-        return
-
-    //已经合上,还往右滑,忽略后面的事件
-    if (item.value.left >= 0 && deltaX > 0)
-        return
-
-
-    //基于上一次的位置滑动
-    moveX += this.startLeft;
-    // console.log("-------------" + moveX)
-    //避免快速滑动时两个move事件x距离太大,抽屉滑过头了
-    moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
-    moveX = moveX > 0 ? 0 : moveX
-
-    item.value.left = moveX
-    item.style.left = 'left:' + item.value.left + 'rpx';
+    var currLeft = item.value.sv_slider_left + scrollLeft 
+    console.log( "sv_slider_left--------" + item.value.sv_slider_left) 
+  console.log(scrollLeft+"--------"+currLeft)    
+    
+    var leftStr = "left:" + currLeft + "rpx;"
+    item.style.sv_slider_left = leftStr
     this.slidersInfo.page.refreshSliderData()
-
-
-
-
 }
 
 /**
@@ -448,7 +405,7 @@ module.exports = {
     init: init,
 
     start: start,
-    move: move,
+    scroll: scroll,
     end: end,
     breakOnce: breakOnce,
     close: close,
