@@ -325,7 +325,9 @@ Page({
                             colorBg: "#2ba245",
                             colorShadow: "black",
                             onClick: "acceptInvite",
-                            width: 150
+                            width: 150,
+                            visible:false
+
                         },
                         {
                             text: "自费",
@@ -333,7 +335,8 @@ Page({
                             colorBg: "#cdcdcd",
                             colorShadow: "black",
                             onClick: "refuseInvite",
-                            width: 150
+                            width: 150,
+                            visible: false
                         },
                         {
                             text: "规则",
@@ -341,7 +344,8 @@ Page({
                             colorBg: "#cdcdcd",
                             colorShadow: "black",
                             onClick: "refuseInvite",
-                            width: 150
+                            width: 150,
+                            visible: false
                         }
                     ]
                 }
@@ -350,23 +354,6 @@ Page({
 
         slider = require('../../utils/slider.js').init(slidersInfo)
         slider.setLayer(0, 0)
-        slider.updateLayer(0,[
-            {
-                text: "添加规则",
-                onClick:"showRule",
-                visible:true
-            },
-            {
-                text:"添加自费",
-                onClick: "showRulePaySelf",
-                visible: true
-            },
-            {
-                
-                visible: false
-            }
-        ])
-
     },
 
     caclContainerHeight: function () {

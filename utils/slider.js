@@ -98,6 +98,7 @@ function setLayer(index, layerIndex) {
     if (layerIndex!=undefined){
         item.value.layerInfo = clone(this.slidersInfo.layers[layerIndex])
         item.value.layerIndex = layerIndex
+        return
     }
 
     //配置可拖动视图
@@ -178,17 +179,28 @@ function start(e) {
     var index = e.target.dataset.index
     var item = this.slidersInfo.page.getSliderData(index)
 
-    if (!this.hasSlider(index))
+    if (!this.hasSlider(index)){
+        item.style.sv_main = "width:750rpx;"
         return
-    this.closeAll()
+    }
 
-    // console.log(e)
+    console.log(item.value.sv_left)
+    if (item.value.sv_left < 0 ){
+        this.close(index)
+        return
+    }
+
+    this.closeOther(index)
+
+    
 
     this.eventEnd = false;
     this.startX = e.touches[0].pageX;
     this.startY = e.touches[0].pageY;
 
     this.startLeft = item.value.sv_left;
+
+    this.slidersInfo.page.refreshSliderData()
     // console.log(startLeft)
 
 
@@ -220,7 +232,7 @@ function move(e, checkAngle) {
         console.log(a)
         if (Math.abs(a) > 15) {
             this.eventEnd = true
-            this.closeAll()
+            this.closeOther(index)
             return
         }
 
@@ -248,6 +260,7 @@ function move(e, checkAngle) {
     moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
     moveX = moveX > 0 ? 0 : moveX
 
+    
     item.value.sv_left = moveX
     item.style.sv_left = 'left:' + item.value.sv_left + 'rpx;';
     delete item.style.scroll_left
@@ -270,7 +283,7 @@ function end(e) {
 
     this.eventEnd = true
 
-    var isOpen = item.value.sv_left < -this.getSliderWidthByIndex(index) / 3 ? true : false;
+    var isOpen = Math.abs(item.value.sv_left) > 75 ? true : false
 
 
 
@@ -283,17 +296,31 @@ function end(e) {
 /**
  * 关闭所有打开的抽屉
  */
-function closeAll() {
-    // console.log('closeAll')
+function closeOther(index) {
+    // console.log('closeOther')
     var datas = this.slidersInfo.page.getSliderData()
-    var that = this
     datas.forEach(function (v, i) {
+        if(i==index)
+            return
         v.value.sv_left = 0
-        v.style.sv_left = 'left:0;transition:all 0.2s ease;';
+        v.style.sv_left = 'left:0;transition:all 0.2s ease;'
         v.style.scroll_left = 0
     })
 
     this.slidersInfo.page.refreshSliderData()
+
+    setTimeout(function () {
+        var datas = this.slidersInfo.page.getSliderData()
+        datas.forEach(function (v, i) {
+            if (i == index)
+                return
+            v.style.sv_left = 'left:0;'
+            v.style.scroll_left = 0
+            v.style.slider = "display:none;"
+        })
+
+        this.slidersInfo.page.refreshSliderData()
+    }.bind(this), 200)
 }
 
 /**
@@ -305,7 +332,16 @@ function close(index) {
     item.value.sv_left = 0
     item.style.sv_left = 'left:0;transition: left 0.2s ease;';
     item.style.scroll_left=0
+
     this.slidersInfo.page.refreshSliderData()
+
+    //解决垂直滑动时右下角隐约可见slider的buttons
+    setTimeout(function () {
+        var item = this.slidersInfo.page.getSliderData(index)
+        item.style.slider = "display:none;"
+        item.style.sv_left = 'left:0;'
+        this.slidersInfo.page.refreshSliderData()
+    }.bind(this), 200)
 }
 /**
  * 关闭某个索引的抽屉
@@ -316,6 +352,12 @@ function open(index) {
     item.value.sv_left = -this.getSliderWidthByIndex(index)
     item.style.sv_left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease;';
     this.slidersInfo.page.refreshSliderData()
+
+    setTimeout(function () {
+        var item = this.slidersInfo.page.getSliderData(index)
+        item.style.sv_left = 'left:' + -this.getSliderWidthByIndex(index) +"rpx;"
+        this.slidersInfo.page.refreshSliderData()
+    }.bind(this), 200)
 }
 
 /**
@@ -325,7 +367,7 @@ function breakOnce() {
     if (this.eventEnd)
         return
     this.eventEnd = true
-    this.closeAll()
+    this.closeOther()
 }
 
 
@@ -455,7 +497,7 @@ module.exports = {
     end: end,
     breakOnce: breakOnce,
     close: close,
-    closeAll: closeAll,
+    closeOther: closeOther,
     open: open,
     cancel: cancel,
     angle: angle,

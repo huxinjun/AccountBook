@@ -221,7 +221,7 @@
 /**成员主内容*/
 
 .member_main {
-    width: 752rpx;
+    width: 750rpx;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -229,6 +229,7 @@
     background-color: #efefef;
     padding-left: 20rpx;
     padding-right: 20rpx;
+    box-sizing: border-box;
     position: relative;
 }
 
