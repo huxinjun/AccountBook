@@ -1,4 +1,4 @@
-<scroll-view class="container" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{windowHeight}}px;" bindscroll='outterScroll'>
+<scroll-view class="container" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;" bindscroll='outterScroll'>
     <view class="title">
         <image src="/img/type/gray_accounts.png"></image>
         <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
@@ -49,12 +49,9 @@
         <view wx:for="{{account.members}}" wx:key="{{index}}">
             <view class="memeber" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}">
 
+                <scroll-view scroll-x bindscroll='innerScroll' style="{{item.style.sv_pos}}{{item.style.sv_left}}" scroll-left="{{item.style.scroll_left}}">
 
-
-                <scroll-view scroll-x bindscroll='innerScroll' scroll-left="{{item.value.scroll_left}}" scroll-with-animation="true" style="{{item.style.sv}}{{item.style.deleteTrans}}" data-index="{{index}}" >
-
-
-                    <view class="member_main" style="{{item.style.sv_main}}" bindtouchstart="touchstart" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+                    <view class="member_main" style="{{item.style.sv_main}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
                         <image class="member_icon" src="/img/head.jpg" mode="aspectFill" data-index="{{index}}"></image>
 
                         <view class="member_content" data-index="{{index}}">
@@ -70,12 +67,7 @@
 
                     </view>
 
-
-                    <view style='{{item.style.sv_ph}}'></view>
-
                 </scroll-view>
-
-
 
                 <view class="member_rule" style="{{item.style.memberRule}}{{item.style.memberRuleTrans}}">
 
@@ -88,17 +80,11 @@
                     <button>保存</button>
                 </view>
 
-
-
-                <view style="{{item.style.sv_slider}}">
-                        <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
-                        <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
-                        <view style="{{item.style.layerStyle_0_2}}" bindtap="{{item.value.layerTap_0_2}}" data-index="{{index}}">{{item.value.layerText_0_2}}</view>
+                <view style="{{item.style.slider}}">
+                    <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
+                    <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
+                    <view style="{{item.style.layerStyle_0_2}}" bindtap="{{item.value.layerTap_0_2}}" data-index="{{index}}">{{item.value.layerText_0_2}}</view>
                 </view>
-
-
-
-
 
 
 

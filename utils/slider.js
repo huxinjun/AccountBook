@@ -2,7 +2,16 @@
  * 左滑删除
  * Created by xinjun on 2017/8/11 14:10
  */
-
+/**按下时item的left */
+var startLeft = 0
+/**按下x */
+var startX = 0
+/**按下y */
+var startY = 0
+/**上一次move事件的x */
+var preX = 0
+/**标识事件是否已经中断 */
+var eventEnd = false
 
 
 var slidersInfo
@@ -93,7 +102,6 @@ function setLayer(index, layerIndex) {
 
     //配置可拖动视图
     if (!this.hasSlider(index)) {
-        //没有配置任何状态层，不需要拉开
         return
     }
     //更新界面绑定的数据
@@ -102,17 +110,13 @@ function setLayer(index, layerIndex) {
     var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
-
-    var left = 750 - this.getSliderWidthByIndex(index)
-    var p6 = "position:absolute;top:0;left:" + left + "rpx;"
-    
+    var p6 = "position:absolute;right:0;top:0;"
 
 
-    item.style.sv = "width:750rpx;position:absolute;z-index:1;"
-    item.style.sv_main = "position: relative;"
-    //ph:placeholder占位
-    item.style.sv_ph = p1 + p2 +"position:absolute;left:750rpx;top:0;opacity:0;"
-    item.style.sv_slider = p1 + p2 + p3 + p4 + p5 + p6
+    item.style.sv_pos ="position:absolute;top:0;z-index:1;"
+    item.style.sv_main="width:752rpx;"
+    item.style.slider = p1 + p2 + p3 + p4 + p5 + p6
+
 
     var that = this
 
@@ -158,6 +162,7 @@ function setLayer(index, layerIndex) {
             item.value[textName] = innerValue.text
         })
     })
+
     //更新界面
     this.slidersInfo.page.refreshSliderData()
 }
@@ -170,7 +175,6 @@ function setLayer(index, layerIndex) {
  * 按下时触发
  */
 function start(e) {
-    console.log("start")
     var index = e.target.dataset.index
     var item = this.slidersInfo.page.getSliderData(index)
 
@@ -179,20 +183,78 @@ function start(e) {
     this.closeAll()
 
     // console.log(e)
-    
+
+    this.eventEnd = false;
+    this.startX = e.touches[0].pageX;
+    this.startY = e.touches[0].pageY;
+
+    this.startLeft = item.value.sv_left;
+    // console.log(startLeft)
 
 
 }
 
-function scroll(e){
-    console.log("scroll")
+/**
+ * 移动时触发
+ */
+function move(e, checkAngle) {
     var index = e.target.dataset.index
-    var scrollLeft = e.detail.scrollLeft
-    var scrollWidth = e.detail.scrollWidth
     var item = this.slidersInfo.page.getSliderData(index)
 
-    item.value.scroll_left = scrollLeft
-    item.value.scroll_width = scrollWidth
+    if (!this.hasSlider(index))
+        return
+    if (this.eventEnd)
+        return
+
+
+
+    var currX = e.touches[0].pageX;
+    var currY = e.touches[0].pageY;
+    var moveX = currX - this.startX;
+    var moveY = currY - this.startY;
+
+
+    if (this.slidersInfo.checkAngle) {
+        //获取滑动角度
+        var a = angle({ X: this.startX, Y: this.startY }, { X: currX, Y: currY });
+        console.log(a)
+        if (Math.abs(a) > 15) {
+            this.eventEnd = true
+            this.closeAll()
+            return
+        }
+
+    }
+
+
+
+    var deltaX = currX - this.preX;
+    this.preX = currX;
+
+
+    //已经抽出,还往左滑,忽略后面的事件
+    if (item.value.sv_left <= -250 && deltaX < 0)
+        return
+
+    //已经合上,还往右滑,忽略后面的事件
+    if (item.value.sv_left >= 0 && deltaX > 0)
+        return
+
+
+    //基于上一次的位置滑动
+    moveX += this.startLeft;
+    // console.log("-------------" + moveX)
+    //避免快速滑动时两个move事件x距离太大,抽屉滑过头了
+    moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
+    moveX = moveX > 0 ? 0 : moveX
+
+    item.value.sv_left = moveX
+    item.style.sv_left = 'left:' + item.value.sv_left + 'rpx;';
+    delete item.style.scroll_left
+    this.slidersInfo.page.refreshSliderData()
+
+
+
 
 }
 
@@ -206,12 +268,11 @@ function end(e) {
     if (!this.hasSlider(index))
         return
 
-    var sliderWidthPx=item.value.scroll_width - this.slidersInfo.windowWidth
+    this.eventEnd = true
+
+    var isOpen = item.value.sv_left < -this.getSliderWidthByIndex(index) / 3 ? true : false;
 
 
-    var isOpen = item.value.scroll_left > sliderWidthPx/2 ? true : false;
-
-    console.log(item.value.scroll_left + "---------------" + sliderWidthPx)
 
     if (isOpen)
         this.open(index)
@@ -220,27 +281,16 @@ function end(e) {
 }
 
 /**
- * 打开某个索引的抽屉
- */
-function open(index) {
-    console.log("open")
-    var item = this.slidersInfo.page.getSliderData(index)
-
-    var sliderWidthPx = item.value.scroll_width - this.slidersInfo.windowWidth
-    item.value.scroll_left = sliderWidthPx
-
-    this.slidersInfo.page.refreshSliderData()
-}
-
-/**
  * 关闭所有打开的抽屉
  */
 function closeAll() {
-    console.log('closeAll')
+    // console.log('closeAll')
     var datas = this.slidersInfo.page.getSliderData()
     var that = this
     datas.forEach(function (v, i) {
-        v.value.scroll_left = 0
+        v.value.sv_left = 0
+        v.style.sv_left = 'left:0;transition:all 0.2s ease;';
+        v.style.scroll_left = 0
     })
 
     this.slidersInfo.page.refreshSliderData()
@@ -250,20 +300,31 @@ function closeAll() {
  * 关闭某个索引的抽屉
  */
 function close(index) {
-    console.log("close")
     var item = this.slidersInfo.page.getSliderData(index)
 
-    item.value.scroll_left = 0
-
+    item.value.sv_left = 0
+    item.style.sv_left = 'left:0;transition: left 0.2s ease;';
+    item.style.scroll_left=0
     this.slidersInfo.page.refreshSliderData()
 }
+/**
+ * 关闭某个索引的抽屉
+ */
+function open(index) {
+    var item = this.slidersInfo.page.getSliderData(index)
 
+    item.value.sv_left = -this.getSliderWidthByIndex(index)
+    item.style.sv_left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease;';
+    this.slidersInfo.page.refreshSliderData()
+}
 
 /**
  * 强制中断本次抽屉事件
  */
 function breakOnce() {
-    console.log('breakOnce')
+    if (this.eventEnd)
+        return
+    this.eventEnd = true
     this.closeAll()
 }
 
@@ -309,8 +370,8 @@ function deleteItem(index) {
             //移除列表中下标为index的项
             datas.remove(index, 1);
             datas.forEach(function (v, i) {
-                v.value.left = 0
-                v.style.left = ""
+                v.value.sv_left = 0
+                v.style.sv_left = ""
             })
             //更新列表的状态
             this.slidersInfo.page.refreshSliderData()
@@ -320,6 +381,24 @@ function deleteItem(index) {
 
 }
 
+
+
+
+
+
+
+
+/**
+ * 计算滑动角度
+ * @param {Object} start 起点坐标
+ * @param {Object} end 终点坐标
+ */
+function angle(start, end) {
+    var _X = end.X - start.X,
+        _Y = end.Y - start.Y
+    //返回角度 /Math.atan()返回数字的反正切值
+    return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+}
 
 /**
  * 克隆一个对象(所有属性)
@@ -372,13 +451,14 @@ module.exports = {
     init: init,
 
     start: start,
-    scroll: scroll,
+    move: move,
     end: end,
     breakOnce: breakOnce,
     close: close,
     closeAll: closeAll,
     open: open,
     cancel: cancel,
+    angle: angle,
     deleteItem: deleteItem,
 
     updateLayer: updateLayer,

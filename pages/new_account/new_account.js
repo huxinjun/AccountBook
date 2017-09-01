@@ -4,8 +4,7 @@ var APP = getApp()
 var slider
 Page({
     data: {
-        windowHeight: 0,
-        windowWidth:0,
+        containerHeight: 0,
 
         account: {
 
@@ -175,7 +174,6 @@ Page({
      * 添加成员
      */
     addMember: function () {
-        
         /**
          * 不把其他元素的动画取消,会导致顶部元素动画时,打开编辑框的条目也在进行height动画
          */
@@ -203,7 +201,6 @@ Page({
         this.setData({
             account: this.data.account
         })
-       
         setTimeout(function () {
 
             this.data.account.members[0].style.member = "height:140rpx;opacity:1;"
@@ -224,7 +221,6 @@ Page({
      */
     removeMember: function (e) {
       var index=e.target.dataset.index
-      console.log("delete:"+index);
       slider.deleteItem(index);
     },
 
@@ -313,9 +309,11 @@ Page({
         var slidersInfo = {
             //page：page对象
             page: this,
+            //checkAngle：是否要检查水平滑动的角度，默认大于15度将认为抽屉时间中断
+            checkAngle: false,
             //条目高度
             height: 140,
-            windowWidth: this.data.windowWidth,
+
             //N种状态
             layers: [
                 {
@@ -349,6 +347,7 @@ Page({
                 }
             ]
         }
+
         slider = require('../../utils/slider.js').init(slidersInfo)
         slider.setLayer(0, 0)
         slider.updateLayer(0,[
@@ -374,10 +373,8 @@ Page({
         var that = this
         wx.getSystemInfo({
             success: function (res) {
-                console.log(res)
                 that.setData({
-                    windowHeight: res.windowHeight,
-                    windowWidth: res.windowWidth
+                    containerHeight: res.windowHeight
                 })
             }
         })
@@ -397,7 +394,9 @@ Page({
         var index = e.target.dataset.index
         this.updateMemberSliderButton(index)
         slider.start(e)
-        console.log("touchstart:"+index)
+    },
+    touchmove: function (e) {
+        slider.move(e)
     },
     touchend: function (e) {
         slider.end(e)
@@ -406,10 +405,11 @@ Page({
         slider.cancel(e)
     },
     outterScroll: function (e) {
-        
+        console.log("outterScroll")
+        slider.breakOnce();
     },
     innerScroll: function (e) {
-        slider.scroll(e)
+        console.log("innerScroll")
     }
 
 })
