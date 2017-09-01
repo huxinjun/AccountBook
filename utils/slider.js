@@ -2,8 +2,7 @@
  * 左滑删除
  * Created by xinjun on 2017/8/11 14:10
  */
-/**按下时item的left */
-var startLeft = 0
+
 /**按下x */
 var startX = 0
 /**按下y */
@@ -181,6 +180,8 @@ function start(e) {
 
     if (!this.hasSlider(index)){
         item.style.sv_main = "width:750rpx;"
+        this.slidersInfo.page.refreshSliderData()
+        eventEnd = true
         return
     }
 
@@ -198,10 +199,8 @@ function start(e) {
     this.startX = e.touches[0].pageX;
     this.startY = e.touches[0].pageY;
 
-    this.startLeft = item.value.sv_left;
 
     this.slidersInfo.page.refreshSliderData()
-    // console.log(startLeft)
 
 
 }
@@ -253,8 +252,6 @@ function move(e, checkAngle) {
         return
 
 
-    //基于上一次的位置滑动
-    moveX += this.startLeft;
     // console.log("-------------" + moveX)
     //避免快速滑动时两个move事件x距离太大,抽屉滑过头了
     moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
