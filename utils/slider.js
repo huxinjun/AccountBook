@@ -104,10 +104,13 @@ function setLayer(index, layerIndex) {
     if (!this.hasSlider(index)) {
         return
     }
+
+    var layer = this.slidersInfo.layers[item.value.layerIndex]
+
     //更新界面绑定的数据
     var p1 = "width:" + this.getSliderWidthByIndex(index) + "rpx;"
-    var p2 = "height:" + this.slidersInfo.height + "rpx;"
-    var p3 = "line-height:" + this.slidersInfo.height + "rpx;"
+    var p2 = "height:" + layer.height + "rpx;"
+    var p3 = "line-height:" + layer.height + "rpx;"
     var p4 = "vertical-align:middle;"
     var p5 = "text-align:center;"
     var p6 = "position:absolute;right:0;top:0;"
@@ -135,7 +138,7 @@ function setLayer(index, layerIndex) {
 
             
 
-            var p1 = "height:" + that.slidersInfo.height + "rpx; "
+            var p1 = "height:" + layer.height + "rpx; "
             var p2 = "width:" + innerValue.width + "rpx;"
             var p3 = "color:" + innerValue.color + ";"
             var p4 = "background-color:" + innerValue.colorBg + ";"

@@ -44,12 +44,21 @@
     align-self: center;
     color: #f00;
     font-size: 50rpx;
-    margin-right: 10rpx;
+    margin-right: 20rpx;
 }
 
 /**备注---------------------------------------------------------------------------*/
-
 .desc {
+    width: 750rpx;
+    height: 100rpx;
+    border-bottom: 1rpx dashed #ddd;
+    box-sizing: border-box;
+    
+    position: relative;
+    overflow: hidden;
+}
+
+.desc_main {
     width: 750rpx;
     height: 100rpx;
     flex-flow: row wrap;
@@ -57,8 +66,9 @@
     align-items: center;
     justify-content: space-between;
     padding-left: 20rpx;
-    border-bottom: 1rpx dashed #ddd;
     box-sizing: border-box;
+    position: relative;
+    background-color: #fff;
 }
 
 .desc_icon {
@@ -80,12 +90,6 @@
     margin-right: 20rpx;
 }
 
-.desc_delete_pic {
-    width: 40rpx;
-    height: 40rpx;
-    align-self: center;
-    margin-right: 10rpx;
-}
 
 .pics {
     width: 100%;

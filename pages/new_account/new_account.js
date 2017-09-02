@@ -10,6 +10,10 @@ Page({
         tip1: "请输入固定数额(此成员将只按此金额付款)",
         tip2: "请输入自费数额(其他成员将不会为这笔数额买单哦！)",
 
+        descSliderInfo:{
+            index:-1
+        },
+
         account: {
 
             name: "火锅",
@@ -68,6 +72,26 @@ Page({
 
 
         
+    },
+
+    /**
+     * 获取某个抽屉数据附加的list条目对象
+     */
+    getSliderData: function (index) {
+        if (index == -1)
+            return this.data.descSliderInfo
+        if (index == undefined)
+            return this.data.account.members
+        return this.data.account.members[index]
+    },
+    /**
+     * 刷新抽屉数据
+     */
+    refreshSliderData: function () {
+        this.setData({
+            descSliderInfo: this.data.descSliderInfo,
+            account: this.data.account
+        })
     },
 
     /**
@@ -167,6 +191,10 @@ Page({
      * 根据索引配置抽屉需要显示的按钮
      */
     updateMemberSliderButton:function(index){
+        if(index==this.data.descSliderInfo.index){
+            slider.updateLayer(this.data.descSliderInfo.index, [])
+            return
+        }
         if (this.getSliderData().length == 1) {
           slider.updateLayer(0, [
             { visible: false },
@@ -264,22 +292,7 @@ Page({
     },
 
 
-    /**
-     * 获取某个抽屉数据附加的list条目对象
-     */
-    getSliderData: function (index) {
-        if (index == undefined)
-            return this.data.account.members
-        return this.data.account.members[index]
-    },
-    /**
-     * 刷新抽屉数据
-     */
-    refreshSliderData: function () {
-        this.setData({
-            account: this.data.account
-        })
-    },
+
 
 
 
@@ -572,13 +585,13 @@ Page({
         var slidersInfo = {
             //page：page对象
             page: this,
-            //条目高度
-            height: 140,
-
+            
             //N种状态
             layers: [
                 {
-                    name: "状态一",
+                    name: "members slider buttons",
+                    //条目高度
+                    height: 140,
                     buttons: [
                         {
                             text: "",
@@ -609,12 +622,39 @@ Page({
                             visible: false
                         }
                     ]
+                },
+                {
+                    name: "desc slider buttons",
+                    //条目高度
+                    height: 100,
+                    buttons: [
+                        {
+                            text: "清空",
+                            color: "white",
+                            colorBg: "#f00",
+                            colorShadow: "black",
+                            onClick: "",
+                            width: 150,
+                            visible: true
+
+                        },
+                        {
+                            text: "删除",
+                            color: "white",
+                            colorBg: "#2BA245",
+                            colorShadow: "black",
+                            onClick: "",
+                            width: 150,
+                            visible: true
+                        }
+                    ]
                 }
             ]
         }
 
         slider = require('../../utils/slider.js').init(slidersInfo)
         slider.setLayer(0, 0)
+        slider.setLayer(this.data.descSliderInfo.index, 1)
 
         this.getTodayDate()
     },
