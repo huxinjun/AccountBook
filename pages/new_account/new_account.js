@@ -14,6 +14,14 @@ Page({
 
             name: "火锅",
 
+            description:"",
+
+            icons: [],
+
+            date:"",
+
+            address_info:{},
+
 
             members: [
                 {
@@ -21,7 +29,7 @@ Page({
                     //account data----------------------------------
                     id: "abc",
                     name:"新军",
-                    icon:["/img/head.jpg"],
+                    
                     paid_in:88.8,
                     // pay_rule:{
                     //     type: 0,    //0:百分比  1:固定数额
@@ -472,6 +480,9 @@ Page({
     paidInFocus:function(e){
         var index = e.target.dataset.index
         var item = this.getSliderData(index)
+        if (item.value.isSliderOpen)
+            slider.close(index)
+
         item.value.paidin_input="￥"
         this.refreshSliderData()
     },
@@ -480,17 +491,74 @@ Page({
      * 成员支付数额失去焦点
      */
     paidInBlur: function (e) {
+        
         var index = e.target.dataset.index
         var item = this.getSliderData(index)
+        
+
         if (item.value.paidin_input =="￥")
             item.value.paidin_input = "￥0.00"
         this.refreshSliderData()
     },
 
 
+    /**
+     * 选择时间
+     */
+    bindDateChange:function(e){
+        console.log(e)
+        this.data.account.date = e.detail.value
+        this.refreshSliderData()
+    },
+
+    /**
+     * 获取今天的日期字符串
+     */
+    getTodayDate:function(){
+        var date=new Date()
+        var year = date.getFullYear()
+        var month = date.getMonth()+1
+        var day = date.getDate()
+        this.data.account.date = year + "-" + (month > 9 ? month : "0" + month) + "-" + (day > 9 ? day : "0" + day)
+        this.setData({
+            today: this.data.account.date,
+            account:this.data.account
+        })
+    },
+
+    /**
+     * 选择位置
+     */
+    chooseLocation: function (e) {
+        var that = this
+        wx.chooseLocation({
+            success: function (res) {
+                // console.log(res)
+                that.data.account.address_info=res
+                that.refreshSliderData()
+            },
+        })
+    },
 
 
-
+    /**
+     * 选择图片
+     */
+    chooseImage:function(e){
+        var that=this
+        wx.chooseImage({
+            count: 9, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+                var tempFilePaths = res.tempFilePaths
+                console.log(res)
+                that.data.account.icons=tempFilePaths
+                that.refreshSliderData()
+            }
+        })
+    },
 
 
 
@@ -547,6 +615,8 @@ Page({
 
         slider = require('../../utils/slider.js').init(slidersInfo)
         slider.setLayer(0, 0)
+
+        this.getTodayDate()
     },
 
     /**
@@ -589,6 +659,8 @@ Page({
     innerScroll: function (e) {
         // console.log("innerScroll")
     },
+
+    
 
 
 

@@ -299,6 +299,7 @@ function closeOther(index) {
     datas.forEach(function (v, i) {
         if(i==index)
             return
+        v.value.isSliderOpen = false
         v.value.sv_left = 0
         v.style.sv_left = 'left:0;transition:all 0.2s ease;'
         v.style.scroll_left = 0
@@ -326,6 +327,7 @@ function closeOther(index) {
 function close(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
+    item.value.isSliderOpen = false
     item.value.sv_left = 0
     item.style.sv_left = 'left:0;transition: left 0.2s ease;';
     item.style.scroll_left=0
@@ -346,6 +348,7 @@ function close(index) {
 function open(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
+    item.value.isSliderOpen=true
     item.value.sv_left = -this.getSliderWidthByIndex(index)
     item.style.sv_left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease;';
     this.slidersInfo.page.refreshSliderData()
