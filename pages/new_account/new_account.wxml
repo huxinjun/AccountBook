@@ -58,7 +58,7 @@
                             <text class="member_name" data-index="{{index}}">新军{{index}}</text>
 
                             <view class="member_tags" data-index="{{index}}">
-                                <text class="member_name" bindtap="hideRule" data-index="{{index}}" style="{{item.style.tag0}}">{{item.value.tag0}}</text>
+                                <text class="member_name" data-index="{{index}}" style="{{item.style.tag0}}">{{item.value.tag0}}</text>
                                 <text class="member_name" bindtap="showRule" data-index="{{index}}" style="{{item.style.tag1}}">{{item.value.tag1}}</text>
                                 <text class="member_name" bindtap="showRulePaySelf" data-index="{{index}}" style="{{item.style.tag2}}">{{item.value.tag2}}</text>
                             </view>
@@ -71,13 +71,13 @@
 
                 <view class="member_rule" style="{{item.style.memberRule}}{{item.style.memberRuleTrans}}">
 
-                    <radio-group bindchange="radioChange" style="{{item.style.memberRuleType}}{{item.style.memberRuleTypeTrans}}">
-                        <label class="member_rule_label" wx:for="{{items}}" wx:key="{{index}}">
-                                <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+                    <radio-group bindchange="radioChange" style="{{item.style.memberRuleType}}{{item.style.memberRuleTypeTrans}}" data-index="{{index}}">
+                        <label class="member_rule_label" wx:for="{{rule_tyles}}" wx:key="{{index}}">
+                                <radio value="{{item.value}}" checked="true"/>{{item.name}}
                          </label>
                     </radio-group>
-                    <input type="text" placeholder="请输入数值" placeholder-class="placeholder_class" />
-                    <button>保存</button>
+                    <input type="text" value="{{item.value.rule_input_value}}" placeholder="{{item.value.rule_input_placeholder}}" placeholder-class="placeholder_class" bindinput="ruleInputValueChanged" data-index="{{index}}" type="digit"/>
+                    <button bind:tap="save" data-index="{{index}}">保存</button>
                 </view>
 
                 <view style="{{item.style.slider}}">
@@ -93,4 +93,7 @@
 
         </view>
     </view>
+
+
+    <button bind:tap="uploadAccount" data-index="{{index}}">记一笔</button>
 </scroll-view>

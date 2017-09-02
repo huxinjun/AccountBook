@@ -5,6 +5,10 @@ var slider
 Page({
     data: {
         containerHeight: 0,
+        
+        tip0: "请输入固定比例(此成员将只付款总金额的百分比值)",
+        tip1: "请输入固定数额(此成员将只按此金额付款)",
+        tip2: "请输入自费数额(其他成员将不会为这笔数额买单哦！)",
 
         account: {
 
@@ -21,7 +25,7 @@ Page({
                     paid_in:88.8,
                     // pay_rule:{
                     //     type: 0,    //0:百分比  1:固定数额
-                    //     number:0.2
+                    //     num:0.2
                     // },
                     // money_for_self: 20.5,
 
@@ -47,32 +51,24 @@ Page({
                 }
             ]
         },
-        items: [
-            { name: '百分比付款', value: '0' },
-            { name: '固定值付款', value: '1', checked: 'true' }
+        rule_tyles: [
+            { name: '百分比付款', value: 0},
+            { name: '固定值付款', value: 1}
         ],
 
 
         
     },
-    /**
-     * 添加规则
-     */
-    addRule:function(index,tp,num){
-        var member = this.getSliderData(index)
-        member.pay_rule={
-            type: tp,
-            number: num
-        }
-        getSliderData(index).style.tag1 = "display:inherit;"
-    },
+ 
     /**
      * 删除规则
      */
-    removeRule: function (index) {
+    removeRule: function (e) {
+        var index = e.target.dataset.index
         var member = this.getSliderData(index)
         delete member.pay_rule
-        getSliderData(index).style.tag1 = "display:none;"
+        slider.close(index)
+        this.refreshTags()
 
     },
     /**
@@ -82,21 +78,16 @@ Page({
         var member = this.getSliderData(index)
         return member.pay_rule!=undefined
     },
-    /**
-     * 添加自费
-     */
-    addMoneyForSelf: function (index,num) {
-        var member = this.getSliderData(index)
-        member.money_for_self=num
-        getSliderData(index).style.tag2 = "display:inherit;"
-    },
+
     /**
      * 删除自费
      */
-    removeMoneyForSelf: function (index) {
+    removeMoneyForSelf: function (e) {
+        var index = e.target.dataset.index
         var member = this.getSliderData(index)
         delete member.money_for_self
-        getSliderData(index).style.tag2 = "display:none;"
+        slider.close(index)
+        this.refreshTags()
     },
     /**
      * 是否有自费
@@ -135,7 +126,7 @@ Page({
         } else {
           info[1].visible = true
           info[1].text = "添加自费"
-          info[1].onClick = "addMoneyForSelf"
+          info[1].onClick = "showRulePaySelf"
         }
 
         if (index!=this.getSliderData().length-1) {
@@ -150,6 +141,60 @@ Page({
 
         slider.updateLayer(index,info)
 
+    },
+
+
+    /**
+     * 根据现有的规则和自费刷新要显示的tag
+     */
+    refreshTags: function () {
+        var datas = this.getSliderData()
+        var that=this
+        if (datas.length > 1) {
+            datas.forEach(function (v, i) {
+
+                v.style.tag0 = "display:none;"
+                v.style.tag1 = "display:inherit;"
+                if (that.hasRule(i)){
+                    //0:百分比  1:固定数额
+                    if(v.pay_rule.type==0)
+                        v.value.tag1 = "付款" + v.pay_rule.num + "%"
+                    else
+                        v.value.tag1 = "付款" + v.pay_rule.num + "元"
+                        
+                }else
+                    v.value.tag1 = "AA制"
+
+                if (that.hasMoneyForSelf(i)) {
+                    v.style.tag2 = "display:inherit;"
+                    v.value.tag2 = "自费" + v.money_for_self + "元"
+
+                }else{
+                    v.style.tag2 = "display:none;"
+                    v.value.tag2 = ""
+                }
+                
+            })
+        }else{
+            datas[0].style.tag0 = "display:inherit;"
+            datas[0].style.tag1 = "display:none;"
+            datas[0].style.tag2 = "display:none;"
+        }
+        this.refreshSliderData()
+    },
+
+
+    /**
+     * 刷新规则或自费input的placeholder文案
+     */
+    refreshRuleInputPlaceHolder:function(index){
+        var item = this.getSliderData(index)
+        if (item.value.isShowRule)
+            item.value.rule_input_placeholder = this.data["tip" + item.value.rule_type]
+        else
+            item.value.rule_input_placeholder = this.data.tip2
+        delete item.value.rule_input_value
+        this.refreshSliderData()
     },
 
 
@@ -194,7 +239,8 @@ Page({
             value: {
                 tag0: "个人账单",
                 tag1: "AA制",
-                tag2: "自费10元"
+                tag2: "自费10元",
+                rule_type:1
             }
         })
         slider.setLayer(0,0)
@@ -229,35 +275,47 @@ Page({
      */
     showRule: function (e) {
         var index = e.target.dataset.index
-        var members = this.data.account.members
-        members[index].style.member = "height:410rpx;opacity:1;"
-        members[index].style.memberRule = "height:270rpx;opacity:1;"
-        members[index].style.memberRuleType = "height:60rpx;opacity:1;"
+        var item=this.getSliderData(index)
+        //已经打开了就关闭
+        if (item.value.isShowRule){
+            this.hideRule(e)
+            return
+        }
 
-        members[index].style.memberTrans = "transition:all 0.5s ease;"
-        members[index].style.memberRuleTrans = "transition:all 0.5s ease;"
-        members[index].style.memberRuleTypeTrans = "transition:all 0.5s ease;"
+        item.style.member = "height:410rpx;opacity:1;"
+        item.style.memberRule = "height:270rpx;opacity:1;"
+        item.style.memberRuleType = "height:60rpx;opacity:1;"
 
+        item.style.memberTrans = "transition:all 0.5s ease;"
+        item.style.memberRuleTrans = "transition:all 0.5s ease;"
+        item.style.memberRuleTypeTrans = "transition:all 0.5s ease;"
+
+
+        
+        item.value.isShowRule = true
+        
         this.setData({
             scrollToView: "members",
             account: this.data.account
         })
         slider.close(index)
+
+        this.refreshRuleInputPlaceHolder(index)
     },
     /**
      * 隐藏规则编辑框
      */
     hideRule: function (e) {
         var index = e.target.dataset.index
-        var members = this.data.account.members
-        members[index].style.member = "height:140rpx;opacity:1;"
-        members[index].style.memberRule = "height:0;opacity:0;"
+        var item = this.getSliderData(index)
+        item.style.member = "height:140rpx;opacity:1;"
+        item.style.memberRule = "height:0;opacity:0;"
 
-        members[index].style.memberTrans = "transition:all 0.5s ease;"
-        members[index].style.memberRuleTrans = "transition:all 0.5s ease;"
-        this.setData({
-            account: this.data.account
-        })
+        item.style.memberTrans = "transition:all 0.5s ease;"
+        item.style.memberRuleTrans = "transition:all 0.5s ease;"
+
+        item.value.isShowRule=false
+        this.refreshSliderData()
 
     },
     /**
@@ -265,18 +323,101 @@ Page({
      */
     showRulePaySelf: function (e) {
         var index = e.target.dataset.index
-        var members = this.data.account.members
-        members[index].style.member = "height:350rpx;opacity:1;"
-        members[index].style.memberRule = "height:210rpx;opacity:1;"
-        members[index].style.memberRuleType = "height:0;opacity:0;"
+        var item = this.getSliderData(index)
+        item.style.member = "height:350rpx;opacity:1;"
+        item.style.memberRule = "height:210rpx;opacity:1;"
+        item.style.memberRuleType = "height:0;opacity:0;"
 
-        members[index].style.memberTrans = "transition:all 0.5s ease;"
-        members[index].style.memberRuleTrans = "transition:all 0.5s ease;"
-        members[index].style.memberRuleTypeTrans = "transition:all 0.5s ease;"
-        this.setData({
-            account: this.data.account
-        })
+        item.style.memberTrans = "transition:all 0.5s ease;"
+        item.style.memberRuleTrans = "transition:all 0.5s ease;"
+        item.style.memberRuleTypeTrans = "transition:all 0.5s ease;"
+
+
+        item.value.isShowRule = false
+        item.value.isMoneyForSelf = true
+
+        this.refreshRuleInputPlaceHolder(index)
         slider.close(index)
+    },
+
+
+
+
+    /**
+     * 条目的规则中的付款类型变化了
+     */
+    radioChange: function (e) {
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        console.log(e)
+        console.log('radio发生change事件，携带value值为：', e.detail.value)
+        item.value.rule_type = parseInt(e.detail.value)
+        item.value.rule_input_placeholder = this.data["tip" + e.detail.value]
+        this.refreshSliderData()
+    },
+
+    /**
+     * 规则或者自费的数额发生变化
+     */
+    ruleInputValueChanged:function(e){
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+
+        item.value.rule_input_value=parseFloat(e.detail.value)
+
+        console.log("输入的数字：" + item.value.rule_input_value)
+    },
+
+
+
+
+    /**
+     * 保存规则或者自费
+     */
+    save:function(e){
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        var inputValue = item.value.rule_input_value
+        if (inputValue == undefined || isNaN(inputValue)) {
+            wx.showToast({
+                title: '请输入数字！',
+            })
+            this.refreshRuleInputPlaceHolder(index)
+            return
+        }
+
+
+        if(item.value.isShowRule){
+            var ruleType=item.value.rule_type
+            item.pay_rule = {
+                type: ruleType
+            }
+            console.log("saveRule" + ruleType)
+            switch(ruleType){
+                case 0:
+                    //检查输入的有效性
+                    if (inputValue.isvalue < 0 || inputValue > 100) {
+                        wx.showToast({
+                            title: '请输入0-100之间的数额！',
+                        })
+                        this.refreshRuleInputPlaceHolder(index)
+                        return
+                    }
+
+                    item.pay_rule.num = inputValue
+                    break;
+                case 1:
+                    item.pay_rule.num = inputValue
+                    break;
+            }
+            
+        }else{
+            item.money_for_self = inputValue
+        }
+        delete item.value.rule_input_value
+        this.hideRule(e)
+        this.refreshTags()
+        
     },
 
 
@@ -288,29 +429,14 @@ Page({
 
     onLoad: function () {
         this.caclContainerHeight()
+        var that=this
         this.data.account.members.onSizeChanged=function(size){
-            if(size==1){
-                this[0].style.tag0="display:inherit;"
-                this[0].style.tag1 = "display:none;"
-                this[0].style.tag2 = "display:none;"
-                
-                return
-            }
-            if(size>=2){
-                this.forEach(function(v,i){
-                    v.style.tag0 = "display:none;"
-                    v.style.tag1 = "display:inherit;"
-                })
-                return
-            }
-
+            that.refreshTags()
         }
 
         var slidersInfo = {
             //page：page对象
             page: this,
-            //checkAngle：是否要检查水平滑动的角度，默认大于15度将认为抽屉时间中断
-            checkAngle: false,
             //条目高度
             height: 140,
 
@@ -356,6 +482,9 @@ Page({
         slider.setLayer(0, 0)
     },
 
+    /**
+     * 垂直的scroll-view需要一个固定高度
+     */
     caclContainerHeight: function () {
         var that = this
         wx.getSystemInfo({
@@ -367,12 +496,7 @@ Page({
         })
     },
 
-    longtap: function (e) {
-        console.log(e)
-    },
-    radioChange: function (e) {
-        console.log('radio发生change事件，携带value值为：', e.detail.value)
-    },
+
 
 
 
@@ -392,11 +516,34 @@ Page({
         slider.cancel(e)
     },
     outterScroll: function (e) {
-        console.log("outterScroll")
+        // console.log("outterScroll")
         slider.breakOnce();
     },
     innerScroll: function (e) {
-        console.log("innerScroll")
+        // console.log("innerScroll")
+    },
+
+
+
+
+
+
+
+
+    /**
+     * 上传到服务器
+     */
+    uploadAccount:function(e){
+        var clone=slider.clone(this.data.account)
+        delete clone.rule_tyles
+        clone.members.forEach(function(v,i){
+            delete v.style
+            delete v.value
+        })
+        console.log(clone)
+        
+
+
     }
 
 })
