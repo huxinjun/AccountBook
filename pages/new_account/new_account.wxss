@@ -246,16 +246,17 @@
     flex-grow: 1;
     height: 100rpx;
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: flex-start;
+    z-index: 1;
 }
 
 /**成员规则和其他标签*/
 
 .member_tags {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: flex-start;
 }
@@ -270,6 +271,20 @@
     padding-left: 10rpx;
     padding-right: 10rpx;
 }
+/**成员实付款*/
+.member_paidin{
+    width: 250rpx; 
+    height: 100%;
+    line-height: 100%;
+    text-align: right;
+    color: red;
+    position: absolute;
+    right: 0;
+    margin-right: 20rpx;
+
+    
+}
+
 
 /**成员规则编辑框*/
 

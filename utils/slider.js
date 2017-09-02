@@ -185,7 +185,7 @@ function start(e) {
         return
     }
 
-    console.log(item.value.sv_left)
+    // console.log(item.value.sv_left)
     if (item.value.sv_left < 0 ){
         this.close(index)
         return

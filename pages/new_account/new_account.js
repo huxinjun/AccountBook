@@ -6,7 +6,7 @@ Page({
     data: {
         containerHeight: 0,
         
-        tip0: "请输入固定比例(此成员将只付款总金额的百分比值)",
+        tip0: "请输入固定比例(此成员将只付款总金额的百分比值,范围0-100)",
         tip1: "请输入固定数额(此成员将只按此金额付款)",
         tip2: "请输入自费数额(其他成员将不会为这笔数额买单哦！)",
 
@@ -45,7 +45,9 @@ Page({
                     value: {
                         tag0: "个人账单",
                         tag1: "AA制",
-                        tag2: "自费10元"
+                        tag2: "自费10元",
+                        rule_type: 1,
+                        paidin_input:"￥0.00"
                     }
 
                 }
@@ -58,6 +60,62 @@ Page({
 
 
         
+    },
+
+    /**
+     * 添加成员
+     */
+    addMember: function () {
+        /**
+         * 不把其他元素的动画取消,会导致顶部元素动画时,打开编辑框的条目也在进行height动画
+         */
+        this.data.account.members.forEach(function (v, i) {
+            v.style.memberTrans = ""
+            v.style.memberRuleTrans = ""
+            v.style.memberRuleTypeTrans = ""
+        })
+
+        this.data.account.members.addToHead({
+            style: {
+                member: "height:0;opacity:0;",
+                memberRule: "height:0;opacity:0;",
+                tag0: "",
+                tag1: "display:inherit;",
+                tag2: "display:none;"
+            },
+            value: {
+                tag0: "个人账单",
+                tag1: "AA制",
+                tag2: "自费10元",
+                rule_type: 1,
+                paidin_input: "￥0.00"
+            }
+        })
+        slider.setLayer(0, 0)
+        this.setData({
+            account: this.data.account
+        })
+        setTimeout(function () {
+
+            this.data.account.members[0].style.member = "height:140rpx;opacity:1;"
+            this.data.account.members[0].style.memberTrans = "transition:all 0.5s ease;"
+            this.setData({
+                scrollToView: "members_title",
+                account: this.data.account
+
+            })
+
+        }.bind(this), 50)
+
+
+
+    },
+    /**
+     * 移除成员
+     */
+    removeMember: function (e) {
+        var index = e.target.dataset.index
+        slider.deleteItem(index);
     },
  
     /**
@@ -193,7 +251,7 @@ Page({
             item.value.rule_input_placeholder = this.data["tip" + item.value.rule_type]
         else
             item.value.rule_input_placeholder = this.data.tip2
-        delete item.value.rule_input_value
+        delete item.value.rule_input
         this.refreshSliderData()
     },
 
@@ -215,60 +273,7 @@ Page({
         })
     },
 
-    /**
-     * 添加成员
-     */
-    addMember: function () {
-        /**
-         * 不把其他元素的动画取消,会导致顶部元素动画时,打开编辑框的条目也在进行height动画
-         */
-        this.data.account.members.forEach(function(v,i){
-            v.style.memberTrans=""
-            v.style.memberRuleTrans=""
-            v.style.memberRuleTypeTrans=""
-        })
 
-        this.data.account.members.addToHead({
-            style: {
-                member: "height:0;opacity:0;",
-                memberRule: "height:0;opacity:0;",
-                tag0: "",
-                tag1: "display:inherit;",
-                tag2: "display:none;"
-            },
-            value: {
-                tag0: "个人账单",
-                tag1: "AA制",
-                tag2: "自费10元",
-                rule_type:1
-            }
-        })
-        slider.setLayer(0,0)
-        this.setData({
-            account: this.data.account
-        })
-        setTimeout(function () {
-
-            this.data.account.members[0].style.member = "height:140rpx;opacity:1;"
-            this.data.account.members[0].style.memberTrans = "transition:all 0.5s ease;"
-            this.setData({
-                scrollToView: "members_title",
-                account: this.data.account
-
-            })
-            
-        }.bind(this), 50)
-
-
-
-    },
-    /**
-     * 移除成员
-     */
-    removeMember: function (e) {
-      var index=e.target.dataset.index
-      slider.deleteItem(index);
-    },
 
     /**
      * 显示特殊规则编辑框
@@ -315,6 +320,7 @@ Page({
         item.style.memberRuleTrans = "transition:all 0.5s ease;"
 
         item.value.isShowRule=false
+        item.value.isShowMoneyForSelf = false
         this.refreshSliderData()
 
     },
@@ -324,6 +330,11 @@ Page({
     showRulePaySelf: function (e) {
         var index = e.target.dataset.index
         var item = this.getSliderData(index)
+        //已经打开了就关闭
+        if (item.value.isShowMoneyForSelf) {
+            this.hideRule(e)
+            return
+        }
         item.style.member = "height:350rpx;opacity:1;"
         item.style.memberRule = "height:210rpx;opacity:1;"
         item.style.memberRuleType = "height:0;opacity:0;"
@@ -334,7 +345,7 @@ Page({
 
 
         item.value.isShowRule = false
-        item.value.isMoneyForSelf = true
+        item.value.isShowMoneyForSelf = true
 
         this.refreshRuleInputPlaceHolder(index)
         slider.close(index)
@@ -349,8 +360,8 @@ Page({
     radioChange: function (e) {
         var index = e.target.dataset.index
         var item = this.getSliderData(index)
-        console.log(e)
-        console.log('radio发生change事件，携带value值为：', e.detail.value)
+        // console.log(e)
+        // console.log('radio发生change事件，携带value值为：', e.detail.value)
         item.value.rule_type = parseInt(e.detail.value)
         item.value.rule_input_placeholder = this.data["tip" + e.detail.value]
         this.refreshSliderData()
@@ -363,21 +374,40 @@ Page({
         var index = e.target.dataset.index
         var item = this.getSliderData(index)
 
-        item.value.rule_input_value=parseFloat(e.detail.value)
+        item.value.rule_input=parseFloat(e.detail.value)
 
-        console.log("输入的数字：" + item.value.rule_input_value)
-    },
+        // console.log("输入的规则或自费数字：" + item.value.rule_input)
+    }, 
 
+    /**
+     * 成员支付数额发生变化
+     */
+    paidinInputValueChanged:function(e) {
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+
+        var value=e.detail.value
+        value=value.replace('￥','')
+
+
+        item.value.paidin_input = parseFloat(value)
+        item.paid_in = item.value.paidin_input
+        // console.log("输入的成员支付数字：" + item.value.paidin_input)
+
+        var newValue = '￥' + value
+        item.value.paidin_input = newValue
+        this.refreshSliderData()
+    }, 
 
 
 
     /**
      * 保存规则或者自费
      */
-    save:function(e){
+    saveRule:function(e){
         var index = e.target.dataset.index
         var item = this.getSliderData(index)
-        var inputValue = item.value.rule_input_value
+        var inputValue = item.value.rule_input
         if (inputValue == undefined || isNaN(inputValue)) {
             wx.showToast({
                 title: '请输入数字！',
@@ -392,7 +422,7 @@ Page({
             item.pay_rule = {
                 type: ruleType
             }
-            console.log("saveRule" + ruleType)
+            // console.log("saveRule" + ruleType)
             switch(ruleType){
                 case 0:
                     //检查输入的有效性
@@ -414,10 +444,47 @@ Page({
         }else{
             item.money_for_self = inputValue
         }
-        delete item.value.rule_input_value
+        delete item.value.rule_input
         this.hideRule(e)
         this.refreshTags()
         
+    },
+
+    /**
+     * 保存成员支付数额
+     */
+    savePaidIn:function(e){
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        var inputValue = item.value.paidin_input
+        if (inputValue == undefined || isNaN(inputValue)) {
+            wx.showToast({
+                title: '请输入数字！',
+            })
+            item.value.paidin_input = "￥"
+            return
+        }
+    },
+
+    /**
+     * 成员支付数额获取到焦点
+     */
+    paidInFocus:function(e){
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        item.value.paidin_input="￥"
+        this.refreshSliderData()
+    },
+
+    /**
+     * 成员支付数额失去焦点
+     */
+    paidInBlur: function (e) {
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        if (item.value.paidin_input =="￥")
+            item.value.paidin_input = "￥0.00"
+        this.refreshSliderData()
     },
 
 
@@ -446,30 +513,30 @@ Page({
                     name: "状态一",
                     buttons: [
                         {
-                            text: "成员",
+                            text: "",
                             color: "white",
-                            colorBg: "#2ba245",
+                            colorBg: "#f00",
                             colorShadow: "black",
-                            onClick: "acceptInvite",
+                            onClick: "",
                             width: 150,
                             visible:false
 
                         },
                         {
-                            text: "自费",
+                            text: "",
                             color: "white",
-                            colorBg: "#cdcdcd",
+                            colorBg: "#2BA245",
                             colorShadow: "black",
-                            onClick: "refuseInvite",
+                            onClick: "",
                             width: 150,
                             visible: false
                         },
                         {
-                            text: "规则",
+                            text: "",
                             color: "white",
-                            colorBg: "#cdcdcd",
+                            colorBg: "#FFD700",
                             colorShadow: "black",
-                            onClick: "refuseInvite",
+                            onClick: "",
                             width: 150,
                             visible: false
                         }

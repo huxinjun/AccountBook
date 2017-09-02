@@ -65,6 +65,9 @@
 
                         </view>
 
+                        <input class='member_paidin' type="text" value="{{item.value.paidin_input}}" bindinput="paidinInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="savePaidIn" bindfocus="paidInFocus" maxlength='10' bindblur='paidInBlur'/>
+
+
                     </view>
 
                 </scroll-view>
@@ -76,8 +79,9 @@
                                 <radio value="{{item.value}}" checked="true"/>{{item.name}}
                          </label>
                     </radio-group>
-                    <input type="text" value="{{item.value.rule_input_value}}" placeholder="{{item.value.rule_input_placeholder}}" placeholder-class="placeholder_class" bindinput="ruleInputValueChanged" data-index="{{index}}" type="digit"/>
-                    <button bind:tap="save" data-index="{{index}}">保存</button>
+                    <input type="text" value="{{item.value.rule_input}}" placeholder="{{item.value.rule_input_placeholder}}" placeholder-class="placeholder_class" bindinput="ruleInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="save" maxlength='9' cursor-spacing="80"
+                    />
+                    <button bind:tap="saveRule" data-index="{{index}}">保存</button>
                 </view>
 
                 <view style="{{item.style.slider}}">
