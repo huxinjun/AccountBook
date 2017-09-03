@@ -4,6 +4,7 @@ var APP = getApp()
 var slider
 Page({
     data: {
+
         containerHeight: 0,
         
         tip0: "请输入固定比例(此成员将只付款总金额的百分比值,范围0-100)",
@@ -13,6 +14,8 @@ Page({
         descSliderInfo:{
             index:-1
         },
+
+        images:[],
 
         account: {
 
@@ -557,19 +560,63 @@ Page({
     /**
      * 选择图片
      */
-    chooseImage:function(e){
+    chooseImage: function(e){
         var that=this
         wx.chooseImage({
             count: 9, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
-                // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-                var tempFilePaths = res.tempFilePaths
-                console.log(res)
-                that.data.account.icons=tempFilePaths
-                that.refreshSliderData()
+            success: function(res){
+                for (var i=0;i<res.tempFilePaths.length;i++){
+                    var outterValue = res.tempFilePaths[i]
+                    var exists = false
+                    for (var j = 0; j < that.data.images.length; j++) {
+                        var innerValue = that.data.images[i]
+                        if (innerValue.wx_path == outterValue){
+                            console.log("重复图片")
+                            exists = true
+                            break
+                        }
+                    }
+                    if (!exists) {
+                        that.data.images.push({
+                            wx_path: outterValue,
+                            remote_name: "",
+                            progress: 0
+                        })
+                        that.uploadImage(outterValue)
+                    }
+                }
+                that.setData({
+                    images:that.data.images
+                })
             }
+        })
+    },
+
+    /**
+     * 上传图片
+     */
+    uploadImage: function (filePath) {
+        var that = this
+        var callback = wx.uploadFile({
+            url: APP.globalData.BaseUrl + '/image/upload',
+            filePath: filePath,
+            name: 'image',
+            success: function (res) {
+                var data = JSON.parse(res.data)
+                that.data.images.forEach(function (v, i) {
+                    if (v.wx_path == filePath)
+                        v.remote_name = data.msg
+                })
+                that.data.account.icons.push(data.msg)
+            }
+        })
+        callback.onProgressUpdate((res) => {
+            that.data.images.forEach(function (v, i) {
+                if (v.wx_path == filePath)
+                    v.progress = res.progress
+            })
         })
     },
 
@@ -720,8 +767,6 @@ Page({
             delete v.value
         })
         console.log(clone)
-        
-
 
     }
 

@@ -33,7 +33,7 @@
 
 
     <view class="pics">
-        <image src="{{item}}" mode="aspectFill" wx:for="{{account.icons}}" wx:key="{{index}}"></image>
+        <image src="{{item.wx_path}}" mode="aspectFill" wx:for="{{images}}" wx:key="{{index}}"></image>
 
 
         <!-- <image src="/img/head.jpg" mode="scaleToFill" ></image>
