@@ -169,7 +169,9 @@ Page({
             url: APP.globalData.BaseUrl + '/msg/invite',
 
             data: {
-                token: wx.getStorageSync("token")
+                token: wx.getStorageSync("token"),
+                /**type必须:1帐友邀请,2加入组邀请*/
+                type:1
             },
 
             success: function (res) {
