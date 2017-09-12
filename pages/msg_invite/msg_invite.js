@@ -107,15 +107,12 @@ Page({
         var slidersInfo = {
             //page：page对象
             page: this,
-            //checkAngle：是否要检查水平滑动的角度，默认大于15度将认为抽屉时间中断
-            checkAngle: false,
-            //条目高度
-            height:200,
-            
             //N种状态
             layers: [
                 {
                     name: "状态一",
+                    //条目高度
+                    height: 200,
                     buttons: [
                         {
                             text: "接受1",
@@ -141,6 +138,8 @@ Page({
                 },
                 {
                     name: "状态二",
+                    //条目高度
+                    height: 200,
                     buttons: [
                         {
                             text: "删除3",
@@ -156,6 +155,8 @@ Page({
                 },
                 {
                     name: "状态三",
+                    //条目高度
+                    height: 140
                 }
             ]
         }
@@ -194,10 +195,6 @@ Page({
                         }
 
                     })
-                    this.setData({
-                        datas: res.data.datas
-                    })
-
                 }
 
             }
@@ -207,8 +204,6 @@ Page({
 
 
     touchstart: function (e) {
-        var a=this
-        // debugger
         slider.start(e)
     },
     touchmove: function (e) {

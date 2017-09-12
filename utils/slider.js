@@ -97,11 +97,11 @@ function setLayer(index, layerIndex) {
     if (layerIndex!=undefined){
         item.value.layerInfo = clone(this.slidersInfo.layers[layerIndex])
         item.value.layerIndex = layerIndex
-        return
     }
 
     //配置可拖动视图
     if (!this.hasSlider(index)) {
+        console.log("no slider")
         return
     }
 
@@ -299,6 +299,7 @@ function end(e) {
 function closeOther(index) {
     // console.log('closeOther')
     var datas = this.slidersInfo.page.getSliderData()
+
     datas.forEach(function (v, i) {
         if(i==index)
             return

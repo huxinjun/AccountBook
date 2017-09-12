@@ -3,24 +3,26 @@
 
     <view wx:for="{{datas}}" wx:key="{{index}}">
         <!-- {{index}}: {{item.value}} -->
+        <view class="listitem" style="{{item.style.deleteTrans}}">
 
-        <scroll-view class="listitem" scroll-x bindscroll='innerScroll' style="{{item.style.width}}{{item.style.deleteTrans}}">
+            <scroll-view scroll-x bindscroll='innerScroll' style="height:200rpx;{{item.style.sv_pos}}{{item.style.sv_left}}" scroll-left="{{item.style.scroll_left}}">
 
-            <view class="item" style="{{item.style.width}}{{item.style.left}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
-                <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
+                <view class="item" style="{{item.style.sv_main}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+                    <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
 
-                <view class="content" data-index="{{index}}">
-                    <text class="name" data-index="{{index}}">邀请人：{{item.nickname}}</text>
+                    <view class="content" data-index="{{index}}">
+                        <text class="name" data-index="{{index}}">邀请人：{{item.nickname}}</text>
 
 
-                    <text class="msg" data-index="{{index}}">{{item.msg}}</text>
-                    <text class="time" data-index="{{index}}">{{item.time}}</text>
+                        <text class="msg" data-index="{{index}}">{{item.msg}}</text>
+                        <text class="time" data-index="{{index}}">{{item.time}}</text>
+
+                    </view>
+                    <text class="status" data-index="{{index}}">{{item.statusStr}}</text>
+
 
                 </view>
-                <text class="status" data-index="{{index}}">{{item.statusStr}}</text>
-
-
-            </view>
+            </scroll-view>
 
             <view style="{{item.style.slider}}">
 
@@ -29,10 +31,10 @@
                 <view style="{{item.style.layerStyle_1_0}}" bindtap="{{item.value.layerTap_1_0}}" data-index="{{index}}">{{item.value.layerText_1_0}}</view>
             </view>
 
-            
-        </scroll-view>
 
-        
+        </view>
+
+
     </view>
 
 
