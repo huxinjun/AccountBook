@@ -3,7 +3,7 @@
 
     <view wx:for="{{datas}}" wx:key="{{index}}">
         <!-- {{index}}: {{item.value}} -->
-        <view class="listitem" style="{{item.style.deleteTrans}}">
+        <view class="listitem" style="height:200rpx;{{item.style.height}}{{item.style.deleteTrans}}">
 
             <scroll-view scroll-x bindscroll='innerScroll' style="height:200rpx;{{item.style.sv_pos}}{{item.style.sv_left}}" scroll-left="{{item.style.scroll_left}}">
 

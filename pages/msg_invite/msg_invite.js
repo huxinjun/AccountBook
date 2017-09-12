@@ -5,7 +5,6 @@ var APP = getApp()
 Page({
     data: {
         containerHeight: 0,
-
         datas:null
 
     },
@@ -121,7 +120,6 @@ Page({
                             colorShadow: "black",
                             onClick: "acceptInvite",
                             width: 150,
-                            borderTop: "10rpx solid white",
                             visible:true
                         },
                         {
@@ -131,7 +129,6 @@ Page({
                             colorShadow: "black",
                             onClick: "refuseInvite",
                             width: 150,
-                            borderTop: "10rpx solid white",
                             visible: true
                         }
                     ]
@@ -147,7 +144,6 @@ Page({
                             colorBg:"#f00",
                             colorShadow:"black",
                             onClick: "_delete",
-                            borderTop: "10rpx solid white",
                             width: 150,
                             visible: true
                         }
@@ -156,7 +152,7 @@ Page({
                 {
                     name: "状态三",
                     //条目高度
-                    height: 140
+                    height: 200
                 }
             ]
         }
@@ -179,6 +175,7 @@ Page({
                 if (res.data.status == APP.globalData.resultcode.SUCCESS) {
                     this.data.datas = res.data.datas
                     res.data.datas.forEach(function (v, i) {
+                      
                         switch (v.status) {
                             case 0:
                             case 1:
@@ -195,6 +192,7 @@ Page({
                         }
 
                     })
+                    this.refreshSliderData()
                 }
 
             }
@@ -204,6 +202,8 @@ Page({
 
 
     touchstart: function (e) {
+        var index = e.target.dataset.index
+        slider.updateLayer(index,[])
         slider.start(e)
     },
     touchmove: function (e) {

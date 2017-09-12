@@ -97,6 +97,7 @@ function setLayer(index, layerIndex) {
     if (layerIndex!=undefined){
         item.value.layerInfo = clone(this.slidersInfo.layers[layerIndex])
         item.value.layerIndex = layerIndex
+        return
     }
 
     //配置可拖动视图
@@ -152,13 +153,12 @@ function setLayer(index, layerIndex) {
             //是否显示
             var p9 = outterIndex != item.value.layerIndex ? "display:none;" : "display:" + (visible?"inherit":"none") +";"
 
-            var p10 = "border-top:" + innerValue.borderTop +";"
-            var p11 = "font-size:28rpx;"
+            var p10 = "font-size:28rpx;"
 
             var styleName = "layerStyle_" + outterIndex + "_" + innerIndex
             var tapName = "layerTap_" + outterIndex + "_" + innerIndex
             var textName = "layerText_" + outterIndex + "_" + innerIndex
-            var styleValue = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10 + p11
+            var styleValue = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10
 
             item.style[styleName] = styleValue
             item.value[tapName] = innerValue.onClick
