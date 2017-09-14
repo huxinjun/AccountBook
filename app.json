@@ -2,9 +2,12 @@
   "pages":[
     "pages/index/index",
     "pages/logs/logs",
-    "pages/find_friend/find_friend",
+    "pages/friend/friend",
+    "pages/friend_search/friend_search",
     "pages/msg_invite/msg_invite",
-    "pages/new_account/new_account"
+    "pages/new_account/new_account",
+    "pages/group/group",
+    "pages/group_add/group_add"
   ],
   "window":{
     "navigationBarBackgroundColor": "#2BA245",
@@ -34,7 +37,7 @@
             "selectedIconPath": "img/me_press.png"
         },
         {
-            "pagePath": "pages/find_friend/find_friend",
+            "pagePath": "pages/friend/friend",
             "text": "帐友",
             "iconPath": "img/me.png",
             "selectedIconPath": "img/me_press.png"

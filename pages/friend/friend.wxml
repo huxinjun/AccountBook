@@ -1,0 +1,58 @@
+<!--index.wxml-->
+<scroll-view class="container" scroll-y bindscroll='outterScroll' style="height:{{containerHeight}}px;">
+
+
+    <view class="sample_item" hover-class='sample_item_hover' bindtap='gotoAddFriend'>
+        <image src="" ></image>
+        <text class="name">新的朋友</text>
+    </view>
+
+    <view class="sample_item border_bottom" hover-class='sample_item_hover' bindtap='gotoGroup'>
+        <image src=""></image>
+        <text class="name">我的分组</text>
+    </view>
+
+
+
+
+
+
+
+    <view wx:for="{{datas}}" wx:key="{{index}}">
+        <!-- {{index}}: {{item.value}} -->
+        <view class="listitem" style="height:200rpx;{{item.style.height}}{{item.style.deleteTrans}}">
+
+            <scroll-view scroll-x bindscroll='innerScroll' style="height:200rpx;{{item.style.sv_pos}}{{item.style.sv_left}}" scroll-left="{{item.style.scroll_left}}">
+
+                <view class="item" style="{{item.style.sv_main}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+                    <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
+
+                    <view class="content" data-index="{{index}}">
+                        <text class="name" data-index="{{index}}">邀请人：{{item.nickname}}</text>
+
+
+                        <text class="msg" data-index="{{index}}">{{item.msg}}</text>
+                        <text class="time" data-index="{{index}}">{{item.time}}</text>
+
+                    </view>
+                    <text class="status" data-index="{{index}}">{{item.statusStr}}</text>
+
+
+                </view>
+            </scroll-view>
+
+            <view style="{{item.style.slider}}">
+
+                <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
+                <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
+                <view style="{{item.style.layerStyle_1_0}}" bindtap="{{item.value.layerTap_1_0}}" data-index="{{index}}">{{item.value.layerText_1_0}}</view>
+            </view>
+
+
+        </view>
+
+
+    </view>
+
+
+</scroll-view>
