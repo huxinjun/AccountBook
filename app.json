@@ -7,7 +7,7 @@
     "pages/msg_invite/msg_invite",
     "pages/new_account/new_account",
     "pages/group/group",
-    "pages/group_add/group_add"
+    "pages/group_edit/group_edit"
   ],
   "window":{
     "navigationBarBackgroundColor": "#2BA245",
@@ -37,7 +37,7 @@
             "selectedIconPath": "img/me_press.png"
         },
         {
-            "pagePath": "pages/friend/friend",
+            "pagePath":"pages/group_edit/group_edit",
             "text": "帐友",
             "iconPath": "img/me.png",
             "selectedIconPath": "img/me_press.png"

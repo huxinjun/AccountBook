@@ -2,10 +2,10 @@
 
 App({
     globalData: {
-        // BaseUrl: 'http://192.168.10.228:8080/AccountBook',
+        BaseUrl: 'http://192.168.10.205:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
-        BaseUrl: 'http://192.168.1.103:8080/AccountBook',
+        // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         userInfo: null,
         resultcode: {
             SUCCESS: 0,
@@ -21,7 +21,7 @@ App({
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())
         wx.setStorageSync('logs', logs)
-        // wx.removeStorageSync("token")
+        wx.removeStorageSync("token")
 
         Array.prototype.onSizeChanged = function (size) {
             console.log("Array.onSizeChanged:" + size)

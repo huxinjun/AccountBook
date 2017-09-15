@@ -2,7 +2,12 @@
 //获取应用实例
 var APP = getApp()
 Page({
+
     data: {
+        firendId:"",
+        containerHeight: 0,
+        dialog:"display:none;",
+
         list: [
             {
                 "id":0,
@@ -53,11 +58,63 @@ Page({
         ],
     },
     
-    onLoad: function () {
+    onLoad: function (option) {
         var that = this
         this.setData({
             list:this.data.list
         })
-    }
+
+        wx.getSystemInfo({
+            success: function (res) {
+                that.setData({
+                    containerHeight: res.windowHeight
+                })
+            }
+        })
+        console.log(option)
+        if (option.friendId){
+            this.data.firendId = option.friendId
+            this.dialogShow()
+        }
+    },
+
+    dialogShow:function(msg){
+        console.log("shw")
+        this.setData({
+            dialog: "display:inherit;"
+        })
+    },
+    dialogDissmiss: function () {
+        this.setData({
+            dialog: "display:none;"
+        })
+    },
+
+    
+    /**
+     * 邀请用户
+     */
+    inviteUser: function (e) {
+        var that=this
+        this.dialogDissmiss()
+        wx.login({
+            success: function (res) {
+                APP.ajax({
+                    url: APP.globalData.BaseUrl + "/user/invite",
+                    data: {
+                        formId: e.detail.formId,
+                        token: wx.getStorageSync('token'),
+                        code: res.code,
+                        openid: that.data.firendId
+                    },
+                    success: function (res) {
+
+                    }
+
+                }, this)
+            }
+        })
+
+    },
 })
 

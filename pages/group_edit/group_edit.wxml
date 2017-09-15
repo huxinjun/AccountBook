@@ -1,0 +1,13 @@
+<view class="container">
+    <view class="members">
+
+        <view class="member" wx:for="{{list}}" wx:key="{{index}}" hover-class="item_hover">
+
+            <image class="icon" src="{{item.icon}}"></image>
+            <text class="name">{{item.name}}</text>
+
+        </view>
+
+
+    </view>
+</view>

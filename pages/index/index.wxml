@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container">
-    <view class="content" wx:for="{{list}}" wx:key="{{index}}">
+    <view wx:for="{{list}}" wx:key="{{index}}">
 
         <view class="item" hover-class="item_hover">
 
@@ -9,6 +9,19 @@
 
         </view>
 
+
+    </view>
+
+    <view class="dialog_container" style='height:{{containerHeight}}px;{{dialog}}'>
+        <form class="dialog" bindsubmit="inviteUser" report-submit="true">
+            <text class='dialog_title'>提醒</text>
+            <text class='dialog_content'>温馨提示,确定添加帐友吗?</text>
+            <view class='dialog_buttons'>
+                <button style='border-right: 1rpx solid #667489;' hover-class='dialog_btn_left_hover' bindtap='dialogDissmiss'>取消</button>
+                <button hover-class='dialog_btn_right_hover' form-type='submit'>确定</button>
+            </view>
+
+        </form>
 
     </view>
 

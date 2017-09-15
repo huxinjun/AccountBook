@@ -185,7 +185,7 @@ Page({
 
     gotoAddGroup:function(e){
         wx.navigateTo({
-            url: '/pages/group_add/group_add',
+            url: '/pages/group_edit/group_edit',
         })
     },
 
