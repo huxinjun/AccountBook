@@ -1,13 +1,47 @@
 <view class="container">
-    <view class="members">
+  <view class="members">
 
-        <view class="member" wx:for="{{list}}" wx:key="{{index}}" hover-class="item_hover">
+    <view class="member" wx:for="{{list}}" wx:key="{{index}}">
 
-            <image class="icon" src=""></image>
-            <text class="name">{{item.name}}</text>
-
-        </view>
-
+      <image src=""></image>
+      <text>{{item.name}}</text>
 
     </view>
+
+
+  </view>
+
+  <view class="item" style='margin-top: 30rpx;'>
+    <text class="icon_key">头像</text>
+    <view class="icon_value">
+      <image src=""></image>
+    </view>
+    <image class="arow" src=""></image>
+
+  </view>
+
+
+  <view class="item" style='margin-top: 30rpx;border-bottom:1rpx solid #ccc;'>
+    <text class="icon_key">名称</text>
+    <view class="icon_value">
+      <text>主卧</text>
+    </view>
+    <image class="arow" src=""></image>
+
+  </view>
+
+  <view class="item" style=''>
+    <text class="icon_key">描述</text>
+    <view class="icon_value">
+      <text>相同描述归为一类</text>
+    </view>
+    <image class="arow" src=""></image>
+
+  </view>
+
+  <button class='commit' hover-class='commit_hover'>提交更改</button>
+  <button class='delete' hover-class='delete_hover'>解散并删除</button>
+
+
+
 </view>

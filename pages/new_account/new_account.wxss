@@ -8,6 +8,7 @@
     justify-content: flex-start;
     font-family: "微软雅黑";
     color: #272636;
+
 }
 
 .placeholder_class {

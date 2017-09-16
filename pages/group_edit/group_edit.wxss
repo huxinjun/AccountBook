@@ -11,9 +11,11 @@
     background-color: #EFEFF4;
 
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: flex-start;
+
+    overflow: hidden;
 }
 .members{
     width: 100%;
@@ -31,7 +33,7 @@
 }
 .member{
     box-sizing: border-box;
-    
+    width: 115rpx;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -43,19 +45,84 @@
     
 
 }
-.item_hover{
-    background-color: #ddd;
-}
 
-.icon{
+.member image{
     width: 115rpx;
     height: 115rpx;
     background-color: rebeccapurple;
     border-radius: 10rpx;
 }
-.name{
+.member text{
     width: 115rpx;
     font-size: 26rpx;
     color: #667489;
     margin-top: 10rpx;
+}
+
+.item{
+    width: 750rpx;
+    height: 80rpx;
+    background-color: #fff;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+.item .icon_key{
+  margin-left: 30rpx;
+
+}
+.item .icon_value{
+  flex-grow: 1;
+  height: 100%;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  
+}
+.item .icon_value image{
+  background-color: #0f0;
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 30rpx;
+}
+.item .icon_value text{
+  margin-right: 30rpx;
+}
+.arow{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 30rpx;
+  background-color: #f00;
+}
+
+
+.commit{
+  width: 690rpx;
+  height: 80rpx;
+  margin-top: 30rpx;
+  background-color: #2BA245;
+  color: white;
+  line-height: 80rpx;
+}
+.commit_hover{
+  background-color: #2BB345;
+  text-shadow: 5rpx 5rpx 5rpx black;
+}
+
+
+.delete{
+  width: 690rpx;
+  height: 80rpx;
+  margin-top: 30rpx;
+  background-color: #fa0000;
+  color: white;
+  line-height: 80rpx;
+}
+.delete_hover{
+  background-color: #f00;
+  text-shadow: 5rpx 5rpx 5rpx black;
 }

@@ -117,8 +117,7 @@ function setLayer(index, layerIndex) {
     var p6 = "position:absolute;right:0;top:0;"
 
 
-    item.style.sv_pos ="position:absolute;top:0;z-index:1;"
-    item.style.sv_main="width:752rpx;"
+    item.style.slider_container_pos ="position:relative;top:0;z-index:1;overflow:hidden;"
     item.style.slider = p1 + p2 + p3 + p4 + p5 + p6
 
 
@@ -188,12 +187,6 @@ function start(e) {
         return
     }
 
-    // console.log(item.value.sv_left)
-    if (item.value.sv_left < 0 ){
-        this.close(index)
-        return
-    }
-
     this.closeOther(index)
 
     
@@ -211,7 +204,7 @@ function start(e) {
 /**
  * 移动时触发
  */
-function move(e, checkAngle) {
+function move(e) {
     var index = e.target.dataset.index
     var item = this.slidersInfo.page.getSliderData(index)
 
@@ -228,42 +221,29 @@ function move(e, checkAngle) {
     var moveY = currY - this.startY;
 
 
-    if (this.slidersInfo.checkAngle) {
-        //获取滑动角度
-        var a = angle({ X: this.startX, Y: this.startY }, { X: currX, Y: currY });
-        console.log(a)
-        if (Math.abs(a) > 15) {
-            this.eventEnd = true
-            this.closeOther(index)
-            return
-        }
-
-    }
-
-
 
     var deltaX = currX - this.preX;
     this.preX = currX;
 
 
-    //已经抽出,还往左滑,忽略后面的事件
-    if (item.value.sv_left <= -250 && deltaX < 0)
+    // 已经抽出,还往左滑,忽略后面的事件
+    if (item.value.slider_container_left <= -250 && deltaX < 0)
         return
 
-    //已经合上,还往右滑,忽略后面的事件
-    if (item.value.sv_left >= 0 && deltaX > 0)
+    // 已经合上,还往右滑,忽略后面的事件
+    if (item.value.slider_container_left >= 0 && deltaX > 0)
         return
 
 
     // console.log("-------------" + moveX)
     //避免快速滑动时两个move事件x距离太大,抽屉滑过头了
-    moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
-    moveX = moveX > 0 ? 0 : moveX
+    // moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
+    // moveX = moveX > 0 ? 0 : moveX
 
     
-    item.value.sv_left = moveX
-    item.style.sv_left = 'left:' + item.value.sv_left + 'rpx;';
-    delete item.style.scroll_left
+    item.value.slider_container_left = moveX
+    item.style.slider_container_left = 'left:' + item.value.slider_container_left + 'rpx;';
+    console.log("left:"+moveX);
     this.slidersInfo.page.refreshSliderData()
 
 
@@ -283,7 +263,7 @@ function end(e) {
 
     this.eventEnd = true
 
-    var isOpen = Math.abs(item.value.sv_left) > 75 ? true : false
+    var isOpen = Math.abs(item.value.slider_container_left) > 75 ? true : false
 
 
 
@@ -304,8 +284,8 @@ function closeOther(index) {
         if(i==index)
             return
         v.value.isSliderOpen = false
-        v.value.sv_left = 0
-        v.style.sv_left = 'left:0;transition:all 0.2s ease;'
+        v.value.slider_container_left = 0
+        v.style.slider_container_left = 'left:0;transition:all 0.2s ease;'
         v.style.scroll_left = 0
     })
 
@@ -316,7 +296,7 @@ function closeOther(index) {
         datas.forEach(function (v, i) {
             if (i == index)
                 return
-            v.style.sv_left = 'left:0;'
+            v.style.slider_container_left = 'left:0;'
             v.style.scroll_left = 0
             v.style.slider = "display:none;"
         })
@@ -332,8 +312,8 @@ function close(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
     item.value.isSliderOpen = false
-    item.value.sv_left = 0
-    item.style.sv_left = 'left:0;transition: left 0.2s ease;';
+    item.value.slider_container_left = 0
+    item.style.slider_container_left = 'left:0;transition: left 0.2s ease;';
     item.style.scroll_left=0
 
     this.slidersInfo.page.refreshSliderData()
@@ -342,7 +322,7 @@ function close(index) {
     setTimeout(function () {
         var item = this.slidersInfo.page.getSliderData(index)
         item.style.slider = "display:none;"
-        item.style.sv_left = 'left:0;'
+        item.style.slider_container_left = 'left:0;'
         this.slidersInfo.page.refreshSliderData()
     }.bind(this), 200)
 }
@@ -353,13 +333,13 @@ function open(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
     item.value.isSliderOpen=true
-    item.value.sv_left = -this.getSliderWidthByIndex(index)
-    item.style.sv_left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease;';
+    item.value.slider_container_left = -this.getSliderWidthByIndex(index)
+    item.style.slider_container_left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease;';
     this.slidersInfo.page.refreshSliderData()
 
     setTimeout(function () {
         var item = this.slidersInfo.page.getSliderData(index)
-        item.style.sv_left = 'left:' + -this.getSliderWidthByIndex(index) +"rpx;"
+        item.style.slider_container_left = 'left:' + -this.getSliderWidthByIndex(index) +"rpx;"
         this.slidersInfo.page.refreshSliderData()
     }.bind(this), 200)
 }
@@ -416,8 +396,8 @@ function deleteItem(index) {
             //移除列表中下标为index的项
             datas.remove(index, 1);
             datas.forEach(function (v, i) {
-                v.value.sv_left = 0
-                v.style.sv_left = ""
+                v.value.slider_container_left = 0
+                v.style.slider_container_left = ""
             })
             //更新列表的状态
             this.slidersInfo.page.refreshSliderData()
@@ -433,6 +413,18 @@ function deleteItem(index) {
 
 
 
+function isHorizontal(startEvent, currEvent){
+  var startX = startEvent.touches[0].pageX;
+  var startY = startEvent.touches[0].pageY;
+  var currX = currEvent.touches[0].pageX;
+  var currY = currEvent.touches[0].pageY;
+    //获取滑动角度
+    var a = angle({ X: startX, Y: startY }, { X: currX, Y: currY });
+    console.log(a)
+    if (Math.abs(a) > 30)
+      return false;
+    return true;
+}
 
 /**
  * 计算滑动角度
@@ -504,6 +496,8 @@ module.exports = {
     closeOther: closeOther,
     open: open,
     cancel: cancel,
+
+    isHorizontal: isHorizontal,
     angle: angle,
     deleteItem: deleteItem,
 

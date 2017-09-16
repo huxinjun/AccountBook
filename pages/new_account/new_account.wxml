@@ -7,9 +7,12 @@
 
 
     <view class="desc">
-        <scroll-view scroll-x style="{{descSliderInfo.style.sv_pos}}{{descSliderInfo.style.sv_left}}" scroll-left="{{descSliderInfo.style.scroll_left}}">
+        <view style="{{descSliderInfo.style.slider_container_pos}}{{descSliderInfo.style.slider_container_left}}">
 
-            <view class="desc_main" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{descSliderInfo.index}}">
+            <view class="desc_main" capture-bind:touchstart="capturetouchstart" capture-bind:touchmove="capturetouchmove" 
+                    capture-bind:touchend="capturetouchend" capture-bind:touchcancel="capturetouchcancel" capture-bind:tap="capturetap"
+                    
+                    catchtouchstart="{{touchstart}}" catchtouchmove="{{touchmove}}" catchtouchend="{{touchend}}" catchtouchcancel="{{touchcancel}}" data-index="{{descSliderInfo.index}}">
                 <image class="desc_icon" src="/img/desc.png" data-index="{{descSliderInfo.index}}"></image>
                 <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" />
                 <image class="desc_add_pic" src="/img/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
@@ -17,7 +20,7 @@
             </view>
 
 
-        </scroll-view>
+        </view>
 
 
         <view style="{{descSliderInfo.style.slider}}">
@@ -71,9 +74,12 @@
         <view wx:for="{{account.members}}" wx:key="{{index}}">
             <view class="memeber" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}">
 
-                <scroll-view scroll-x bindscroll='innerScroll' style="{{item.style.sv_pos}}{{item.style.sv_left}}" scroll-left="{{item.style.scroll_left}}">
+                <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
 
-                    <view class="member_main" style="{{item.style.sv_main}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" bindtouchcancel="touchcancel" data-index="{{index}}">
+                    <view class="member_main" capture-bind:touchstart="capturetouchstart" capture-bind:touchmove="capturetouchmove" 
+                    capture-bind:touchend="capturetouchend" capture-bind:touchcancel="capturetouchcancel" capture-bind:tap="capturetap"
+                    
+                    catchtouchstart="{{touchstart}}" catchtouchmove="{{touchmove}}" catchtouchend="{{touchend}}" catchtouchcancel="{{touchcancel}}" data-index="{{index}}">
                         <image class="member_icon" src="/img/head.jpg" mode="aspectFill" data-index="{{index}}"></image>
 
                         <view class="member_content" data-index="{{index}}">
@@ -93,7 +99,7 @@
 
                     </view>
 
-                </scroll-view>
+                </view>
 
                 <view class="member_rule" style="{{item.style.memberRule}}{{item.style.memberRuleTrans}}">
 

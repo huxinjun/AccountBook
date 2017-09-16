@@ -721,7 +721,70 @@ Page({
     },
 
 
+    
 
+    startEvent: null,
+    calculated:false,
+    //按下时关闭
+    capturetap:function(e){
+      var index = e.target.dataset.index
+      slider.close(index)
+    },
+    capturetouchstart: function (e) {
+      // console.log("捕获阶段：start")
+      this.startEvent=e
+      this.calculated=false
+    },
+    capturetouchmove: function (e) {
+      if (this.calculated)
+        return
+      // console.log("捕获阶段：move")
+      var currEvent=e
+      var isHorizontal = slider.isHorizontal(this.startEvent, currEvent)
+      console.log("!!!!!!!!!!!!!!!"+isHorizontal)
+      if(isHorizontal){
+        //一开始没有绑定冒泡时期的catch方法，所以接受不到start的
+        this.touchstart(e)
+        //水平时让catch事件生效，就可以屏蔽垂直滚动
+        this.setData({
+          touchstart:"touchstart",
+          touchmove: "touchmove",
+          touchend: "touchend",
+          touchcancel: "touchcancel",
+          
+        })
+      }else{
+        //垂直滚动了
+        slider.eventEnd = false
+        slider.breakOnce()
+        
+        this.setData({
+          touchstart: "",
+          touchmove: "",
+          touchend: "",
+          touchcancel: "",
+        })
+      }
+      this.calculated=true
+    },
+    capturetouchend: function (e) {
+      // console.log("捕获阶段：end")
+      this.setData({
+        touchstart: "",
+        touchmove: "",
+        touchend: "",
+        touchcancel: "",
+      })
+    },
+    capturetouchcancel: function (e) {
+      // console.log("捕获阶段：cancel")
+      this.setData({
+        touchstart: "",
+        touchmove: "",
+        touchend: "",
+        touchcancel: "",
+      })
+    },
 
 
     touchstart: function (e) {
@@ -738,13 +801,6 @@ Page({
     },
     touchcancel: function (e) {
         slider.cancel(e)
-    },
-    outterScroll: function (e) {
-        // console.log("outterScroll")
-        slider.breakOnce();
-    },
-    innerScroll: function (e) {
-        // console.log("innerScroll")
     },
 
     
@@ -771,6 +827,8 @@ Page({
     }
 
 })
+
+
 
 
 
