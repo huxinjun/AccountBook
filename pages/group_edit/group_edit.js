@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 var slider
-var imageutil = require('../../utils/imageutil.js')
 var APP = getApp()
 Page({
     data: {
@@ -49,17 +48,6 @@ Page({
         //   this.changeButtonStatus("add_group_info_invalid")
         // else
         this.changeButtonStatus("add_group_info_invalid")
-
-        const canvas = wx.createCanvasContext('canvas')
-
-
-        imageutil.drawIcon(canvas,'','',{
-            success:function(localFile){
-                that.setData({
-                    group_icon:localFile
-                })
-            }
-        })
     },
 
     changeButtonStatus:function(status){

@@ -1,5 +1,4 @@
 <view class="container">
-    <canvas canvas-id="canvas" style='width:500rpx;height:500rpx;position:fixed;background-color:rgba(255,0,0,0.5)'></canvas>
   <view class="members">
 
     <view class="member" wx:for="{{list}}" wx:key="{{index}}">
