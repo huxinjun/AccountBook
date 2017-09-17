@@ -1,4 +1,5 @@
 <view class="container">
+    <canvas canvas-id="canvas" style='width:500rpx;height:500rpx;position:fixed;background-color:rgba(255,0,0,0.5)'></canvas>
   <view class="members">
 
     <view class="member" wx:for="{{list}}" wx:key="{{index}}">
@@ -11,37 +12,39 @@
 
   </view>
 
-  <view class="item" style='margin-top: 30rpx;'>
-    <text class="icon_key">头像</text>
-    <view class="icon_value">
-      <image src=""></image>
+  <view class="item" hover-class='item_hover' style='margin-top: 30rpx;'>
+    <text class="key">头像</text>
+    <view class="value">
+      <image src="{{group_icon}}"></image>
     </view>
-    <image class="arow" src=""></image>
+    <image class="arrow" src="/img/right_arrow_normal.png"></image>
 
   </view>
 
 
-  <view class="item" style='margin-top: 30rpx;border-bottom:1rpx solid #ccc;'>
-    <text class="icon_key">名称</text>
-    <view class="icon_value">
+  <view class="item" hover-class='item_hover' style='margin-top: 30rpx;border-bottom:1rpx solid #ccc;'>
+    <text class="key">名称</text>
+    <text class="point" style='display:{{namePointDisplay}};'>●</text>
+    <view class="value">
       <text>主卧</text>
     </view>
-    <image class="arow" src=""></image>
+    <image class="arrow" src="/img/right_arrow_normal.png"></image>
 
   </view>
 
-  <view class="item" style=''>
-    <text class="icon_key">描述</text>
-    <view class="icon_value">
+  <view class="item" hover-class='item_hover' style=''>
+    <text class="key">描述</text>
+    <text class="point" style='display:{{descPointDisplay}};'>●</text>
+    <view class="value">
       <text>相同描述归为一类</text>
     </view>
-    <image class="arow" src=""></image>
+    <image class="arrow" src="/img/right_arrow_normal.png"></image>
 
   </view>
 
-  <button class='commit' hover-class='commit_hover'>提交更改</button>
-  <button class='delete' hover-class='delete_hover'>解散并删除</button>
-
+  <button class='{{commit_class}}' hover-class='{{commit_hover_class}}'>{{commit_text}}</button>
+  <button class='delete' hover-class='delete_hover' style='{{deleteStyle}}'>删除该组</button>
+  <button class='delete' hover-class='delete_hover' style='{{quitStyle}}'>退出该组</button>
 
 
 </view>
