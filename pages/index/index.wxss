@@ -2,7 +2,6 @@
 @import "/global/dialog.wxss";
 
 .container {
-    /* filter: blur(5rpx); */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

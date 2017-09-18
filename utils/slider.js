@@ -1,13 +1,3 @@
-/**
- * 左滑删除
- * Created by xinjun on 2017/8/11 14:10
- */
-
-/**按下x */
-var startX = 0
-/**按下y */
-var startY = 0
-/**上一次move事件的x */
 var preX = 0
 /**标识事件是否已经中断 */
 var eventEnd = false

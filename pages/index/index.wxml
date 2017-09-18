@@ -1,8 +1,8 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container {{dialogInfo.blurClass}}" style='{{dialogInfo.mainBlur}}'>
     <view wx:for="{{list}}" wx:key="{{index}}">
 
-        <view class="item" hover-class="item_hover">
+        <view class="item" hover-class="item_hover" bindtap='testShowDialog'>
 
             <image class="icon" src="{{item.icon}}"></image>
             <text class="name">{{item.name}}</text>
@@ -18,12 +18,12 @@
 
 
 
-<view class="dialog_container" style='{{dialogInfo.display}}'>
-    <view class="dialog">
+<view class="dialog_container" style='{{dialogInfo.display}}{{dialogInfo.bgAnim}}'>
+    <view class="dialog" style='{{dialogInfo.dialogAnim}}'>
         <form bindsubmit="{{dialog_form_submit}}" report-submit="true">
             <text class='dialog_title'>{{dialogInfo.title}}</text>
             <text class='dialog_content'>{{dialogInfo.content}}</text>
-            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='true' maxlength='{{dialogInfo.maxLength}}' type='dialogInfo.inputType' style='{{dialogInfo.inputDisplay}}'></input>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.focus}}' maxlength='{{dialogInfo.maxLength}}' type='dialogInfo.inputType' style='{{dialogInfo.inputDisplay}}'></input>
             <view class='dialog_buttons'>
                 <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
                 <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>

@@ -59,6 +59,23 @@ Page({
         ],
     },
 
+    testShowDialog:function(e){
+        var dialogInfo = {
+            page: this,
+            title: "标题",
+            content: "提示文字",
+            inputType: "aaa",
+            maxLength: 3,
+            callback: {
+                onConfirm: function (formId) { },
+                onCancel: function () { }
+            }
+        }
+
+        dialog.showDialog(dialogInfo)
+
+    },
+
     
     onLoad: function (option) {
         var that = this
@@ -69,8 +86,7 @@ Page({
         console.log(option)
         if (option.friendId){
             this.data.firendId = option.friendId
-
-            var settingTemp = {
+            var dialogInfo = {
                 page: this,
                 title: "标题",
                 content: "提示文字",
@@ -81,10 +97,14 @@ Page({
                     onCancel: function () { }
                 }
             }
+
+            dialog.showDialog(dialogInfo)
             
-            dialog.showDialog(settingTemp)
         }
+        
     },
+
+
 
     
 
