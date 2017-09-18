@@ -18,13 +18,14 @@
 
 
 
-<view class="dialog_container" style='{{dialog}}'>
+<view class="dialog_container" style='{{dialogInfo.display}}'>
     <view class="dialog">
-        <form bindsubmit="inviteUser" report-submit="true">
-            <text class='dialog_title'>提醒</text>
-            <text class='dialog_content'>温馨提示,确定添加帐友吗?</text>
-            <view class='dialog_buttons' style='border-top: 1rpx solid #ccc;'>
-                <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dialogDissmiss'>取消</button>
+        <form bindsubmit="{{dialog_form_submit}}" report-submit="true">
+            <text class='dialog_title'>{{dialogInfo.title}}</text>
+            <text class='dialog_content'>{{dialogInfo.content}}</text>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='true' maxlength='{{dialogInfo.maxLength}}' type='dialogInfo.inputType' style='{{dialogInfo.inputDisplay}}'></input>
+            <view class='dialog_buttons'>
+                <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
                 <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
             </view>
 

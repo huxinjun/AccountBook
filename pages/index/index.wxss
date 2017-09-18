@@ -1,4 +1,5 @@
 /**index.wxss**/
+@import "/global/dialog.wxss";
 
 .container {
     /* filter: blur(5rpx); */
@@ -50,89 +51,4 @@
 
 
 
-
-
-.dialog_container{
-    width: 100%;
-    height: 100%;
-    
-    background-color:rgba(0, 0, 0, 0.5);
-    z-index: 1;
-
-    display: flex !important;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-
-    position: fixed;
-    left: 0;
-    top: 0; 
-}
-.dialog{
-    width: 400rpx;
-
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-end;
-    align-items: center;
-    align-content: center;
-
-    background-color:rgba(255, 255, 255, 1);
-    opacity: 1;
-    border-radius: 10rpx;
-    overflow: hidden;
-}
-
-.dialog_title{
-    display: block;
-    text-align: center;
-    font-size: 30rpx;
-    font-weight: 900;
-    margin: 20rpx;
-}
-.dialog_content{
-    display: block;
-    text-align: center;
-    font-size: 24rpx;
-    margin-bottom: 20rpx;
-}
-
-.dialog_buttons{
-    height: 75rpx;
-    width: 400rpx; 
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10rpx;
-    
-}
-.dialog_buttons button{
-    height: 100%;
-    flex-grow: 1;
-    font-size: 30rpx;
-    text-align: center;
-    line-height: 75rpx;
-    box-sizing: border-box;
-    border-radius: 0;
-    color:blue;
-}
-.dialog_buttons button::after{
-    border:none;
-} 
-.dialog_button_cancel{
-    border-right: 1rpx solid #ccc;
-    
-}
-.dialog_button_ok{
-    font-weight: 900;
-}
-
-.dialog_button_cancel_hover{
-    background-color: #ddd;
-}
-.dialog_button_ok_hover{
-    background-color: #ddd;
-}
 

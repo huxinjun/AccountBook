@@ -1,5 +1,6 @@
 //index.js
 //获取应用实例
+var dialog = require("../../utils/dialog.js")
 var APP = getApp()
 Page({
 
@@ -68,20 +69,24 @@ Page({
         console.log(option)
         if (option.friendId){
             this.data.firendId = option.friendId
-            this.dialogShow()
+
+            var settingTemp = {
+                page: this,
+                title: "标题",
+                content: "提示文字",
+                inputType: "number",
+                maxLength: 3,
+                callback: {
+                    onConfirm: function (formId) { },
+                    onCancel: function () { }
+                }
+            }
+            
+            dialog.showDialog(settingTemp)
         }
     },
 
-    dialogShow:function(msg){
-        this.setData({
-            dialog: "display:flex !important;"
-        })
-    },
-    dialogDissmiss: function () {
-        this.setData({
-            dialog: "display:none !important;"
-        })
-    },
+    
 
     
     /**
