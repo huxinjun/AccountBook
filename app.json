@@ -14,7 +14,7 @@
     "navigationBarTextStyle": "white",
     "backgroundColor": "#eeeeee",
     "backgroundTextStyle": "light",
-    "enablePullDownRefresh":true
+    "enablePullDownRefresh":false
 
   },
   "tabBar":{

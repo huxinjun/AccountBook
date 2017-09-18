@@ -57,6 +57,7 @@ Page({
 
         ],
     },
+
     
     onLoad: function (option) {
         var that = this
@@ -64,13 +65,6 @@ Page({
             list:this.data.list
         })
 
-        wx.getSystemInfo({
-            success: function (res) {
-                that.setData({
-                    containerHeight: res.windowHeight
-                })
-            }
-        })
         console.log(option)
         if (option.friendId){
             this.data.firendId = option.friendId
@@ -79,14 +73,13 @@ Page({
     },
 
     dialogShow:function(msg){
-        console.log("shw")
         this.setData({
-            dialog: "display:inherit;"
+            dialog: "display:flex !important;"
         })
     },
     dialogDissmiss: function () {
         this.setData({
-            dialog: "display:none;"
+            dialog: "display:none !important;"
         })
     },
 

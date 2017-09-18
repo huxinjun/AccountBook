@@ -1,6 +1,7 @@
 /**index.wxss**/
 
 .container {
+    /* filter: blur(5rpx); */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -9,6 +10,7 @@
     font-family: "微软雅黑";
     color: #272636;
     font-size: 24rpx;
+    overflow: hidden;
 }
 .item{
     width: 250rpx;
@@ -53,16 +55,19 @@
 .dialog_container{
     width: 100%;
     height: 100%;
+    
     background-color:rgba(0, 0, 0, 0.5);
     z-index: 1;
-    display: flex;
-    flex-flow: row nowrap;
+
+    display: flex !important;
+    flex-flow: column nowrap;
     justify-content: center;
+    align-content: center;
     align-items: center;
 
-    position: absolute;
+    position: fixed;
     left: 0;
-    top: 0;
+    top: 0; 
 }
 .dialog{
     width: 400rpx;
@@ -71,10 +76,12 @@
     flex-flow: column nowrap;
     justify-content: flex-end;
     align-items: center;
+    align-content: center;
 
     background-color:rgba(255, 255, 255, 1);
     opacity: 1;
     border-radius: 10rpx;
+    overflow: hidden;
 }
 
 .dialog_title{
@@ -82,13 +89,13 @@
     text-align: center;
     font-size: 30rpx;
     font-weight: 900;
-
-    margin-top: 30rpx;
+    margin: 20rpx;
 }
 .dialog_content{
     display: block;
     text-align: center;
-    
+    font-size: 24rpx;
+    margin-bottom: 20rpx;
 }
 
 .dialog_buttons{
@@ -98,24 +105,34 @@
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    margin-top: 30rpx;
+    margin-top: 10rpx;
     
 }
 .dialog_buttons button{
     height: 100%;
     flex-grow: 1;
-    border-top: 1rpx solid #667489;
     font-size: 30rpx;
     text-align: center;
     line-height: 75rpx;
     box-sizing: border-box;
+    border-radius: 0;
+    color:blue;
 }
-.dialog_btn_left_hover{
-    background-color: #ddd;
-    border-bottom-left-radius: 10rpx;
+.dialog_buttons button::after{
+    border:none;
+} 
+.dialog_button_cancel{
+    border-right: 1rpx solid #ccc;
+    
 }
-.dialog_btn_right_hover{
+.dialog_button_ok{
+    font-weight: 900;
+}
+
+.dialog_button_cancel_hover{
     background-color: #ddd;
-    border-bottom-right-radius: 10rpx;
+}
+.dialog_button_ok_hover{
+    background-color: #ddd;
 }
 

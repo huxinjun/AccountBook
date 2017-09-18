@@ -1,4 +1,4 @@
-<scroll-view class="container" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;" bindscroll='outterScroll'>
+<scroll-view class="container" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;">
     <view class="title">
         <image src="/img/type/gray_accounts.png"></image>
         <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
@@ -9,10 +9,10 @@
     <view class="desc">
         <view style="{{descSliderInfo.style.slider_container_pos}}{{descSliderInfo.style.slider_container_left}}">
 
-            <view class="desc_main" capture-bind:touchstart="capturetouchstart" capture-bind:touchmove="capturetouchmove" 
-                    capture-bind:touchend="capturetouchend" capture-bind:touchcancel="capturetouchcancel" capture-bind:tap="capturetap"
+            <view class="desc_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" 
+                    capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap"
                     
-                    catchtouchstart="{{touchstart}}" catchtouchmove="{{touchmove}}" catchtouchend="{{touchend}}" catchtouchcancel="{{touchcancel}}" data-index="{{descSliderInfo.index}}">
+                    catchtouchstart="{{eventStart}}" catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{descSliderInfo.index}}">
                 <image class="desc_icon" src="/img/desc.png" data-index="{{descSliderInfo.index}}"></image>
                 <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" />
                 <image class="desc_add_pic" src="/img/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
@@ -76,10 +76,10 @@
 
                 <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
 
-                    <view class="member_main" capture-bind:touchstart="capturetouchstart" capture-bind:touchmove="capturetouchmove" 
-                    capture-bind:touchend="capturetouchend" capture-bind:touchcancel="capturetouchcancel" capture-bind:tap="capturetap"
+                    <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" 
+                    capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap"
                     
-                    catchtouchstart="{{touchstart}}" catchtouchmove="{{touchmove}}" catchtouchend="{{touchend}}" catchtouchcancel="{{touchcancel}}" data-index="{{index}}">
+                    catchtouchstart="{{eventStart}}" catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
                         <image class="member_icon" src="/img/head.jpg" mode="aspectFill" data-index="{{index}}"></image>
 
                         <view class="member_content" data-index="{{index}}">

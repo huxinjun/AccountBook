@@ -722,85 +722,12 @@ Page({
 
 
     
-
-    startEvent: null,
-    calculated:false,
-    //按下时关闭
-    capturetap:function(e){
-      var index = e.target.dataset.index
-      slider.close(index)
-    },
-    capturetouchstart: function (e) {
-      // console.log("捕获阶段：start")
-      this.startEvent=e
-      this.calculated=false
-    },
-    capturetouchmove: function (e) {
-      if (this.calculated)
-        return
-      // console.log("捕获阶段：move")
-      var currEvent=e
-      var isHorizontal = slider.isHorizontal(this.startEvent, currEvent)
-      console.log("!!!!!!!!!!!!!!!"+isHorizontal)
-      if(isHorizontal){
-        //一开始没有绑定冒泡时期的catch方法，所以接受不到start的
-        this.touchstart(e)
-        //水平时让catch事件生效，就可以屏蔽垂直滚动
-        this.setData({
-          touchstart:"touchstart",
-          touchmove: "touchmove",
-          touchend: "touchend",
-          touchcancel: "touchcancel",
-          
-        })
-      }else{
-        //垂直滚动了
-        slider.eventEnd = false
-        slider.breakOnce()
-        
-        this.setData({
-          touchstart: "",
-          touchmove: "",
-          touchend: "",
-          touchcancel: "",
-        })
-      }
-      this.calculated=true
-    },
-    capturetouchend: function (e) {
-      // console.log("捕获阶段：end")
-      this.setData({
-        touchstart: "",
-        touchmove: "",
-        touchend: "",
-        touchcancel: "",
-      })
-    },
-    capturetouchcancel: function (e) {
-      // console.log("捕获阶段：cancel")
-      this.setData({
-        touchstart: "",
-        touchmove: "",
-        touchend: "",
-        touchcancel: "",
-      })
-    },
-
-
-    touchstart: function (e) {
-        //拉开时确定要显示的按钮
-        var index = e.target.dataset.index
+    /**
+     * 当slider捕获到事件时会请求page为其刷新slider中的
+     * 描述信息,以显示不同的按钮点击产生不同的事件
+     */
+    requireSliderUpdate:function(index){
         this.updateMemberSliderButton(index)
-        slider.start(e)
-    },
-    touchmove: function (e) {
-        slider.move(e)
-    },
-    touchend: function (e) {
-        slider.end(e)
-    },
-    touchcancel: function (e) {
-        slider.cancel(e)
     },
 
     
@@ -827,6 +754,7 @@ Page({
     }
 
 })
+
 
 
 

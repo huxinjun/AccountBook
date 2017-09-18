@@ -22,6 +22,45 @@ var slidersInfo
  */
 function init(slidersInfo) {
     this.slidersInfo = slidersInfo
+    var page = this.slidersInfo.page
+    var that=this
+    page.eventCaptureStart=function(e){
+        that.captureStart.call(that,e)
+    }
+    page.eventCaptureMove = function (e) {
+        that.captureMove.call(that,e)
+    }
+    page.eventCaptureEnd = function (e) {
+        that.captureEnd.call(that,e)
+    }
+    page.eventCaptureCancel =function (e) {
+        that.captureCancel.call(that,e)
+    }
+    page.eventCaptureTap = function (e) {
+        var index = e.target.dataset.index
+        that.close.call(that,index)
+    }
+    page.eventStart = function (e) {
+        console.log("eventStart")
+        //拉开时确定要显示的按钮
+        var index = e.target.dataset.index
+        if (page.requireSliderUpdate)
+            page.requireSliderUpdate(index)
+
+        that.start(e)
+    }
+    page.eventMove = function (e) {
+        console.log("eventMove")
+        that.move(e)
+    }
+    page.eventEnd = function (e) {
+        console.log("eventEnd")
+        that.end(e)
+    }
+    page.eventCancel = function (e) {
+        console.log("eventCancel")
+        that.cancel(e)
+    }
     return this
 }
 
@@ -37,7 +76,7 @@ function getSliderWidthByIndex(index) {
     item.value.layerInfo.buttons.forEach(function (v, i) {
         var visible = v.visible
         visible = visible == undefined ? true : visible
-        width += visible?v.width:0
+        width += visible ? v.width : 0
     })
     return width;
 }
@@ -53,12 +92,12 @@ function hasSlider(index) {
         item.value.layerInfo.buttons.length == 0) {
         return false
     }
-    var result=false
+    var result = false
     item.value.layerInfo.buttons.forEach(function (v, i) {
-      if(result)
-        return
-      if(v.visible)
-        result=true
+        if (result)
+            return
+        if (v.visible)
+            result = true
     })
     return result
 }
@@ -68,7 +107,7 @@ function hasSlider(index) {
 function updateLayer(index, newInfo) {
     var item = this.slidersInfo.page.getSliderData(index)
 
-    if (newInfo==undefined){
+    if (newInfo == undefined) {
         console.log("删除layerInfo属性")
         delete item.value.layerInfo
         return
@@ -77,7 +116,7 @@ function updateLayer(index, newInfo) {
     item.value.layerInfo.buttons.overide(newInfo)
     //重写更新界面关联的属性
     this.setLayer(index)
-    
+
 }
 /**
  * 设置当前要显示的slider
@@ -88,13 +127,13 @@ function setLayer(index, layerIndex) {
 
     var item = this.slidersInfo.page.getSliderData(index)
 
-    if(item.value==undefined)
-        item.value={}
+    if (item.value == undefined)
+        item.value = {}
     if (item.style == undefined)
         item.style = {}
 
     //复制一个layer对象,为的是每个item之后可以更新layer的状态
-    if (layerIndex!=undefined){
+    if (layerIndex != undefined) {
         item.value.layerInfo = clone(this.slidersInfo.layers[layerIndex])
         item.value.layerIndex = layerIndex
         return
@@ -117,7 +156,7 @@ function setLayer(index, layerIndex) {
     var p6 = "position:absolute;right:0;top:0;"
 
 
-    item.style.slider_container_pos ="position:relative;top:0;z-index:1;overflow:hidden;"
+    item.style.slider_container_pos = "position:relative;top:0;z-index:1;overflow:hidden;"
     item.style.slider = p1 + p2 + p3 + p4 + p5 + p6
 
 
@@ -136,7 +175,7 @@ function setLayer(index, layerIndex) {
 
         outterValue.buttons.forEach(function (innerValue, innerIndex) {
 
-            
+
 
             var p1 = "height:" + layer.height + "rpx; "
             var p2 = "width:" + innerValue.width + "rpx;"
@@ -147,10 +186,10 @@ function setLayer(index, layerIndex) {
             var p7 = "top:0;"
             var p8 = "right:" + right + "rpx;"
             var visible = innerValue.visible
-            visible=visible==undefined?true:visible
-            right += visible?innerValue.width:0;
+            visible = visible == undefined ? true : visible
+            right += visible ? innerValue.width : 0;
             //是否显示
-            var p9 = outterIndex != item.value.layerIndex ? "display:none;" : "display:" + (visible?"inherit":"none") +";"
+            var p9 = outterIndex != item.value.layerIndex ? "display:none;" : "display:" + (visible ? "inherit" : "none") + ";"
 
             var p10 = "font-size:28rpx;"
 
@@ -180,7 +219,7 @@ function start(e) {
     var index = e.target.dataset.index
     var item = this.slidersInfo.page.getSliderData(index)
 
-    if (!this.hasSlider(index)){
+    if (!this.hasSlider(index)) {
         item.style.sv_main = "width:750rpx;"
         this.slidersInfo.page.refreshSliderData()
         eventEnd = true
@@ -189,7 +228,7 @@ function start(e) {
 
     this.closeOther(index)
 
-    
+
 
     this.eventEnd = false;
     this.startX = e.touches[0].pageX;
@@ -240,10 +279,10 @@ function move(e) {
     // moveX = moveX < -this.getSliderWidthByIndex(index) ? -this.getSliderWidthByIndex(index) : moveX
     // moveX = moveX > 0 ? 0 : moveX
 
-    
+
     item.value.slider_container_left = moveX
     item.style.slider_container_left = 'left:' + item.value.slider_container_left + 'rpx;';
-    console.log("left:"+moveX);
+    console.log("left:" + moveX);
     this.slidersInfo.page.refreshSliderData()
 
 
@@ -277,11 +316,11 @@ function end(e) {
  * 关闭所有打开的抽屉
  */
 function closeOther(index) {
-    // console.log('closeOther')
+    console.log('closeOther')
     var datas = this.slidersInfo.page.getSliderData()
 
     datas.forEach(function (v, i) {
-        if(i==index)
+        if (i == index)
             return
         v.value.isSliderOpen = false
         v.value.slider_container_left = 0
@@ -314,7 +353,7 @@ function close(index) {
     item.value.isSliderOpen = false
     item.value.slider_container_left = 0
     item.style.slider_container_left = 'left:0;transition: left 0.2s ease;';
-    item.style.scroll_left=0
+    item.style.scroll_left = 0
 
     this.slidersInfo.page.refreshSliderData()
 
@@ -332,14 +371,14 @@ function close(index) {
 function open(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
-    item.value.isSliderOpen=true
+    item.value.isSliderOpen = true
     item.value.slider_container_left = -this.getSliderWidthByIndex(index)
     item.style.slider_container_left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease;';
     this.slidersInfo.page.refreshSliderData()
 
     setTimeout(function () {
         var item = this.slidersInfo.page.getSliderData(index)
-        item.style.slider_container_left = 'left:' + -this.getSliderWidthByIndex(index) +"rpx;"
+        item.style.slider_container_left = 'left:' + -this.getSliderWidthByIndex(index) + "rpx;"
         this.slidersInfo.page.refreshSliderData()
     }.bind(this), 200)
 }
@@ -351,6 +390,7 @@ function breakOnce() {
     if (this.eventEnd)
         return
     this.eventEnd = true
+    console.log("breakOnce")
     this.closeOther()
 }
 
@@ -413,16 +453,16 @@ function deleteItem(index) {
 
 
 
-function isHorizontal(startEvent, currEvent){
-  var startX = startEvent.touches[0].pageX;
-  var startY = startEvent.touches[0].pageY;
-  var currX = currEvent.touches[0].pageX;
-  var currY = currEvent.touches[0].pageY;
+function isHorizontal(startEvent, currEvent) {
+    var startX = startEvent.touches[0].pageX;
+    var startY = startEvent.touches[0].pageY;
+    var currX = currEvent.touches[0].pageX;
+    var currY = currEvent.touches[0].pageY;
     //获取滑动角度
     var a = angle({ X: startX, Y: startY }, { X: currX, Y: currY });
     console.log(a)
     if (Math.abs(a) > 30)
-      return false;
+        return false;
     return true;
 }
 
@@ -444,10 +484,10 @@ function angle(start, end) {
 function clone(obj) {
 
     // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj){
+    if (null == obj || "object" != typeof obj) {
         //基础类型string,number,boolean等等
         return obj;
-    } 
+    }
 
     // Handle Date
     if (obj instanceof Date) {
@@ -469,13 +509,13 @@ function clone(obj) {
     if (obj instanceof Object) {
         var copy = {};
         for (var attr in obj) {
-            
+
             if (obj.hasOwnProperty(attr)) {
-                
+
                 copy[attr] = clone(obj[attr]);
             }
         }
-        
+
         return copy;
     }
 
@@ -485,8 +525,88 @@ function clone(obj) {
 
 
 
+
+
+
+//------------------------------------------------------------------------
+var startEvent=null
+var calculated=false
+//按下时关闭
+function captureTap(e) {
+    page.captureEventTap(e)
+}
+function captureStart(e) {
+    console.log("捕获阶段：start")
+    this.startEvent = e
+    this.calculated = false
+}
+function captureMove(e) {
+    if (this.calculated)
+        return
+    var page = this.slidersInfo.page
+    console.log("捕获阶段：move")
+    var currEvent = e
+    var isHorizontal = this.isHorizontal(this.startEvent, currEvent)
+    console.log("!!!!!!!!!!!!!!!" + isHorizontal)
+    if (isHorizontal) {
+        //一开始没有绑定冒泡时期的catch方法，所以接受不到start的
+        page.eventStart(e)
+        //水平时让catch事件生效，就可以屏蔽垂直滚动
+        page.setData({
+            eventStart: "eventStart",
+            eventMove: "eventMove",
+            eventEnd: "eventEnd",
+            eventCancel: "eventCancel",
+        })
+    } else {
+        //垂直滚动了
+        this.eventEnd = false
+        this.breakOnce()
+
+        page.setData({
+            eventStart: "",
+            eventMove: "",
+            eventEnd: "",
+            eventCancel: "",
+
+        })
+    }
+    this.calculated = true
+}
+function captureEnd(e) {
+    // console.log("捕获阶段：end")
+    var page = this.slidersInfo.page
+    page.setData({
+        eventStart: "",
+        eventMove: "",
+        eventEnd: "",
+        eventCancel: "",
+
+    })
+}
+function captureCancel(e) {
+    // console.log("捕获阶段：cancel")
+    var page = this.slidersInfo.page
+    page.setData({
+        eventStart: "",
+        eventMove: "",
+        eventEnd: "",
+        eventCancel: "",
+
+    })
+}
+
+
+
+
 module.exports = {
     init: init,
+
+    captureStart,
+    captureMove,
+    captureEnd,
+    captureCancel,
+    captureTap,
 
     start: start,
     move: move,
@@ -506,6 +626,6 @@ module.exports = {
     getSliderWidthByIndex: getSliderWidthByIndex,
     hasSlider: hasSlider,
 
-    clone:clone
+    clone: clone
 
 }
