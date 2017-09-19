@@ -64,10 +64,13 @@ Page({
             page: this,
             title: "标题",
             content: "提示文字",
-            inputType: "aaa",
+            inputType: "number",
             maxLength: 3,
             callback: {
-                onConfirm: function (formId) { },
+                onConfirm: function (formId,inputValue) {
+                    console.log("testShowDialog.formId:" + formId)
+                    console.log("testShowDialog.inputValue:" + inputValue)
+                 },
                 onCancel: function () { }
             }
         }

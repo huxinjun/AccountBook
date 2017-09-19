@@ -23,9 +23,22 @@ var dialogInfo
 function showDialog(dialogInfo) {
     this.dialogInfo = dialogInfo
     var that = this
-    this.dialogInfo.page.dissmiss = function () {
+    //点击取消
+    this.dialogInfo.page.dissmiss = function (e) {
+        var callback = that.dialogInfo.callback
+        if (callback && callback.onCancel)
+            callback.onCancel()
         that.dismissDialog();
     }
+    //点击确定
+    this.dialogInfo.submitEventName = "formSubmit"
+    this.dialogInfo.page.formSubmit = function (e) {
+        var callback=that.dialogInfo.callback
+        if (callback && callback.onConfirm)
+            callback.onConfirm(e.detail.formId, that.dialogInfo.inputValue)
+        that.dismissDialog();
+    }
+    //内容模糊
     this.dialogInfo.blurClass = "blur"
     this.dialogInfo.display = "display:flex !important;"
     //是否需要输入
@@ -41,6 +54,7 @@ function showDialog(dialogInfo) {
     dialogInfo.bgAnim = transition + "background-color:rgba(0, 0, 0, 0);"
     dialogInfo.dialogAnim = transition + "transform: scale(0, 0);"
 
+
     this.dialogInfo.page.setData({
         dialogInfo: this.dialogInfo
     })
@@ -55,15 +69,20 @@ function showDialog(dialogInfo) {
         })
     }.bind(this), 50)
 
-    if (isInputDialog)
+    if (isInputDialog){
         setTimeout(function () {
             this.dialogInfo.focus = true
             this.dialogInfo.page.setData({
                 dialogInfo: this.dialogInfo
             })
         }.bind(this), 500)
-
-
+        
+        this.dialogInfo.inputEventName ="inputValueChanged"
+        this.dialogInfo.page.inputValueChanged = function (e) {
+            that.dialogInfo.inputValue=e.detail.value
+        }
+    }
+    
 }
 
 /**

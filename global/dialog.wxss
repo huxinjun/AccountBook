@@ -84,7 +84,7 @@
     box-sizing: border-box;
     border-radius: 0;
     color:blue;
-    background-color: transparent !important;
+    background-color: transparent;
 }
 .dialog_buttons button::after{
     border:none;
@@ -98,9 +98,9 @@
 }
 
 .dialog_button_cancel_hover{
-    background-color: #ddd;
+    background-color: #ddd !important;
 }
 .dialog_button_ok_hover{
-    background-color: #ddd;
+    background-color: #ddd !important;
 }
 

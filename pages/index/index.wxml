@@ -20,10 +20,10 @@
 
 <view class="dialog_container" style='{{dialogInfo.display}}{{dialogInfo.bgAnim}}'>
     <view class="dialog" style='{{dialogInfo.dialogAnim}}'>
-        <form bindsubmit="{{dialog_form_submit}}" report-submit="true">
+        <form bindsubmit="{{dialogInfo.submitEventName}}" report-submit="true">
             <text class='dialog_title'>{{dialogInfo.title}}</text>
             <text class='dialog_content'>{{dialogInfo.content}}</text>
-            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.focus}}' maxlength='{{dialogInfo.maxLength}}' type='dialogInfo.inputType' style='{{dialogInfo.inputDisplay}}'></input>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.focus}}' maxlength='{{dialogInfo.maxLength}}' type='dialogInfo.inputType' style='{{dialogInfo.inputDisplay}}' bindinput="{{dialogInfo.inputEventName}}"></input>
             <view class='dialog_buttons'>
                 <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
                 <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
