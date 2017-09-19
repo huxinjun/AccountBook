@@ -31,7 +31,7 @@ function showDialog(dialogInfo) {
     this.page.dissmiss = function (e) {
         var callback = that.dialogInfo.callback
         if (callback && callback.onCancel)
-            callback.onCancel()
+            callback.onCancel.call(that.page)
         that.dismissDialog();
     }
     //点击确定
@@ -39,7 +39,7 @@ function showDialog(dialogInfo) {
     this.page.formSubmit = function (e) {
         var callback=that.dialogInfo.callback
         if (callback && callback.onConfirm)
-            callback.onConfirm(e.detail.formId, that.dialogInfo.inputValue)
+            callback.onConfirm.call(that.page,e.detail.formId, that.dialogInfo.inputValue)
         that.dismissDialog();
     }
     //内容模糊

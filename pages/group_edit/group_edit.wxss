@@ -1,3 +1,6 @@
+@import "/global/dialog.wxss";
+
+
 
 .container {
     width: 100%;
@@ -30,6 +33,7 @@
 
     padding: 15rpx;
 
+
 }
 .member{
     box-sizing: border-box;
@@ -42,14 +46,14 @@
     justify-content: center;
     
     margin: 15rpx;
-    
+
+    transition: all 0.1s linear;
 
 }
 
 .member image{
     width: 115rpx;
     height: 115rpx;
-    background-color: rebeccapurple;
     border-radius: 10rpx;
 }
 .member text{
@@ -139,6 +143,8 @@
   background-color: #fa0000;
   color: white;
   line-height: 80rpx;
+
+  display: none;
 }
 .delete_hover{
   background-color: #f00;

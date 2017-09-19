@@ -21,7 +21,7 @@ App({
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())
         wx.setStorageSync('logs', logs)
-        wx.removeStorageSync("token")
+        // wx.removeStorageSync("token")
 
         Array.prototype.onSizeChanged = function (size) {
             console.log("Array.onSizeChanged:" + size)

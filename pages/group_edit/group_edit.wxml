@@ -1,49 +1,80 @@
-<view class="container">
-  <view class="members">
+<view class="container {{dialogInfo.blurClass}}">
+    <view class="members" style='{{membersStyle}}'>
 
-    <view class="member" wx:for="{{list}}" wx:key="{{index}}">
+        <view class="member" wx:for="{{groupInfo.members}}" wx:key="{{index}}" bindtouchstart='memberTouchDown' bindtouchend='memberTouchUp' style='{{memberAnim}}' data-index="{{index}}">
 
-      <image src=""></image>
-      <text>{{item.name}}</text>
+            <image src=""></image>
+            <text>{{item.name}}</text>
+
+        </view>
+
+        <view class="member" bindtap='addMember' bindtouchstart='memberTouchDown' bindtouchend='memberTouchUp' style='{{memberAddAnim}}'>
+
+            <image src="/img/plus3.png"></image>
+
+        </view>
+
+
+    </view>
+
+    <view class="item" hover-class='item_hover' style='margin-top: 30rpx;'>
+        <text class="key">头像</text>
+        <view class="value">
+            <image src="{{groupInfo.group.icon}}"></image>
+        </view>
+        <!-- <image class="arrow"></image> -->
 
     </view>
 
 
-  </view>
+    <view class="item" hover-class='item_hover' style='margin-top: 30rpx;border-bottom:1rpx solid #ccc;' bindtap='inputName'>
+        <text class="key">名称</text>
+        <text class="point" style='{{namePointStyle}}'>●</text>
+        <view class="value">
+            <text>{{groupInfo.group.name}}</text>
+        </view>
+        <image class="arrow" src="/img/right_arrow_normal.png"></image>
 
-  <view class="item" hover-class='item_hover' style='margin-top: 30rpx;'>
-    <text class="key">头像</text>
-    <view class="value">
-      <image src="{{group_icon}}"></image>
     </view>
-    <image class="arrow" src="/img/right_arrow_normal.png"></image>
 
-  </view>
+    <view class="item" hover-class='item_hover' bindtap='inputDesc'>
+        <text class="key">描述</text>
+        <text class="point" style='{{descPointStyle}}'>●</text>
+        <view class="value">
+            <text>{{groupInfo.group.desc}}</text>
+        </view>
+        <image class="arrow" src="/img/right_arrow_normal.png"></image>
 
-
-  <view class="item" hover-class='item_hover' style='margin-top: 30rpx;border-bottom:1rpx solid #ccc;'>
-    <text class="key">名称</text>
-    <text class="point" style='display:{{namePointDisplay}};'>●</text>
-    <view class="value">
-      <text>主卧</text>
     </view>
-    <image class="arrow" src="/img/right_arrow_normal.png"></image>
 
-  </view>
+    <button class='{{commit_class}}' hover-class='{{commit_hover_class}}' bindtap='{{commit_click}}'>{{commit_text}}</button>
+    <button class='delete' hover-class='delete_hover' style='{{deleteStyle}}'>删除该组</button>
+    <button class='delete' hover-class='delete_hover' style='{{quitStyle}}'>退出该组</button>
 
-  <view class="item" hover-class='item_hover' style=''>
-    <text class="key">描述</text>
-    <text class="point" style='display:{{descPointDisplay}};'>●</text>
-    <view class="value">
-      <text>相同描述归为一类</text>
+
+</view>
+
+
+
+
+
+
+
+
+
+
+<view class="dialog_container" style='{{dialogInfo.display}}{{dialogInfo.bgAnim}}'>
+    <view class="dialog" style='{{dialogInfo.dialogAnim}}'>
+        <form bindsubmit="{{dialogInfo.submitEventName}}" report-submit="true">
+            <text class='dialog_title'>{{dialogInfo.title}}</text>
+            <text class='dialog_content'>{{dialogInfo.content}}</text>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' value='{{dialogInfo.inputValue}}' focus='{{dialogInfo.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.inputDisplay}}' bindinput="{{dialogInfo.inputEventName}}"></input>
+            <view class='dialog_buttons'>
+                <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
+                <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
+            </view>
+
+        </form>
     </view>
-    <image class="arrow" src="/img/right_arrow_normal.png"></image>
-
-  </view>
-
-  <button class='{{commit_class}}' hover-class='{{commit_hover_class}}'>{{commit_text}}</button>
-  <button class='delete' hover-class='delete_hover' style='{{deleteStyle}}'>删除该组</button>
-  <button class='delete' hover-class='delete_hover' style='{{quitStyle}}'>退出该组</button>
-
 
 </view>
