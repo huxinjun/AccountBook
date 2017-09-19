@@ -59,6 +59,7 @@ Page({
         ],
     },
 
+
     testShowDialog:function(e){
         var dialogInfo = {
             page: this,

@@ -11,20 +11,24 @@ var Temp = {
     //输入框最长输入字符个数
     maxLength: 10,
     callback: {
-        onConfirm: function (formId) { },
-        onCancel: function () { }
+        onConfirm: function (formId,inputValue) {},
+        onCancel: function () {}
     }
 }
 
 var dialogInfo
+var page
 /**
  * 弹出一个提醒对话框
  */
 function showDialog(dialogInfo) {
     this.dialogInfo = dialogInfo
+    this.page = dialogInfo.page
+    //page是关键字,不删除会有很多warning
+    delete dialogInfo.page
     var that = this
     //点击取消
-    this.dialogInfo.page.dissmiss = function (e) {
+    this.page.dissmiss = function (e) {
         var callback = that.dialogInfo.callback
         if (callback && callback.onCancel)
             callback.onCancel()
@@ -32,7 +36,7 @@ function showDialog(dialogInfo) {
     }
     //点击确定
     this.dialogInfo.submitEventName = "formSubmit"
-    this.dialogInfo.page.formSubmit = function (e) {
+    this.page.formSubmit = function (e) {
         var callback=that.dialogInfo.callback
         if (callback && callback.onConfirm)
             callback.onConfirm(e.detail.formId, that.dialogInfo.inputValue)
@@ -55,7 +59,7 @@ function showDialog(dialogInfo) {
     dialogInfo.dialogAnim = transition + "transform: scale(0, 0);"
 
 
-    this.dialogInfo.page.setData({
+    this.page.setData({
         dialogInfo: this.dialogInfo
     })
 
@@ -64,7 +68,7 @@ function showDialog(dialogInfo) {
         dialogInfo.bgAnim = transition + "background-color:rgba(0, 0, 0, 0.5);"
         dialogInfo.dialogAnim = transition + "transform:scale(1,1);"
 
-        this.dialogInfo.page.setData({
+        this.page.setData({
             dialogInfo: this.dialogInfo
         })
     }.bind(this), 50)
@@ -72,13 +76,13 @@ function showDialog(dialogInfo) {
     if (isInputDialog){
         setTimeout(function () {
             this.dialogInfo.focus = true
-            this.dialogInfo.page.setData({
+            this.page.setData({
                 dialogInfo: this.dialogInfo
             })
         }.bind(this), 500)
         
         this.dialogInfo.inputEventName ="inputValueChanged"
-        this.dialogInfo.page.inputValueChanged = function (e) {
+        this.page.inputValueChanged = function (e) {
             that.dialogInfo.inputValue=e.detail.value
         }
     }
@@ -96,14 +100,14 @@ function dismissDialog() {
     this.dialogInfo.bgAnim = transition + "background-color:rgba(0, 0, 0, 0);"
     this.dialogInfo.dialogAnim = transition + "transform: scale(0, 0);"
 
-    this.dialogInfo.page.setData({
+    this.page.setData({
         dialogInfo: this.dialogInfo
     })
 
     setTimeout(function () {
 
         this.dialogInfo.display = "display:none !important;"
-        this.dialogInfo.page.setData({
+        this.page.setData({
             dialogInfo: this.dialogInfo
         })
     }.bind(this), 500)
