@@ -10,8 +10,8 @@ Page({
         groupInfo: {
             group: {
                 name: "",
-                desc: "",
-                icon: null
+                category: "",
+                icon: ""
             },
             users:[]
         }
@@ -25,7 +25,7 @@ Page({
         APP.ajax({
             url: APP.globalData.BaseUrl + '/group/get',
             data: {
-                groupId: "n8Y5qSAmisgEjG_BQdRiiA==",
+                groupId: "n8Y5qSAmisgEjG_BQdRiiA",
                 token: wx.getStorageSync("token")
                 
             },
@@ -44,7 +44,7 @@ Page({
 
                 this.setMemberVisible(true)
                 this.setNameValid(true)
-                this.setDescValid(true)
+                this.setCategoryValid(true)
             }
 
         }, this)
@@ -61,7 +61,7 @@ Page({
             data: {
                 token: wx.getStorageSync("token"),
                 name: this.data.groupInfo.group.name,
-                desc: this.data.groupInfo.group.desc
+                category: this.data.groupInfo.group.category
             },
 
             success: function (res) {
@@ -83,11 +83,11 @@ Page({
                 token: wx.getStorageSync("token"),
                 groupId: this.data.groupInfo.group.id,
                 name: this.data.groupInfo.group.name,
-                desc: this.data.groupInfo.group.desc
+                category: this.data.groupInfo.group.category
             },
 
             success: function (res) {
-               
+                this.pullGroupInfo(res.data.msg)
             }
 
         }, this)
@@ -124,7 +124,7 @@ Page({
             namePointStyle: valid ? "display:none;" : "display:inherit;"
         })
         var isAddGroup=this.data.groupInfo.group.id==undefined
-        var isAllValid = this.data.nameValid && this.data.descValid
+        var isAllValid = this.data.nameValid && this.data.categoryValid
         this.commitEnable(isAllValid, isAddGroup ? "addGroup" :"updateGroup")
 
         if (isAddGroup)
@@ -137,13 +137,13 @@ Page({
     /**
      * 显示或隐藏分类条目的小红点
      */
-    setDescValid: function (valid) {
+    setCategoryValid: function (valid) {
         this.setData({
-            descValid: valid,
-            descPointStyle: valid ? "display:none;" : "display:inherit;"
+            categoryValid: valid,
+            categoryPointStyle: valid ? "display:none;" : "display:inherit;"
         })
         var isAddGroup = this.data.groupInfo.group.id == undefined
-        var isAllValid = this.data.nameValid && this.data.descValid
+        var isAllValid = this.data.nameValid && this.data.categoryValid
         this.commitEnable(isAllValid, isAddGroup ? "addGroup" : "updateGroup")
 
         if (isAddGroup)
@@ -273,7 +273,7 @@ Page({
     /**
      * 点击描述条目
      */
-    inputDesc: function (e) {
+    inputCategory: function (e) {
         var dialogInfo = {
             page: this,
             title: "输入",
@@ -284,15 +284,15 @@ Page({
                 onConfirm: function (formId, inputValue) {
                     if (inputValue)
                         inputValue = inputValue.replace(/\s+/g, '')
-                    this.data.groupInfo.group.desc = inputValue
+                    this.data.groupInfo.group.category = inputValue
                     this.setData({
                         groupInfo: this.data.groupInfo
                     })
                     //判断是否不是空的
                     if (inputValue && inputValue != '')
-                        this.setDescValid(true)
+                        this.setCategoryValid(true)
                     else
-                        this.setDescValid(false)
+                        this.setCategoryValid(false)
                 },
                 onCancel: function () { }
             }
@@ -335,6 +335,18 @@ Page({
             this.setData({
                 memberAddAnim: "transform:scale(1,1);"
             })
+    },
+
+    /**
+     * 预览头像
+     */
+    iconPreview:function(e){
+        var page=this
+        wx.previewImage({
+            urls: [
+                page.data.ImageBaseUrl+page.data.groupInfo.group.icon
+            ],
+        })
     }
     
 

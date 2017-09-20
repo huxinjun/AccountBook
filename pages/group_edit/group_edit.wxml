@@ -17,7 +17,7 @@
 
     </view>
 
-    <view class="item" hover-class='item_hover' style='margin-top: 30rpx;'>
+    <view class="item" hover-class='item_hover' style='margin-top: 30rpx;' bindtap='iconPreview'>
         <text class="key">头像</text>
         <view class="value">
             <image src="{{ImageBaseUrl}}{{groupInfo.group.icon}}"></image>
@@ -36,11 +36,11 @@
 
     </view>
 
-    <view class="item" hover-class='item_hover' bindtap='inputDesc'>
+    <view class="item" hover-class='item_hover' bindtap='inputCategory'>
         <text class="key">描述</text>
-        <text class="point" style='{{descPointStyle}}'>●</text>
+        <text class="point" style='{{categoryPointStyle}}'>●</text>
         <view class="value">
-            <text>{{groupInfo.group.desc}}</text>
+            <text>{{groupInfo.group.category}}</text>
         </view>
         <image class="arrow" src="/img/right_arrow_normal.png"></image>
 
