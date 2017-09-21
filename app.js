@@ -2,15 +2,16 @@
 
 App({
     globalData: {
-        // BaseUrl: 'http://192.168.10.205:8080/AccountBook',
+        BaseUrl: 'http://192.168.10.205:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
-        BaseUrl: 'http://192.168.1.103:8080/AccountBook',
+        // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         userInfo: null,
         resultcode: {
             SUCCESS: 0,
             INVALID_TOKEN: 1,
-            INVALID_COMMAND: 2
+            INVALID_COMMAND: 2,
+            INVALID_USERINFO: 3
         }
     },
 
@@ -63,12 +64,8 @@ App({
                 withCredentials: false,
                 success: function (res) {
                     that.globalData.userInfo = res.userInfo
+                    debugger
                     typeof cb == "function" && cb(that.globalData.userInfo)
-                    if (wx.getStorageSync('token') != '') {
-                        console.log('使用本地token')
-                        return
-                    }
-                    that.login()
                 }
 
             })
@@ -90,46 +87,54 @@ App({
     //在我的服务器上登录,获取token
     loginInMyServer: function (code, success) {
         console.log('loginInMyServer')
+        var that=this
         wx.showLoading({
             title: '正在登陆中请稍后...',
         })
-        this.ajax({
-            url: this.globalData.BaseUrl + '/login/fromWX',
+        wx.request({
+            url: that.globalData.BaseUrl + '/login/fromWX',
             data: {
                 code: code
             },
             success: function (res) {
-                console.log(res.data)
-                this.globalData.token = res.data.token
+                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 wx.setStorageSync("token", res.data.token)
-                if (res.data.status == 1) {
+                console.log(res)
+                console.log(that.globalData.resultcode.INVALID_USERINFO)
+                if (res.data.status == that.globalData.resultcode.INVALID_USERINFO) {
                     //完善个人信息
-                    this.setUserInfo();
-                    wx.showLoading({
-                        title: '正在完善用户信息请稍后...',
+                    wx.getUserInfo({
+                        withCredentials: false,
+                        success: function (res) {
+                            that.uploadUserInfo(res.userInfo, success);
+                            wx.showLoading({
+                                title: '正在完善用户信息请稍后...',
+                            })
+                        }
+
                     })
                     return
                 }
-                this.onLoginSuccess(success);
+                that.onLoginSuccess(success);
             },
 
 
-        }, this)
+        })
     },
 
     //第一次在我的服务器上登录,需要完善用户信息
-    setUserInfo: function () {
+    uploadUserInfo: function (info, success) {
         console.log('uploadUserInfo')
         this.ajax({
 
             url: this.globalData.BaseUrl + '/user/updateInfo',
             data: {
                 token: wx.getStorageSync("token"),
-                info: this.globalData.userInfo
+                info: info
             },
             success: function (res) {
                 console.log(res.data)
-                this.onLoginSuccess();
+                this.onLoginSuccess(success);
             }
         }, this)
     },
@@ -193,7 +198,8 @@ App({
                 console.log("");
                 console.log("");
                 console.log("");
-                if (res.data.status == that.globalData.resultcode.INVALID_TOKEN) {
+                if (res.data.status == that.globalData.resultcode.INVALID_TOKEN ||
+                    res.data.status == that.globalData.resultcode.INVALID_USERINFO) {
                     that.reLogin({
                         context: this,
                         success: function () {

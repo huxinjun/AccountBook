@@ -87,7 +87,7 @@ Page({
             },
 
             success: function (res) {
-                this.pullGroupInfo(res.data.msg)
+                this.pullGroupInfo(this.data.groupInfo.group.id)
             }
 
         }, this)
