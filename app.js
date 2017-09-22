@@ -6,13 +6,20 @@ App({
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
         // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
-        userInfo: null,
         resultcode: {
             SUCCESS: 0,
             INVALID_TOKEN: 1,
             INVALID_COMMAND: 2,
             INVALID_USERINFO: 3
         }
+    },
+
+    /**
+     * 拼接图像的完整地址
+     * 服务器只返回一个文件id
+     */
+    getImageUrl:function(file){
+        return this.globalData.BaseUrl + "/image/get/" +(file?file:"")
     },
 
 
@@ -23,6 +30,26 @@ App({
         logs.unshift(Date.now())
         wx.setStorageSync('logs', logs)
         // wx.removeStorageSync("token")
+
+
+        var that=this
+        wx.getSystemInfo({
+            success: function (res) {
+                that.systemInfo=res
+                console.log(res.model)
+                console.log(res.pixelRatio)
+                console.log(res.screenWidth)
+                console.log(res.screenHeight)
+                console.log(res.windowWidth)
+                console.log(res.windowHeight)
+                console.log(res.language)
+                console.log(res.version)
+                console.log(res.platform)
+            }
+        })
+
+
+
 
         Array.prototype.onSizeChanged = function (size) {
             console.log("Array.onSizeChanged:" + size)
@@ -48,29 +75,6 @@ App({
 
     },
 
-
-
-
-
-
-
-    getUserInfo: function (cb) {
-        var that = this
-        if (this.globalData.userInfo) {
-            typeof cb == "function" && cb(this.globalData.userInfo)
-        } else {
-            //调用登录接口
-            wx.getUserInfo({
-                withCredentials: false,
-                success: function (res) {
-                    that.globalData.userInfo = res.userInfo
-                    debugger
-                    typeof cb == "function" && cb(that.globalData.userInfo)
-                }
-
-            })
-        }
-    },
 
     login: function (success) {
 

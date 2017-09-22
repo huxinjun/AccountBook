@@ -4,7 +4,7 @@ var slider
 var APP = getApp()
 Page({
     data: {
-        containerHeight: 0,
+        containerHeight: APP.systemInfo.windowHeight,
         datas:null
 
     },
@@ -80,13 +80,6 @@ Page({
     onLoad: function () {
         console.log('onLoad')
         var that = this
-        wx.getSystemInfo({
-            success: function (res) {
-                that.setData({
-                    containerHeight: res.windowHeight
-                })
-            }
-        })
         var slidersInfo = {
             //page：page对象
             page: this,

@@ -5,7 +5,7 @@ var slider
 Page({
     data: {
 
-        containerHeight: 0,
+        containerHeight: APP.systemInfo.windowHeight,
         
         tip0: "请输入固定比例(此成员将只付款总金额的百分比值,范围0-100)",
         tip1: "请输入固定数额(此成员将只按此金额付款)",
@@ -623,7 +623,6 @@ Page({
 
 
     onLoad: function () {
-        this.caclContainerHeight()
         var that=this
         this.data.account.members.onSizeChanged=function(size){
             that.refreshTags()
@@ -704,20 +703,6 @@ Page({
         slider.setLayer(this.data.descSliderInfo.index, 1)
 
         this.getTodayDate()
-    },
-
-    /**
-     * 垂直的scroll-view需要一个固定高度
-     */
-    caclContainerHeight: function () {
-        var that = this
-        wx.getSystemInfo({
-            success: function (res) {
-                that.setData({
-                    containerHeight: res.windowHeight
-                })
-            }
-        })
     },
 
 

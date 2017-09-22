@@ -5,8 +5,7 @@ var APP = getApp()
 var dialog = require("../../utils/dialog.js")
 Page({
     data: {
-        ImageBaseUrl: APP.globalData.BaseUrl +"/image/get/",
-
+        ImageBaseUrl: APP.getImageUrl(),
         groupInfo: {
             group: {
                 name: "",
@@ -344,7 +343,7 @@ Page({
         var page=this
         wx.previewImage({
             urls: [
-                page.data.ImageBaseUrl+page.data.groupInfo.group.icon
+                APP.getImageUrl(page.data.groupInfo.group.icon)
             ],
         })
     }

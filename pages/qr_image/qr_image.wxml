@@ -1,0 +1,3 @@
+<view class="container" style="height:{{containerHeight}}px;">
+    <image class="qr" mode='widthFix' src="{{qrImageUrl}}"></image>
+</view>

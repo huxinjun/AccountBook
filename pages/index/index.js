@@ -6,7 +6,7 @@ Page({
 
     data: {
         firendId:"",
-        containerHeight: 0,
+        containerHeight: APP.systemInfo.windowHeight,
         dialog:"display:none;",
 
         list: [
@@ -88,24 +88,47 @@ Page({
         })
 
         console.log(option)
-        if (option.friendId){
-            this.data.firendId = option.friendId
-            var dialogInfo = {
-                page: this,
-                title: "标题",
-                content: "提示文字",
-                inputType: "number",
-                maxLength: 3,
-                callback: {
-                    onConfirm: function (formId) { },
-                    onCancel: function () { }
-                }
+        if (option.friendId)
+            addFriend(option.friendId)
+            
+        
+    },
+
+    /**
+     * 添加好友
+     */
+    addFriend:function(friendId){
+        //查询目标好友昵称
+        APP.ajax({
+            url: APP.globalData.BaseUrl + "/user/",
+            data: {
+                groupId: option.groupId,
+                token: wx.getStorageSync("token")
+            },
+
+            success: function (res) {
+                if (res.data.status == APP.globalData.resultcode.SUCCESS)
+                    this.setData({
+                        qrImageUrl: APP.getImageUrl(res.data.msg)
+                    })
             }
 
-            dialog.showDialog(dialogInfo)
-            
+
+        }, this)
+
+
+        this.data.firendId = option.friendId
+        var dialogInfo = {
+            page: this,
+            title: "提示",
+            content: "确定加",
+            callback: {
+                onConfirm: function (formId) { },
+                onCancel: function () { }
+            }
         }
-        
+
+        dialog.showDialog(dialogInfo)
     },
 
 

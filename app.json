@@ -7,7 +7,8 @@
     "pages/msg_invite/msg_invite",
     "pages/new_account/new_account",
     "pages/group/group",
-    "pages/group_edit/group_edit"
+    "pages/group_edit/group_edit",
+    "pages/qr_image/qr_image"
   ],
   "window":{
     "navigationBarBackgroundColor": "#2BA245",
@@ -48,11 +49,12 @@
             "iconPath": "img/me.png",
             "selectedIconPath": "img/me_press.png"
         },
+        
         {
-            "pagePath": "pages/logs/logs",
-            "text": "个人",
-            "iconPath": "img/me.png",
-            "selectedIconPath": "img/me_press.png"
+                "pagePath": "pages/qr_image/qr_image",
+                "text": "个人",
+                "iconPath": "img/me.png",
+                "selectedIconPath": "img/me_press.png"
         }
 
     ]
