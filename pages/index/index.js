@@ -60,25 +60,25 @@ Page({
     },
 
 
-    testShowDialog:function(e){
-        var dialogInfo = {
-            page: this,
-            title: "标题",
-            content: "提示文字",
-            inputType: "number",
-            maxLength: 3,
-            callback: {
-                onConfirm: function (formId,inputValue) {
-                    console.log("testShowDialog.formId:" + formId)
-                    console.log("testShowDialog.inputValue:" + inputValue)
-                 },
-                onCancel: function () { }
-            }
-        }
+    // testShowDialog:function(e){
+    //     var dialogInfo = {
+    //         page: this,
+    //         title: "标题",
+    //         content: "提示文字",
+    //         inputType: "number",
+    //         maxLength: 3,
+    //         callback: {
+    //             onConfirm: function (formId,inputValue) {
+    //                 console.log("testShowDialog.formId:" + formId)
+    //                 console.log("testShowDialog.inputValue:" + inputValue)
+    //              },
+    //             onCancel: function () { }
+    //         }
+    //     }
 
-        dialog.showDialog(dialogInfo)
+    //     dialog.showDialog(dialogInfo)
 
-    },
+    // },
 
     
     onLoad: function (option) {
@@ -89,46 +89,76 @@ Page({
 
         console.log(option)
         if (option.friendId)
-            addFriend(option.friendId)
+            this.showAddFriend(option.friendId)
+        if (option.groupId)
+            this.showJoinGroup(option.groupId)
             
         
     },
 
     /**
-     * 添加好友
+     * 添加好友弹窗
      */
-    addFriend:function(friendId){
+    showAddFriend:function(friendId){
         //查询目标好友昵称
         APP.ajax({
-            url: APP.globalData.BaseUrl + "/user/",
+            url: APP.globalData.BaseUrl + "/user/get",
             data: {
-                groupId: option.groupId,
+                userId: friendId,
                 token: wx.getStorageSync("token")
             },
 
             success: function (res) {
-                if (res.data.status == APP.globalData.resultcode.SUCCESS)
-                    this.setData({
-                        qrImageUrl: APP.getImageUrl(res.data.msg)
-                    })
+                var dialogInfo = {
+                    page: this,
+                    title: "提示",
+                    content: "确定加["+res.data.nickname+"]为帐友吗?",
+                    callback: {
+                        onConfirm: function (formId) {
+                            this.inviteUser(formId,friendId)
+                        },
+                        onCancel: function () { }
+                    }
+                }
+
+                dialog.showDialog(dialogInfo)
+            }
+
+
+        }, this)  
+    },
+
+    /**
+    * 加入到分组弹窗
+    */
+    showJoinGroup: function (groupId) {
+        //查询目标分组昵称
+        APP.ajax({
+            url: APP.globalData.BaseUrl + "/group/getSimple",
+            data: {
+                groupId: groupId,
+                token: wx.getStorageSync("token")
+            },
+
+            success: function (res) {
+                var groupName = res.data.name
+                var dialogInfo = {
+                    page: this,
+                    title: "提示",
+                    content: "确定加入[" + groupName + "]组吗?",
+                    callback: {
+                        onConfirm: function (formId) {
+                            this.joinGroup(groupId, groupName)
+                        },
+                        onCancel: function () { }
+                    }
+                }
+
+                dialog.showDialog(dialogInfo)
             }
 
 
         }, this)
-
-
-        this.data.firendId = option.friendId
-        var dialogInfo = {
-            page: this,
-            title: "提示",
-            content: "确定加",
-            callback: {
-                onConfirm: function (formId) { },
-                onCancel: function () { }
-            }
-        }
-
-        dialog.showDialog(dialogInfo)
     },
 
 
@@ -139,21 +169,22 @@ Page({
     /**
      * 邀请用户
      */
-    inviteUser: function (e) {
+    inviteUser: function (formId, friendId) {
         var that=this
-        this.dialogDissmiss()
         wx.login({
             success: function (res) {
                 APP.ajax({
                     url: APP.globalData.BaseUrl + "/user/invite",
                     data: {
-                        formId: e.detail.formId,
+                        formId: formId,
                         token: wx.getStorageSync('token'),
                         code: res.code,
-                        openid: that.data.firendId
+                        openid: friendId
                     },
                     success: function (res) {
-
+                        wx.showToast({
+                            title: '邀请已发出,请耐心等待接受',
+                        })
                     }
 
                 }, this)
@@ -161,5 +192,32 @@ Page({
         })
 
     },
+
+    /**
+    * 加入分组
+    */
+    joinGroup: function (groupId, groupName) {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + "/group/join",
+            data: {
+                groupId: groupId,
+                token: wx.getStorageSync("token")
+            },
+
+            success: function (res) {
+                wx.showToast({
+                    title: '已成功加入到' + groupName,
+                })
+            }
+
+
+        }, this)
+    },
+
+
+
+
+
+   
 })
 

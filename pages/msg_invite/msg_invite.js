@@ -57,11 +57,11 @@ Page({
                         var item = this.data.datas[index]
                         slider.setLayer(item, 1)
                         if (opt == "accept") {
-                            item.status = 11
-                            item.statusStr = "已接受"
+                            item.state = 11
+                            item.stateStr = "已接受"
                         } else if (opt == "refuse"){
-                            item.status = 12
-                            item.statusStr = "已拒绝"
+                            item.state = 12
+                            item.stateStr = "已拒绝"
                         }else{
                             slider.deleteItem(index)
                             return
@@ -159,17 +159,17 @@ Page({
                     this.data.datas = res.data.datas
                     res.data.datas.forEach(function (v, i) {
                       
-                        switch (v.status) {
+                        switch (v.state) {
                             case 0:
                             case 1:
                                 slider.setLayer(i,0)
                                 break;
                             case 11:
-                                v.statusStr = "已接受"
+                                v.stateStr = "已接受"
                                 slider.setLayer(i,1)
                                 break;
                             case 12:
-                                v.statusStr = "已拒绝"
+                                v.stateStr = "已拒绝"
                                 slider.setLayer(i,1)
                                 break;
                         }
@@ -181,31 +181,6 @@ Page({
             }
         }, this)
     },
-
-
-
-    touchstart: function (e) {
-        var index = e.target.dataset.index
-        slider.updateLayer(index,[])
-        slider.start(e)
-    },
-    touchmove: function (e) {
-        slider.move(e)
-    },
-    touchend: function (e) {
-        slider.end(e)
-    },
-    touchcancel: function (e) {
-        slider.cancel(e)
-    },
-    outterScroll: function (e) {
-        //   console.log(e)
-        slider.breakOnce();
-    },
-    innerScroll: function (e) {
-        //   console.log(e)
-    }
-
 })
 
 

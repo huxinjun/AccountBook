@@ -64,7 +64,7 @@
     color: #000;
 }
 
-.status {
+.state {
     font-size: 20rpx;
     color: #777;
 }

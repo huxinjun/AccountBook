@@ -36,6 +36,8 @@ function init(slidersInfo) {
         var index = e.target.dataset.index
         if (page.requireSliderUpdate)
             page.requireSliderUpdate(index)
+        else
+            that.updateLayer(index, [])
 
         that.start(e)
     }
