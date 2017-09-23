@@ -14,6 +14,12 @@ function init(slidersInfo) {
     this.slidersInfo = slidersInfo
     var page = this.slidersInfo.page
     var that=this
+    page.outterScroll=function(e){
+        console.log("垂直滚动")
+        //垂直滚动不响应
+        that.eventEnd = true
+        that.calculated=true
+    }
     page.eventCaptureStart=function(e){
         that.captureStart.call(that,e)
     }
@@ -531,6 +537,7 @@ function captureStart(e) {
     console.log("捕获阶段：start")
     this.startEvent = e
     this.calculated = false
+    
 }
 function captureMove(e) {
     if (this.calculated)
@@ -550,10 +557,12 @@ function captureMove(e) {
             eventEnd: "eventEnd",
             eventCancel: "eventCancel",
         })
+        console.log("!!!!!!!!!!!!!!!setData")
     } else {
         //垂直滚动了
         this.eventEnd = false
         this.breakOnce()
+
 
         page.setData({
             eventStart: "",

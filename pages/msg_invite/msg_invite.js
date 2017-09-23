@@ -9,6 +9,58 @@ Page({
 
     },
 
+    slidersInfo : {
+        //N种状态
+        layers: [
+            {
+                name: "状态一",
+                //条目高度
+                height: 200,
+                buttons: [
+                    {
+                        text: "接受1",
+                        color: "white",
+                        colorBg: "#2ba245",
+                        colorShadow: "black",
+                        onClick: "acceptInvite",
+                        width: 150,
+                        visible: true
+                    },
+                    {
+                        text: "拒绝2",
+                        color: "white",
+                        colorBg: "#cdcdcd",
+                        colorShadow: "black",
+                        onClick: "refuseInvite",
+                        width: 150,
+                        visible: true
+                    }
+                ]
+            },
+            {
+                name: "状态二",
+                //条目高度
+                height: 200,
+                buttons: [
+                    {
+                        text: "删除3",
+                        color: "white",
+                        colorBg: "#f00",
+                        colorShadow: "black",
+                        onClick: "_delete",
+                        width: 150,
+                        visible: true
+                    }
+                ]
+            },
+            {
+                name: "状态三",
+                //条目高度
+                height: 200
+            }
+        ]
+    },
+
     getSliderData:function(index){
         if(index==undefined)
             return this.data.datas
@@ -86,62 +138,16 @@ Page({
     onLoad: function () {
         console.log('onLoad')
         var that = this
-        var slidersInfo = {
-            //page：page对象
-            page: this,
-            //N种状态
-            layers: [
-                {
-                    name: "状态一",
-                    //条目高度
-                    height: 200,
-                    buttons: [
-                        {
-                            text: "接受1",
-                            color: "white",
-                            colorBg: "#2ba245",
-                            colorShadow: "black",
-                            onClick: "acceptInvite",
-                            width: 150,
-                            visible:true
-                        },
-                        {
-                            text: "拒绝2",
-                            color: "white",
-                            colorBg: "#cdcdcd",
-                            colorShadow: "black",
-                            onClick: "refuseInvite",
-                            width: 150,
-                            visible: true
-                        }
-                    ]
-                },
-                {
-                    name: "状态二",
-                    //条目高度
-                    height: 200,
-                    buttons: [
-                        {
-                            text: "删除3",
-                            color: "white",
-                            colorBg:"#f00",
-                            colorShadow:"black",
-                            onClick: "_delete",
-                            width: 150,
-                            visible: true
-                        }
-                    ]
-                },
-                {
-                    name: "状态三",
-                    //条目高度
-                    height: 200
-                }
-            ]
-        }
 
-        slider = require('../../utils/slider.js').init(slidersInfo)
+        this.slidersInfo.page = this
+        slider = require('../../utils/slider.js').init(this.slidersInfo)
         this.initData()
+    },
+
+    onShow: function (options) {
+        console.log('onShow')
+        //切换页面时候需要重新初始化slider,因为require获取的是同一个对象
+        slider.init(this.slidersInfo)
     },
 
     initData: function () {

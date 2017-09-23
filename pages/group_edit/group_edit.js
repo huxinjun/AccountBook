@@ -9,8 +9,7 @@ Page({
         groupInfo: {
             group: {
                 name: "",
-                category: "",
-                icon: ""
+                category: ""
             },
             users:[]
         }

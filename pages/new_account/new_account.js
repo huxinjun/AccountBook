@@ -77,6 +77,74 @@ Page({
         
     },
 
+
+    slidersInfo :{
+        //N种状态
+        layers: [
+            {
+                name: "members slider buttons",
+                //条目高度
+                height: 140,
+                buttons: [
+                    {
+                        text: "",
+                        color: "white",
+                        colorBg: "#f00",
+                        colorShadow: "black",
+                        onClick: "",
+                        width: 150,
+                        visible: false
+
+                    },
+                    {
+                        text: "",
+                        color: "white",
+                        colorBg: "#2BA245",
+                        colorShadow: "black",
+                        onClick: "",
+                        width: 150,
+                        visible: false
+                    },
+                    {
+                        text: "",
+                        color: "white",
+                        colorBg: "#FFD700",
+                        colorShadow: "black",
+                        onClick: "",
+                        width: 150,
+                        visible: false
+                    }
+                ]
+            },
+            {
+                name: "desc slider buttons",
+                //条目高度
+                height: 100,
+                buttons: [
+                    {
+                        text: "清空",
+                        color: "white",
+                        colorBg: "#f00",
+                        colorShadow: "black",
+                        onClick: "",
+                        width: 150,
+                        visible: true
+
+                    },
+                    {
+                        text: "删除",
+                        color: "white",
+                        colorBg: "#2BA245",
+                        colorShadow: "black",
+                        onClick: "",
+                        width: 150,
+                        visible: true
+                    }
+                ]
+            }
+        ]
+    },
+
     /**
      * 获取某个抽屉数据附加的list条目对象
      */
@@ -620,89 +688,23 @@ Page({
         })
     },
 
-
-
     onLoad: function () {
         var that=this
         this.data.account.members.onSizeChanged=function(size){
             that.refreshTags()
         }
 
-        var slidersInfo = {
-            //page：page对象
-            page: this,
-            
-            //N种状态
-            layers: [
-                {
-                    name: "members slider buttons",
-                    //条目高度
-                    height: 140,
-                    buttons: [
-                        {
-                            text: "",
-                            color: "white",
-                            colorBg: "#f00",
-                            colorShadow: "black",
-                            onClick: "",
-                            width: 150,
-                            visible:false
-
-                        },
-                        {
-                            text: "",
-                            color: "white",
-                            colorBg: "#2BA245",
-                            colorShadow: "black",
-                            onClick: "",
-                            width: 150,
-                            visible: false
-                        },
-                        {
-                            text: "",
-                            color: "white",
-                            colorBg: "#FFD700",
-                            colorShadow: "black",
-                            onClick: "",
-                            width: 150,
-                            visible: false
-                        }
-                    ]
-                },
-                {
-                    name: "desc slider buttons",
-                    //条目高度
-                    height: 100,
-                    buttons: [
-                        {
-                            text: "清空",
-                            color: "white",
-                            colorBg: "#f00",
-                            colorShadow: "black",
-                            onClick: "",
-                            width: 150,
-                            visible: true
-
-                        },
-                        {
-                            text: "删除",
-                            color: "white",
-                            colorBg: "#2BA245",
-                            colorShadow: "black",
-                            onClick: "",
-                            width: 150,
-                            visible: true
-                        }
-                    ]
-                }
-            ]
-        }
-
-        slider = require('../../utils/slider.js').init(slidersInfo)
+        this.slidersInfo.page=this
+        slider = require('../../utils/slider.js').init(this.slidersInfo)
         slider.setLayer(0, 0)
         slider.setLayer(this.data.descSliderInfo.index, 1)
 
         this.getTodayDate()
+    },
+
+    onShow: function (options) {
+        //切换页面时候需要重新初始化slider,因为require获取的是同一个对象
+        slider.init(this.slidersInfo)
     },
 
 
@@ -737,7 +739,6 @@ Page({
         console.log(clone)
 
     }
-
 })
 
 

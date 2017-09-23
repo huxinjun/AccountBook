@@ -1,4 +1,4 @@
-<scroll-view class="container" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;">
+<scroll-view class="container" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;" bindscroll="outterScroll">
     <view class="title">
         <image src="/img/type/gray_accounts.png"></image>
         <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
@@ -79,7 +79,7 @@
                     <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" 
                     capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap"
                     
-                    catchtouchstart="{{eventStart}}" catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
+                    catch:touchstart="{{eventStart}}" catch:touchmove="{{eventMove}}" catch:touchend="{{eventEnd}}" catch:touchcancel="{{eventCancel}}" data-index="{{index}}">
                         <image class="member_icon" src="/img/head.jpg" mode="aspectFill" data-index="{{index}}"></image>
 
                         <view class="member_content" data-index="{{index}}">
