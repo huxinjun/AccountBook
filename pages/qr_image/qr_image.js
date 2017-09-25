@@ -19,7 +19,7 @@ Page({
      * 获取二维码
      */
     pullQrImage: function (option) {
-        var urlPattener="/"+ (option.userId?"user":"group") +"/qr"
+        var urlPattener = "/" + (option.groupId ?"group":"user") +"/qr"
         APP.ajax({
             url: APP.globalData.BaseUrl + urlPattener,
             data: {

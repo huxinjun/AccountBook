@@ -34,35 +34,30 @@ function showDialog(dialogInfo) {
             callback.onCancel.call(that.page)
         that.dismissDialog();
     }
-    //点击确定
-    this.dialogInfo.submitEventName = "formSubmit"
-    this.page.formSubmit = function (e) {
-        var callback=that.dialogInfo.callback
-        if (callback && callback.onConfirm)
-            callback.onConfirm.call(that.page,e.detail.formId, that.dialogInfo.inputValue)
-        that.dismissDialog();
-    }
+
+    //根据属性配置为不同的dialog
+    if (dialogInfo.hasOwnProperty("inputType"))
+        this.inputDialogSetting()
+    else if (dialogInfo.hasOwnProperty("members"))
+        this.memberChooserDialogSetting()
+    else
+        this.tipDialogSetting()
+
+
+
     //内容模糊
     this.dialogInfo.blurClass = "blur"
     this.dialogInfo.display = "display:flex !important;"
-    //是否需要输入
-    var isInputDialog = dialogInfo.inputType == 'text' || dialogInfo.inputType == 'number'
-        || dialogInfo.inputType == 'digit' || dialogInfo.inputType == 'idcard'
-    if (isInputDialog)
-        dialogInfo.inputDisplay = "display:inhert;"
-    else
-        dialogInfo.inputDisplay = "display:none;"
 
-    //animation start
+    //animation init
     var transition = "transition: all 0.5s ease;"
     dialogInfo.bgAnim = transition + "background-color:rgba(0, 0, 0, 0);"
     dialogInfo.dialogAnim = transition + "transform: scale(0, 0);"
-
-
     this.page.setData({
         dialogInfo: this.dialogInfo
     })
 
+    //animation start
     setTimeout(function () {
 
         dialogInfo.bgAnim = transition + "background-color:rgba(0, 0, 0, 0.5);"
@@ -72,22 +67,61 @@ function showDialog(dialogInfo) {
             dialogInfo: this.dialogInfo
         })
     }.bind(this), 50)
-
-    if (isInputDialog){
-        setTimeout(function () {
-            this.dialogInfo.focus = true
-            this.page.setData({
-                dialogInfo: this.dialogInfo
-            })
-        }.bind(this), 500)
-        
-        this.dialogInfo.inputEventName ="inputValueChanged"
-        this.page.inputValueChanged = function (e) {
-            that.dialogInfo.inputValue=e.detail.value
-        }
-    }
     
 }
+
+/**
+ * 提示dialog
+ */
+function tipDialogSetting() {
+    this.dialogInfo.contentDisplay = "display:inhert;"
+    this.dialogInfo.inputDisplay = "display:none;"
+    this.dialogInfo.membersDisplay = "display:none;"
+    
+}
+
+/**
+ * 带输入的dialog
+ */
+function inputDialogSetting(){
+    var that = this
+    this.dialogInfo.contentDisplay = "display:inhert;"
+    this.dialogInfo.inputDisplay = "display:inhert;"
+    this.dialogInfo.membersDisplay = "display:none;"
+    //点击确定
+    this.dialogInfo.submitEventName = "formSubmit"
+    this.page.formSubmit = function (e) {
+        var callback = that.dialogInfo.callback
+        if (callback && callback.onConfirm)
+            callback.onConfirm.call(that.page, e.detail.formId, that.dialogInfo.inputValue)
+        that.dismissDialog();
+    }
+    //弹出输入法
+    setTimeout(function () {
+        this.dialogInfo.focus = true
+        this.page.setData({
+            dialogInfo: this.dialogInfo
+        })
+    }.bind(this), 500)
+
+    this.dialogInfo.inputEventName = "inputValueChanged"
+    this.page.inputValueChanged = function (e) {
+        that.dialogInfo.inputValue = e.detail.value
+    }
+}
+/**
+ * 选择成员的dialog
+ */
+function memberChooserDialogSetting() {
+    var that = this
+    this.dialogInfo.contentDisplay = "display:none;"
+    this.dialogInfo.inputDisplay = "display:none;"
+    this.dialogInfo.membersDisplay = "display:inhert;"
+
+    this.dialogInfo.dialogRect="width:600rpx;height:600rpx;"
+
+}
+
 
 /**
  * 消失
@@ -111,9 +145,14 @@ function dismissDialog() {
             dialogInfo: this.dialogInfo
         })
     }.bind(this), 500)
+
+    
 }
 
 module.exports = {
     showDialog: showDialog,
-    dismissDialog: dismissDialog
+    dismissDialog: dismissDialog,
+    tipDialogSetting: tipDialogSetting,
+    inputDialogSetting: inputDialogSetting,
+    memberChooserDialogSetting: memberChooserDialogSetting
 }

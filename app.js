@@ -1,5 +1,5 @@
 //app.js
-
+var util = require("/utils/util.js")
 App({
     globalData: {
         BaseUrl: 'http://192.168.10.205:8080/AccountBook',
@@ -213,6 +213,18 @@ App({
                     });
                     return
                 }
+
+
+                //转换为完整头像地址
+                var clone=util.clone(res.data,{
+                    onCopyed:function(obj,attr){
+                        if (attr=="icon")
+                            obj[attr] = that.getImageUrl(obj[attr])
+                    }
+                })
+                res.data=clone
+                // console.log(clone)
+                
 
                 if (obj.success != undefined)
                     obj.success.call(context, res);

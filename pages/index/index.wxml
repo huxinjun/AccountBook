@@ -2,7 +2,7 @@
 <view class="container {{dialogInfo.blurClass}}">
     <view wx:for="{{list}}" wx:key="{{index}}">
 
-        <view class="item" hover-class="item_hover" bindtap='testShowDialog'>
+        <view class="item" hover-class="item_hover" bindtap='test'>
 
             <image class="icon" src="{{item.icon}}"></image>
             <text class="name">{{item.name}}</text>

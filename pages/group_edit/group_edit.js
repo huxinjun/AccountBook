@@ -1,11 +1,8 @@
-//index.js
 //获取应用实例
-var slider
 var APP = getApp()
 var dialog = require("../../utils/dialog.js")
 Page({
     data: {
-        ImageBaseUrl: APP.getImageUrl(),
         groupInfo: {
             group: {
                 name: "",
@@ -96,7 +93,9 @@ Page({
      * 添加成员
      */
     addMember: function (e) {
-
+        wx.navigateTo({
+            url: '/pages/qr_image/qr_image?groupId=' + this.data.groupInfo.group.id,
+        })
     },
 
 

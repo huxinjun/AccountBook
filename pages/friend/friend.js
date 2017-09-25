@@ -1,12 +1,63 @@
 //index.js
 //获取应用实例
-var slider
+var slider= require('../../utils/slider.js')
 var APP = getApp()
 Page({
     data: {
         containerHeight: APP.systemInfo.windowHeight,
         datas:null
 
+    },
+    slidersInfo:{
+        //N种状态
+        layers: [
+            {
+                name: "状态一",
+                //条目高度
+                height: 200,
+                buttons: [
+                    {
+                        text: "接受1",
+                        color: "white",
+                        colorBg: "#2ba245",
+                        colorShadow: "black",
+                        onClick: "acceptInvite",
+                        width: 150,
+                        visible: true
+                    },
+                    {
+                        text: "拒绝2",
+                        color: "white",
+                        colorBg: "#cdcdcd",
+                        colorShadow: "black",
+                        onClick: "refuseInvite",
+                        width: 150,
+                        visible: true
+                    }
+                ]
+            },
+            {
+                name: "状态二",
+                //条目高度
+                height: 200,
+                buttons: [
+                    {
+                        text: "删除3",
+                        color: "white",
+                        colorBg: "#f00",
+                        colorShadow: "black",
+                        onClick: "_delete",
+                        width: 150,
+                        visible: true
+                    }
+                ]
+            },
+            {
+                name: "状态三",
+                //条目高度
+                height: 200
+            }
+        ]
     },
 
     getSliderData:function(index){
@@ -19,123 +70,17 @@ Page({
             datas:this.data.datas
         })
     },
-
-
-
-    //点击删除按钮事件
-    _delete: function (e) {
-        console.log("delete")
-        var index = e.target.dataset.index
-        slider.updateLayer(index,[
-            {
-                text:"成功!!!"
-            }
-        ])
-        // this.option(e, "delete")
-    },
-
-
-    option: function (e, opt) {
-        APP.ajax({
-            url: APP.globalData.BaseUrl + '/msg/invite/' + opt,
-
-            data: {
-                token: wx.getStorageSync("token"),
-                msgId: this.data.datas[e.target.dataset.index].id
-            },
-
-            success: function (res) {
-                var index = e.target.dataset.index
-                switch (res.data.status) {
-                    case APP.globalData.resultcode.SUCCESS:
-                        var item = this.data.datas[index]
-                        slider.setLayer(item, 1)
-                        if (opt == "accept") {
-                            item.status = 11
-                            item.statusStr = "已接受"
-                        } else if (opt == "refuse"){
-                            item.status = 12
-                            item.statusStr = "已拒绝"
-                        }else{
-                            slider.deleteItem(index)
-                            return
-                        }
-                        slider.close(index)
-                        break;
-                    case APP.globalData.resultcode.INVALID_COMMAND:
-                        //已经是好友关系了
-                        slider.close(index)
-                        break;
-                }
-
-
-            }
-
-        }, this)
-
-    },
-
-
-
     onLoad: function () {
-        console.log('onLoad')
         var that = this
-        var slidersInfo = {
-            //page：page对象
-            page: this,
-            //N种状态
-            layers: [
-                {
-                    name: "状态一",
-                    //条目高度
-                    height: 200,
-                    buttons: [
-                        {
-                            text: "接受1",
-                            color: "white",
-                            colorBg: "#2ba245",
-                            colorShadow: "black",
-                            onClick: "acceptInvite",
-                            width: 150,
-                            visible:true
-                        },
-                        {
-                            text: "拒绝2",
-                            color: "white",
-                            colorBg: "#cdcdcd",
-                            colorShadow: "black",
-                            onClick: "refuseInvite",
-                            width: 150,
-                            visible: true
-                        }
-                    ]
-                },
-                {
-                    name: "状态二",
-                    //条目高度
-                    height: 200,
-                    buttons: [
-                        {
-                            text: "删除3",
-                            color: "white",
-                            colorBg:"#f00",
-                            colorShadow:"black",
-                            onClick: "_delete",
-                            width: 150,
-                            visible: true
-                        }
-                    ]
-                },
-                {
-                    name: "状态三",
-                    //条目高度
-                    height: 200
-                }
-            ]
-        }
-
-        slider = require('../../utils/slider.js').init(slidersInfo)
+        this.slidersInfo.page = this
+        slider.init(this.slidersInfo)
         // this.initData()
+    },
+
+
+    onShow: function (options) {
+        //切换页面时候需要重新初始化slider,因为require获取的是同一个对象
+        slider.init(this.slidersInfo)
     },
 
     initData: function () {
@@ -178,36 +123,13 @@ Page({
 
     gotoAddFriend:function(e){
         wx.navigateTo({
-            url: '/pages/friend_search/friend_search',
+            url: '/pages/qr_image/qr_image',
         })
     },
     gotoGroup: function (e) {
         wx.navigateTo({
             url: '/pages/group/group',
         })
-    },
-
-
-
-
-    touchstart: function (e) {
-        var index = e.target.dataset.index
-        slider.updateLayer(index,[])
-        slider.start(e)
-    },
-    touchmove: function (e) {
-        slider.move(e)
-    },
-    touchend: function (e) {
-        slider.end(e)
-    },
-    touchcancel: function (e) {
-        slider.cancel(e)
-    },
-    outterScroll: function (e) {
-        slider.breakOnce();
-    },
-    innerScroll: function (e) {
     }
 
 })

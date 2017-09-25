@@ -1,5 +1,3 @@
-//index.js
-//获取应用实例
 var dialog = require("../../utils/dialog.js")
 var APP = getApp()
 Page({

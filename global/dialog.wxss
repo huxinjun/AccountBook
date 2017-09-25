@@ -18,7 +18,7 @@
 
     position: fixed;
     left: 0;
-    top: 0; 
+    top: 0;  
 
     
 }
@@ -28,15 +28,15 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
-    align-items: center;
-    align-content: center;
+    /* align-items: center;
+    align-content: center; */
 
     background-color:rgba(245, 245, 245, 1);
     border-radius: 10rpx;
-    overflow: hidden;
+
  
-    position: relative;
-    top:-100rpx; 
+    /* position: relative;
+    top:-100rpx;  */
 
     
 }
@@ -63,13 +63,28 @@
     padding: 5rpx;
 }
 
+
+.dialog_members{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    flex-grow: 2;
+
+}
+.dialog_member{
+
+}
+
+
+
 .dialog_buttons{
     height: 60rpx;
-    width: 400rpx; 
+    width: 100%; 
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
+    align-self: flex-end;
     margin-top: 10rpx;
 
     border-top: 1rpx solid #ccc;
@@ -103,4 +118,9 @@
 .dialog_button_ok_hover{
     background-color: #ddd !important;
 }
+
+
+
+
+
 

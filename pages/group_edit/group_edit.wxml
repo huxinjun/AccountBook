@@ -20,7 +20,7 @@
     <view class="item" hover-class='item_hover' style='margin-top: 30rpx;' bindtap='iconPreview'>
         <text class="key">头像</text>
         <view class="value">
-            <image src="{{ImageBaseUrl}}{{groupInfo.group.icon}}"></image>
+            <image src="{{groupInfo.group.icon}}"></image>
         </view>
 
     </view>

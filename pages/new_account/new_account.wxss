@@ -1,4 +1,4 @@
-/**index.wxss**/
+@import "/global/dialog.wxss";
 
 .container {
     display: flex;

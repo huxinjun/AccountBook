@@ -44,8 +44,61 @@ function px2rpx(px) {
   return rpx;
 }
 
+
+
+
+
+
+/**
+ * 克隆一个对象(所有属性)
+ */
+function clone(obj, callback) {
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) {
+        //基础类型string,number,boolean等等
+        return obj;
+    }
+
+    // Handle Date
+    if (obj instanceof Date) {
+        var copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        var copy = [];
+        for (var i = 0, len = obj.length; i < len; ++i) {
+            copy[i] = this.clone(obj[i], callback);
+        }
+        return copy;
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        var copy = {};
+        for (var attr in obj) {
+
+            if (obj.hasOwnProperty(attr)) {
+
+                copy[attr] = this.clone(obj[attr], callback);
+                if (callback && callback.onCopyed)
+                    callback.onCopyed(copy, attr)
+            }
+        }
+
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+}
+
 module.exports = {
   formatTime: formatTime,
   rpx2px: rpx2px,
-  px2rpx: px2rpx
+  px2rpx: px2rpx,
+
+  clone: clone
 }

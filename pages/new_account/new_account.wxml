@@ -1,4 +1,4 @@
-<scroll-view class="container" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;" bindscroll="outterScroll">
+<scroll-view class="container {{dialogInfo.blurClass}}" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;" bindscroll="outterScroll">
     <view class="title">
         <image src="/img/type/gray_accounts.png"></image>
         <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
@@ -65,7 +65,7 @@
 
     <view class="members">
 
-        <view class="members_title" hover-class="members_title_hover" bindtap="addMember" id="members_title">
+        <view class="members_title" hover-class="members_title_hover" bindtap="showSelectMembersDialog" id="members_title">
             <text class="members_title_txt">参与者</text>
             <text class="members_title_add">+</text>
 
@@ -130,3 +130,32 @@
 
     <button bind:tap="uploadAccount" data-index="{{index}}">记一笔</button>
 </scroll-view>
+
+
+
+
+<view class="dialog_container" style='{{dialogInfo.display}}{{dialogInfo.bgAnim}}'>
+        <form bindsubmit="{{dialogInfo.submitEventName}}" report-submit="true" class="dialog" style='{{dialogInfo.dialogAnim}}{{dialogInfo.dialogRect}}'>
+            <text class='dialog_title'>{{dialogInfo.title}}</text>
+            <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.inputDisplay}}' bindinput="{{dialogInfo.inputEventName}}"></input>
+
+            <scroll-view class='dialog_members' style='{{dialogInfo.membersDisplay}}'>
+                <view class='dialog_member' wx:for="{{members}}" wx:key="{{index}}">
+                    123
+                
+                </view>
+            
+            
+            </scroll-view>
+
+
+
+
+            <view class='dialog_buttons'>
+                <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
+                <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
+            </view>
+
+        </form>
+</view>

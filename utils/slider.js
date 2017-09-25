@@ -1,3 +1,4 @@
+var util=require("util.js")
 var preX = 0
 /**标识事件是否已经中断 */
 var eventEnd = false
@@ -132,7 +133,7 @@ function setLayer(index, layerIndex) {
 
     //复制一个layer对象,为的是每个item之后可以更新layer的状态
     if (layerIndex != undefined) {
-        item.value.layerInfo = clone(this.slidersInfo.layers[layerIndex])
+        item.value.layerInfo = util.clone(this.slidersInfo.layers[layerIndex])
         item.value.layerIndex = layerIndex
         return
     }
@@ -476,49 +477,6 @@ function angle(start, end) {
     return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
 }
 
-/**
- * 克隆一个对象(所有属性)
- */
-function clone(obj) {
-
-    // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj) {
-        //基础类型string,number,boolean等等
-        return obj;
-    }
-
-    // Handle Date
-    if (obj instanceof Date) {
-        var copy = new Date();
-        copy.setTime(obj.getTime());
-        return copy;
-    }
-
-    // Handle Array
-    if (obj instanceof Array) {
-        var copy = [];
-        for (var i = 0, len = obj.length; i < len; ++i) {
-            copy[i] = clone(obj[i]);
-        }
-        return copy;
-    }
-
-    // Handle Object
-    if (obj instanceof Object) {
-        var copy = {};
-        for (var attr in obj) {
-
-            if (obj.hasOwnProperty(attr)) {
-
-                copy[attr] = clone(obj[attr]);
-            }
-        }
-
-        return copy;
-    }
-
-    throw new Error("Unable to copy obj! Its type isn't supported.");
-}
 
 
 
@@ -625,8 +583,6 @@ module.exports = {
     updateLayer: updateLayer,
     setLayer: setLayer,
     getSliderWidthByIndex: getSliderWidthByIndex,
-    hasSlider: hasSlider,
-
-    clone: clone
+    hasSlider: hasSlider
 
 }
