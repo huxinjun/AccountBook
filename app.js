@@ -72,6 +72,13 @@ App({
                 }
             })
         }
+        //在对象数组中寻找具有某个属性和值得对象
+        Array.prototype.findByAttr = function (key,value) {
+            for (var i = 0, len = this.length; i < len; i++) {
+                if(this[i][key]==value)
+                    return this[i];
+            }
+        }
 
     },
 

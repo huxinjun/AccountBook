@@ -521,13 +521,11 @@ function captureMove(e) {
         this.eventEnd = false
         this.breakOnce()
 
-
         page.setData({
             eventStart: "",
             eventMove: "",
             eventEnd: "",
-            eventCancel: "",
-
+            eventCancel: ""
         })
     }
     this.calculated = true
@@ -539,7 +537,7 @@ function captureEnd(e) {
         eventStart: "",
         eventMove: "",
         eventEnd: "",
-        eventCancel: "",
+        eventCancel: ""
 
     })
 }
@@ -550,7 +548,7 @@ function captureCancel(e) {
         eventStart: "",
         eventMove: "",
         eventEnd: "",
-        eventCancel: "",
+        eventCancel: ""
 
     })
 }

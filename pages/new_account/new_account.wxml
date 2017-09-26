@@ -1,4 +1,4 @@
-<scroll-view class="container {{dialogInfo.blurClass}}" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;" bindscroll="outterScroll">
+<scroll-view scroll-y class="container {{dialogInfo.value.blurClass}}" scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;" bindscroll="outterScroll">
     <view class="title">
         <image src="/img/type/gray_accounts.png"></image>
         <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
@@ -79,7 +79,7 @@
                     <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" 
                     capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap"
                     
-                    catch:touchstart="{{eventStart}}" catch:touchmove="{{eventMove}}" catch:touchend="{{eventEnd}}" catch:touchcancel="{{eventCancel}}" data-index="{{index}}">
+                    catchtouchstart="{{eventStart}}" catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
                         <image class="member_icon" src="/img/head.jpg" mode="aspectFill" data-index="{{index}}"></image>
 
                         <view class="member_content" data-index="{{index}}">
@@ -134,19 +134,24 @@
 
 
 
-<view class="dialog_container" style='{{dialogInfo.display}}{{dialogInfo.bgAnim}}'>
-        <form bindsubmit="{{dialogInfo.submitEventName}}" report-submit="true" class="dialog" style='{{dialogInfo.dialogAnim}}{{dialogInfo.dialogWidth}}'>
+<view class="dialog_container" style='{{dialogInfo.style.display}}{{dialogInfo.style.bgAnim}}'>
+        <form bindsubmit="formSubmit" report-submit="true" class="dialog" style='{{dialogInfo.style.dialogAnim}}{{dialogInfo.style.dialogWidth}}'>
 
             <text class='dialog_title'>{{dialogInfo.title}}</text>
             <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
-            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.inputDisplay}}' bindinput="{{dialogInfo.inputEventName}}"></input>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged"></input>
 
 
 
-            <scroll-view class='dialog_members' style='{{dialogInfo.membersDisplay}}{{dialogInfo.membersHeight}}'>
-                <view class='dialog_member' wx:for="{{members}}" wx:key="{{index}}">
-                    <image class="icon" src="{{item.icon}}"></image>
-                    <text class="name">{{item.name}}</text>
+            <scroll-view class='dialog_members' style='{{dialogInfo.style.membersDisplay}}{{dialogInfo.style.membersHeight}}'>
+                <view class='dialog_member' wx:for="{{dialogInfo.members}}" wx:key="{{index}}" bindtap='selectMember' data-index='{{index}}'>
+                    <image class="icon" src="{{item.icon}}" data-index='{{index}}'></image>
+                    <image class="select" src="/img/selected.png" style='{{item.style.selectVisible}}' data-index='{{index}}'></image>
+                    <view class="name" data-index='{{index}}'>
+                        <image src="/img/group_small.png" data-index='{{index}}'></image>
+                        <text data-index='{{index}}'>{{item.name}}</text>
+                    </view>
+                    
                 </view>
             
             

@@ -1,6 +1,7 @@
 var APP = getApp()
 var slider = require('../../utils/slider.js')
 var dialog = require("../../utils/dialog.js")
+var util = require('../../utils/util.js')
 Page({
     data: {
 
@@ -19,11 +20,31 @@ Page({
         //所有可以选择的成员(相关的分组和自己的帐友集合)
         members: [
             {
-                name: "主卧",
+                id:"1",
+                name: "主卧的服务器法国人",
                 icon: "http://192.168.10.205:8080/AccountBook/image/get/c0ea1500-9b8f-47f1-b68f-f2dd43a960b6",
                 isGroup: true
             },
             {
+                id: "2",
+                name: "新军",
+                icon: "http://192.168.10.205:8080/AccountBook/image/get/9bd8e2db-586b-44de-8933-623b5341e6b0",
+                isGroup: false
+            },
+            {
+                id: "3",
+                name: "新军",
+                icon: "http://192.168.10.205:8080/AccountBook/image/get/9bd8e2db-586b-44de-8933-623b5341e6b0",
+                isGroup: false
+            },
+            {
+                id: "4",
+                name: "新军",
+                icon: "http://192.168.10.205:8080/AccountBook/image/get/9bd8e2db-586b-44de-8933-623b5341e6b0",
+                isGroup: false
+            },
+            {
+                id: "5",
                 name: "新军",
                 icon: "http://192.168.10.205:8080/AccountBook/image/get/9bd8e2db-586b-44de-8933-623b5341e6b0",
                 isGroup: false
@@ -183,7 +204,7 @@ Page({
     /**
      * 添加成员
      */
-    addMember: function () {
+    addMember: function (member) {
         /**
          * 不把其他元素的动画取消,会导致顶部元素动画时,打开编辑框的条目也在进行height动画
          */
@@ -192,31 +213,31 @@ Page({
             v.style.memberRuleTrans = ""
             v.style.memberRuleTypeTrans = ""
         })
-
-        this.data.account.members.addToHead({
-            style: {
-                member: "height:0;opacity:0;",
-                memberRule: "height:0;opacity:0;",
-                tag0: "",
-                tag1: "display:inherit;",
-                tag2: "display:none;"
-            },
-            value: {
-                tag0: "个人账单",
-                tag1: "AA制",
-                tag2: "自费10元",
-                rule_type: 1,
-                paidin_input: "￥0.00"
-            }
-        })
+        member.style = {
+            member: "height:0;opacity:0;",
+            memberRule: "height:0;opacity:0;",
+            tag0: "",
+            tag1: "display:inherit;",
+            tag2: "display:none;"
+        }
+        member.value = {
+            tag0: "个人账单",
+            tag1: "AA制",
+            tag2: "自费10元",
+            rule_type: 1,
+            paidin_input: "￥0.00"
+        }
+        this.data.account.members.addToHead(member)
         slider.setLayer(0, 0)
         this.setData({
             account: this.data.account
         })
         setTimeout(function () {
+            var memberInArray=this.data.account.members.findByAttr("id",member.id)
 
-            this.data.account.members[0].style.member = "height:140rpx;opacity:1;"
-            this.data.account.members[0].style.memberTrans = "transition:all 0.5s ease;"
+            memberInArray.style.member = "height:140rpx;opacity:1;"
+            memberInArray.style.memberTrans = "transition:all 0.5s ease;"
+
             this.setData({
                 scrollToView: "members_title",
                 account: this.data.account
@@ -725,12 +746,31 @@ Page({
     showSelectMembersDialog: function (e) {
         var dialogInfo = {
             page: this,
-            aaa:"",
+            aaa: "",
             title: "选择成员",
+            // singleChoose:true,
             members: this.data.members,
             callback: {
-                onConfirm: function () {
-                 }
+                onConfirm: function (members) {
+                    console.log("成功选择成员")
+                    console.log(members)
+
+                    var that=this
+                    members.forEach(function(outterValue,i){
+                        //去掉已经添加的
+                        var isAdded=false
+                        that.data.account.members.forEach(function (innerValue,i){
+                            if (isAdded)
+                                return
+                            if (innerValue.id == outterValue.id)
+                                isAdded=true
+
+                        })
+                        if(!isAdded)
+                            that.addMember(util.clone(outterValue))
+                    })
+
+                }
             }
         }
 

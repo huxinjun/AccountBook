@@ -1,0 +1,89 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": true,
+		"minified": true
+	},
+	"compileType": "weapp",
+	"libVersion": "1.5.2",
+	"appid": "wx9d9db1b5e01578f8",
+	"projectname": "%E5%B0%8F%E8%B4%A6%E6%9C%AC%E6%9C%AC",
+	"condition": {
+		"weapp": {
+			"current": 6,
+			"list": [
+				{
+					"id": 0,
+					"name": "主页好友邀请",
+					"pathName": "pages/index/index",
+					"query": "friendId=oCBrx0FreB-L8pIQM5_RYDGoWOKQ",
+					"scene": 1044,
+					"shareInfo": {}
+				},
+				{
+					"id": 5,
+					"name": "主页加入分组",
+					"pathName": "pages/index/index",
+					"query": "groupId=n8Y5qSAmisgEjG_BQdRiiA",
+					"scene": "1001"
+				},
+				{
+					"id": 1,
+					"name": "分组编辑",
+					"pathName": "pages/group_edit/group_edit",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "二维码",
+					"pathName": "pages/qr_image/qr_image",
+					"query": "title=帐友二维码&groupId=n8Y5qSAmisgEjG_BQdRiiA"
+				},
+				{
+					"id": -1,
+					"name": "扫码添加好友",
+					"pathName": "pages/index/index",
+					"query": "friendId=oCBrx0FreB-L8pIQM5_RYDGoWOKQ"
+				},
+				{
+					"id": -1,
+					"name": "邀请消息",
+					"pathName": "pages/msg_invite/msg_invite",
+					"query": "",
+					"scene": 1044,
+					"shareInfo": {}
+				},
+				{
+					"id": -1,
+					"name": "记账",
+					"pathName": "pages/new_account/new_account",
+					"query": ""
+				}
+			]
+		},
+		"search": {
+			"current": -1,
+			"list": [
+				{
+					"name": "test",
+					"pathName": "",
+					"title": "",
+					"cacheKey": ""
+				}
+			]
+		},
+		"conversation": {
+			"current": 0,
+			"list": [
+				{
+					"name": "test",
+					"query": "",
+					"boxQI": "",
+					"service": {}
+				}
+			]
+		}
+	}
+}

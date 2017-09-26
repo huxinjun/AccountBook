@@ -1,8 +1,19 @@
+var util = require("util.js")
 /**
  * 对话框工具
  */
-
-var Temp = {
+//通用提示
+var tempTip = {
+    page: this,
+    title: "标题",
+    content: "提示文字",
+    callback: {
+        onConfirm: function (formId) {},
+        onCancel: function () {}
+    }
+}
+//通用输入
+var tempInput = {
     page: this,
     title: "标题",
     content: "提示文字",
@@ -11,10 +22,41 @@ var Temp = {
     //输入框最长输入字符个数
     maxLength: 10,
     callback: {
-        onConfirm: function (formId,inputValue) {},
-        onCancel: function () {}
+        //表单id,输入内容
+        onConfirm: function (formId, inputValue) { },
+        onCancel: function () { }
     }
 }
+//成员选择,只适用账单页面
+var tempSelectMember = {
+    page: this,
+    title: "标题",
+    singleChoose:true,//是否单选
+    members: [],
+    callback: {
+        onConfirm: function (selectedMembers) { },
+        onCancel: function () { }
+    }
+}
+//**************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var dialogInfo
 var page
@@ -23,6 +65,10 @@ var page
  */
 function showDialog(dialogInfo) {
     this.dialogInfo = dialogInfo
+    this.dialogInfo.style={}
+    this.dialogInfo.value = {}
+
+
     this.page = dialogInfo.page
     //page是关键字,不删除会有很多warning
     delete dialogInfo.page
@@ -46,13 +92,13 @@ function showDialog(dialogInfo) {
 
 
     //内容模糊
-    this.dialogInfo.blurClass = "blur"
-    this.dialogInfo.display = "display:flex !important;"
+    this.dialogInfo.value.blurClass = "blur"
+    this.dialogInfo.style.display = "display:flex !important;"
 
     //animation init
     var transition = "transition: all 0.5s ease;"
-    dialogInfo.bgAnim = transition + "background-color:rgba(0, 0, 0, 0);"
-    dialogInfo.dialogAnim = transition + "transform: scale(0, 0);"
+    dialogInfo.style.bgAnim = transition + "background-color:rgba(0, 0, 0, 0);"
+    dialogInfo.style.dialogAnim = transition + "transform: scale(0, 0);"
     this.page.setData({
         dialogInfo: this.dialogInfo
     })
@@ -60,8 +106,8 @@ function showDialog(dialogInfo) {
     //animation start
     setTimeout(function () {
 
-        dialogInfo.bgAnim = transition + "background-color:rgba(0, 0, 0, 0.5);"
-        dialogInfo.dialogAnim = transition + "transform:scale(1,1);"
+        dialogInfo.style.bgAnim = transition + "background-color:rgba(0, 0, 0, 0.5);"
+        dialogInfo.style.dialogAnim = transition + "transform:scale(1,1);"
 
         this.page.setData({
             dialogInfo: this.dialogInfo
@@ -70,30 +116,88 @@ function showDialog(dialogInfo) {
     
 }
 
+
+/**
+ * 消失
+ */
+function dismissDialog(completed) {
+    this.dialogInfo.value.blurClass = ""
+    this.dialogInfo.value.focus = false
+    //animation start
+    var transition = "transition: all 0.5s ease;"
+    this.dialogInfo.style.bgAnim = transition + "background-color:rgba(0, 0, 0, 0);"
+    this.dialogInfo.style.dialogAnim = transition + "transform: scale(0, 0);"
+
+    this.page.setData({
+        dialogInfo: this.dialogInfo
+    })
+
+    setTimeout(function () {
+
+        this.dialogInfo.style.display = "display:none !important;"
+        this.page.setData({
+            dialogInfo: this.dialogInfo
+        })
+        if (completed)
+            completed()
+    }.bind(this), 500)
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * 提示dialog
  */
 function tipDialogSetting() {
-    this.dialogInfo.dialogWidth = "width:400rpx;"
+    this.dialogInfo.style.dialogWidth = "width:400rpx;"
 
-    this.dialogInfo.contentDisplay = ""
-    this.dialogInfo.inputDisplay = "display:none;"
-    this.dialogInfo.membersDisplay = "display:none;"
+    this.dialogInfo.style.contentDisplay = ""
+    this.dialogInfo.style.inputDisplay = "display:none;"
+    this.dialogInfo.style.membersDisplay = "display:none;"
     
 }
+
+
+
+
+
+
+
+
+
+
 
 /**
  * 带输入的dialog
  */
 function inputDialogSetting(){
     var that = this
-    this.dialogInfo.dialogWidth = "width:400rpx;"
+    this.dialogInfo.style.dialogWidth = "width:400rpx;"
 
-    this.dialogInfo.contentDisplay = ""
-    this.dialogInfo.inputDisplay = ""
-    this.dialogInfo.membersDisplay = "display:none;"
+    this.dialogInfo.style.contentDisplay = ""
+    this.dialogInfo.style.inputDisplay = ""
+    this.dialogInfo.style.membersDisplay = "display:none;"
     //点击确定
-    this.dialogInfo.submitEventName = "formSubmit"
     this.page.formSubmit = function (e) {
         var callback = that.dialogInfo.callback
         if (callback && callback.onConfirm)
@@ -102,58 +206,140 @@ function inputDialogSetting(){
     }
     //弹出输入法
     setTimeout(function () {
-        this.dialogInfo.focus = true
+        this.dialogInfo.value.focus = true
         this.page.setData({
             dialogInfo: this.dialogInfo
         })
     }.bind(this), 500)
 
-    this.dialogInfo.inputEventName = "inputValueChanged"
     this.page.inputValueChanged = function (e) {
         that.dialogInfo.inputValue = e.detail.value
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+var originMembers //记录最初的对象,点击取消后需要使用
 /**
  * 选择成员的dialog
  */
 function memberChooserDialogSetting() {
     var that = this
-    this.dialogInfo.contentDisplay = "display:none;"
-    this.dialogInfo.inputDisplay = "display:none;"
-    this.dialogInfo.membersDisplay = ""
+
+    //成员对象副本(未修改前)
+    this.originMembers = util.clone(this.dialogInfo.members)
+
+    this.dialogInfo.style.contentDisplay = "display:none;"
+    this.dialogInfo.style.inputDisplay = "display:none;"
+    this.dialogInfo.style.membersDisplay = ""
 
     
-    this.dialogInfo.dialogWidth = "width:600rpx;"
-    this.dialogInfo.membersHeight="height:600rpx;"
+    this.dialogInfo.style.dialogWidth = "width:600rpx;"
+    this.dialogInfo.style.membersHeight="height:600rpx;"
 
-}
-
-
-/**
- * 消失
- */
-function dismissDialog() {
-    this.dialogInfo.blurClass = ""
-    this.dialogInfo.focus = false
-    //animation start
-    var transition = "transition: all 0.5s ease;"
-    this.dialogInfo.bgAnim = transition + "background-color:rgba(0, 0, 0, 0);"
-    this.dialogInfo.dialogAnim = transition + "transform: scale(0, 0);"
-
-    this.page.setData({
-        dialogInfo: this.dialogInfo
+    var transition = "transition: all 0.2s ease;"
+    //初始化
+    this.dialogInfo.members.forEach(function(v,i){
+        if (!v.style)
+            v.style = {
+                selectVisible: transition + "transform: scale(0, 0);"
+            }
+        if (!v.value)
+            v.value = {
+                isSelected:false
+            }
     })
 
-    setTimeout(function () {
+    //点击成员
+    this.page.selectMember=function(e){
+        var index = e.target.dataset.index
+        var item = that.dialogInfo.members[index]
 
-        this.dialogInfo.display = "display:none !important;"
-        this.page.setData({
-            dialogInfo: this.dialogInfo
+        if (that.dialogInfo.singleChoose){
+            that.dialogInfo.members.forEach(function (v, i) {
+                if (index==i){
+                    v.value.isSelected = true
+                    v.style.selectVisible = transition + "transform: scale(1, 1);"
+                }else{
+                    v.value.isSelected = false
+                    v.style.selectVisible = transition + "transform: scale(0, 0);"
+                }
+            })
+        }else{
+            item.value.isSelected = !item.value.isSelected
+            item.style.selectVisible = transition + (item.value.isSelected ? "transform: scale(1, 1);" : "transform: scale(0, 0);")
+        }
+
+        
+
+        that.page.setData({
+            dialogInfo: that.dialogInfo
         })
-    }.bind(this), 500)
+    }
 
-    
+
+    //点击确定,动画后执行成功回调
+    this.page.formSubmit = function () {
+        that.dismissDialog(function(){
+            var selectedMembers=[]
+            that.dialogInfo.members.forEach(function (v, i) {
+                if (v.value.isSelected)
+                    selectedMembers.push(v)
+            })
+
+
+            var callback = that.dialogInfo.callback
+
+            if (callback && callback.onConfirm)
+                callback.onConfirm.call(that.page, selectedMembers)
+        });
+    }
+
+
+    this.page.dissmiss = function (e) {
+        var callback = that.dialogInfo.callback
+        if (callback && callback.onCancel)
+            callback.onCancel.call(that.page)
+        //恢复数据为打开dialog之前的状态
+        that.dialogInfo.members.forEach(function (v, i) {
+            var originItem = that.originMembers[i]
+            if (originItem.value)
+                v.value.isSelected = originItem.value.isSelected
+            else
+                delete v.value
+            if (originItem.style)
+                v.style.selectVisible = originItem.style.selectVisible
+            else
+                delete v.style
+
+        })
+        that.dismissDialog();
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
     showDialog: showDialog,
