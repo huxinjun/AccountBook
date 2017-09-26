@@ -254,6 +254,10 @@ Page({
      */
     removeMember: function (e) {
         var index = e.target.dataset.index
+        //已添加成员和全部可选成员保持同步
+        var member=this.data.members.findByAttr("id",this.getSliderData(index).id)
+        delete member.value
+        delete member.style
         slider.deleteItem(index);
     },
 

@@ -1,4 +1,4 @@
-<scroll-view scroll-y class="container {{dialogInfo.value.blurClass}}" scroll-into-view="{{scrollToView}}" scroll-with-animation="true" style="height:{{containerHeight}}px;" bindscroll="outterScroll">
+<scroll-view scroll-y class="container {{dialogInfo.value.blurClass}}" scroll-into-view="{{scrollToView}}" scroll-with-animation="true" bindscroll="outterScroll">
     <view class="title">
         <image src="/img/type/gray_accounts.png"></image>
         <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
