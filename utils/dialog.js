@@ -74,7 +74,9 @@ function showDialog(dialogInfo) {
  * 提示dialog
  */
 function tipDialogSetting() {
-    this.dialogInfo.contentDisplay = "display:inhert;"
+    this.dialogInfo.dialogWidth = "width:400rpx;"
+
+    this.dialogInfo.contentDisplay = ""
     this.dialogInfo.inputDisplay = "display:none;"
     this.dialogInfo.membersDisplay = "display:none;"
     
@@ -85,8 +87,10 @@ function tipDialogSetting() {
  */
 function inputDialogSetting(){
     var that = this
-    this.dialogInfo.contentDisplay = "display:inhert;"
-    this.dialogInfo.inputDisplay = "display:inhert;"
+    this.dialogInfo.dialogWidth = "width:400rpx;"
+
+    this.dialogInfo.contentDisplay = ""
+    this.dialogInfo.inputDisplay = ""
     this.dialogInfo.membersDisplay = "display:none;"
     //点击确定
     this.dialogInfo.submitEventName = "formSubmit"
@@ -116,9 +120,11 @@ function memberChooserDialogSetting() {
     var that = this
     this.dialogInfo.contentDisplay = "display:none;"
     this.dialogInfo.inputDisplay = "display:none;"
-    this.dialogInfo.membersDisplay = "display:inhert;"
+    this.dialogInfo.membersDisplay = ""
 
-    this.dialogInfo.dialogRect="width:600rpx;height:600rpx;"
+    
+    this.dialogInfo.dialogWidth = "width:600rpx;"
+    this.dialogInfo.membersHeight="height:600rpx;"
 
 }
 

@@ -135,15 +135,18 @@
 
 
 <view class="dialog_container" style='{{dialogInfo.display}}{{dialogInfo.bgAnim}}'>
-        <form bindsubmit="{{dialogInfo.submitEventName}}" report-submit="true" class="dialog" style='{{dialogInfo.dialogAnim}}{{dialogInfo.dialogRect}}'>
+        <form bindsubmit="{{dialogInfo.submitEventName}}" report-submit="true" class="dialog" style='{{dialogInfo.dialogAnim}}{{dialogInfo.dialogWidth}}'>
+
             <text class='dialog_title'>{{dialogInfo.title}}</text>
             <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
             <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.inputDisplay}}' bindinput="{{dialogInfo.inputEventName}}"></input>
 
-            <scroll-view class='dialog_members' style='{{dialogInfo.membersDisplay}}'>
+
+
+            <scroll-view class='dialog_members' style='{{dialogInfo.membersDisplay}}{{dialogInfo.membersHeight}}'>
                 <view class='dialog_member' wx:for="{{members}}" wx:key="{{index}}">
-                    123
-                
+                    <image class="icon" src="{{item.icon}}"></image>
+                    <text class="name">{{item.name}}</text>
                 </view>
             
             

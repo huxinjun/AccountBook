@@ -725,7 +725,8 @@ Page({
     showSelectMembersDialog: function (e) {
         var dialogInfo = {
             page: this,
-            title: "标题",
+            aaa:"",
+            title: "选择成员",
             members: this.data.members,
             callback: {
                 onConfirm: function () {
