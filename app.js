@@ -80,6 +80,13 @@ App({
             }
         }
 
+        Array.prototype.findIndexByAttr = function (key, value) {
+            for (var i = 0, len = this.length; i < len; i++) {
+                if (this[i][key] == value)
+                    return i;
+            }
+        }
+
     },
 
 

@@ -254,11 +254,18 @@ Page({
      */
     removeMember: function (e) {
         var index = e.target.dataset.index
+        var id = this.getSliderData(index).id
+        this.removeMemberById(id)
+    },
+    /**
+     * 移除成员
+     */
+    removeMemberById: function (id) {
         //已添加成员和全部可选成员保持同步
-        var member=this.data.members.findByAttr("id",this.getSliderData(index).id)
-        delete member.value
-        delete member.style
-        slider.deleteItem(index);
+        var item = this.data.members.findByAttr("id", id)
+        delete item.value
+        delete item.style
+        slider.deleteItem("id",id);
     },
 
     /**
@@ -750,16 +757,15 @@ Page({
     showSelectMembersDialog: function (e) {
         var dialogInfo = {
             page: this,
-            aaa: "",
             title: "选择成员",
             // singleChoose:true,
             members: this.data.members,
             callback: {
-                onConfirm: function (members) {
-                    console.log("成功选择成员")
+                onConfirm: function () {
+                    var that = this
+                    var members=this.data.members
                     console.log(members)
 
-                    var that=this
                     members.forEach(function(outterValue,i){
                         //去掉已经添加的
                         var isAdded=false
@@ -770,8 +776,17 @@ Page({
                                 isAdded=true
 
                         })
-                        if(!isAdded)
-                            that.addMember(util.clone(outterValue))
+                        if (outterValue.value && outterValue.value.isSelected){
+                            //已选未添加,添加
+                            if(!isAdded)
+                                that.addMember(util.clone(outterValue))
+                        }else{
+                            //未选已添加,删除
+                            if (isAdded){
+                                that.removeMemberById(outterValue.id)
+                            }
+                            
+                        }
                     })
 
                 }

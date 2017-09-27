@@ -291,17 +291,17 @@ function memberChooserDialogSetting() {
     //点击确定,动画后执行成功回调
     this.page.formSubmit = function () {
         that.dismissDialog(function(){
-            var selectedMembers=[]
-            that.dialogInfo.members.forEach(function (v, i) {
-                if (v.value.isSelected)
-                    selectedMembers.push(v)
-            })
+            // var selectedMembers=[]
+            // that.dialogInfo.members.forEach(function (v, i) {
+            //     if (v.value.isSelected)
+            //         selectedMembers.push(v)
+            // })
 
 
             var callback = that.dialogInfo.callback
 
             if (callback && callback.onConfirm)
-                callback.onConfirm.call(that.page, selectedMembers)
+                callback.onConfirm.call(that.page)
         });
     }
 

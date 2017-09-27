@@ -409,8 +409,8 @@ function cancel(e) {
 /**
  * 点击删除按钮事件:transition动画
  */
-function deleteItem(index) {
-    var item = this.slidersInfo.page.getSliderData(index)
+function deleteItem(key,value) {
+    var item = this.slidersInfo.page.getSliderData().findByAttr(key,value)
 
     //先是透明度动画
     item.style.styleBorder = "border:none;"
@@ -419,21 +419,22 @@ function deleteItem(index) {
     this.slidersInfo.page.refreshSliderData()
     //继续进行高度动画
     setTimeout(function () {
-        item = this.slidersInfo.page.getSliderData(index)
+        item = this.slidersInfo.page.getSliderData().findByAttr(key, value)
         item.style.deleteTrans = "opacity:0;height:0;transition:height 0.3s ease;"
         this.slidersInfo.page.refreshSliderData()
 
         //最后删除元素
         setTimeout(function () {
-            console.log("setTimeout删除：" + index)
-            console.log(this)
-            item = this.slidersInfo.page.getSliderData(index)
+            
+            item = this.slidersInfo.page.getSliderData().findByAttr(key, value)
             item.style.deleteTrans = "display:none;opacity:0;height:0;"
             this.slidersInfo.page.refreshSliderData()
 
             var datas = this.slidersInfo.page.getSliderData()
+            var index = datas.findIndexByAttr(key, value)
+            console.log("setTimeout删除：" + index)
             //移除列表中下标为index的项
-            datas.remove(index, 1);
+            datas.remove(index);
             datas.forEach(function (v, i) {
                 v.value.slider_container_left = 0
                 v.style.slider_container_left = ""

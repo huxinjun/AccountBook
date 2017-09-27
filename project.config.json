@@ -7,12 +7,12 @@
 		"minified": true
 	},
 	"compileType": "weapp",
-	"libVersion": "1.5.2",
+	"libVersion": "1.5.4",
 	"appid": "wx9d9db1b5e01578f8",
 	"projectname": "%E5%B0%8F%E8%B4%A6%E6%9C%AC%E6%9C%AC",
 	"condition": {
 		"weapp": {
-			"current": 6,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
