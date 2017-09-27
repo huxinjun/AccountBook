@@ -50,18 +50,26 @@ App({
 
 
 
-
+        //数组长度改变回调
         Array.prototype.onSizeChanged = function (size) {
             console.log("Array.onSizeChanged:" + size)
         }
+        //添加数据到数组顶端
         Array.prototype.addToHead = function (v) {
             this.unshift(v)
             this.onSizeChanged(this.length)
         }
+        //移除某个索引的元素
         Array.prototype.remove = function (i) {
             this.splice(i, 1)
             this.onSizeChanged(this.length)
         }
+        //移除数组中具有某个属性和值得对象
+        Array.prototype.removeObject = function (key, value) {
+            this.remove(this.findIndexByAttr(key, value))
+        }
+
+
         //重写属性
         Array.prototype.overide = function (arr) {
 
@@ -79,13 +87,14 @@ App({
                     return this[i];
             }
         }
-
+        //在数组中寻找具有指定属性的元素,返回第一个
         Array.prototype.findIndexByAttr = function (key, value) {
             for (var i = 0, len = this.length; i < len; i++) {
                 if (this[i][key] == value)
                     return i;
             }
         }
+        
 
     },
 

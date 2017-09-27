@@ -431,10 +431,8 @@ function deleteItem(key,value) {
             this.slidersInfo.page.refreshSliderData()
 
             var datas = this.slidersInfo.page.getSliderData()
-            var index = datas.findIndexByAttr(key, value)
-            console.log("setTimeout删除：" + index)
             //移除列表中下标为index的项
-            datas.remove(index);
+            datas.removeObject(key, value);
             datas.forEach(function (v, i) {
                 v.value.slider_container_left = 0
                 v.style.slider_container_left = ""
