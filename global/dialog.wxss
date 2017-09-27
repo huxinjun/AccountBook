@@ -79,15 +79,15 @@
 
 }
 .dialog_member{
-    width: 115rpx;
-    height: 115rpx;
+    width: 120rpx;
+    height: 120rpx;
 
     display: inline-block;
     position: relative;
     box-sizing: border-box;
 
     border-radius: 10rpx;
-    margin: 10rpx;
+    margin: 15rpx;
 
     overflow: hidden;
 }

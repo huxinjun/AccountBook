@@ -9,10 +9,8 @@
     <view class="desc">
         <view style="{{descSliderInfo.style.slider_container_pos}}{{descSliderInfo.style.slider_container_left}}">
 
-            <view class="desc_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" 
-                    capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap"
-                    
-                    catchtouchstart="{{eventStart}}" catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{descSliderInfo.index}}">
+            <view class="desc_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap" catchtouchstart="{{eventStart}}"
+                catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{descSliderInfo.index}}">
                 <image class="desc_icon" src="/img/desc.png" data-index="{{descSliderInfo.index}}"></image>
                 <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" />
                 <image class="desc_add_pic" src="/img/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
@@ -71,56 +69,49 @@
 
         </view>
 
-        <view wx:for="{{account.members}}" wx:key="{{index}}">
-            <view class="memeber" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}">
+        <view class="memeber" wx:for="{{account.members}}" wx:key="{{index}}" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}">
 
-                <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
+            <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
 
-                    <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" 
-                    capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap"
-                    
-                    catchtouchstart="{{eventStart}}" catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
-                        <image class="member_icon" src="/img/head.jpg" mode="aspectFill" data-index="{{index}}"></image>
+                <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap" catchtouchstart="{{eventStart}}"
+                    catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
+                    <image class="member_icon" src="{{item.icon}}" mode="aspectFill" data-index="{{index}}"></image>
 
-                        <view class="member_content" data-index="{{index}}">
-                            <text class="member_name" data-index="{{index}}">新军{{index}}</text>
+                    <view class="member_content" data-index="{{index}}">
+                        <text class="member_name" data-index="{{index}}">{{item.name}}</text>
 
-                            <view class="member_tags" data-index="{{index}}">
-                                <text class="member_name" data-index="{{index}}" style="{{item.style.tag0}}">{{item.value.tag0}}</text>
-                                <text class="member_name" bindtap="showRule" data-index="{{index}}" style="{{item.style.tag1}}">{{item.value.tag1}}</text>
-                                <text class="member_name" bindtap="showRulePaySelf" data-index="{{index}}" style="{{item.style.tag2}}">{{item.value.tag2}}</text>
-                            </view>
-
+                        <view class="member_tags" data-index="{{index}}">
+                            <text class="member_name" data-index="{{index}}" style="{{item.style.tag0}}">{{item.value.tag0}}</text>
+                            <text class="member_name" bindtap="showRule" data-index="{{index}}" style="{{item.style.tag1}}">{{item.value.tag1}}</text>
+                            <text class="member_name" bindtap="showRulePaySelf" data-index="{{index}}" style="{{item.style.tag2}}">{{item.value.tag2}}</text>
                         </view>
-
-                        <input class='member_paidin' type="text" value="{{item.value.paidin_input}}" bindinput="paidinInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="savePaidIn" bindfocus="paidInFocus" maxlength='10' bindblur='paidInBlur'
-                        />
-
 
                     </view>
 
+                    <input class='member_paidin' type="text" value="{{item.value.paidin_input}}" bindinput="paidinInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="savePaidIn" bindfocus="paidInFocus" maxlength='10' bindblur='paidInBlur'
+                    />
+
+
                 </view>
 
-                <view class="member_rule" style="{{item.style.memberRule}}{{item.style.memberRuleTrans}}">
+            </view>
 
-                    <radio-group bindchange="radioChange" style="{{item.style.memberRuleType}}{{item.style.memberRuleTypeTrans}}" data-index="{{index}}">
-                        <label class="member_rule_label" wx:for="{{rule_tyles}}" wx:key="{{index}}">
-                                <radio value="{{item.value}}" checked="true"/>{{item.name}}
-                         </label>
-                    </radio-group>
-                    <input type="text" value="{{item.value.rule_input}}" placeholder="{{item.value.rule_input_placeholder}}" placeholder-class="placeholder_class" bindinput="ruleInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="save"
-                        maxlength='9' cursor-spacing="80" />
-                    <button bind:tap="saveRule" data-index="{{index}}">保存</button>
-                </view>
+            <view class="member_rule" style="{{item.style.memberRule}}{{item.style.memberRuleTrans}}">
 
-                <view style="{{item.style.slider}}">
-                    <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
-                    <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
-                    <view style="{{item.style.layerStyle_0_2}}" bindtap="{{item.value.layerTap_0_2}}" data-index="{{index}}">{{item.value.layerText_0_2}}</view>
-                </view>
+                <radio-group bindchange="radioChange" style="{{item.style.memberRuleType}}{{item.style.memberRuleTypeTrans}}" data-index="{{index}}">
+                    <label class="member_rule_label" wx:for="{{rule_tyles}}" wx:key="{{index}}">
+                        <radio value="{{item.value}}" checked="true" />{{item.name}}
+                    </label>
+                </radio-group>
+                <input type="text" value="{{item.value.rule_input}}" placeholder="{{item.value.rule_input_placeholder}}" placeholder-class="placeholder_class" bindinput="ruleInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="save"
+                    maxlength='9' cursor-spacing="80" />
+                <button bind:tap="saveRule" data-index="{{index}}">保存</button>
+            </view>
 
-
-
+            <view style="{{item.style.slider}}">
+                <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
+                <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
+                <view style="{{item.style.layerStyle_0_2}}" bindtap="{{item.value.layerTap_0_2}}" data-index="{{index}}">{{item.value.layerText_0_2}}</view>
             </view>
 
 
@@ -135,35 +126,35 @@
 
 
 <view class="dialog_container" style='{{dialogInfo.style.display}}{{dialogInfo.style.bgAnim}}'>
-        <form bindsubmit="formSubmit" report-submit="true" class="dialog" style='{{dialogInfo.style.dialogAnim}}{{dialogInfo.style.dialogWidth}}'>
+    <form bindsubmit="formSubmit" report-submit="true" class="dialog" style='{{dialogInfo.style.dialogAnim}}{{dialogInfo.style.dialogWidth}}'>
 
-            <text class='dialog_title'>{{dialogInfo.title}}</text>
-            <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
-            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged"></input>
+        <text class='dialog_title'>{{dialogInfo.title}}</text>
+        <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
+        <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged"></input>
 
 
 
-            <scroll-view class='dialog_members' style='{{dialogInfo.style.membersDisplay}}{{dialogInfo.style.membersHeight}}'>
-                <view class='dialog_member' wx:for="{{dialogInfo.members}}" wx:key="{{index}}" bindtap='selectMember' data-index='{{index}}'>
-                    <image class="icon" src="{{item.icon}}" data-index='{{index}}'></image>
-                    <image class="select" src="/img/selected.png" style='{{item.style.selectVisible}}' data-index='{{index}}'></image>
-                    <view class="name" data-index='{{index}}'>
-                        <image src="/img/group_small.png" data-index='{{index}}'></image>
-                        <text data-index='{{index}}'>{{item.name}}</text>
-                    </view>
-                    
+        <scroll-view class='dialog_members' style='{{dialogInfo.style.membersDisplay}}{{dialogInfo.style.membersHeight}}'>
+            <view class='dialog_member' wx:for="{{dialogInfo.members}}" wx:key="{{index}}" bindtap='selectMember' data-index='{{index}}'>
+                <image class="icon" src="{{item.icon}}" data-index='{{index}}'></image>
+                <image class="select" src="/img/selected.png" style='{{item.style.selectVisible}}' data-index='{{index}}'></image>
+                <view class="name" data-index='{{index}}'>
+                    <image src="/img/group_small.png" data-index='{{index}}' style='{{item.style.groupFlagVisible}}'></image>
+                    <text data-index='{{index}}'>{{item.name}}</text>
                 </view>
-            
-            
-            </scroll-view>
 
-
-
-
-            <view class='dialog_buttons'>
-                <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
-                <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
             </view>
 
-        </form>
+
+        </scroll-view>
+
+
+
+
+        <view class='dialog_buttons'>
+            <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
+            <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
+        </view>
+
+    </form>
 </view>
