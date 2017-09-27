@@ -70,7 +70,7 @@ Page({
                     //account data----------------------------------
                     id: "abc",
                     name: "新军",
-                    icon:"/img/head.jpg",
+                    icon: "https://p0.ssl.qhimgs4.com/dmfd/125_71_/t014b6f1f660e49d1e7.jpg?size=400x500",///img/head.jpg
                     paid_in: 88.8,
                     // pay_rule:{
                     //     type: 0,    //0:百分比  1:固定数额
@@ -861,7 +861,7 @@ Page({
      * 上传到服务器
      */
     uploadAccount: function (e) {
-        var clone = slider.clone(this.data.account)
+        var clone = util.clone(this.data.account)
         delete clone.rule_tyles
         clone.members.forEach(function (v, i) {
             delete v.style
