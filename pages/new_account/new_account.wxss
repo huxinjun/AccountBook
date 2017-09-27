@@ -271,7 +271,8 @@
 .member_tags text {
     margin-right: 20rpx;
     font-size: 28rpx;
-    border: 1px solid #000;
+    border: 1px solid #aaa;
+    color: #aaa;
     border-radius: 20rpx;
     padding-left: 10rpx;
     padding-right: 10rpx;

@@ -409,40 +409,35 @@ function cancel(e) {
 /**
  * 点击删除按钮事件:transition动画
  */
-function deleteItem(index) {
-    var item = this.slidersInfo.page.getSliderData(index)
+function deleteItem(key,value) {
+    var item = this.slidersInfo.page.getSliderData().findByAttr(key,value)
 
     //先是透明度动画
     item.style.styleBorder = "border:none;"
-    item.style.deleteTrans = "opacity:0;transition:opacity 0.2s ease;"
+    item.style.deleteTrans = "opacity:0;transition:opacity 0.3s ease;"
 
     this.slidersInfo.page.refreshSliderData()
     //继续进行高度动画
     setTimeout(function () {
-        item = this.slidersInfo.page.getSliderData(index)
-        item.style.deleteTrans = "opacity:0;height:0;transition:height 0.3s ease;"
+        item = this.slidersInfo.page.getSliderData().findByAttr(key, value)
+        item.style.deleteTrans = "opacity:0;height:0;transition:height 0.2s ease;"
         this.slidersInfo.page.refreshSliderData()
 
         //最后删除元素
         setTimeout(function () {
-            console.log("setTimeout删除：" + index)
-            console.log(this)
-            item = this.slidersInfo.page.getSliderData(index)
-            item.style.deleteTrans = "display:none;opacity:0;height:0;"
+            
+            item = this.slidersInfo.page.getSliderData().findByAttr(key, value)
+            item.style.deleteTrans = "display:none;"
             this.slidersInfo.page.refreshSliderData()
 
             var datas = this.slidersInfo.page.getSliderData()
             //移除列表中下标为index的项
-            datas.remove(index, 1);
-            datas.forEach(function (v, i) {
-                v.value.slider_container_left = 0
-                v.style.slider_container_left = ""
-            })
-            //更新列表的状态
+            datas.removeObject(key, value);
+            // 更新列表的状态
             this.slidersInfo.page.refreshSliderData()
-        }.bind(this), 300)
+        }.bind(this), 200)
 
-    }.bind(this), 200)
+    }.bind(this), 300)
 
 }
 

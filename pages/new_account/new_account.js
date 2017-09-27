@@ -27,26 +27,26 @@ Page({
             },
             {
                 id: "2",
-                name: "新军",
-                icon: "http://192.168.10.205:8080/AccountBook/image/get/9bd8e2db-586b-44de-8933-623b5341e6b0",
+                name: "啊哈哈",
+                icon: "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3688856313,2337624274&fm=173&s=518B9D554C5160DE1801C06A0300D07B&w=218&h=146&img.JPG",
                 isGroup: false
             },
             {
                 id: "3",
-                name: "新军",
-                icon: "http://192.168.10.205:8080/AccountBook/image/get/9bd8e2db-586b-44de-8933-623b5341e6b0",
+                name: "大笑",
+                icon: "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3514131192,3730652926&fm=173&s=9810EE17695457C85DDC056C0300B072&w=218&h=146&img.JPEG",
                 isGroup: false
             },
             {
                 id: "4",
-                name: "新军",
-                icon: "http://192.168.10.205:8080/AccountBook/image/get/9bd8e2db-586b-44de-8933-623b5341e6b0",
+                name: "多撒多",
+                icon: "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1570290885,475601001&fm=173&s=E3A31364CCAB128E300C6DA30300F0E2&w=218&h=146&img.JPEG",
                 isGroup: false
             },
             {
                 id: "5",
-                name: "新军",
-                icon: "http://192.168.10.205:8080/AccountBook/image/get/9bd8e2db-586b-44de-8933-623b5341e6b0",
+                name: "和奴役",
+                icon: "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3735426824,2443786566&fm=173&s=E7D05A945481F8E85E0549E003007032&w=218&h=146&img.JPG",
                 isGroup: false
             }
         ],
@@ -70,7 +70,7 @@ Page({
                     //account data----------------------------------
                     id: "abc",
                     name: "新军",
-
+                    icon:"/img/head.jpg",
                     paid_in: 88.8,
                     // pay_rule:{
                     //     type: 0,    //0:百分比  1:固定数额
@@ -244,6 +244,17 @@ Page({
 
             })
 
+            //动画完毕一定要删除memberTrans,不然删除元素的时候回闪
+            setTimeout(function () {
+                var memberInArray = this.data.account.members.findByAttr("id", member.id)
+                memberInArray.style.member = "height:140rpx;"
+                memberInArray.style.memberTrans = ""
+                this.setData({
+                    account: this.data.account
+                })
+
+            }.bind(this), 500)
+
         }.bind(this), 50)
 
 
@@ -254,11 +265,18 @@ Page({
      */
     removeMember: function (e) {
         var index = e.target.dataset.index
+        var id = this.getSliderData(index).id
+        this.removeMemberById(id)
+    },
+    /**
+     * 移除成员
+     */
+    removeMemberById: function (id) {
         //已添加成员和全部可选成员保持同步
-        var member=this.data.members.findByAttr("id",this.getSliderData(index).id)
-        delete member.value
-        delete member.style
-        slider.deleteItem(index);
+        var item = this.data.members.findByAttr("id", id)
+        delete item.value
+        delete item.style
+        slider.deleteItem("id",id);
     },
 
     /**
@@ -750,16 +768,16 @@ Page({
     showSelectMembersDialog: function (e) {
         var dialogInfo = {
             page: this,
-            aaa: "",
             title: "选择成员",
             // singleChoose:true,
             members: this.data.members,
             callback: {
-                onConfirm: function (members) {
-                    console.log("成功选择成员")
-                    console.log(members)
+                onConfirm: function () {
+                    var that = this
+                    var members=this.data.members
 
-                    var that=this
+                    var needAddMbs = []
+                    var neenDelMbs = []
                     members.forEach(function(outterValue,i){
                         //去掉已经添加的
                         var isAdded=false
@@ -770,9 +788,28 @@ Page({
                                 isAdded=true
 
                         })
-                        if(!isAdded)
-                            that.addMember(util.clone(outterValue))
+                        if (outterValue.value && outterValue.value.isSelected){
+                            //已选未添加,添加
+                            if(!isAdded)
+                                needAddMbs.push(outterValue)
+                        }else{
+                            //未选已添加,删除
+                            if (isAdded){
+                                neenDelMbs.push(outterValue)
+                            }
+                            
+                        }
                     })
+                    neenDelMbs.forEach(function (v, i) {
+                        that.removeMemberById(v.id)
+                    })
+                    setTimeout(function(){
+                        needAddMbs.forEach(function (v, i) {
+                            that.addMember(util.clone(v))
+                        })
+                    },neenDelMbs.length>0?600:0)
+                    
+                    
 
                 }
             }
