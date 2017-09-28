@@ -20,7 +20,7 @@ Page({
         //所有可以选择的成员(相关的分组和自己的帐友集合)
         members: [
             {
-                id:"1",
+                id: "1",
                 name: "主卧的服务器法国人",
                 icon: "http://192.168.10.205:8080/AccountBook/image/get/c0ea1500-9b8f-47f1-b68f-f2dd43a960b6",
                 isGroup: true
@@ -65,41 +65,7 @@ Page({
 
 
             members: [
-                {
 
-                    //account data----------------------------------
-                    id: "abc",
-                    name: "新军",
-                    icon: "https://p0.ssl.qhimgs4.com/dmfd/125_71_/t014b6f1f660e49d1e7.jpg?size=400x500",///img/head.jpg
-                    paid_in: 88.8,
-                    // pay_rule:{
-                    //     type: 0,    //0:百分比  1:固定数额
-                    //     num:0.2
-                    // },
-                    // money_for_self: 20.5,
-
-                    //binding data----------------------------------
-                    style: {
-                        member: "height:140rpx;",
-                        memberRule: "height:0;",
-                        memberRuleType: "height:0;",
-
-                        memberTrans: "",
-                        memberRuleTrans: "",
-                        memberRuleTrans: "",
-                        tag0: "",
-                        tag1: "display:none;",
-                        tag2: "display:none;"
-                    },
-                    value: {
-                        tag0: "个人账单",
-                        tag1: "AA制",
-                        tag2: "自费10元",
-                        rule_type: 1,
-                        paidin_input: "￥0.00"
-                    }
-
-                }
             ]
         },
         rule_tyles: [
@@ -213,27 +179,29 @@ Page({
             v.style.memberRuleTrans = ""
             v.style.memberRuleTypeTrans = ""
         })
-        member.style = {
-            member: "height:0;opacity:0;",
-            memberRule: "height:0;opacity:0;",
-            tag0: "",
-            tag1: "display:inherit;",
-            tag2: "display:none;"
-        }
         member.value = {
             tag0: "个人账单",
             tag1: "AA制",
             tag2: "自费10元",
             rule_type: 1,
-            paidin_input: "￥0.00"
+            paidin_input: "0.00"
         }
+        member.style = {
+            member: "height:0;opacity:0;",
+            memberRule: "height:0;opacity:0;",
+            tag0: "",
+            tag1: "display:inherit;",
+            tag2: "display:none;",
+            //初始化时计算成员支出初始值所占的宽度
+            paidin_width: "width:" + (util.calcTextWidth(40, member.value.paidin_input)+40) + "rpx;"
+        }
+        
         this.data.account.members.addToHead(member)
         slider.setLayer(0, 0)
-        this.setData({
-            account: this.data.account
-        })
+        this.refreshSliderData()
+
         setTimeout(function () {
-            var memberInArray=this.data.account.members.findByAttr("id",member.id)
+            var memberInArray = this.data.account.members.findByAttr("id", member.id)
 
             memberInArray.style.member = "height:140rpx;opacity:1;"
             memberInArray.style.memberTrans = "transition:all 0.5s ease;"
@@ -276,7 +244,7 @@ Page({
         var item = this.data.members.findByAttr("id", id)
         delete item.value
         delete item.style
-        slider.deleteItem("id",id);
+        slider.deleteItem("id", id);
     },
 
     /**
@@ -537,17 +505,75 @@ Page({
         var item = this.getSliderData(index)
 
         var value = e.detail.value
-        value = value.replace('￥', '')
+        item.value.paidin_input = value
+        item.paid_in = parseFloat(value)
 
-
-        item.value.paidin_input = parseFloat(value)
-        item.paid_in = item.value.paidin_input
+        //动态计算input宽度
+        var width=util.calcTextWidth(40,value)
+        item.style.paidin_width = "width:" + (width + 40)+"rpx;"
+        this.refreshSliderData()
         // console.log("输入的成员支付数字：" + item.value.paidin_input)
+    },
 
-        var newValue = '￥' + value
-        item.value.paidin_input = newValue
+    
+
+    /**
+     * 保存成员支付数额
+     */
+    savePaidIn: function (e) {
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        var inputValue = item.paid_in
+
+        if (inputValue == undefined || isNaN(inputValue)) {
+            wx.showToast({
+                title: '请输入数字！',
+            })
+            item.value.paidin_input = "0.00"
+            return
+        }
+
+        //动态计算input宽度
+        var width = util.calcTextWidth(40, String(inputValue))
+        item.style.paidin_width = "width:" + (width + 40) + "rpx;"
         this.refreshSliderData()
     },
+
+    /**
+     * 成员支付数额获取到焦点
+     */
+    paidInFocus: function (e) {
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        if (item.value.isSliderOpen)
+            slider.close(index)
+        item.value.paidin_input = ""
+
+        //无数字时input宽度
+        item.style.paidin_width = "width:" + 0 + "rpx;"
+        this.refreshSliderData()
+    },
+
+    /**
+     * 成员支付数额失去焦点
+     */
+    paidInBlur: function (e) {
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        if (!item.paid_in || item.paid_in == 0)
+            item.value.paidin_input = "0.00"
+        else
+            item.value.paidin_input = String(item.paid_in)
+        //动态计算input宽度
+        var width = util.calcTextWidth(40,item.value.paidin_input)
+        item.style.paidin_width = "width:" + (width+40) + "rpx;"
+        this.refreshSliderData()
+    },
+
+
+
+
+
 
 
 
@@ -600,48 +626,7 @@ Page({
 
     },
 
-    /**
-     * 保存成员支付数额
-     */
-    savePaidIn: function (e) {
-        var index = e.target.dataset.index
-        var item = this.getSliderData(index)
-        var inputValue = item.value.paidin_input
-        if (inputValue == undefined || isNaN(inputValue)) {
-            wx.showToast({
-                title: '请输入数字！',
-            })
-            item.value.paidin_input = "￥"
-            return
-        }
-    },
 
-    /**
-     * 成员支付数额获取到焦点
-     */
-    paidInFocus: function (e) {
-        var index = e.target.dataset.index
-        var item = this.getSliderData(index)
-        if (item.value.isSliderOpen)
-            slider.close(index)
-
-        item.value.paidin_input = "￥"
-        this.refreshSliderData()
-    },
-
-    /**
-     * 成员支付数额失去焦点
-     */
-    paidInBlur: function (e) {
-
-        var index = e.target.dataset.index
-        var item = this.getSliderData(index)
-
-
-        if (item.value.paidin_input == "￥")
-            item.value.paidin_input = "￥0.00"
-        this.refreshSliderData()
-    },
 
 
     /**
@@ -746,21 +731,7 @@ Page({
         })
     },
 
-    /**
-     * 初始化和自己相关的分组和帐友,待会儿需要选择成员
-     */
-    initMembersData: function () {
-        APP.ajax({
-            url: APP.globalData.BaseUrl + '/account/getAllMembers',
-            data: {
-                token: wx.getStorageSync("token")
-            },
 
-            success: function (res) {
-            }
-
-        }, this)
-    },
 
     /**
      * 弹出选择成员的dialog
@@ -774,42 +745,42 @@ Page({
             callback: {
                 onConfirm: function () {
                     var that = this
-                    var members=this.data.members
+                    var members = this.data.members
 
                     var needAddMbs = []
                     var neenDelMbs = []
-                    members.forEach(function(outterValue,i){
+                    members.forEach(function (outterValue, i) {
                         //去掉已经添加的
-                        var isAdded=false
-                        that.data.account.members.forEach(function (innerValue,i){
+                        var isAdded = false
+                        that.data.account.members.forEach(function (innerValue, i) {
                             if (isAdded)
                                 return
                             if (innerValue.id == outterValue.id)
-                                isAdded=true
+                                isAdded = true
 
                         })
-                        if (outterValue.value && outterValue.value.isSelected){
+                        if (outterValue.value && outterValue.value.isSelected) {
                             //已选未添加,添加
-                            if(!isAdded)
+                            if (!isAdded)
                                 needAddMbs.push(outterValue)
-                        }else{
+                        } else {
                             //未选已添加,删除
-                            if (isAdded){
+                            if (isAdded) {
                                 neenDelMbs.push(outterValue)
                             }
-                            
+
                         }
                     })
                     neenDelMbs.forEach(function (v, i) {
                         that.removeMemberById(v.id)
                     })
-                    setTimeout(function(){
+                    setTimeout(function () {
                         needAddMbs.forEach(function (v, i) {
                             that.addMember(util.clone(v))
                         })
-                    },neenDelMbs.length>0?600:0)
-                    
-                    
+                    }, neenDelMbs.length > 0 ? 600 : 0)
+
+
 
                 }
             }
@@ -833,11 +804,14 @@ Page({
 
         this.slidersInfo.page = this
         slider.init(this.slidersInfo)
-        slider.setLayer(0, 0)
+        // slider.setLayer(0, 0)
         slider.setLayer(this.data.descSliderInfo.index, 1)
 
         this.getTodayDate()
+
+        this.initSelfInfo()
         // this.initMembersData()
+
     },
 
     onShow: function (options) {
@@ -856,6 +830,57 @@ Page({
     },
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 初始化和自己的信息:id,name,icon
+     */
+    initSelfInfo: function () {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/user/getSelfSimple',
+            data: {
+                token: wx.getStorageSync("token")
+            },
+
+            success: function (res) {
+                var clone = util.clone(res.data)
+                delete clone.msg
+                delete clone.status
+                this.addMember(clone)
+            }
+
+        }, this)
+    },
+
+    /**
+     * 初始化和自己相关的分组和帐友,待会儿需要选择成员
+     */
+    initMembersData: function () {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/account/getAllMembers',
+            data: {
+                token: wx.getStorageSync("token")
+            },
+
+            success: function (res) {
+            }
+
+        }, this)
+    },
 
     /**
      * 上传到服务器

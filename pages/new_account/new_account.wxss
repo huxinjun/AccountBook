@@ -279,15 +279,26 @@
 }
 /**成员实付款*/
 .member_paidin{
-    width: 250rpx; 
-    height: 100%;
-    line-height: 100%;
-    text-align: right;
+    font-size: 40rpx;
     color: red;
+
+     display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+
     position: absolute;
     right: 0;
     margin-right: 20rpx;
 
+    background-color: #0f0;
+    
+}
+.member_paidin text{
+    height: 100%;
+}
+.member_paidin input{
+    height: 100%;
+    background: blue;
     
 }
 

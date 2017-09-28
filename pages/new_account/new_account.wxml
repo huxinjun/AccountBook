@@ -87,11 +87,12 @@
                         </view>
 
                     </view>
+                    <view class='member_paidin' style='{{item.style.paidin_width}}'>
+                        <text>￥</text>
+                        <input type="text"  value="{{item.value.paidin_input}}" bindinput="paidinInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="savePaidIn" bindfocus="paidInFocus" bindblur='paidInBlur'
+                            maxlength='10' />
 
-                    <input class='member_paidin' type="text" value="{{item.value.paidin_input}}" bindinput="paidinInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="savePaidIn" bindfocus="paidInFocus" maxlength='10' bindblur='paidInBlur'
-                    />
-
-
+                    </view>
                 </view>
 
             </view>
