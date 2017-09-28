@@ -69,7 +69,7 @@
 
         </view>
 
-        <view class="memeber" wx:for="{{account.members}}" wx:key="{{index}}" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}">
+        <view class="memeber" wx:for="{{account.members}}" wx:key="{{index}}" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}" bindtap='aaa'>
 
             <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
 
@@ -87,10 +87,11 @@
                         </view>
 
                     </view>
-                    <view class='member_paidin' style='{{item.style.paidin_width}}'>
-                        <text>￥</text>
-                        <input type="text"  value="{{item.value.paidin_input}}" bindinput="paidinInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="savePaidIn" bindfocus="paidInFocus" bindblur='paidInBlur'
-                            maxlength='10' />
+                    <view class='member_paidin' style='{{item.style.paidin_width}}' >
+                        <text style='{{item.style.paidin_input_prefix}}'  data-index="{{index}}" catchtap='onInputPrefixClick'>{{item.value.paidin_input_prefix}}</text>
+                        <input type="text" style='{{item.style.paidin_input}}' value="{{item.value.paidin_input}}" bindinput="paidinInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="savePaidIn" bindfocus="paidInFocus" bindblur='paidInBlur'
+                            maxlength='10' focus='{{item.value.paidin_input_focus}}' data-index="{{index}}"/>
+                            
 
                     </view>
                 </view>

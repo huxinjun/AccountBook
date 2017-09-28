@@ -118,7 +118,7 @@ function calcTextWidth(fontSize,text) {
         // console.log("!!!" + text.charAt(i)+"---"+text.charCodeAt(i))
     }
     var width = 40 / 4.5 * pointCount + 40 / 1.6 * numCount
-    console.log("点个数:" + pointCount + "---数字个数:" + numCount + "---计算宽度:" + width)
+    // console.log("点个数:" + pointCount + "---数字个数:" + numCount + "---计算宽度:" + width)
     return width
 }
 

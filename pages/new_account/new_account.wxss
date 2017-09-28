@@ -254,7 +254,6 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: flex-start;
-    z-index: 1;
 }
 
 /**成员规则和其他标签*/
@@ -279,6 +278,7 @@
 }
 /**成员实付款*/
 .member_paidin{
+    height: 50rpx;
     font-size: 40rpx;
     color: red;
 
@@ -291,14 +291,18 @@
     margin-right: 20rpx;
 
     background-color: #0f0;
+
+    z-index: 1;
     
 }
 .member_paidin text{
     height: 100%;
+    line-height: 50rpx;
+    background-color: rgba(255, 213, 185, 0.5)
 }
 .member_paidin input{
     height: 100%;
-    background: blue;
+    background-color: rgba(25, 213, 185, 0.5)
     
 }
 

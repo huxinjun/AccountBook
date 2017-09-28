@@ -179,12 +179,14 @@ Page({
             v.style.memberRuleTrans = ""
             v.style.memberRuleTypeTrans = ""
         })
+        member.paid_in=0
         member.value = {
             tag0: "个人账单",
             tag1: "AA制",
             tag2: "自费10元",
             rule_type: 1,
-            paidin_input: "0.00"
+            paidin_input: "",
+            paidin_input_prefix: "￥0.00"
         }
         member.style = {
             member: "height:0;opacity:0;",
@@ -192,8 +194,10 @@ Page({
             tag0: "",
             tag1: "display:inherit;",
             tag2: "display:none;",
-            //初始化时计算成员支出初始值所占的宽度
-            paidin_width: "width:" + (util.calcTextWidth(40, member.value.paidin_input)+40) + "rpx;"
+            //初始状态必须让成员上的支付input不可见,点击￥0.00提示文字才让其可见
+            paidin_input:"display:none;",
+            //初始状态￥0.00提示文字位于右侧,点击后flex布局中位于input左侧
+            paidin_input_prefix: "position: relative;right: 0;top: 0;"
         }
         
         this.data.account.members.addToHead(member)
@@ -228,6 +232,9 @@ Page({
 
 
     },
+
+    
+
     /**
      * 移除成员
      */
@@ -512,7 +519,6 @@ Page({
         var width=util.calcTextWidth(40,value)
         item.style.paidin_width = "width:" + (width + 40)+"rpx;"
         this.refreshSliderData()
-        // console.log("输入的成员支付数字：" + item.value.paidin_input)
     },
 
     
@@ -536,6 +542,7 @@ Page({
         //动态计算input宽度
         var width = util.calcTextWidth(40, String(inputValue))
         item.style.paidin_width = "width:" + (width + 40) + "rpx;"
+        item.value.paidin_input_focus = false
         this.refreshSliderData()
     },
 
@@ -548,7 +555,8 @@ Page({
         if (item.value.isSliderOpen)
             slider.close(index)
         item.value.paidin_input = ""
-
+        item.value.paidin_input_prefix="￥"
+        item.value.paidin_input_focus=true
         //无数字时input宽度
         item.style.paidin_width = "width:" + 0 + "rpx;"
         this.refreshSliderData()
@@ -567,9 +575,35 @@ Page({
         //动态计算input宽度
         var width = util.calcTextWidth(40,item.value.paidin_input)
         item.style.paidin_width = "width:" + (width+40) + "rpx;"
+        item.value.paidin_input_focus = false
         this.refreshSliderData()
+        console.log(item)
+    },
+    /**
+     * 点击成员支付输入框前的￥0.00后让input变为可见(因为它初始化时候没有设置宽度,太宽导致误按)
+     * 为什么不设置初始宽度?
+     * 因为设了宽度后再iphone上只显示初始宽度的字符,其他的字符就不见了
+     */
+    onInputPrefixClick: function (e) {
+        console.log("onInputPrefixClick")
+        var index = e.target.dataset.index
+        var item = this.getSliderData(index)
+        delete this.getSliderData(index).style.paidin_input
+        delete this.getSliderData(index).style.paidin_input_prefix
+        item.value.paidin_input_focus = true
+        this.refreshSliderData()
+        
     },
 
+    aaa: function (e) {
+        console.log("aaa")
+        var datas = this.getSliderData()
+        datas.forEach(function(v,i){
+            v.value.paidin_input_focus = false
+        })
+        this.refreshSliderData()
+    },
+    
 
 
 
