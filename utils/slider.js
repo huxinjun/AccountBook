@@ -321,10 +321,11 @@ function closeOther(index) {
     datas.forEach(function (v, i) {
         if (i == index)
             return
-        v.value.isSliderOpen = false
+        
         v.value.slider_container_left = 0
         v.style.slider_container_left = 'left:0;transition:all 0.2s ease;'
         v.style.scroll_left = 0
+        v.value.isSliderOpen = false
     })
 
     this.slidersInfo.page.refreshSliderData()
@@ -337,6 +338,7 @@ function closeOther(index) {
             v.style.slider_container_left = 'left:0;'
             v.style.scroll_left = 0
             v.style.slider = "display:none;"
+            
         })
 
         this.slidersInfo.page.refreshSliderData()
@@ -362,6 +364,8 @@ function close(index) {
         item.style.slider = "display:none;"
         item.style.slider_container_left = 'left:0;'
         this.slidersInfo.page.refreshSliderData()
+
+        
     }.bind(this), 200)
 }
 /**

@@ -87,7 +87,7 @@
                         </view>
 
                     </view>
-                    <text class='member_paidin' data-index="{{index}}" catchtap='onMemberPaidinClick'>{{item.value.paidin}}</text>
+                    <text class='member_paidin' data-index="{{index}}" catchtap='onMemberPaidinClick'>{{item.value.paid_in}}</text>
 
                 </view>
 

@@ -185,7 +185,7 @@ Page({
             tag1: "AA制",
             tag2: "自费10元",
             rule_type: 1,
-            paidin: "￥0.00"
+            paid_in: "￥0.00"
         }
         member.style = {
             member: "height:0;opacity:0;",
@@ -505,9 +505,19 @@ Page({
      */
     onMemberPaidinClick:function(e){
         var index = e.target.dataset.index
+        var item=this.getSliderData(index)
+        console.log("onMemberPaidinClick")
+        console.log(item)
+        if (item.value.isSliderOpen){
+            slider.close(index)
+            return
+        }
+
+
+
         var dialogInfo = {
             page: this,
-            title: "选择成员",
+            title: "输入",
             content:"请输入成员支付数额",
             inputType: "digit",
             maxLength:10,
@@ -520,7 +530,7 @@ Page({
                         })
                         return
                     }
-                    this.getSliderData(index).value.paidin = "￥" + parseFloat(value)
+                    this.getSliderData(index).value.paid_in = "￥" + parseFloat(value)
                     this.refreshSliderData()
                 }
             }

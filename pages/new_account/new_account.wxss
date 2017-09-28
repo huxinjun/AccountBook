@@ -282,10 +282,6 @@
     font-size: 40rpx;
     color: red;
 
-     display: flex;
-    justify-content: flex-end;
-    align-items: center; 
-
     position: absolute;
     right: 0;
     margin-right: 20rpx;
