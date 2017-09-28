@@ -69,7 +69,7 @@
 
         </view>
 
-        <view class="memeber" wx:for="{{account.members}}" wx:key="{{index}}" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}" bindtap='aaa'>
+        <view class="memeber" wx:for="{{account.members}}" wx:key="{{index}}" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}">
 
             <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
 
@@ -87,13 +87,8 @@
                         </view>
 
                     </view>
-                    <view class='member_paidin' style='{{item.style.paidin_width}}' >
-                        <text style='{{item.style.paidin_input_prefix}}'  data-index="{{index}}" catchtap='onInputPrefixClick'>{{item.value.paidin_input_prefix}}</text>
-                        <input type="text" style='{{item.style.paidin_input}}' value="{{item.value.paidin_input}}" bindinput="paidinInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="savePaidIn" bindfocus="paidInFocus" bindblur='paidInBlur'
-                            maxlength='10' focus='{{item.value.paidin_input_focus}}' data-index="{{index}}"/>
-                            
+                    <text class='member_paidin' data-index="{{index}}" catchtap='onMemberPaidinClick'>{{item.value.paidin}}</text>
 
-                    </view>
                 </view>
 
             </view>
@@ -132,7 +127,7 @@
 
         <text class='dialog_title'>{{dialogInfo.title}}</text>
         <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
-        <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged"></input>
+        <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged" value='{{dialogInfo.inputValue}}'></input>
 
 
 

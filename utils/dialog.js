@@ -23,7 +23,7 @@ var tempInput = {
     maxLength: 10,
     callback: {
         //表单id,输入内容
-        onConfirm: function (formId, inputValue) { },
+        onConfirm: function (inputValue, formId) { },
         onCancel: function () { }
     }
 }
@@ -194,6 +194,7 @@ function inputDialogSetting(){
     var that = this
     this.dialogInfo.style.dialogWidth = "width:400rpx;"
 
+    this.dialogInfo.inputValue=""
     this.dialogInfo.style.contentDisplay = ""
     this.dialogInfo.style.inputDisplay = ""
     this.dialogInfo.style.membersDisplay = "display:none;"
@@ -201,7 +202,7 @@ function inputDialogSetting(){
     this.page.formSubmit = function (e) {
         var callback = that.dialogInfo.callback
         if (callback && callback.onConfirm)
-            callback.onConfirm.call(that.page, e.detail.formId, that.dialogInfo.inputValue)
+            callback.onConfirm.call(that.page,that.dialogInfo.inputValue, e.detail.formId)
         that.dismissDialog();
     }
     //弹出输入法

@@ -23,7 +23,7 @@
 
             <text class='dialog_title'>{{dialogInfo.title}}</text>
             <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
-            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged"></input>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged" value='{{dialogInfo.inputValue}}'></input>
 
             <view class='dialog_buttons'>
                 <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>

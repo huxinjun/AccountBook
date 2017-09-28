@@ -290,19 +290,7 @@
     right: 0;
     margin-right: 20rpx;
 
-    background-color: #0f0;
-
     z-index: 1;
-    
-}
-.member_paidin text{
-    height: 100%;
-    line-height: 50rpx;
-    background-color: rgba(255, 213, 185, 0.5)
-}
-.member_paidin input{
-    height: 100%;
-    background-color: rgba(25, 213, 185, 0.5)
     
 }
 

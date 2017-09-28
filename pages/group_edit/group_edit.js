@@ -247,7 +247,7 @@ Page({
             inputType: "text",
             maxLength: 8,
             callback: {
-                onConfirm: function (formId, inputValue) {
+                onConfirm: function (inputValue, formId) {
                     if (inputValue)
                         inputValue = inputValue.replace(/\s+/g, '')
                     this.data.groupInfo.group.name = inputValue
@@ -278,7 +278,7 @@ Page({
             inputType: "text",
             maxLength: 8,
             callback: {
-                onConfirm: function (formId, inputValue) {
+                onConfirm: function (inputValue,formId) {
                     if (inputValue)
                         inputValue = inputValue.replace(/\s+/g, '')
                     this.data.groupInfo.group.category = inputValue
