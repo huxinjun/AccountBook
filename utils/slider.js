@@ -16,7 +16,7 @@ function init(slidersInfo) {
     var page = this.slidersInfo.page
     var that=this
     page.outterScroll=function(e){
-        console.log("垂直滚动")
+        // console.log("垂直滚动")
         //垂直滚动不响应
         that.eventEnd = true
         that.calculated=true
@@ -38,7 +38,7 @@ function init(slidersInfo) {
         that.close.call(that,index)
     }
     page.eventStart = function (e) {
-        console.log("eventStart")
+        // console.log("eventStart")
         //拉开时确定要显示的按钮
         var index = e.target.dataset.index
         if (page.requireSliderUpdate)
@@ -49,15 +49,15 @@ function init(slidersInfo) {
         that.start(e)
     }
     page.eventMove = function (e) {
-        console.log("eventMove")
+        // console.log("eventMove")
         that.move(e)
     }
     page.eventEnd = function (e) {
-        console.log("eventEnd")
+        // console.log("eventEnd")
         that.end(e)
     }
     page.eventCancel = function (e) {
-        console.log("eventCancel")
+        // console.log("eventCancel")
         that.cancel(e)
     }
     return this
@@ -281,7 +281,7 @@ function move(e) {
 
     item.value.slider_container_left = moveX
     item.style.slider_container_left = 'left:' + item.value.slider_container_left + 'rpx;';
-    console.log("left:" + moveX);
+    // console.log("left:" + moveX);
     this.slidersInfo.page.refreshSliderData()
 
 
@@ -322,22 +322,31 @@ function closeOther(index) {
         if (i == index)
             return
         
+        v.value.lastSliderOpen = v.value.isSliderOpen
+        v.value.isSliderOpen = false
         v.value.slider_container_left = 0
         v.style.slider_container_left = 'left:0;transition:all 0.2s ease;'
         v.style.scroll_left = 0
-        v.value.isSliderOpen = false
+        
+        
     })
 
     this.slidersInfo.page.refreshSliderData()
 
     setTimeout(function () {
         var datas = this.slidersInfo.page.getSliderData()
+        var that=this
+        
         datas.forEach(function (v, i) {
             if (i == index)
                 return
             v.style.slider_container_left = 'left:0;'
             v.style.scroll_left = 0
             v.style.slider = "display:none;"
+
+            
+            if (that.slidersInfo.page.onSliderClose && v.value.lastSliderOpen)
+                that.slidersInfo.page.onSliderClose(i)
             
         })
 
@@ -351,6 +360,7 @@ function closeOther(index) {
 function close(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
+    item.value.lastSliderOpen = item.value.isSliderOpen
     item.value.isSliderOpen = false
     item.value.slider_container_left = 0
     item.style.slider_container_left = 'left:0;transition: left 0.2s ease;';
@@ -364,7 +374,12 @@ function close(index) {
         item.style.slider = "display:none;"
         item.style.slider_container_left = 'left:0;'
         this.slidersInfo.page.refreshSliderData()
+        
 
+        if (this.slidersInfo.page.onSliderClose && item.value.lastSliderOpen)
+            this.slidersInfo.page.onSliderClose(index)
+
+        
         
     }.bind(this), 200)
 }
@@ -374,6 +389,7 @@ function close(index) {
 function open(index) {
     var item = this.slidersInfo.page.getSliderData(index)
 
+    item.value.lastSliderOpen = item.value.isSliderOpen
     item.value.isSliderOpen = true
     item.value.slider_container_left = -this.getSliderWidthByIndex(index)
     item.style.slider_container_left = 'left:' + -this.getSliderWidthByIndex(index) + 'rpx;transition: left 0.2s ease;';
@@ -383,6 +399,11 @@ function open(index) {
         var item = this.slidersInfo.page.getSliderData(index)
         item.style.slider_container_left = 'left:' + -this.getSliderWidthByIndex(index) + "rpx;"
         this.slidersInfo.page.refreshSliderData()
+
+        if (this.slidersInfo.page.onSliderOpen && !item.value.lastSliderOpen)
+            this.slidersInfo.page.onSliderOpen(index)
+
+        
     }.bind(this), 200)
 }
 
@@ -458,7 +479,7 @@ function isHorizontal(startEvent, currEvent) {
     var currY = currEvent.touches[0].pageY;
     //获取滑动角度
     var a = angle({ X: startX, Y: startY }, { X: currX, Y: currY });
-    console.log(a)
+    // console.log(a)
     if (Math.abs(a) > 30)
         return false;
     return true;
@@ -491,7 +512,7 @@ function captureTap(e) {
     page.captureEventTap(e)
 }
 function captureStart(e) {
-    console.log("捕获阶段：start")
+    // console.log("捕获阶段：start")
     this.startEvent = e
     this.calculated = false
     
@@ -500,10 +521,10 @@ function captureMove(e) {
     if (this.calculated)
         return
     var page = this.slidersInfo.page
-    console.log("捕获阶段：move")
+    // console.log("捕获阶段：move")
     var currEvent = e
     var isHorizontal = this.isHorizontal(this.startEvent, currEvent)
-    console.log("!!!!!!!!!!!!!!!" + isHorizontal)
+    // console.log("!!!!!!!!!!!!!!!" + isHorizontal)
     if (isHorizontal) {
         //一开始没有绑定冒泡时期的catch方法，所以接受不到start的
         page.eventStart(e)
@@ -514,7 +535,6 @@ function captureMove(e) {
             eventEnd: "eventEnd",
             eventCancel: "eventCancel",
         })
-        console.log("!!!!!!!!!!!!!!!setData")
     } else {
         //垂直滚动了
         this.eventEnd = false

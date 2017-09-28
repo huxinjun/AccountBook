@@ -9,10 +9,10 @@
     <view class="desc">
         <view style="{{descSliderInfo.style.slider_container_pos}}{{descSliderInfo.style.slider_container_left}}">
 
-            <view class="desc_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap" catchtouchstart="{{eventStart}}"
+            <view class="desc_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" catchtouchstart="{{eventStart}}" bind:tap="eventCaptureTap"
                 catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{descSliderInfo.index}}">
                 <image class="desc_icon" src="/img/desc.png" data-index="{{descSliderInfo.index}}"></image>
-                <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" />
+                <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}"/>
                 <image class="desc_add_pic" src="/img/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
 
             </view>
@@ -73,7 +73,7 @@
 
             <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
 
-                <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap" catchtouchstart="{{eventStart}}"
+                <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel"  catchtouchstart="{{eventStart}}" bind:tap="eventCaptureTap"
                     catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
                     <image class="member_icon" src="{{item.icon}}" mode="aspectFill" data-index="{{index}}"></image>
 

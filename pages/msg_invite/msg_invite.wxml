@@ -8,7 +8,7 @@
             <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
 
                 <view class="item" style="{{item.style.sv_main}}" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" 
-                    capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" capture-bind:tap="eventCaptureTap"
+                    capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" bind:tap="eventCaptureTap"
                     
                     catchtouchstart="{{eventStart}}" catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
                     <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>

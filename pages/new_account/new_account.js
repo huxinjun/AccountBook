@@ -540,8 +540,12 @@ Page({
 
     },
 
-
-
+    onSliderOpen:function(index){
+        console.log("打开了："+index)
+    },
+    onSliderClose: function (index) {
+        console.log("关闭了：" + index)
+    },
 
 
 
