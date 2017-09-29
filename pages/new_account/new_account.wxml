@@ -13,7 +13,7 @@
                 catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{descSliderInfo.index}}">
                 <image class="desc_icon" src="/img/account/description.png" data-index="{{descSliderInfo.index}}"></image>
                 <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" disabled='{{descSliderInfo.value.inputDisable}}'/>
-                <image class="desc_add_pic" src="/img/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
+                <image class="desc_add_pic" src="/img/account/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
 
             </view>
 
