@@ -170,8 +170,8 @@
 }
 
 .loc_get {
-    width: 45rpx;
-    height: 45rpx;
+    width: 40rpx;
+    height: 40rpx;
     align-self: center;
     margin-right: 20rpx;
 }

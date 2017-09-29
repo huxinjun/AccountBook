@@ -408,6 +408,14 @@ function open(index) {
 }
 
 /**
+ * 检测是否打开
+ */
+function isSliderOpen(index){
+    var item = this.slidersInfo.page.getSliderData(index)
+    return item.value.isSliderOpen
+}
+
+/**
  * 强制中断本次抽屉事件
  */
 function breakOnce() {
@@ -600,6 +608,7 @@ module.exports = {
     updateLayer: updateLayer,
     setLayer: setLayer,
     getSliderWidthByIndex: getSliderWidthByIndex,
-    hasSlider: hasSlider
+    hasSlider: hasSlider,
+    isSliderOpen: isSliderOpen
 
 }

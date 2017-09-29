@@ -3,57 +3,71 @@ var APP = getApp()
 Page({
 
     data: {
-        firendId:"",
+        firendId: "",
         containerHeight: APP.systemInfo.windowHeight,
-        dialog:"display:none;",
+        dialog: "display:none;",
 
         list: [
             {
-                "id":0,
-                "name":"吃饭",
-                "icon":"/img/type/gray_food.png"
-            }, 
+                "id": 0,
+                "name": "吃饭",
+                "icon": "/img/type/type_food.png"
+            },
             {
                 "id": 1,
                 "name": "租房",
-                "icon": "/img/type/gray_housing.png"
+                "icon": "/img/type/type_home.png"
             },
             {
                 "id": 2,
-                "name": "公交",
-                "icon": "/img/type/gray_traffic.png"
+                "name": "交通",
+                "icon": "/img/type/type_traffic.png"
             },
             {
                 "id": 3,
-                "name": "打车",
-                "icon": "/img/type/gray_car.png"
+                "name": "购物",
+                "icon": "/img/type/type_shopping.png"
             },
             {
                 "id": 4,
-                "name": "信用卡还钱",
-                "icon": "/img/type/gray_refund.png"
+                "name": "蔬菜",
+                "icon": "/img/type/type_vegetable.png"
             },
             {
                 "id": 5,
-                "name": "请客",
-                "icon": "/img/type/gray_gam.png"
-            },
-            {
-                "id": 6,
                 "name": "零食",
-                "icon": "/img/type/gray_snacks.png"
+                "icon": "/img/type/type_snack.png"
             },
             {
                 "id": 6,
-                "name": "购物",
-                "icon": "/img/type/gray_shopping.png"
+                "name": "请客",
+                "icon": "/img/type/type_gam.png"
             },
             {
                 "id": 7,
+                "name": "娱乐",
+                "icon": "/img/type/type_entertainment.png"
+            },
+            {
+                "id": 8,
+                "name": "书籍",
+                "icon": "/img/type/type_book.png"
+            },
+            {
+                "id": 9,
+                "name": "借款",
+                "icon": "/img/type/type_money_out.png"
+            },
+            {
+                "id": 10,
+                "name": "收入",
+                "icon": "/img/type/type_money_in.png"
+            },
+            {
+                "id": 11,
                 "name": "其他",
-                "icon": "/img/type/gray_other.png"
-            }
-
+                "icon": "/img/type/type_other.png"
+            },
         ],
     },
 
@@ -78,11 +92,11 @@ Page({
 
     // },
 
-    
+
     onLoad: function (option) {
         var that = this
         this.setData({
-            list:this.data.list
+            list: this.data.list
         })
 
         console.log(option)
@@ -90,14 +104,14 @@ Page({
             this.showAddFriend(option.friendId)
         if (option.groupId)
             this.showJoinGroup(option.groupId)
-            
-        
+
+
     },
 
     /**
      * 添加好友弹窗
      */
-    showAddFriend:function(friendId){
+    showAddFriend: function (friendId) {
         //查询目标好友昵称
         APP.ajax({
             url: APP.globalData.BaseUrl + "/user/get",
@@ -110,10 +124,10 @@ Page({
                 var dialogInfo = {
                     page: this,
                     title: "提示",
-                    content: "确定加["+res.data.nickname+"]为帐友吗?",
+                    content: "确定加[" + res.data.nickname + "]为帐友吗?",
                     callback: {
                         onConfirm: function (formId) {
-                            this.inviteUser(formId,friendId)
+                            this.inviteUser(formId, friendId)
                         },
                         onCancel: function () { }
                     }
@@ -123,7 +137,7 @@ Page({
             }
 
 
-        }, this)  
+        }, this)
     },
 
     /**
@@ -161,14 +175,14 @@ Page({
 
 
 
-    
 
-    
+
+
     /**
      * 邀请用户
      */
     inviteUser: function (formId, friendId) {
-        var that=this
+        var that = this
         wx.login({
             success: function (res) {
                 APP.ajax({
@@ -216,6 +230,6 @@ Page({
 
 
 
-   
+
 })
 

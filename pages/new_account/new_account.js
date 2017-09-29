@@ -508,7 +508,7 @@ Page({
         var item=this.getSliderData(index)
         console.log("onMemberPaidinClick")
         console.log(item)
-        if (item.value.isSliderOpen){
+        if (slider.isSliderOpen(index)){
             slider.close(index)
             return
         }
@@ -542,9 +542,17 @@ Page({
 
     onSliderOpen:function(index){
         console.log("打开了："+index)
+        if(index==-1){
+            this.getSliderData(-1).value.inputDisable=true
+            this.refreshSliderData()
+        }
     },
     onSliderClose: function (index) {
         console.log("关闭了：" + index)
+        if (index == -1) {
+            this.getSliderData(-1).value.inputDisable = false
+            this.refreshSliderData()
+        }
     },
 
 
@@ -563,6 +571,7 @@ Page({
             this.refreshRuleInputPlaceHolder(index)
             return
         }
+        // if (item.paid_in && inputValue > item.paid_in)---
 
 
         if (item.value.isShowRule) {
@@ -645,6 +654,11 @@ Page({
      */
     chooseImage: function (e) {
         var that = this
+        var index = e.target.dataset.index
+        if (slider.isSliderOpen(index)) {
+            slider.close(index)
+            return
+        }
         wx.chooseImage({
             count: 9, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有

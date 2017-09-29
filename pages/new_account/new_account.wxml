@@ -1,6 +1,6 @@
 <scroll-view scroll-y class="container {{dialogInfo.value.blurClass}}" scroll-into-view="{{scrollToView}}" scroll-with-animation="true" bindscroll="outterScroll">
     <view class="title">
-        <image src="/img/type/gray_accounts.png"></image>
+        <image src=""></image>
         <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
         <text>￥0.00</text>
     </view>
@@ -11,8 +11,8 @@
 
             <view class="desc_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" catchtouchstart="{{eventStart}}" bind:tap="eventCaptureTap"
                 catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{descSliderInfo.index}}">
-                <image class="desc_icon" src="/img/desc.png" data-index="{{descSliderInfo.index}}"></image>
-                <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}"/>
+                <image class="desc_icon" src="/img/account/description.png" data-index="{{descSliderInfo.index}}"></image>
+                <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" disabled='{{descSliderInfo.value.inputDisable}}'/>
                 <image class="desc_add_pic" src="/img/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
 
             </view>
@@ -49,15 +49,15 @@
     </view>
 
     <view class="date">
-        <image class="date_icon" src="/img/date.png"></image>
+        <image class="date_icon" src="/img/account/calendar.png"></image>
         <picker mode="date" value="{{date}}" start="1970-01-01" end="{{today}}" bindchange="bindDateChange">{{account.date}}</picker>
         <span class="date_today" bindtap="getTodayDate">今天</span>
     </view>
 
     <view class="loc">
-        <image class="loc_icon" src="/img/loc.png"></image>
+        <image class="loc_icon" src="/img/account/location.png"></image>
         <input type="text" placeholder="位置" placeholder-class="placeholder_class" value='{{account.address_info.address}}' />
-        <image class="loc_get" src="/img/get_loc.png" bindtap='chooseLocation'></image>
+        <image class="loc_get" src="/img/account/location_me.png" bindtap='chooseLocation'></image>
     </view>
 
 
@@ -134,7 +134,7 @@
         <scroll-view class='dialog_members' style='{{dialogInfo.style.membersDisplay}}{{dialogInfo.style.membersHeight}}'>
             <view class='dialog_member' wx:for="{{dialogInfo.members}}" wx:key="{{index}}" bindtap='selectMember' data-index='{{index}}'>
                 <image class="icon" src="{{item.icon}}" data-index='{{index}}'></image>
-                <image class="select" src="/img/selected.png" style='{{item.style.selectVisible}}' data-index='{{index}}'></image>
+                <image class="select" src="/img/account/true_select.png" style='{{item.style.selectVisible}}' data-index='{{index}}'></image>
                 <view class="name" data-index='{{index}}'>
                     <image src="/img/group_small.png" data-index='{{index}}' style='{{item.style.groupFlagVisible}}'></image>
                     <text data-index='{{index}}'>{{item.name}}</text>

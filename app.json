@@ -26,32 +26,32 @@
             {
                 "pagePath": "pages/index/index",
                 "text": "记账",
-                "iconPath": "img/main.png",
-                "selectedIconPath": "img/main_press.png"
+                "iconPath": "img/tab/tab_home.png",
+                "selectedIconPath": "img/tab/tab_home_select.png"
             },
             {
                 "pagePath": "pages/msg_invite/msg_invite",
                 "text": "消息",
-                "iconPath": "img/me.png",
-                "selectedIconPath": "img/me_press.png"
+                "iconPath": "img/tab/tab_message.png",
+                "selectedIconPath": "img/tab/tab_message_select.png"
             },
             {
                 "pagePath": "pages/friend/friend",
-                "text": "帐友",
-                "iconPath": "img/me.png",
-                "selectedIconPath": "img/me_press.png"
+                "text": "基友",
+                "iconPath": "img/tab/tab_friend.png",
+                "selectedIconPath": "img/tab/tab_friend_select.png"
             },
             {
                 "pagePath": "pages/new_account/new_account",
-                "text": "圈子",
-                "iconPath": "img/me.png",
-                "selectedIconPath": "img/me_press.png"
+                "text": "本本",
+                "iconPath": "img/tab/tab_record.png",
+                "selectedIconPath": "img/tab/tab_record_select.png"
             },
             {
                 "pagePath": "pages/logs/logs",
-                "text": "个人",
-                "iconPath": "img/me.png",
-                "selectedIconPath": "img/me_press.png"
+                "text": "俺的",
+                "iconPath": "img/tab/tab_me.png",
+                "selectedIconPath": "img/tab/tab_me_select.png"
             }
         ]
     }
