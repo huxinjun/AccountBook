@@ -72,25 +72,15 @@ Page({
     },
 
 
-    // testShowDialog:function(e){
-    //     var dialogInfo = {
-    //         page: this,
-    //         title: "标题",
-    //         content: "提示文字",
-    //         inputType: "number",
-    //         maxLength: 3,
-    //         callback: {
-    //             onConfirm: function (formId,inputValue) {
-    //                 console.log("testShowDialog.formId:" + formId)
-    //                 console.log("testShowDialog.inputValue:" + inputValue)
-    //              },
-    //             onCancel: function () { }
-    //         }
-    //     }
-
-    //     dialog.showDialog(dialogInfo)
-
-    // },
+    gotoAddAccount:function(e){
+        var index = e.target.dataset.index
+        var item=this.data.list[index]
+        
+        console.log(item)
+        wx.navigateTo({
+            url: '/pages/new_account/new_account?type=' + item.id + "&name=" + item.name + "&typeIcon=" + item.icon,
+        })
+    },
 
 
     onLoad: function (option) {

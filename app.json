@@ -42,7 +42,7 @@
                 "selectedIconPath": "img/tab/tab_friend_select.png"
             },
             {
-                "pagePath": "pages/new_account/new_account",
+                "pagePath": "pages/logs/logs",
                 "text": "本本",
                 "iconPath": "img/tab/tab_record.png",
                 "selectedIconPath": "img/tab/tab_record_select.png"

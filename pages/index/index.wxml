@@ -2,10 +2,10 @@
 <view class="container {{dialogInfo.blurClass}}">
     <view wx:for="{{list}}" wx:key="{{index}}">
 
-        <view class="item" hover-class="item_hover" bindtap='test'>
+        <view class="item" hover-class="item_hover" bindtap='gotoAddAccount' data-index='{{index}}'>
 
-            <image class="icon" src="{{item.icon}}"></image>
-            <text class="name">{{item.name}}</text>
+            <image class="icon" src="{{item.icon}}" data-index='{{index}}'></image>
+            <text class="name" data-index='{{index}}'>{{item.name}}</text>
 
         </view>
 

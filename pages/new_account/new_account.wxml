@@ -1,7 +1,7 @@
 <scroll-view scroll-y class="container {{dialogInfo.value.blurClass}}" scroll-into-view="{{scrollToView}}" scroll-with-animation="true" bindscroll="outterScroll">
     <view class="title">
-        <image src=""></image>
-        <input placeholder="标题" maxlength="10" placeholder-class="placeholder_class" />
+        <image src="{{account.value.typeIcon}}"></image>
+        <input placeholder="{{account.name}}" maxlength="10" placeholder-class="placeholder_class" />
         <text>￥0.00</text>
     </view>
 
@@ -63,7 +63,7 @@
 
     <view class="members">
 
-        <view class="members_title" hover-class="members_title_hover" bindtap="showSelectMembersDialog" id="members_title">
+        <view class="members_title" hover-class="members_title_hover" bindtap="{{account.value.addMemberClick}}" id="members_title">
             <text class="members_title_txt">参与者</text>
             <text class="members_title_add">+</text>
 

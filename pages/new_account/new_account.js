@@ -726,7 +726,7 @@ Page({
         var dialogInfo = {
             page: this,
             title: "选择成员",
-            // singleChoose:true,
+            singleChoose:this.data.account.type==9?true:false,//借款只允许选择一个其他成员
             members: this.data.members,
             callback: {
                 onConfirm: function () {
@@ -782,11 +782,12 @@ Page({
 
 
 
-    onLoad: function () {
+    onLoad: function (option) {
         var that = this
         this.data.account.members.onSizeChanged = function (size) {
             that.refreshTags()
         }
+        this.initAccount(option)
 
         this.slidersInfo.page = this
         slider.init(this.slidersInfo)
@@ -797,6 +798,8 @@ Page({
 
         this.initSelfInfo()
         // this.initMembersData()
+
+        
 
     },
 
@@ -816,11 +819,29 @@ Page({
     },
 
 
+    
 
 
+    /**
+     * 根据传递的参数初始化account信息
+     */
+    initAccount:function(option) {
+        console.log(option)
+        this.data.account.value={}
+
+        this.data.account.type = option.type
+        this.data.account.name = option.name
+        this.data.account.value.typeIcon = option.typeIcon
+        //类型为收入时不许添加成员
+        if (this.data.account.type == 10) 
+            delete this.data.account.value.addMemberClick
+        else
+            this.data.account.value.addMemberClick ="showSelectMembersDialog"
 
 
-
+        this.refreshSliderData()
+        console.log(this.data.account)
+    },
 
 
 
@@ -874,6 +895,7 @@ Page({
     uploadAccount: function (e) {
         var clone = util.clone(this.data.account)
         delete clone.rule_tyles
+        delete clone.value
         clone.members.forEach(function (v, i) {
             delete v.style
             delete v.value
