@@ -2,10 +2,10 @@
 var util = require("/utils/util.js")
 App({
     globalData: {
-        BaseUrl: 'http://192.168.10.205:8080/AccountBook',
+        // BaseUrl: 'http://192.168.10.205:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
-        // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
+        BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         resultcode: {
             SUCCESS: 0,
             INVALID_TOKEN: 1,
@@ -27,6 +27,7 @@ App({
 
 
     onLaunch: function () {
+        this.checkLogin()
         //调用API从本地缓存中获取数据
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())
@@ -98,6 +99,20 @@ App({
         }
         
 
+    },
+
+    //检查登录状态，为了防止token失效时进入页面同时请求两个以上接口，导致服务器不停刷新token,造成死循环
+    checkLogin: function () {
+        console.log('checkLogin')
+        this.ajax({
+
+            url: this.globalData.BaseUrl + '/login/checkLogin',
+            data: {
+                token: wx.getStorageSync("token")
+            },
+            success: function (res) {
+            }
+        }, this)
     },
 
 
@@ -244,7 +259,7 @@ App({
                 var clone=util.clone(res.data,{
                     onCopyed:function(obj,attr){
                         //服务器内部图片都是以IMG开头
-                        if (obj[attr] && typeof obj[attr]=='string' && obj[attr].startsWith("IMG"))
+                        if (obj[attr] && typeof obj[attr] == 'string' && obj[attr].endsWith("XzBB"))
                             obj[attr] = that.getImageUrl(obj[attr])
                     }
                 })
