@@ -2,10 +2,10 @@
 var util = require("/utils/util.js")
 App({
     globalData: {
-        // BaseUrl: 'http://192.168.10.205:8080/AccountBook',
+        BaseUrl: 'http://192.168.10.205:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
-        BaseUrl: 'http://192.168.1.103:8080/AccountBook',
+        // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         resultcode: {
             SUCCESS: 0,
             INVALID_TOKEN: 1,
@@ -19,6 +19,8 @@ App({
      * 服务器只返回一个文件id
      */
     getImageUrl:function(file){
+        if(file==null || file=="")
+            return null
         return this.globalData.BaseUrl + "/image/get/" +(file?file:"")
     },
 
@@ -181,7 +183,7 @@ App({
         wx.hideLoading()
         wx.showToast({
             title: '登陆成功!',
-            icon: 'loading',
+            icon: 'success',
             duration: 2000
         })
 
@@ -241,12 +243,13 @@ App({
                 //转换为完整头像地址
                 var clone=util.clone(res.data,{
                     onCopyed:function(obj,attr){
-                        if (attr=="icon")
+                        //服务器内部图片都是以IMG开头
+                        if (obj[attr] && typeof obj[attr]=='string' && obj[attr].startsWith("IMG"))
                             obj[attr] = that.getImageUrl(obj[attr])
                     }
                 })
                 res.data=clone
-                // console.log(clone)
+                
                 
 
                 if (obj.success != undefined)

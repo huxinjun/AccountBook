@@ -100,12 +100,14 @@
     justify-content: flex-start;
     border-bottom: 1rpx dashed #ddd;
     background-color: #efefef;
+    padding-right: 20rpx;
 }
 
 .pics image {
-    width: 210rpx;
+    width: 223rpx;
     height: 157.5rpx;
-    margin: 20rpx;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
 }
 
 /**日期---------------------------------------------------------------------------*/
@@ -279,7 +281,7 @@
 /**成员实付款*/
 .member_paidin{
     height: 50rpx;
-    font-size: 40rpx;
+    font-size: 30rpx;
     color: red;
 
     position: absolute;

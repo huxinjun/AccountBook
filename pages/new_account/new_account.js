@@ -7,7 +7,7 @@ Page({
 
         containerHeight: APP.systemInfo.windowHeight,
 
-        tip0: "请输入固定比例(此成员将只付款总金额的百分比值,范围0-100)",
+        tip0: "请输入固定比例(此成员将只付款总金额的百分比值,范围1-99)",
         tip1: "请输入固定数额(此成员将只按此金额付款)",
         tip2: "请输入自费数额(其他成员将不会为这笔数额买单哦！)",
 
@@ -18,38 +18,7 @@ Page({
         images: [],
 
         //所有可以选择的成员(相关的分组和自己的帐友集合)
-        members: [
-            {
-                id: "1",
-                name: "主卧的服务器法国人",
-                icon: "http://192.168.10.205:8080/AccountBook/image/get/c0ea1500-9b8f-47f1-b68f-f2dd43a960b6",
-                isGroup: true
-            },
-            {
-                id: "2",
-                name: "啊哈哈",
-                icon: "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3688856313,2337624274&fm=173&s=518B9D554C5160DE1801C06A0300D07B&w=218&h=146&img.JPG",
-                isGroup: false
-            },
-            {
-                id: "3",
-                name: "大笑",
-                icon: "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3514131192,3730652926&fm=173&s=9810EE17695457C85DDC056C0300B072&w=218&h=146&img.JPEG",
-                isGroup: false
-            },
-            {
-                id: "4",
-                name: "多撒多",
-                icon: "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1570290885,475601001&fm=173&s=E3A31364CCAB128E300C6DA30300F0E2&w=218&h=146&img.JPEG",
-                isGroup: false
-            },
-            {
-                id: "5",
-                name: "和奴役",
-                icon: "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3735426824,2443786566&fm=173&s=E7D05A945481F8E85E0549E003007032&w=218&h=146&img.JPG",
-                isGroup: false
-            }
-        ],
+        members: [],
 
         account: {
 
@@ -64,9 +33,7 @@ Page({
             address_info: {},
 
 
-            members: [
-
-            ]
+            members: []
         },
         rule_tyles: [
             { name: '百分比付款', value: 0 },
@@ -526,6 +493,7 @@ Page({
                     console.log(value)
                     if(isNaN(value)){
                         wx.showToast({
+                            image: "/img/error.png",
                             title: '请输入数字',
                         })
                         return
@@ -566,6 +534,7 @@ Page({
         var inputValue = item.value.rule_input
         if (inputValue == undefined || isNaN(inputValue)) {
             wx.showToast({
+                image: "/img/error.png",
                 title: '请输入数字！',
             })
             this.refreshRuleInputPlaceHolder(index)
@@ -583,9 +552,10 @@ Page({
             switch (ruleType) {
                 case 0:
                     //检查输入的有效性
-                    if (inputValue.isvalue < 0 || inputValue > 100) {
+                    if (inputValue.isvalue < 1 || inputValue > 99) {
                         wx.showToast({
-                            title: '请输入0-100之间的数额！',
+                            image: "/img/error.png",
+                            title: '请输入1-99之间的数字！',
                         })
                         this.refreshRuleInputPlaceHolder(index)
                         return
@@ -665,24 +635,13 @@ Page({
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
                 for (var i = 0; i < res.tempFilePaths.length; i++) {
-                    var outterValue = res.tempFilePaths[i]
-                    var exists = false
-                    for (var j = 0; j < that.data.images.length; j++) {
-                        var innerValue = that.data.images[i]
-                        if (innerValue.wx_path == outterValue) {
-                            console.log("重复图片")
-                            exists = true
-                            break
-                        }
-                    }
-                    if (!exists) {
-                        that.data.images.push({
-                            wx_path: outterValue,
-                            remote_name: "",
-                            progress: 0
-                        })
-                        that.uploadImage(outterValue)
-                    }
+                    var wx_path = res.tempFilePaths[i]
+                    that.data.images.push({
+                        wx_path: wx_path,
+                        remote_file: "",
+                        progress: 0
+                    })
+                    that.uploadImage(wx_path)
                 }
                 that.setData({
                     images: that.data.images
@@ -704,15 +663,17 @@ Page({
                 var data = JSON.parse(res.data)
                 that.data.images.forEach(function (v, i) {
                     if (v.wx_path == filePath)
-                        v.remote_name = data.msg
+                        v.remote_file = data.msg
                 })
                 that.data.account.icons.push(data.msg)
             }
         })
         callback.onProgressUpdate((res) => {
             that.data.images.forEach(function (v, i) {
-                if (v.wx_path == filePath)
+                if (v.wx_path == filePath){
                     v.progress = res.progress
+                    console.log("上传图片(" + filePath + "):" + v.progress)
+                }
             })
         })
     },
@@ -723,6 +684,16 @@ Page({
      * 弹出选择成员的dialog
      */
     showSelectMembersDialog: function (e) {
+        //类型为请客,收入时不许添加成员
+        if (this.data.account.type == 6 || this.data.account.type == 10){
+            var typeStr = (this.data.account.type == 6 ? "请客" : "收入")
+            wx.showToast({
+                image:"/img/error.png",
+                title: "类型是[" + typeStr+"]时不能有其他成员!",
+            })
+            return
+        }
+
         var dialogInfo = {
             page: this,
             title: "选择成员",
@@ -797,7 +768,8 @@ Page({
         this.getTodayDate()
 
         this.initSelfInfo()
-        // this.initMembersData()
+
+        this.initMembersData()
 
         
 
@@ -832,15 +804,8 @@ Page({
         this.data.account.type = option.type
         this.data.account.name = option.name
         this.data.account.value.typeIcon = option.typeIcon
-        //类型为收入时不许添加成员
-        if (this.data.account.type == 10) 
-            delete this.data.account.value.addMemberClick
-        else
-            this.data.account.value.addMemberClick ="showSelectMembersDialog"
-
-
+        
         this.refreshSliderData()
-        console.log(this.data.account)
     },
 
 
@@ -884,6 +849,9 @@ Page({
             },
 
             success: function (res) {
+                this.setData({
+                    members: res.data.members
+                })
             }
 
         }, this)
@@ -900,7 +868,8 @@ Page({
             delete v.style
             delete v.value
         })
-        console.log(clone)
+        var str = JSON.stringify(clone);
+        console.log(str)
 
     }
 })

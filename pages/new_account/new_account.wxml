@@ -63,7 +63,7 @@
 
     <view class="members">
 
-        <view class="members_title" hover-class="members_title_hover" bindtap="{{account.value.addMemberClick}}" id="members_title">
+        <view class="members_title" hover-class="members_title_hover" bindtap="showSelectMembersDialog" id="members_title">
             <text class="members_title_txt">参与者</text>
             <text class="members_title_add">+</text>
 
@@ -136,7 +136,7 @@
                 <image class="icon" src="{{item.icon}}" data-index='{{index}}'></image>
                 <image class="select" src="/img/account/true_select.png" style='{{item.style.selectVisible}}' data-index='{{index}}'></image>
                 <view class="name" data-index='{{index}}'>
-                    <image src="/img/group_small.png" data-index='{{index}}' style='{{item.style.groupFlagVisible}}'></image>
+                    <image src="/img/group.png" data-index='{{index}}' style='{{item.style.groupFlagVisible}}'></image>
                     <text data-index='{{index}}'>{{item.name}}</text>
                 </view>
 

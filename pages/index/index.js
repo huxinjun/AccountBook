@@ -30,7 +30,7 @@ Page({
             },
             {
                 "id": 4,
-                "name": "蔬菜",
+                "name": "生活",
                 "icon": "/img/type/type_vegetable.png"
             },
             {
