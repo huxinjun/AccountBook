@@ -15,7 +15,9 @@ Page({
             index: -1
         },
 
-        images: [],
+        images: [
+            
+        ],
 
         //所有可以选择的成员(相关的分组和自己的帐友集合)
         members: [],
@@ -40,6 +42,10 @@ Page({
             { name: '固定值付款', value: 1 }
         ],
 
+        style:{
+            picsContainerHeight : "",
+            picsPaddingBottom: ""
+        }
 
 
     },
@@ -623,6 +629,17 @@ Page({
      * 选择图片
      */
     chooseImage: function (e) {
+
+        this.data.images.append({
+            wx_path: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=401001407,327245464&fm=27&gp=0.jpg"
+        })
+        this.setData({
+            images: this.data.images
+        })
+
+        return
+
+
         var that = this
         var index = e.target.dataset.index
         if (slider.isSliderOpen(index)) {
@@ -758,6 +775,25 @@ Page({
         this.data.account.members.onSizeChanged = function (size) {
             that.refreshTags()
         }
+        this.data.images.onSizeChanged = function (size) {
+            if(size==0){
+                that.data.style.picsContainerHeight=""
+                that.data.style.picsPaddingBottom = ""
+            }else{
+                var row = Math.ceil(size / 3)
+                var height = 158 * row + row * 20
+                that.data.style.picsContainerHeight = "height:" + height+"rpx;"
+                that.data.style.picsPaddingBottom = "padding-bottom: 20rpx;"
+            }
+
+            that.setData({
+                style: that.data.style
+            })
+        }
+
+        
+
+
         this.initAccount(option)
 
         this.slidersInfo.page = this
@@ -767,12 +803,9 @@ Page({
 
         this.getTodayDate()
 
-        this.initSelfInfo()
+        // this.initSelfInfo()
 
-        this.initMembersData()
-
-        
-
+        // this.initMembersData()
     },
 
     onShow: function (options) {

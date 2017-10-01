@@ -93,21 +93,78 @@
 
 
 .pics {
+    height: 0;
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     border-bottom: 1rpx dashed #ddd;
     background-color: #efefef;
     padding-right: 20rpx;
+
+    overflow: hidden; 
+
+    transition: all 500ms ease;
 }
 
-.pics image {
+.pic{
     width: 223rpx;
-    height: 157.5rpx;
+    height: 158rpx;
     margin-left: 20rpx;
     margin-top: 20rpx;
+    position: relative;
+}
+.pic .img{
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+}
+.pic .delete{
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    right: -10rpx;
+    top: -10rpx;
+}
+.pic .mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255, 0.75);
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    
+}
+.mask .loading{
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -25rpx;
+    margin-top: -25rpx;
+    
+}
+.mask .progress{
+    width: 20rpx;
+    height: 20rpx;
+    position: absolute;
+    font-size: 20rpx;
+    left: 50%;
+    top: 50%;
+    margin-left: -10rpx;
+    margin-top: -10rpx;
+    text-align: center;
+    line-height: 20rpx;
+
+    color: gray;
+    
 }
 
 /**日期---------------------------------------------------------------------------*/

@@ -33,9 +33,20 @@
 
 
 
-    <view class="pics">
-        <image src="{{item.wx_path}}" mode="aspectFill" wx:for="{{images}}" wx:key="{{index}}"></image>
+    <view class="pics" style='{{style.picsContainerHeight}}{{style.picsPaddingBottom}}'>
 
+        <view class='pic' wx:for="{{images}}" wx:key="{{index}}">
+
+            <image class='img' src="{{item.wx_path}}" mode="aspectFill" wx:key="{{index}}"></image>
+            <image class='delete' src="/img/account/false_select.png" wx:key="{{index}}"></image>
+            <view class='mask'>
+                <image class='loading' src="/img/loading.gif"></image>
+                <text class='progress'>99</text>
+            </view>
+
+        
+        </view>
+        
 
         <!-- <image src="/img/head.jpg" mode="scaleToFill" ></image>
         <image src="/img/head.jpg" mode="aspectFit"></image>

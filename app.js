@@ -62,6 +62,11 @@ App({
             this.unshift(v)
             this.onSizeChanged(this.length)
         }
+        //追加到末尾
+        Array.prototype.append = function (v) {
+            this.push(v)
+            this.onSizeChanged(this.length)
+        }
         //移除某个索引的元素
         Array.prototype.remove = function (i) {
             this.splice(i, 1)
@@ -285,7 +290,7 @@ App({
 
                 wx.showToast({
                     title: '网络错误',
-                    icon: 'loading',
+                    image: "/img/error.png",
                     duration: 1000
                 })
 
