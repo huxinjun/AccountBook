@@ -15,9 +15,8 @@ Page({
             index: -1
         },
 
-        images: [
-            
-        ],
+        //附加图片
+        images: [],
 
         //所有可以选择的成员(相关的分组和自己的帐友集合)
         members: [],
@@ -42,8 +41,8 @@ Page({
             { name: '固定值付款', value: 1 }
         ],
 
-        style:{
-            picsContainerHeight : "",
+        style: {
+            picsContainerHeight: "",
             picsPaddingBottom: ""
         }
 
@@ -152,7 +151,7 @@ Page({
             v.style.memberRuleTrans = ""
             v.style.memberRuleTypeTrans = ""
         })
-        member.paid_in=0
+        member.paid_in = 0
         member.value = {
             tag0: "个人账单",
             tag1: "AA制",
@@ -167,7 +166,7 @@ Page({
             tag1: "display:inherit;",
             tag2: "display:none;"
         }
-        
+
         this.data.account.members.addToHead(member)
         slider.setLayer(0, 0)
         this.refreshSliderData()
@@ -201,7 +200,7 @@ Page({
 
     },
 
-    
+
 
     /**
      * 移除成员
@@ -472,16 +471,16 @@ Page({
         // console.log("输入的规则或自费数字：" + item.value.rule_input)
     },
 
-    
+
     /**
      * 点击成员付款
      */
-    onMemberPaidinClick:function(e){
+    onMemberPaidinClick: function (e) {
         var index = e.target.dataset.index
-        var item=this.getSliderData(index)
+        var item = this.getSliderData(index)
         console.log("onMemberPaidinClick")
         console.log(item)
-        if (slider.isSliderOpen(index)){
+        if (slider.isSliderOpen(index)) {
             slider.close(index)
             return
         }
@@ -491,13 +490,13 @@ Page({
         var dialogInfo = {
             page: this,
             title: "输入",
-            content:"请输入成员支付数额",
+            content: "请输入成员支付数额",
             inputType: "digit",
-            maxLength:10,
+            maxLength: 10,
             callback: {
                 onConfirm: function (value) {
                     console.log(value)
-                    if(isNaN(value)){
+                    if (isNaN(value)) {
                         wx.showToast({
                             image: "/img/error.png",
                             title: '请输入数字',
@@ -514,10 +513,10 @@ Page({
 
     },
 
-    onSliderOpen:function(index){
-        console.log("打开了："+index)
-        if(index==-1){
-            this.getSliderData(-1).value.inputDisable=true
+    onSliderOpen: function (index) {
+        console.log("打开了：" + index)
+        if (index == -1) {
+            this.getSliderData(-1).value.inputDisable = true
             this.refreshSliderData()
         }
     },
@@ -630,14 +629,14 @@ Page({
      */
     chooseImage: function (e) {
 
-        this.data.images.append({
-            wx_path: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=401001407,327245464&fm=27&gp=0.jpg"
-        })
-        this.setData({
-            images: this.data.images
-        })
+        // this.data.images.append({
+        //     wx_path: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=401001407,327245464&fm=27&gp=0.jpg"
+        // })
+        // this.setData({
+        //     images: this.data.images
+        // })
 
-        return
+        // return
 
 
         var that = this
@@ -652,17 +651,12 @@ Page({
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
                 for (var i = 0; i < res.tempFilePaths.length; i++) {
-                    var wx_path = res.tempFilePaths[i]
-                    that.data.images.push({
-                        wx_path: wx_path,
-                        remote_file: "",
-                        progress: 0
+                    that.data.images.append({
+                        wx_path: res.tempFilePaths[i]
                     })
-                    that.uploadImage(wx_path)
+                    that.uploadImage(res.tempFilePaths[i])
                 }
-                that.setData({
-                    images: that.data.images
-                })
+                
             }
         })
     },
@@ -672,27 +666,96 @@ Page({
      */
     uploadImage: function (filePath) {
         var that = this
+        
+        var item = that.data.images.findByAttr("wx_path", filePath)
+        item.remote_file = "",
+        item.progress = 0,
+        item.style = {
+            deleteVisible: "display:none;",
+            maskVisible: ""
+        },
+        item.value = {
+            progressImageSrc: "/img/loading.gif",
+            progressText: "",
+            retryClick: ""
+        }
+        that.setData({
+            images: that.data.images
+        })
+
         var callback = wx.uploadFile({
-            url: APP.globalData.BaseUrl + '/image/upload',
+            url: APP.globalData.BaseUrl + '/image/upload?token=' + wx.getStorageSync("token"),
             filePath: filePath,
             name: 'image',
             success: function (res) {
+                console.log("success")
+                console.log(res)
                 var data = JSON.parse(res.data)
-                that.data.images.forEach(function (v, i) {
-                    if (v.wx_path == filePath)
-                        v.remote_file = data.msg
-                })
+                if (data.status == APP.globalData.resultcode.INVALID_TOKEN){
+                    APP.reLogin({
+                        context: that,
+                        success: function () {
+                            that.uploadImage(filePath)
+                        }
+                    });
+                }
+
+
+
+
+                var item = that.data.images.findByAttr("wx_path", filePath)
+                item.remote_file = data.msg
+                item.style.maskVisible = "display:none;"
                 that.data.account.icons.push(data.msg)
+                that.setData({
+                    images: that.data.images
+                })
+            },
+            fail: function (res) {
+                console.log("fail")
+                console.log(res)
+                var item = that.data.images.findByAttr("wx_path", filePath)
+                item.style.maskVisible = ""
+                item.value = {
+                    progressImageSrc: "/img/retry.png",
+                    progressText: "重试",
+                    retryClick: "onImageUploadRetryClick"
+                }
+                that.setData({
+                    images: that.data.images
+                })
             }
         })
-        callback.onProgressUpdate((res) => {
-            that.data.images.forEach(function (v, i) {
-                if (v.wx_path == filePath){
-                    v.progress = res.progress
-                    console.log("上传图片(" + filePath + "):" + v.progress)
-                }
+        //没网时callback为undifned
+        if(callback)
+            callback.onProgressUpdate((res) => {
+                var item = that.data.images.findByAttr("wx_path", filePath)
+                item.progress = item.progress == 0 && res.progress == 100 ? 0 : res.progress
+                item.value.progressText = item.progress == 0 ? "" : item.progress
+                console.log("上传图片(" + filePath + "):" + item.progress)
+                
+                that.setData({
+                    images: that.data.images
+                })
             })
-        })
+    },
+
+    /**
+     * 点击图片右上角的删除
+     */
+    onImageDeleteClick: function (e) {
+        var index = e.target.dataset.index
+        var item = this.data.images[index]
+        //TODO
+    },
+
+    /**
+     * 点击图片上传的重试
+     */
+    onImageUploadRetryClick: function (e) {
+        var index = e.target.dataset.index
+        var item=this.data.images[index]
+        this.uploadImage(item.wx_path)
     },
 
 
@@ -702,11 +765,11 @@ Page({
      */
     showSelectMembersDialog: function (e) {
         //类型为请客,收入时不许添加成员
-        if (this.data.account.type == 6 || this.data.account.type == 10){
+        if (this.data.account.type == 6 || this.data.account.type == 10) {
             var typeStr = (this.data.account.type == 6 ? "请客" : "收入")
             wx.showToast({
-                image:"/img/error.png",
-                title: "类型是[" + typeStr+"]时不能有其他成员!",
+                image: "/img/error.png",
+                title: "类型是[" + typeStr + "]时不能有其他成员!",
             })
             return
         }
@@ -714,7 +777,7 @@ Page({
         var dialogInfo = {
             page: this,
             title: "选择成员",
-            singleChoose:this.data.account.type==9?true:false,//借款只允许选择一个其他成员
+            singleChoose: this.data.account.type == 9 ? true : false,//借款只允许选择一个其他成员
             members: this.data.members,
             callback: {
                 onConfirm: function () {
@@ -776,13 +839,13 @@ Page({
             that.refreshTags()
         }
         this.data.images.onSizeChanged = function (size) {
-            if(size==0){
-                that.data.style.picsContainerHeight=""
+            if (size == 0) {
+                that.data.style.picsContainerHeight = ""
                 that.data.style.picsPaddingBottom = ""
-            }else{
+            } else {
                 var row = Math.ceil(size / 3)
                 var height = 158 * row + row * 20
-                that.data.style.picsContainerHeight = "height:" + height+"rpx;"
+                that.data.style.picsContainerHeight = "height:" + height + "rpx;"
                 that.data.style.picsPaddingBottom = "padding-bottom: 20rpx;"
             }
 
@@ -791,7 +854,7 @@ Page({
             })
         }
 
-        
+
 
 
         this.initAccount(option)
@@ -824,20 +887,20 @@ Page({
     },
 
 
-    
+
 
 
     /**
      * 根据传递的参数初始化account信息
      */
-    initAccount:function(option) {
+    initAccount: function (option) {
         console.log(option)
-        this.data.account.value={}
+        this.data.account.value = {}
 
         this.data.account.type = option.type
         this.data.account.name = option.name
         this.data.account.value.typeIcon = option.typeIcon
-        
+
         this.refreshSliderData()
     },
 

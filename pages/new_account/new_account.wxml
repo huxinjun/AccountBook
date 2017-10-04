@@ -37,11 +37,11 @@
 
         <view class='pic' wx:for="{{images}}" wx:key="{{index}}">
 
-            <image class='img' src="{{item.wx_path}}" mode="aspectFill" wx:key="{{index}}"></image>
-            <image class='delete' src="/img/account/false_select.png" wx:key="{{index}}"></image>
-            <view class='mask'>
-                <image class='loading' src="/img/loading.gif"></image>
-                <text class='progress'>99</text>
+            <image class='img' src="{{item.wx_path}}" mode="aspectFill" data-index="{{index}}"></image>
+            <image class='delete' style='{{item.style.deleteVisible}}' src="/img/account/false_select.png" data-index="{{index}}" bindtap='onImageDeleteClick'></image>
+            <view class='mask' style='{{item.style.maskVisible}}' bindtap='{{item.value.retryClick}}' data-index="{{index}}">
+                <image class='loading' src="{{item.value.progressImageSrc}}" data-index="{{index}}"></image>
+                <text class='progress' data-index="{{index}}">{{item.value.progressText}}</text>
             </view>
 
         
