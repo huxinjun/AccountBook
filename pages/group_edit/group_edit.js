@@ -20,7 +20,7 @@ Page({
         APP.ajax({
             url: APP.globalData.BaseUrl + '/group/get',
             data: {
-                groupId: "n8Y5qSAmisgEjG_BQdRiiA",
+                groupId: groupId,
                 token: wx.getStorageSync("token")
                 
             },
@@ -167,7 +167,7 @@ Page({
         console.log('onLoad')
         var that = this
         this.setMemberVisible(false)
-        option.groupId="123"
+        
         if (!option.groupId) {
             //添加分组
             this.changeButtonStatus("add_group_info_invalid")
@@ -276,7 +276,7 @@ Page({
             title: "输入",
             content: "输入分组的描述,相同的描述在分组界面会显示在一起",
             inputType: "text",
-            maxLength: 8,
+            maxLength: 20,
             callback: {
                 onConfirm: function (inputValue,formId) {
                     if (inputValue)

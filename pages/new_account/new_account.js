@@ -94,21 +94,11 @@ Page({
                 height: 100,
                 buttons: [
                     {
-                        text: "清空",
-                        color: "white",
-                        colorBg: "#f00",
-                        colorShadow: "black",
-                        onClick: "",
-                        width: 150,
-                        visible: true
-
-                    },
-                    {
                         text: "删除",
                         color: "white",
                         colorBg: "#2BA245",
                         colorShadow: "black",
-                        onClick: "",
+                        onClick: "showImageDeteleButtons",
                         width: 150,
                         visible: true
                     }
@@ -215,9 +205,7 @@ Page({
      */
     removeMemberById: function (id) {
         //已添加成员和全部可选成员保持同步
-        var item = this.data.members.findByAttr("id", id)
-        delete item.value
-        delete item.style
+        var item = this.data.account.members.findByAttr("id", id)
         slider.deleteItem("id", id);
     },
 
@@ -294,15 +282,10 @@ Page({
             info[1].onClick = "showRulePaySelf"
         }
 
-        if (index != this.getSliderData().length - 1) {
-            info[0].visible = true
-            info[0].text = "删除成员"
-            info[0].onClick = "removeMember"
-        } else {
-            info[0].visible = false
-        }
 
-
+        info[0].visible = true
+        info[0].text = "删除成员"
+        info[0].onClick = "removeMember"
 
         slider.updateLayer(index, info)
 
@@ -341,7 +324,12 @@ Page({
 
             })
         } else {
-            datas[0].style.tag0 = "display:inherit;"
+            //如果剩一个成员,只有当这个成员是自己时才显示个人账单tag
+            if (datas[0].id == this.data.userInfo.id)
+                datas[0].style.tag0 = "display:inherit;"
+            else
+                datas[0].style.tag0 = "display:none;"
+            
             datas[0].style.tag1 = "display:none;"
             datas[0].style.tag2 = "display:none;"
         }
@@ -503,7 +491,8 @@ Page({
                         })
                         return
                     }
-                    this.getSliderData(index).value.paid_in = "￥" + parseFloat(value)
+                    this.getSliderData(index).paid_in = parseFloat(value)
+                    this.getSliderData(index).value.paid_in = "￥" + this.getSliderData(index).paid_in
                     this.refreshSliderData()
                 }
             }
@@ -629,16 +618,6 @@ Page({
      */
     chooseImage: function (e) {
 
-        // this.data.images.append({
-        //     wx_path: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=401001407,327245464&fm=27&gp=0.jpg"
-        // })
-        // this.setData({
-        //     images: this.data.images
-        // })
-
-        // return
-
-
         var that = this
         var index = e.target.dataset.index
         if (slider.isSliderOpen(index)) {
@@ -706,6 +685,7 @@ Page({
                 var item = that.data.images.findByAttr("wx_path", filePath)
                 item.remote_file = data.msg
                 item.style.maskVisible = "display:none;"
+                item.value.isUploaded=true
                 that.data.account.icons.push(data.msg)
                 that.setData({
                     images: that.data.images
@@ -719,7 +699,8 @@ Page({
                 item.value = {
                     progressImageSrc: "/img/retry.png",
                     progressText: "重试",
-                    retryClick: "onImageUploadRetryClick"
+                    retryClick: "onImageUploadRetryClick",
+                    isUploaded:true
                 }
                 that.setData({
                     images: that.data.images
@@ -740,13 +721,30 @@ Page({
             })
     },
 
+
     /**
      * 点击图片右上角的删除
      */
     onImageDeleteClick: function (e) {
         var index = e.target.dataset.index
         var item = this.data.images[index]
-        //TODO
+        this.deleteImageFromServer(item.remote_file, function (res) {
+            this.data.images.removeObject("remote_file", remote_file);
+            this.setData({
+                images: this.data.images
+            })
+        })
+        
+    },
+
+    /**
+     * 从服务器删除某个图片
+     */
+    deleteImageFromServer: function (remote_file, success){
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/image/delete/' + remote_file,
+            success: success
+        }, this)
     },
 
     /**
@@ -756,6 +754,42 @@ Page({
         var index = e.target.dataset.index
         var item=this.data.images[index]
         this.uploadImage(item.wx_path)
+    },
+
+    /**
+     * 显示右上角删除图片的红叉
+     */
+    showImageDeteleButtons:function(){
+        for (var i = 0; i < this.data.images.length; i++)
+            if (this.data.images[i].value.isUploaded)
+                this.data.images[i].style.deleteVisible=""
+        
+        this.setData({
+            images:this.data.images
+        })
+        slider.updateLayer(this.data.descSliderInfo.index, [
+            {
+                text: "取消删除",
+                onClick: "hideImageDeteleButtons"
+            }
+        ])
+    },
+    /**
+     * 隐藏右上角删除图片的红叉
+     */
+    hideImageDeteleButtons: function () {
+        for (var i = 0; i < this.data.images.length; i++)
+            this.data.images[i].style.deleteVisible = "display:none;"
+        
+        this.setData({
+            images: this.data.images
+        })
+        slider.updateLayer(this.data.descSliderInfo.index, [
+            {
+                text: "删除",
+                onClick: "showImageDeteleButtons"
+            }
+        ])
     },
 
 
@@ -861,19 +895,28 @@ Page({
 
         this.slidersInfo.page = this
         slider.init(this.slidersInfo)
-        // slider.setLayer(0, 0)
+
         slider.setLayer(this.data.descSliderInfo.index, 1)
 
         this.getTodayDate()
 
-        // this.initSelfInfo()
+        this.initSelfInfo()
 
-        // this.initMembersData()
+        this.initMembersData()
     },
 
     onShow: function (options) {
         //切换页面时候需要重新初始化slider,因为require获取的是同一个对象
         slider.init(this.slidersInfo)
+    },
+
+    onUnload: function () {
+        //退出时如果没有记录这笔账单,那么检查是否添加了图片,有的话删除图片
+        for (var i = 0; i < this.data.images.length; i++)
+            if (this.data.images[i].value.isUploaded)
+                this.deleteImageFromServer(this.data.images[i].remote_file)
+
+            
     },
 
 
@@ -928,6 +971,7 @@ Page({
                 var clone = util.clone(res.data)
                 delete clone.msg
                 delete clone.status
+                this.data.userInfo=clone
                 this.addMember(clone)
             }
 
@@ -957,7 +1001,13 @@ Page({
      * 上传到服务器
      */
     uploadAccount: function (e) {
-        var clone = util.clone(this.data.account)
+        var clone = util.clone(this.data.account, {
+            onCopyed: function (obj, attr) {
+                //服务器内部图片都是以XzBB结尾
+                if (obj[attr] && typeof obj[attr] == 'string' && obj[attr].endsWith("XzBB"))
+                    obj[attr] = APP.getImageUri(obj[attr])
+            }
+        })
         delete clone.rule_tyles
         delete clone.value
         clone.members.forEach(function (v, i) {
@@ -966,6 +1016,23 @@ Page({
         })
         var str = JSON.stringify(clone);
         console.log(str)
+
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/account/add?token=' + wx.getStorageSync("token"),
+            method:"POST",
+            data: {
+                content:str
+            },
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                this.setData({
+                    members: res.data.members
+                })
+            }
+
+        }, this)
 
     }
 })

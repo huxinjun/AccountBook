@@ -2,10 +2,10 @@
 var util = require("/utils/util.js")
 App({
     globalData: {
-        // BaseUrl: 'http://192.168.10.205:8080/AccountBook',
+        BaseUrl: 'http://192.168.10.205:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
-        BaseUrl: 'http://192.168.1.103:8080/AccountBook',
+        // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         resultcode: {
             SUCCESS: 0,
             INVALID_TOKEN: 1,
@@ -22,6 +22,14 @@ App({
         if(file==null || file=="")
             return null
         return this.globalData.BaseUrl + "/image/get/" +(file?file:"")
+    },
+    /**
+     * 根据图像的完整地址获取其在服务器上的短地址
+     */
+    getImageUri: function (url) {
+        if (url == null || url == "")
+            return null
+        return url.replace(this.globalData.BaseUrl + "/image/get/","")
     },
 
 
@@ -263,7 +271,7 @@ App({
                 //转换为完整头像地址
                 var clone=util.clone(res.data,{
                     onCopyed:function(obj,attr){
-                        //服务器内部图片都是以IMG开头
+                        //服务器内部图片都是以以XzBB结尾
                         if (obj[attr] && typeof obj[attr] == 'string' && obj[attr].endsWith("XzBB"))
                             obj[attr] = that.getImageUrl(obj[attr])
                     }
