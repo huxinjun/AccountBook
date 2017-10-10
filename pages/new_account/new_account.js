@@ -31,9 +31,6 @@ Page({
 
             date: "",
 
-            address_info: {},
-
-
             members: []
         },
         rule_tyles: [
@@ -100,7 +97,7 @@ Page({
                         colorShadow: "black",
                         onClick: "showImageDeteleButtons",
                         width: 150,
-                        visible: true
+                        visible: false
                     }
                 ]
             }
@@ -514,6 +511,7 @@ Page({
         if (index == -1) {
             this.getSliderData(-1).value.inputDisable = false
             this.refreshSliderData()
+            this.hideImageDeteleButtons()
         }
     },
 
@@ -606,7 +604,10 @@ Page({
         wx.chooseLocation({
             success: function (res) {
                 // console.log(res)
-                that.data.account.address_info = res
+                that.data.account.addr_name = res.name
+                that.data.account.addr = res.address
+                that.data.account.addr_lat = res.latitude
+                that.data.account.addr_lon = res.longitude
                 that.refreshSliderData()
             },
         })
@@ -729,7 +730,7 @@ Page({
         var index = e.target.dataset.index
         var item = this.data.images[index]
         this.deleteImageFromServer(item.remote_file, function (res) {
-            this.data.images.removeObject("remote_file", remote_file);
+            this.data.images.removeObject("remote_file", item.remote_file);
             this.setData({
                 images: this.data.images
             })
@@ -876,11 +877,27 @@ Page({
             if (size == 0) {
                 that.data.style.picsContainerHeight = ""
                 that.data.style.picsPaddingBottom = ""
+
+                slider.close(that.data.descSliderInfo.index)
+                slider.updateLayer(that.data.descSliderInfo.index, [
+                    {
+                        visible:false,
+                        text: "删除",
+                        onClick: "showImageDeteleButtons"
+                    }
+                ])
+
             } else {
                 var row = Math.ceil(size / 3)
                 var height = 158 * row + row * 20
                 that.data.style.picsContainerHeight = "height:" + height + "rpx;"
                 that.data.style.picsPaddingBottom = "padding-bottom: 20rpx;"
+
+                slider.updateLayer(that.data.descSliderInfo.index, [
+                    {
+                        visible: true
+                    }
+                ])
             }
 
             that.setData({
@@ -940,7 +957,7 @@ Page({
         console.log(option)
         this.data.account.value = {}
 
-        this.data.account.type = option.type
+        this.data.account.type = parseInt(option.type)
         this.data.account.name = option.name
         this.data.account.value.typeIcon = option.typeIcon
 
@@ -1014,7 +1031,8 @@ Page({
             delete v.style
             delete v.value
         })
-        var str = JSON.stringify(clone);
+        clone.icons = JSON.stringify(clone.icons).replace(/\[|\]|\"|\\/g,"")
+        var str = JSON.stringify(clone)
         console.log(str)
 
         APP.ajax({

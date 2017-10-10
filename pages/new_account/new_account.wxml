@@ -12,7 +12,7 @@
             <view class="desc_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" catchtouchstart="{{eventStart}}" bind:tap="eventCaptureTap"
                 catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{descSliderInfo.index}}">
                 <image class="desc_icon" src="/img/account/description.png" data-index="{{descSliderInfo.index}}"></image>
-                <input placeholder="备注" maxlength="50" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" disabled='{{descSliderInfo.value.inputDisable}}'/>
+                <input placeholder="备注" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" disabled='{{descSliderInfo.value.inputDisable}}'/>
                 <image class="desc_add_pic" src="/img/account/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
 
             </view>
@@ -67,7 +67,7 @@
 
     <view class="loc">
         <image class="loc_icon" src="/img/account/location.png"></image>
-        <input type="text" placeholder="位置" placeholder-class="placeholder_class" value='{{account.address_info.address}}' />
+        <input type="text" placeholder="位置" placeholder-class="placeholder_class" value='{{account.addr_name}}' />
         <image class="loc_get" src="/img/account/location_me.png" bindtap='chooseLocation'></image>
     </view>
 
