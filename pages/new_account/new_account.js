@@ -124,6 +124,20 @@ Page({
         })
     },
 
+    /**
+     * 账目名称输入改变
+     */
+    nameInputValueChanged: function (e) {
+        this.data.account.name = e.detail.value
+    },
+
+    /**
+     * 备注输入改变
+     */
+    descInputValueChanged:function(e){
+        this.data.account.description = e.detail.value
+    },
+
 
 
     /**
@@ -499,6 +513,9 @@ Page({
 
     },
 
+    /**
+     * 抽屉拉开了
+     */
     onSliderOpen: function (index) {
         console.log("打开了：" + index)
         if (index == -1) {
@@ -506,6 +523,10 @@ Page({
             this.refreshSliderData()
         }
     },
+
+    /**
+     * 抽屉合上了
+     */
     onSliderClose: function (index) {
         console.log("关闭了：" + index)
         if (index == -1) {
@@ -1031,6 +1052,8 @@ Page({
             delete v.style
             delete v.value
         })
+        clone.user_id = this.data.userInfo.id
+        clone.book_id = 0
         clone.icons = JSON.stringify(clone.icons).replace(/\[|\]|\"|\\/g,"")
         var str = JSON.stringify(clone)
         console.log(str)
@@ -1045,8 +1068,8 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function (res) {
-                this.setData({
-                    members: res.data.members
+                wx.showToast({
+                    title:res.data.msg
                 })
             }
 

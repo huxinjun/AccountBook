@@ -222,10 +222,13 @@
     margin-top: -7rpx;
 }
 
-.loc input {
+.loc_text {
     flex-grow: 1;
-    text-align: start;
     padding-left: 20rpx;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
 }
 
 .loc_get {

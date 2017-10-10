@@ -1,7 +1,7 @@
 <scroll-view scroll-y class="container {{dialogInfo.value.blurClass}}" scroll-into-view="{{scrollToView}}" scroll-with-animation="true" bindscroll="outterScroll">
     <view class="title">
         <image src="{{account.value.typeIcon}}"></image>
-        <input placeholder="{{account.name}}" maxlength="10" placeholder-class="placeholder_class" />
+        <input placeholder="{{account.name}}" maxlength="10" placeholder-class="placeholder_class" bindinput="nameInputValueChanged"/>
         <text>￥0.00</text>
     </view>
 
@@ -12,7 +12,7 @@
             <view class="desc_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" catchtouchstart="{{eventStart}}" bind:tap="eventCaptureTap"
                 catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{descSliderInfo.index}}">
                 <image class="desc_icon" src="/img/account/description.png" data-index="{{descSliderInfo.index}}"></image>
-                <input placeholder="备注" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" disabled='{{descSliderInfo.value.inputDisable}}'/>
+                <input placeholder="备注" placeholder-class="placeholder_class" data-index="{{descSliderInfo.index}}" disabled='{{descSliderInfo.value.inputDisable}}' bindinput="descInputValueChanged"/>
                 <image class="desc_add_pic" src="/img/account/camera.png" bindtap='chooseImage' data-index="{{descSliderInfo.index}}"></image>
 
             </view>
@@ -67,7 +67,14 @@
 
     <view class="loc">
         <image class="loc_icon" src="/img/account/location.png"></image>
-        <input type="text" placeholder="位置" placeholder-class="placeholder_class" value='{{account.addr_name}}' />
+
+        <view wx:if="{{account.addr_name}}" class='loc_text'>
+            <text>{{account.addr_name}}</text>
+        </view>
+        <view wx:else class='loc_text'>
+            <text class='placeholder_class'>点击右侧小图标定位</text>
+        </view>
+        
         <image class="loc_get" src="/img/account/location_me.png" bindtap='chooseLocation'></image>
     </view>
 
