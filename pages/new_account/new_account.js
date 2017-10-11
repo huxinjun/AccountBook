@@ -31,7 +31,9 @@ Page({
 
             date: "",
 
-            members: []
+            members: [],
+
+            paid_in:"0.00"
         },
         rule_tyles: [
             { name: '百分比付款', value: 0 },
@@ -254,7 +256,7 @@ Page({
      */
     hasMoneyForSelf: function (index) {
         var member = this.getSliderData(index)
-        return member.money_for_self != undefined
+        return member.money_for_self != undefined && member.money_for_self > 0
     },
 
     /**
@@ -502,8 +504,22 @@ Page({
                         })
                         return
                     }
-                    this.getSliderData(index).paid_in = parseFloat(value)
-                    this.getSliderData(index).value.paid_in = "￥" + this.getSliderData(index).paid_in
+                    var item = this.getSliderData(index)
+                    item.paid_in = parseFloat(value).toFixed(2)
+                    item.paid_in = item.paid_in < 0 ? 0 : item.paid_in
+                    
+                    item.value.paid_in = "￥" + item.paid_in
+                    if (item.paid_in>0)
+                        item.style.paid_in_color ="color:red;"
+                    else
+                        item.style.paid_in_color = "color:#20B2AA;"
+
+                    //计算总支出
+                    var total=0
+                    this.data.account.members.forEach(function(v,i){
+                        total += parseFloat(v.paid_in)
+                    })    
+                    this.data.account.paid_in = total.toFixed(2)
                     this.refreshSliderData()
                 }
             }
@@ -553,7 +569,17 @@ Page({
             this.refreshRuleInputPlaceHolder(index)
             return
         }
-        // if (item.paid_in && inputValue > item.paid_in)---
+        var total = parseFloat(this.data.account.paid_in)
+
+        //输入的规则或是自费不能大于总支出
+        if (inputValue > total){
+            wx.showToast({
+                image: "/img/error.png",
+                title: '不能超出总支出！',
+            })
+            this.refreshRuleInputPlaceHolder(index)
+            return
+        }
 
 
         if (item.value.isShowRule) {

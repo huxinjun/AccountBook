@@ -342,7 +342,7 @@
 .member_paidin{
     height: 50rpx;
     font-size: 30rpx;
-    color: red;
+    color: #20B2AA;
 
     position: absolute;
     right: 0;
