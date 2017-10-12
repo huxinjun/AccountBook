@@ -2,7 +2,7 @@
     <view class="title">
         <image src="{{account.value.typeIcon}}"></image>
         <input placeholder="{{account.name}}" maxlength="10" placeholder-class="placeholder_class" bindinput="nameInputValueChanged"/>
-        <text>￥{{account.paid_in}}</text>
+        <text>￥{{account.paidIn}}</text>
     </view>
 
 
@@ -93,10 +93,10 @@
 
                 <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel"  catchtouchstart="{{eventStart}}" bind:tap="eventCaptureTap"
                     catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
-                    <image class="member_icon" src="{{item.icon}}" mode="aspectFill" data-index="{{index}}"></image>
+                    <image class="member_icon" src="{{item.memberIcon}}" mode="aspectFill" data-index="{{index}}"></image>
 
                     <view class="member_content" data-index="{{index}}">
-                        <text class="member_name" data-index="{{index}}">{{item.name}}</text>
+                        <text class="member_name" data-index="{{index}}">{{item.memberName}}</text>
 
                         <view class="member_tags" data-index="{{index}}">
                             <text class="member_name" data-index="{{index}}" style="{{item.style.tag0}}">{{item.value.tag0}}</text>
@@ -105,7 +105,7 @@
                         </view>
 
                     </view>
-                    <text class='member_paidin' data-index="{{index}}" catchtap='onMemberPaidinClick' style='{{item.style.paid_in_color}}'>{{item.value.paid_in}}</text>
+                    <text class='member_paidin' data-index="{{index}}" catchtap='onMemberPaidinClick' style='{{item.style.paidIn_color}}'>{{item.value.paidIn}}</text>
 
                 </view>
 
@@ -151,11 +151,11 @@
 
         <scroll-view class='dialog_members' style='{{dialogInfo.style.membersDisplay}}{{dialogInfo.style.membersHeight}}'>
             <view class='dialog_member' wx:for="{{dialogInfo.members}}" wx:key="{{index}}" bindtap='selectMember' data-index='{{index}}'>
-                <image class="icon" src="{{item.icon}}" data-index='{{index}}'></image>
+                <image class="icon" src="{{item.memberIcon}}" data-index='{{index}}'></image>
                 <image class="select" src="/img/account/true_select.png" style='{{item.style.selectVisible}}' data-index='{{index}}'></image>
                 <view class="name" data-index='{{index}}'>
                     <image src="/img/group.png" data-index='{{index}}' style='{{item.style.groupFlagVisible}}'></image>
-                    <text data-index='{{index}}'>{{item.name}}</text>
+                    <text data-index='{{index}}'>{{item.memberName}}</text>
                 </view>
 
             </view>

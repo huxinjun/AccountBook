@@ -201,9 +201,13 @@ function inputDialogSetting(){
     //点击确定
     this.page.formSubmit = function (e) {
         var callback = that.dialogInfo.callback
+        //回调中没有完成输入操作时会主动返回false,不返回则认为是完成
+        var completed = true
         if (callback && callback.onConfirm)
-            callback.onConfirm.call(that.page,that.dialogInfo.inputValue, e.detail.formId)
-        that.dismissDialog();
+            completed=callback.onConfirm.call(that.page,that.dialogInfo.inputValue, e.detail.formId)
+        //false时是回调中主动返回的,undefined则是回调中未返回任何东西,那么默认需要关闭
+        if (completed == true || completed==undefined)
+            that.dismissDialog();
     }
     //弹出输入法
     setTimeout(function () {

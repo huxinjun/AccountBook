@@ -7,9 +7,9 @@ Page({
 
         containerHeight: APP.systemInfo.windowHeight,
 
-        tip0: "请输入固定比例(此成员将只付款总金额的百分比值,范围1-99)",
-        tip1: "请输入固定数额(此成员将只按此金额付款)",
-        tip2: "请输入自费数额(其他成员将不会为这笔数额买单哦！)",
+        tip1: "请输入固定比例(此成员将只付款总金额的百分比值,范围1-99)",
+        tip2: "请输入固定数额(此成员将只按此金额付款)",
+        tip3: "请输入自费数额(其他成员将不会为这笔数额买单哦！)",
 
         descSliderInfo: {
             index: -1
@@ -33,7 +33,7 @@ Page({
 
             members: [],
 
-            paid_in:"0.00"
+            paidIn:"0.00"
         },
         rule_tyles: [
             { name: '百分比付款', value: 0 },
@@ -154,13 +154,13 @@ Page({
             v.style.memberRuleTrans = ""
             v.style.memberRuleTypeTrans = ""
         })
-        member.paid_in = 0
+        member.paidIn = 0
         member.value = {
             tag0: "个人账单",
             tag1: "AA制",
             tag2: "自费10元",
-            rule_type: 1,
-            paid_in: "￥0.00"
+            ruleType: 2,
+            paidIn: "￥0.00"
         }
         member.style = {
             member: "height:0;opacity:0;",
@@ -175,7 +175,7 @@ Page({
         this.refreshSliderData()
 
         setTimeout(function () {
-            var memberInArray = this.data.account.members.findByAttr("id", member.id)
+            var memberInArray = this.data.account.members.findByAttr("memberId", member.memberId)
 
             memberInArray.style.member = "height:140rpx;opacity:1;"
             memberInArray.style.memberTrans = "transition:all 0.5s ease;"
@@ -188,7 +188,7 @@ Page({
 
             //动画完毕一定要删除memberTrans,不然删除元素的时候回闪
             setTimeout(function () {
-                var memberInArray = this.data.account.members.findByAttr("id", member.id)
+                var memberInArray = this.data.account.members.findByAttr("memberId", member.memberId)
                 memberInArray.style.member = "height:140rpx;"
                 memberInArray.style.memberTrans = ""
                 this.setData({
@@ -218,7 +218,7 @@ Page({
      */
     removeMemberById: function (id) {
         //已添加成员和全部可选成员保持同步
-        var item = this.data.account.members.findByAttr("id", id)
+        var item = this.data.account.members.findByAttr("memberId", id)
         slider.deleteItem("id", id);
     },
 
@@ -228,7 +228,8 @@ Page({
     removeRule: function (e) {
         var index = e.target.dataset.index
         var member = this.getSliderData(index)
-        delete member.pay_rule
+        member.ruleType=0
+        delete member.ruleNum
         slider.close(index)
         this.refreshTags()
 
@@ -238,7 +239,7 @@ Page({
      */
     hasRule: function (index) {
         var member = this.getSliderData(index)
-        return member.pay_rule != undefined
+        return member.ruleType && member.ruleType != 0
     },
 
     /**
@@ -247,7 +248,7 @@ Page({
     removeMoneyForSelf: function (e) {
         var index = e.target.dataset.index
         var member = this.getSliderData(index)
-        delete member.money_for_self
+        delete member.moneyForSelf
         slider.close(index)
         this.refreshTags()
     },
@@ -256,7 +257,7 @@ Page({
      */
     hasMoneyForSelf: function (index) {
         var member = this.getSliderData(index)
-        return member.money_for_self != undefined && member.money_for_self > 0
+        return member.moneyForSelf != undefined && member.moneyForSelf > 0
     },
 
     /**
@@ -318,17 +319,17 @@ Page({
                 v.style.tag1 = "display:inherit;"
                 if (that.hasRule(i)) {
                     //0:百分比  1:固定数额
-                    if (v.pay_rule.type == 0)
-                        v.value.tag1 = "付款" + v.pay_rule.num + "%"
+                    if (v.ruleType == 1)
+                        v.value.tag1 = "付款" + v.ruleNum + "%"
                     else
-                        v.value.tag1 = "付款" + v.pay_rule.num + "元"
+                        v.value.tag1 = "付款" + v.ruleNum + "元"
 
                 } else
                     v.value.tag1 = "AA制"
 
                 if (that.hasMoneyForSelf(i)) {
                     v.style.tag2 = "display:inherit;"
-                    v.value.tag2 = "自费" + v.money_for_self + "元"
+                    v.value.tag2 = "自费" + v.moneyForSelf + "元"
 
                 } else {
                     v.style.tag2 = "display:none;"
@@ -338,7 +339,7 @@ Page({
             })
         } else {
             //如果剩一个成员,只有当这个成员是自己时才显示个人账单tag
-            if (datas[0].id == this.data.userInfo.id)
+            if (datas[0].memberId == this.data.userInfo.id)
                 datas[0].style.tag0 = "display:inherit;"
             else
                 datas[0].style.tag0 = "display:none;"
@@ -356,9 +357,9 @@ Page({
     refreshRuleInputPlaceHolder: function (index) {
         var item = this.getSliderData(index)
         if (item.value.isShowRule)
-            item.value.rule_input_placeholder = this.data["tip" + item.value.rule_type]
+            item.value.rule_input_placeholder = this.data["tip" + item.value.ruleType]
         else
-            item.value.rule_input_placeholder = this.data.tip2
+            item.value.rule_input_placeholder = this.data.tip3
         delete item.value.rule_input
         this.refreshSliderData()
     },
@@ -455,8 +456,8 @@ Page({
         var item = this.getSliderData(index)
         // console.log(e)
         // console.log('radio发生change事件，携带value值为：', e.detail.value)
-        item.value.rule_type = parseInt(e.detail.value)
-        item.value.rule_input_placeholder = this.data["tip" + e.detail.value]
+        item.value.ruleType = parseInt(e.detail.value) + 1
+        item.value.rule_input_placeholder = this.data["tip" + item.value.ruleType]
         this.refreshSliderData()
     },
 
@@ -496,30 +497,30 @@ Page({
             maxLength: 10,
             callback: {
                 onConfirm: function (value) {
-                    console.log(value)
-                    if (isNaN(value)) {
+                    console.log("成员付款数额:"+value)
+                    if (value=="" || isNaN(value)) {
                         wx.showToast({
                             image: "/img/error.png",
                             title: '请输入数字',
                         })
-                        return
+                        return false
                     }
                     var item = this.getSliderData(index)
-                    item.paid_in = parseFloat(value).toFixed(2)
-                    item.paid_in = item.paid_in < 0 ? 0 : item.paid_in
+                    item.paidIn = parseFloat(value).toFixed(2)
+                    item.paidIn = item.paidIn < 0 ? 0 : item.paidIn
                     
-                    item.value.paid_in = "￥" + item.paid_in
-                    if (item.paid_in>0)
-                        item.style.paid_in_color ="color:red;"
+                    item.value.paidIn = "￥" + item.paidIn
+                    if (item.paidIn>0)
+                        item.style.paidIn_color ="color:red;"
                     else
-                        item.style.paid_in_color = "color:#20B2AA;"
+                        item.style.paidIn_color = "color:#20B2AA;"
 
                     //计算总支出
                     var total=0
                     this.data.account.members.forEach(function(v,i){
-                        total += parseFloat(v.paid_in)
+                        total += parseFloat(v.paidIn)
                     })    
-                    this.data.account.paid_in = total.toFixed(2)
+                    this.data.account.paidIn = total.toFixed(2)
                     this.refreshSliderData()
                 }
             }
@@ -569,27 +570,16 @@ Page({
             this.refreshRuleInputPlaceHolder(index)
             return
         }
-        var total = parseFloat(this.data.account.paid_in)
+        
 
-        //输入的规则或是自费不能大于总支出
-        if (inputValue > total){
-            wx.showToast({
-                image: "/img/error.png",
-                title: '不能超出总支出！',
-            })
-            this.refreshRuleInputPlaceHolder(index)
-            return
-        }
+        
 
 
         if (item.value.isShowRule) {
-            var ruleType = item.value.rule_type
-            item.pay_rule = {
-                type: ruleType
-            }
-            // console.log("saveRule" + ruleType)
-            switch (ruleType) {
-                case 0:
+            item.ruleType = item.value.ruleType
+            
+            switch (item.ruleType) {
+                case 1:
                     //检查输入的有效性
                     if (inputValue.isvalue < 1 || inputValue > 99) {
                         wx.showToast({
@@ -600,20 +590,41 @@ Page({
                         return
                     }
 
-                    item.pay_rule.num = inputValue
+                    item.ruleNum = inputValue
                     break;
-                case 1:
-                    item.pay_rule.num = inputValue
+                case 2:
+                    if (!this.isRuleInputValid(inputValue))
+                        return
+                    item.ruleNum = inputValue
                     break;
             }
 
         } else {
-            item.money_for_self = inputValue
+            if (!this.isRuleInputValid(inputValue))
+                return
+            item.moneyForSelf = inputValue
         }
         delete item.value.rule_input
         this.hideRule(e)
         this.refreshTags()
 
+    },
+
+    /**
+     * 检查自费或者规则输入的数字是否有效
+     */
+    isRuleInputValid(value){
+        var total = parseFloat(this.data.account.paidIn)
+        //输入的规则或是自费不能大于总支出
+        if (value > total) {
+            wx.showToast({
+                image: "/img/error.png",
+                title: '不能超出总支出！',
+            })
+            this.refreshRuleInputPlaceHolder(index)
+            return false
+        }
+        return true
     },
 
 
@@ -874,7 +885,7 @@ Page({
                         that.data.account.members.forEach(function (innerValue, i) {
                             if (isAdded)
                                 return
-                            if (innerValue.id == outterValue.id)
+                            if (innerValue.memberId == outterValue.memberId)
                                 isAdded = true
 
                         })
@@ -891,7 +902,7 @@ Page({
                         }
                     })
                     neenDelMbs.forEach(function (v, i) {
-                        that.removeMemberById(v.id)
+                        that.removeMemberById(v.memberId)
                     })
                     setTimeout(function () {
                         needAddMbs.forEach(function (v, i) {
@@ -1032,11 +1043,13 @@ Page({
             },
 
             success: function (res) {
-                var clone = util.clone(res.data)
-                delete clone.msg
-                delete clone.status
-                this.data.userInfo=clone
-                this.addMember(clone)
+                this.data.userInfo = res.data
+                var member={
+                    memberId:res.data.id,
+                    memberName: res.data.name,
+                    memberIcon: res.data.icon
+                }
+                this.addMember(member)
             }
 
         }, this)
@@ -1072,12 +1085,14 @@ Page({
                     obj[attr] = APP.getImageUri(obj[attr])
             }
         })
-        delete clone.rule_tyles
+        delete clone.style
         delete clone.value
-        clone.members.forEach(function (v, i) {
-            delete v.style
+        clone.members.forEach(function(v,i){
             delete v.value
+            delete v.style
         })
+
+
         clone.user_id = this.data.userInfo.id
         clone.book_id = 0
         clone.icons = JSON.stringify(clone.icons).replace(/\[|\]|\"|\\/g,"")
