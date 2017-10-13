@@ -7,7 +7,8 @@
         "pages/new_account/new_account",
         "pages/group/group",
         "pages/group_edit/group_edit",
-        "pages/qr_image/qr_image"
+        "pages/qr_image/qr_image",
+        "pages/accounts/accounts"
     ],
     "window": {
         "navigationBarBackgroundColor": "#2BA245",

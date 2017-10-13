@@ -72,6 +72,8 @@ function clone(obj, callback) {
         var copy = [];
         for (var i = 0, len = obj.length; i < len; ++i) {
             copy[i] = this.clone(obj[i], callback);
+            if (callback && callback.onCopyed)
+                callback.onCopyed(copy, i)
         }
         return copy;
     }

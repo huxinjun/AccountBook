@@ -274,6 +274,7 @@ App({
                         //服务器内部图片都是以以XzBB结尾
                         if (obj[attr] && typeof obj[attr] == 'string' && obj[attr].endsWith("XzBB"))
                             obj[attr] = that.getImageUrl(obj[attr])
+                        // console.log("onCopyed:" + attr)
                     }
                 })
                 res.data=clone

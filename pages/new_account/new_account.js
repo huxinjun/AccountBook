@@ -27,7 +27,7 @@ Page({
 
             description: "",
 
-            icons: [],
+            imgs: [],
 
             date: "",
 
@@ -210,7 +210,7 @@ Page({
      */
     removeMember: function (e) {
         var index = e.target.dataset.index
-        var id = this.getSliderData(index).id
+        var id = this.getSliderData(index).memberId
         this.removeMemberById(id)
     },
     /**
@@ -218,8 +218,12 @@ Page({
      */
     removeMemberById: function (id) {
         //已添加成员和全部可选成员保持同步
-        var item = this.data.account.members.findByAttr("memberId", id)
-        slider.deleteItem("id", id);
+        var item=this.data.members.findByAttr("memberId", id)
+        if(item){
+            item.value.isSelected = false
+            item.style.selectVisible = "transform: scale(0, 0);"
+        }
+        slider.deleteItem("memberId", id);
     },
 
     /**
@@ -745,7 +749,7 @@ Page({
                 item.remote_file = data.msg
                 item.style.maskVisible = "display:none;"
                 item.value.isUploaded=true
-                that.data.account.icons.push(data.msg)
+                that.data.account.imgs.push(data.msg)
                 that.setData({
                     images: that.data.images
                 })
@@ -1094,8 +1098,8 @@ Page({
 
 
         clone.user_id = this.data.userInfo.id
-        clone.book_id = 0
-        clone.icons = JSON.stringify(clone.icons).replace(/\[|\]|\"|\\/g,"")
+        clone.book_id = ""
+        clone.imgs = JSON.stringify(clone.imgs).replace(/\[|\]|\"|\\/g,"")
         var str = JSON.stringify(clone)
         console.log(str)
 

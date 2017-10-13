@@ -1,0 +1,35 @@
+@import "/global/dialog.wxss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: "微软雅黑";
+    color: #272636;
+    
+}
+
+.pics {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1rpx dashed #ddd;
+    background-color: #efefef;
+    padding-right: 20rpx;
+
+    overflow: hidden; 
+
+    transition: all 500ms ease;
+}
+
+.pic{
+    width: 223rpx;
+    height: 158rpx;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+    position: relative;
+}
