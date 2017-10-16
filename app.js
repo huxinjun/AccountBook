@@ -34,7 +34,29 @@ App({
 
 
 
+
+    /**
+     * 判断是否iphone手机
+     */
+    isiphone() {
+        var that=this
+        wx.getSystemInfo({
+                success: function (res) {
+                    // console.log("!!!!!!!!")
+                    // console.log(res.model.toLowerCase())
+                    // console.log(res.model.toLowerCase().indexOf("iphone") != -1)
+                    var isiphone = res.model.toLowerCase().indexOf("iphone") != -1
+                    that.globalData.isiphone = isiphone
+                    console.log(that.globalData)
+                }
+        })
+    },
+
+
+
     onLaunch: function () {
+        this.isiphone()
+        
         this.checkLogin()
         //调用API从本地缓存中获取数据
         var logs = wx.getStorageSync('logs') || []

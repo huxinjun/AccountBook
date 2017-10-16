@@ -2,7 +2,124 @@
 
 
 
-    <view wx:for="{{accounts}}" wx:key="{{index}}" wx:for-item="account">
+    <view>
+
+        <view class='account'>
+
+            <image class='account_icon' src='/img/head.jpg'></image>
+
+            <view class='account_main'>
+
+                <view class='title_container'>
+                    <text class='title'>标题</text>
+                </view>
+
+                <textarea class='content {{iphone}}' disabled='true' auto-height="true" maxlength='40' value='这是一次肩负重大使命的历史性盛会。在全面建成小康社会决胜阶段、中国特色社会主义发展关键时期召开的党的十九大，将向世界明确宣示——在中国共产党的领导下，13亿多中国人民将继续高举中国特色社会主义伟大旗帜，坚定不移沿着中国特色社会主义道路，向着实现民族复兴的伟大梦想奋勇前进。'></textarea>
+
+                <text class='all'>全文</text>
+
+
+
+                <view class='members'>
+
+                    <image class='pull_down' src='/img/pull_down.png'></image>
+
+                    <scroll-view class='simple' scroll-x>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+                        <image src='/img/head.jpg'></image>
+
+                    </scroll-view>
+
+                    <view class='detail'>
+                        <view class='item'>
+                            <image src='/img/head.jpg'></image>
+                            <text class="should_pay">新军应付50元</text>
+                            <text class="really_pay">实付0元</text>
+                        </view>
+
+                    </view>
+
+
+                </view>
+
+
+                <view class='pay'>
+
+                    <view class='item'>
+                        <image class='p1' src='/img/head.jpg'></image>
+                        <text>向</text>
+                        <image class='p2' src='/img/head.jpg'></image>
+                        <text>付50元</text>
+
+                        <button>已付</button>
+
+                    </view>
+
+                    <view class='item'>
+                        <image class='p1' src='/img/head.jpg'></image>
+                        <text>向</text>
+                        <image class='p2' src='/img/head.jpg'></image>
+                        <text>付50元</text>
+
+                        <button>已付</button>
+
+                    </view>
+
+                    <view class='item'>
+                        <image class='p1' src='/img/head.jpg'></image>
+                        <text>向</text>
+                        <image class='p2' src='/img/head.jpg'></image>
+                        <text>付50元</text>
+
+                        <button>已付</button>
+
+                    </view>
+
+                </view>
+
+            </view>
+
+
+
+        </view>
+
+
+
+
+    </view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <view wx:for="{{accounts}}" wx:key="{{index}}" wx:for-item="account">
     
     
         <view class="pics">
@@ -12,12 +129,12 @@
         </view>
     
     
-    </view>
+    </view> -->
 
 
-    
 
-   
+
+
 </view>
 
 
