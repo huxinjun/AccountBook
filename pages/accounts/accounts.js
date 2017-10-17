@@ -9,7 +9,7 @@ Page({
     },
 
     onLoad: function (option) {
-        // this.initAccounts()
+        
         var that=this
         var isiphone = APP.globalData.isiphone
         console.log("是否iphone:" + isiphone)
@@ -17,6 +17,8 @@ Page({
             that.setData({
                 iphone: "iphone"
             })
+
+        this.initAccounts()
         
     },
 
@@ -31,6 +33,9 @@ Page({
             },
 
             success: function (res) {
+                res.data.accounts.forEach(function(v,i){
+                    v.icon=APP.globalData.typeList.findByAttr("id",v.type).icon
+                })
                 this.setData({
                     accounts: res.data.accounts
                 })

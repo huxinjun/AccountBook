@@ -7,68 +7,7 @@ Page({
         containerHeight: APP.systemInfo.windowHeight,
         dialog: "display:none;",
 
-        list: [
-            {
-                "id": 0,
-                "name": "吃饭",
-                "icon": "/img/type/type_food.png"
-            },
-            {
-                "id": 1,
-                "name": "租房",
-                "icon": "/img/type/type_home.png"
-            },
-            {
-                "id": 2,
-                "name": "交通",
-                "icon": "/img/type/type_traffic.png"
-            },
-            {
-                "id": 3,
-                "name": "购物",
-                "icon": "/img/type/type_shopping.png"
-            },
-            {
-                "id": 4,
-                "name": "生活",
-                "icon": "/img/type/type_vegetable.png"
-            },
-            {
-                "id": 5,
-                "name": "零食",
-                "icon": "/img/type/type_snack.png"
-            },
-            {
-                "id": 6,
-                "name": "请客",
-                "icon": "/img/type/type_gam.png"
-            },
-            {
-                "id": 7,
-                "name": "娱乐",
-                "icon": "/img/type/type_entertainment.png"
-            },
-            {
-                "id": 8,
-                "name": "书籍",
-                "icon": "/img/type/type_book.png"
-            },
-            {
-                "id": 9,
-                "name": "借款",
-                "icon": "/img/type/type_money_out.png"
-            },
-            {
-                "id": 10,
-                "name": "收入",
-                "icon": "/img/type/type_money_in.png"
-            },
-            {
-                "id": 11,
-                "name": "其他",
-                "icon": "/img/type/type_other.png"
-            },
-        ],
+        list:APP.globalData.typeList,
     },
 
 

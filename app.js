@@ -11,17 +11,79 @@ App({
             INVALID_TOKEN: 1,
             INVALID_COMMAND: 2,
             INVALID_USERINFO: 3
-        }
+        },
+        typeList: [
+            {
+                "id": 0,
+                "name": "吃饭",
+                "icon": "/img/type/type_food.png"
+            },
+            {
+                "id": 1,
+                "name": "租房",
+                "icon": "/img/type/type_home.png"
+            },
+            {
+                "id": 2,
+                "name": "交通",
+                "icon": "/img/type/type_traffic.png"
+            },
+            {
+                "id": 3,
+                "name": "购物",
+                "icon": "/img/type/type_shopping.png"
+            },
+            {
+                "id": 4,
+                "name": "生活",
+                "icon": "/img/type/type_vegetable.png"
+            },
+            {
+                "id": 5,
+                "name": "零食",
+                "icon": "/img/type/type_snack.png"
+            },
+            {
+                "id": 6,
+                "name": "请客",
+                "icon": "/img/type/type_gam.png"
+            },
+            {
+                "id": 7,
+                "name": "娱乐",
+                "icon": "/img/type/type_entertainment.png"
+            },
+            {
+                "id": 8,
+                "name": "书籍",
+                "icon": "/img/type/type_book.png"
+            },
+            {
+                "id": 9,
+                "name": "借款",
+                "icon": "/img/type/type_money_out.png"
+            },
+            {
+                "id": 10,
+                "name": "收入",
+                "icon": "/img/type/type_money_in.png"
+            },
+            {
+                "id": 11,
+                "name": "其他",
+                "icon": "/img/type/type_other.png"
+            },
+        ]
     },
 
     /**
      * 拼接图像的完整地址
      * 服务器只返回一个文件id
      */
-    getImageUrl:function(file){
-        if(file==null || file=="")
+    getImageUrl: function (file) {
+        if (file == null || file == "")
             return null
-        return this.globalData.BaseUrl + "/image/get/" +(file?file:"")
+        return this.globalData.BaseUrl + "/image/get/" + (file ? file : "")
     },
     /**
      * 根据图像的完整地址获取其在服务器上的短地址
@@ -29,7 +91,7 @@ App({
     getImageUri: function (url) {
         if (url == null || url == "")
             return null
-        return url.replace(this.globalData.BaseUrl + "/image/get/","")
+        return url.replace(this.globalData.BaseUrl + "/image/get/", "")
     },
 
 
@@ -39,16 +101,16 @@ App({
      * 判断是否iphone手机
      */
     isiphone() {
-        var that=this
+        var that = this
         wx.getSystemInfo({
-                success: function (res) {
-                    // console.log("!!!!!!!!")
-                    // console.log(res.model.toLowerCase())
-                    // console.log(res.model.toLowerCase().indexOf("iphone") != -1)
-                    var isiphone = res.model.toLowerCase().indexOf("iphone") != -1
-                    that.globalData.isiphone = isiphone
-                    console.log(that.globalData)
-                }
+            success: function (res) {
+                // console.log("!!!!!!!!")
+                // console.log(res.model.toLowerCase())
+                // console.log(res.model.toLowerCase().indexOf("iphone") != -1)
+                var isiphone = res.model.toLowerCase().indexOf("iphone") != -1
+                that.globalData.isiphone = isiphone
+                console.log(that.globalData)
+            }
         })
     },
 
@@ -56,7 +118,7 @@ App({
 
     onLaunch: function () {
         this.isiphone()
-        
+
         this.checkLogin()
         //调用API从本地缓存中获取数据
         var logs = wx.getStorageSync('logs') || []
@@ -65,10 +127,10 @@ App({
         // wx.removeStorageSync("token")
 
 
-        var that=this
+        var that = this
         wx.getSystemInfo({
             success: function (res) {
-                that.systemInfo=res
+                that.systemInfo = res
                 console.log(res.model)
                 console.log(res.pixelRatio)
                 console.log(res.screenWidth)
@@ -111,17 +173,17 @@ App({
         //重写属性
         Array.prototype.overide = function (arr) {
 
-            this.forEach(function(oldObj,i){
-                var newObj=arr[i]
+            this.forEach(function (oldObj, i) {
+                var newObj = arr[i]
                 for (var attr in newObj) {
                     oldObj[attr] = newObj[attr];
                 }
             })
         }
         //在对象数组中寻找具有某个属性和值得对象
-        Array.prototype.findByAttr = function (key,value) {
+        Array.prototype.findByAttr = function (key, value) {
             for (var i = 0, len = this.length; i < len; i++) {
-                if(this[i][key]==value)
+                if (this[i][key] == value)
                     return this[i];
             }
         }
@@ -132,7 +194,7 @@ App({
                     return i;
             }
         }
-        
+
 
     },
 
@@ -166,7 +228,7 @@ App({
     //在我的服务器上登录,获取token
     loginInMyServer: function (code, success) {
         console.log('loginInMyServer')
-        var that=this
+        var that = this
         wx.showLoading({
             title: '正在登陆中请稍后...',
         })
@@ -291,17 +353,17 @@ App({
 
 
                 //转换为完整头像地址
-                var clone=util.clone(res.data,{
-                    onCopyed:function(obj,attr){
+                var clone = util.clone(res.data, {
+                    onCopyed: function (obj, attr) {
                         //服务器内部图片都是以以XzBB结尾
                         if (obj[attr] && typeof obj[attr] == 'string' && obj[attr].endsWith("XzBB"))
                             obj[attr] = that.getImageUrl(obj[attr])
                         // console.log("onCopyed:" + attr)
                     }
                 })
-                res.data=clone
-                
-                
+                res.data = clone
+
+
 
                 if (obj.success != undefined)
                     obj.success.call(context, res);

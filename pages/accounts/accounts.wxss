@@ -25,11 +25,11 @@
 .account{
     
     background: gold;
-    
+    position: relative;
 }
 .account_icon{
-    width: 100rpx;
-    height: 100rpx;
+    width: 60rpx;
+    height: 60rpx;
     position: absolute;
     left: 20rpx;
     top: 20rpx;
@@ -38,14 +38,14 @@
     
 }
 .account_main{
-    width: 610rpx;
+    width: 650rpx;
 
     display: flex;
     flex-flow: column wrap;
     align-items: flex-start;
     justify-content: flex-start;
 
-    margin-left: 140rpx;
+    margin-left: 100rpx;
     padding-top: 20rpx;
 
     
@@ -73,6 +73,55 @@
     color: #5B6A92;
 
 }
+
+
+
+
+
+
+
+
+
+.pics {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1rpx dashed #ddd;
+    background-color: #efefef;
+    padding-right: 20rpx;
+    margin-left: -20rpx;
+
+    overflow: hidden; 
+
+    transition: all 500ms ease;
+}
+
+.pic{
+    width: 176rpx;
+    height: 132rpx;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+    position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .members{
     width: 100%;
@@ -178,81 +227,63 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.pics {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: flex-start;
-    border-bottom: 1rpx dashed #ddd;
-    background-color: #efefef;
-    padding-right: 20rpx;
-
-    overflow: hidden; 
-
-    transition: all 500ms ease;
-}
-
-.pic{
-    width: 223rpx;
-    height: 158rpx;
-    margin-left: 20rpx;
+.time{
     margin-top: 20rpx;
-    position: relative;
+    font-size: 25rpx;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
