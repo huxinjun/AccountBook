@@ -35,6 +35,13 @@ Page({
             success: function (res) {
                 res.data.accounts.forEach(function(v,i){
                     v.icon=APP.globalData.typeList.findByAttr("id",v.type).icon
+
+                    if (v.payResult && v.payResult[0]){
+                        v.payResult[0].payTarget.forEach(function(target,index){
+                            target.paidIcon = v.members.findByAttr("memberId", target.paidId).memberIcon
+                            target.receiptIcon = v.members.findByAttr("memberId", target.receiptId).memberIcon
+                        })
+                    }
                 })
                 this.setData({
                     accounts: res.data.accounts

@@ -26,6 +26,8 @@
     
     background: gold;
     position: relative;
+    border-bottom: 1rpx solid gray;
+    padding-bottom: 30rpx;
 }
 .account_icon{
     width: 60rpx;
@@ -51,15 +53,31 @@
     
 }
 .title_container{
+    width: 100%;
+    height: 60rpx;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: flex-start;
     justify-content: flex-start;
+
+    position: relative;
     
 }
 .title{
+    line-height: 60rpx;
     color: #5B6A92;
     font-weight: 600;
+}
+.date{
+    font-size: 25rpx;
+    width: 200rpx;
+    text-align: right;
+    position: absolute;
+    right: 20rpx;
+    top: 0;
+    line-height: 60rpx;
+    font-weight: 700;
+    color: gray;
 }
 .content{
     width: 100%;
@@ -71,7 +89,7 @@
 }
 .all{
     color: #5B6A92;
-
+    font-size: 25rpx;
 }
 
 
@@ -89,7 +107,6 @@
     align-items: center;
     justify-content: flex-start;
     border-bottom: 1rpx dashed #ddd;
-    background-color: #efefef;
     padding-right: 20rpx;
     margin-left: -20rpx;
 
@@ -160,6 +177,7 @@
     flex-flow: column wrap;
     align-items: flex-start;
     justify-content: flex-start;
+    font-size: 25rpx;
 
     position: relative;
 }
@@ -168,6 +186,7 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
+    margin-top: 10rpx;
 
 }
 .detail .item image{
@@ -193,6 +212,7 @@
     flex-flow: column wrap;
     align-items: flex-start;
     justify-content: flex-start;
+    font-size: 25rpx;
 
     margin-top: 20rpx;
 
