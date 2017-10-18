@@ -43,7 +43,7 @@
                 "selectedIconPath": "img/tab/tab_friend_select.png"
             },
             {
-                "pagePath": "pages/logs/logs",
+                "pagePath": "pages/accounts/accounts",
                 "text": "本本",
                 "iconPath": "img/tab/tab_record.png",
                 "selectedIconPath": "img/tab/tab_record_select.png"
