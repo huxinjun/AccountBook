@@ -35,7 +35,7 @@
 
     <view class="pics" style='{{style.picsContainerHeight}}{{style.picsPaddingBottom}}'>
 
-        <view class='pic' wx:for="{{images}}" wx:key="{{index}}">
+        <view class='pic' wx:for="{{images}}" wx:key="{{index}}" bindtap='iconPreview'>
 
             <image class='img' src="{{item.wx_path}}" mode="aspectFill" data-index="{{index}}"></image>
             <image class='delete' style='{{item.style.deleteVisible}}' src="/img/account/false_select.png" data-index="{{index}}" bindtap='onImageDeleteClick'></image>

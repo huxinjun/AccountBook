@@ -677,6 +677,22 @@ Page({
 
 
     /**
+     * 预览头像
+     */
+    iconPreview: function (e) {
+        var index = e.target.dataset.index
+        var imgs = []
+        this.data.images.forEach(function(v,i){
+            imgs.push(v.wx_path)
+        })
+
+        wx.previewImage({
+            urls: imgs,
+            current: imgs[index]
+        })
+    },
+
+    /**
      * 选择图片
      */
     chooseImage: function (e) {
@@ -739,7 +755,8 @@ Page({
                         success: function () {
                             that.uploadImage(filePath)
                         }
-                    });
+                    })
+                    return
                 }
 
 
@@ -991,9 +1008,10 @@ Page({
 
     onUnload: function () {
         //退出时如果没有记录这笔账单,那么检查是否添加了图片,有的话删除图片
-        for (var i = 0; i < this.data.images.length; i++)
-            if (this.data.images[i].value.isUploaded)
-                this.deleteImageFromServer(this.data.images[i].remote_file)
+        if(!this.data.account.value.uploaded)
+            for (var i = 0; i < this.data.images.length; i++)
+                if (this.data.images[i].value.isUploaded)
+                    this.deleteImageFromServer(this.data.images[i].remote_file)
 
             
     },
@@ -1082,6 +1100,13 @@ Page({
      * 上传到服务器
      */
     uploadAccount: function (e) {
+        if (parseFloat(this.data.account.paidIn)==0){
+            wx.showToast({
+                title: "总金额大于0才可以记账哦"
+            })
+            return
+        }
+
         var clone = util.clone(this.data.account, {
             onCopyed: function (obj, attr) {
                 //服务器内部图片都是以XzBB结尾
@@ -1116,6 +1141,8 @@ Page({
                 wx.showToast({
                     title:res.data.msg
                 })
+                this.data.account.value.uploaded = true
+                wx.navigateBack()
             }
 
         }, this)

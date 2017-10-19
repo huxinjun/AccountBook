@@ -331,14 +331,18 @@ App({
             success: function (res) {
                 console.log("----------------------------------------------------------------")
                 console.log("请求的url:" + obj.url);
-                console.log("请求的参数:");
-                console.log(obj.data);
-                console.log("成功:");
-                console.log(res.data);
+                if (obj.data == undefined)
+                    console.log("没有请求参数!!!")
+                else{
+                    console.log("请求的参数:")
+                    console.log(obj.data)
+                }
+                console.log("成功:")
+                console.log(res.data)
                 console.log("----------------------------------------------------------------")
-                console.log("");
-                console.log("");
-                console.log("");
+                console.log("")
+                console.log("")
+                console.log("")
                 if (res.data.status == that.globalData.resultcode.INVALID_TOKEN ||
                     res.data.status == that.globalData.resultcode.INVALID_USERINFO) {
                     that.reLogin({

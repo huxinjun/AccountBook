@@ -20,7 +20,7 @@
 
 .account{
     
-    background: gold;
+    /* background: gold; */
     position: relative;
     border-bottom: 1rpx solid gray;
     padding-bottom: 30rpx;
@@ -61,14 +61,30 @@
     
 }
 .type_icon{
-    width: 40rpx;
-    height: 40rpx;
+    width: 35rpx;
+    height: 35rpx;
     margin-right: 10rpx;
 }
 .title{
-    line-height: 60rpx;
     color: #5B6A92;
     font-weight: 600;
+}
+.tag{
+    font-size: 20rpx;
+    border-radius: 5rpx;
+    padding-left: 5rpx;
+    padding-right: 5rpx;
+    padding-top: 2rpx;
+    padding-bottom: 2rpx;
+    text-align: center;
+    color: white;
+    margin-left: 10rpx;
+}
+.paid_in{
+    background-color: #2BA245;
+}
+.inner_group{
+    background-color: deeppink;
 }
 .date{
     font-size: 25rpx;
@@ -103,7 +119,6 @@
     flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
-    border-bottom: 1rpx dashed #ddd;
     padding-right: 20rpx;
     margin-left: -20rpx;
 

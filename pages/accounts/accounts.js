@@ -53,6 +53,22 @@ Page({
         })
     },
 
+    /**
+     * 预览头像
+     */
+    iconPreview: function (e) {
+        var accountid = e.target.dataset.accountid
+        var index = e.target.dataset.index
+
+        var imgs = this.data.accounts.findByAttr("id", accountid).imgs
+
+        
+        wx.previewImage({
+            urls: imgs,
+            current:imgs[index]
+        })
+    },
+
 
     onLoad: function (option) {
 
@@ -60,6 +76,13 @@ Page({
 
         this.initAccounts()
 
+    },
+
+    /**
+     * 下拉刷新
+     */
+    onPullDownRefresh:function(){
+        this.initAccounts()
     },
 
     /**
@@ -110,6 +133,7 @@ Page({
                 })
 
                 console.log(res.data.accounts)
+                wx.stopPullDownRefresh()
             }
 
         }, this)
