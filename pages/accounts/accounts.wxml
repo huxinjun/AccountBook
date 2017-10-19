@@ -62,7 +62,7 @@
                         <image class='p2' src='{{target.receiptIcon}}'></image>
                         <text>付{{target.money}}元</text>
 
-                        <button>已付</button>
+                        <button wx:if="{{target.value.showBtn}}">{{target.value.btnText}}</button>
 
                     </view>
 

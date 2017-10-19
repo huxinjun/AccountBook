@@ -74,7 +74,7 @@ Page({
 
         var that = this
 
-        this.initAccounts()
+        this.onPullDownRefresh()
 
     },
 
@@ -82,13 +82,35 @@ Page({
      * 下拉刷新
      */
     onPullDownRefresh:function(){
-        this.initAccounts()
+        if (this.data.userInfo)
+            this.initAccounts()
+        else
+            this.initSelfInfo()
     },
+
+    /**
+     * 初始化和自己的信息:id,name,icon
+     */
+    initSelfInfo: function () {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/user/getSelfSimple',
+            data: {
+                token: wx.getStorageSync("token")
+            },
+            success: function (res) {
+                this.data.userInfo = res.data
+                this.initAccounts()
+            }
+
+        }, this)
+    },
+
 
     /**
      * 初始化账目列表数据
      */
     initAccounts: function () {
+        var that=this
         APP.ajax({
             url: APP.globalData.BaseUrl + '/account/get',
             data: {
@@ -122,8 +144,45 @@ Page({
                     //付款方案中加入需要的用户头像
                     if (v.payResult && v.payResult[0]) {
                         v.payResult[0].payTarget.forEach(function (target, index) {
-                            target.paidIcon = v.members.findByAttr("memberId", target.paidId).memberIcon
-                            target.receiptIcon = v.members.findByAttr("memberId", target.receiptId).memberIcon
+                            target.value={}
+                            target.style={}
+                            var paidMember = v.members.findByAttr("memberId", target.paidId)
+                            var receiptMember = v.members.findByAttr("memberId", target.receiptId)
+                            target.paidIcon = paidMember.memberIcon
+                            target.receiptIcon = receiptMember.memberIcon
+                            //确定是否显示操作按钮,及显示的文字
+                            /**
+                             * 显示收款,付款,完善账单按钮逻辑:
+                             * 1.如果is_group==false and memberid==当前用户显示,否则不显示
+                             * 2.如果is_group==true,那么查看当前用户是否为这个组的成员,如果是显示,否则不显示
+                             * 3.如果显示:那么查看该member是收款还是付款
+                             *      如果是收款:收款
+                             *      如果是付款:付款
+                             *      如果是组并且没有完善子账单:完善账单
+                             */
+                            if (that.data.userInfo.id == paidMember.memberId){
+                                target.value.showBtn=true
+                                target.value.btnText = "付款"
+                                return
+                            }
+                            if (that.data.userInfo.id == receiptMember.memberId) {
+                                target.value.showBtn = true
+                                target.value.btnText = "收款"
+                                return
+                            }
+                            if (paidMember.isGroup && paidMember.isMember && !target.settled){
+                                //我在这个组内
+                                target.value.showBtn = true
+                                target.value.btnText = "完善账单"
+                                return
+                            }
+                            if (receiptMember.isGroup && receiptMember.isMember && !target.settled) {
+                                //我在这个组内
+                                target.value.showBtn = true
+                                target.value.btnText = "完善账单"
+                                return
+                            }
+                                
                         })
                     }
 

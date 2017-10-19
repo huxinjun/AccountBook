@@ -269,6 +269,8 @@
 .pay .item .pay_to{
     width: 50rpx;
     height: 22rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
 }
 .pay .item .p2{
     width: 50rpx;
@@ -280,7 +282,8 @@
     font-size: 15rpx;
     position: absolute;
     background-color: salmon;
-    right: 15rpx;
+    right: 25rpx;
+    color: white;
 }
 
 .addr{
