@@ -53,11 +53,12 @@
                 </view>
 
 
+                <image class='pay_arrow' src='/img/arrow_up.png' wx:if="{{account.payResult}}"></image>
                 <view class='pay' wx:for="{{account.payResult}}" wx:for-item="payResult" wx:key="{{index}}">
 
                     <view class='item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}">
                         <image class='p1' src='{{target.paidIcon}}'></image>
-                        <text>向</text>
+                        <image class='pay_to' src='/img/pay_to.png'></image>
                         <image class='p2' src='{{target.receiptIcon}}'></image>
                         <text>付{{target.money}}元</text>
 

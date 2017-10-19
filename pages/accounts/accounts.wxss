@@ -22,7 +22,7 @@
     
     /* background: gold; */
     position: relative;
-    border-bottom: 1rpx solid gray;
+    border-bottom: 1rpx solid #DEDEDE;
     padding-bottom: 30rpx;
 }
 .account_icon{
@@ -229,7 +229,12 @@
     
 }
 
-
+.pay_arrow{
+    margin-top: 20rpx;
+    width: 30rpx;
+    height: 20rpx;
+    margin-left: 50rpx;
+}
 .pay{
     width: 640rpx;
 
@@ -239,7 +244,7 @@
     justify-content: flex-start;
     font-size: 25rpx;
 
-    margin-top: 20rpx;
+    
     margin-right: 20rpx;
 
     background-color: #f3f3f5;
@@ -253,14 +258,17 @@
     align-items: center;
     justify-content: flex-start;
 
-    padding-top: 5rpx;
-    padding-bottom: 5rpx;
+    padding: 15rpx;
     
 }
 .pay .item .p1{
     width: 50rpx;
     height: 50rpx;
     border-radius: 50rpx;
+}
+.pay .item .pay_to{
+    width: 50rpx;
+    height: 22rpx;
 }
 .pay .item .p2{
     width: 50rpx;
@@ -271,8 +279,8 @@
 .pay .item button{
     font-size: 15rpx;
     position: absolute;
-    right: 20rpx;
     background-color: salmon;
+    right: 15rpx;
 }
 
 .addr{
