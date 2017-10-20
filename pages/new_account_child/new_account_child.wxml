@@ -1,0 +1,130 @@
+<scroll-view scroll-y class="container {{dialogInfo.value.blurClass}}" scroll-into-view="{{scrollToView}}" scroll-with-animation="true" wx:if="{{account}}">
+    <view class="title">
+        <image src="{{account.value.typeIcon}}"></image>
+        <text class='name'>{{account.name}}</text>
+        <text class='paidin'>￥{{account.paidIn}}</text>
+    </view>
+
+
+    <view class="desc" wx:if="{{account.description}}">
+        <view class="desc_main">
+            <image class="desc_icon" src="/img/account/description.png"></image>
+            <text class='content'>{{account.description}}</text>
+        </view>
+
+    </view>
+
+
+
+
+    <view class="pics" wx:if="{{account.imgs}}">
+
+        <view class='pic' wx:for="{{account.imgs}}" wx:key="{{index}}" bindtap='iconPreview'>
+
+            <image class='img' src="{{item}}" mode="aspectFill" data-index="{{index}}"></image>
+        </view>
+
+    </view>
+
+
+
+
+
+    <view class="date">
+        <image class="date_icon" src="/img/account/calendar.png"></image>
+        <text class='date_text'>{{account.date}}</text>
+    </view>
+
+
+
+
+
+    <view class="loc" wx:if="{{account.addrName}}">
+        <image class="loc_icon" src="/img/account/location.png"></image>
+
+        <view wx:if="{{account.addr_name}}" class='loc_text'>
+            <text>{{account.addrName}}</text>
+        </view>
+        <view wx:else class='loc_text'>
+            <text class='placeholder_class'>点击右侧小图标定位</text>
+        </view>
+    </view>
+
+
+
+
+
+
+    <view class="members">
+
+        <view class="members_title" hover-class="members_title_hover" id="members_title">
+            <text class="members_title_txt">参与者</text>
+        </view>
+
+        <view class="memeber" wx:for="{{account.members}}" wx:key="{{index}}" style="{{item.style.member}}{{item.style.memberTrans}}{{item.style.deleteTrans}}">
+
+            <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
+
+                <view class="member_main" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel"  catchtouchstart="{{eventStart}}" bind:tap="eventCaptureTap"
+                    catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
+                    <image class="member_icon" src="{{item.memberIcon}}" mode="aspectFill" data-index="{{index}}"></image>
+
+                    <view class="member_content" data-index="{{index}}">
+                        <text class="member_name" data-index="{{index}}">{{item.memberName}}</text>
+
+                        <view class="member_tags" data-index="{{index}}">
+                            <text class="member_name" bindtap="showRule" data-index="{{index}}" style="{{item.style.tag1}}">{{item.value.tag1}}</text>
+                            <text class="member_name" bindtap="showRulePaySelf" data-index="{{index}}" style="{{item.style.tag2}}">{{item.value.tag2}}</text>
+                        </view>
+
+                    </view>
+                    <text class='member_paidin' data-index="{{index}}" catchtap='onMemberPaidinClick' style='{{item.style.paidIn_color}}'>{{item.value.paidIn}}</text>
+
+                </view>
+
+            </view>
+
+            <view class="member_rule" style="{{item.style.memberRule}}{{item.style.memberRuleTrans}}">
+
+                <radio-group bindchange="radioChange" style="{{item.style.memberRuleType}}{{item.style.memberRuleTypeTrans}}" data-index="{{index}}">
+                    <label class="member_rule_label" wx:for="{{rule_tyles}}" wx:key="{{index}}">
+                        <radio value="{{item.value}}" checked="true" />{{item.name}}
+                    </label>
+                </radio-group>
+                <input type="text" value="{{item.value.rule_input}}" placeholder="{{item.value.rule_input_placeholder}}" placeholder-class="placeholder_class" bindinput="ruleInputValueChanged" data-index="{{index}}" type="digit" confirm-type="done" bindconfirm="save"
+                    maxlength='9' cursor-spacing="80" />
+                <button bind:tap="saveRule" data-index="{{index}}">保存</button>
+            </view>
+
+            <view style="{{item.style.slider}}">
+                <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
+                <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
+                <view style="{{item.style.layerStyle_0_2}}" bindtap="{{item.value.layerTap_0_2}}" data-index="{{index}}">{{item.value.layerText_0_2}}</view>
+            </view>
+
+
+        </view>
+    </view>
+
+
+    <button bind:tap="uploadAccount">完善组内账单</button>
+</scroll-view>
+
+
+
+
+<view class="dialog_container" style='{{dialogInfo.style.display}}{{dialogInfo.style.bgAnim}}'>
+    <form bindsubmit="formSubmit" report-submit="true" class="dialog" style='{{dialogInfo.style.dialogAnim}}{{dialogInfo.style.dialogWidth}}'>
+
+        <text class='dialog_title'>{{dialogInfo.title}}</text>
+        <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
+        <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged" value='{{dialogInfo.inputValue}}'></input>
+
+
+        <view class='dialog_buttons'>
+            <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
+            <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
+        </view>
+
+    </form>
+</view>

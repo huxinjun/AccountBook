@@ -112,7 +112,7 @@ Page({
     initAccounts: function () {
         var that=this
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/account/get',
+            url: APP.globalData.BaseUrl + '/account/getAll',
             data: {
                 token: wx.getStorageSync("token")
             },
