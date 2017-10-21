@@ -140,10 +140,25 @@ Page({
                     } else
                         v.value.showAllContentBtn = false
 
+                    //子成员处理
+                    for (var i = 0; i < v.members.length; i ++) {
+                        var member = v.members[i]
+                        if (member.parentMemberId != null) {
+                            var parentMember = v.members.findByAttr("id", member.parentMemberId)
+                            if (!parentMember.members)
+                                parentMember.members = []
+                            parentMember.members.push(member)
+                            v.members.splice(i--, 1)
+                        }
+                    }
 
                     //付款方案中加入需要的用户头像
                     if (v.payResult && v.payResult[0]) {
-                        v.payResult[0].payTarget.forEach(function (target, index) {
+
+                        var targets = v.payResult[0].payTarget
+
+
+                        targets.forEach(function (target, index) {
                             target.value={}
                             target.style={}
                             var paidMember = v.members.findByAttr("memberId", target.paidId)
@@ -184,6 +199,23 @@ Page({
                             }
                                 
                         })
+
+
+                        //子支付处理
+                        for (var i = 0; i < targets.length; i++) {
+                            var target = targets[i]
+                            if (target.parentPayId != null) {
+                                var parentTarget = targets.findByAttr("id", target.parentPayId)
+                                if (!parentTarget.payTarget)
+                                    parentTarget.payTarget = []
+                                parentTarget.payTarget.push(target)
+                                targets.splice(i--, 1)
+                            }
+                        }
+
+
+
+
                     }
 
                 })

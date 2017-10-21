@@ -1106,6 +1106,12 @@ Page({
             })
             return
         }
+        if (this.data.account.members.length == 1 && this.data.account.members[0].memberId != this.data.userInfo.id){
+            wx.showToast({
+                title: "个人账单的成员必须包含自己"
+            })
+            return
+        }
 
         var clone = util.clone(this.data.account, {
             onCopyed: function (obj, attr) {
@@ -1142,7 +1148,10 @@ Page({
                     title:res.data.msg
                 })
                 this.data.account.value.uploaded = true
-                wx.navigateBack()
+                setTimeout(function(){
+                    wx.navigateBack()
+                },1500)
+                
             }
 
         }, this)

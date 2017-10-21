@@ -249,16 +249,24 @@
 
     background-color: #f3f3f5;
     border-radius: 10rpx;
-    
-    
 }
+
+.pay .full_item{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+
 .pay .item{
+    height: 80rpx;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
 
-    padding: 15rpx;
+    padding: 0 15rpx ;
     
 }
 .pay .item .p1{
@@ -285,6 +293,68 @@
     right: 25rpx;
     color: white;
 }
+
+
+.pay .childItem{
+    height: 80rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    
+    
+}
+
+.pay .link_line{
+    width: 80rpx;
+    height: 95rpx;
+    /* background: pink; */
+
+    align-self: flex-end;
+}
+
+.pay .childItem .p1{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+}
+.pay .childItem .pay_to{
+    width: 50rpx;
+    height: 22rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+}
+.pay .childItem .p2{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+    
+}
+.pay .childItem button{
+    font-size: 15rpx;
+    position: absolute;
+    background-color: salmon;
+    right: 25rpx;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .addr{
     margin-top: 20rpx;
