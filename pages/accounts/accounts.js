@@ -19,11 +19,11 @@ Page({
 
         if (account.value.showMemberDetail) {
             account.style.membersSimpleOpacity = "opacity:0;"
-            account.style.membersDetailHeight = "height:" + (account.members.length * 60) + "rpx;"
+            account.style.membersDetailHeight = "height:" + (account.membersLength * 80) + "rpx;opacity:1;"
             account.style.membersPullDownTrans = "transform: rotate(180deg);"
         } else {
             account.style.membersSimpleOpacity = "opacity:1;"
-            account.style.membersDetailHeight = "height:0;"
+            account.style.membersDetailHeight = "height:0;opacity:0;"
             account.style.membersPullDownTrans = "transform: rotate(0deg);"
         }
 
@@ -67,6 +67,24 @@ Page({
             urls: imgs,
             current:imgs[index]
         })
+    },
+
+
+    onPayClick:function(e){
+        var accountid = e.target.dataset.accountid
+        var targetid = e.target.dataset.targetid
+
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/account/updateInnerAccount',
+            data: {
+                token: wx.getStorageSync("token"),
+                accountId: accountid,
+                targetid: targetid
+            },
+            success: function (res) {
+            }
+
+        }, this)
     },
 
 
@@ -140,6 +158,8 @@ Page({
                     } else
                         v.value.showAllContentBtn = false
 
+
+                    v.membersLength = v.members.length
                     //子成员处理
                     for (var i = 0; i < v.members.length; i ++) {
                         var member = v.members[i]

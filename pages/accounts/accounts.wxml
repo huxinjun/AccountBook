@@ -42,60 +42,79 @@
                     </scroll-view>
 
                     <view class='detail' style='{{account.style.membersDetailHeight}}'>
-                        <view class='item' wx:for="{{account.members}}" wx:for-item="member" wx:key="{{index}}">
-                            <image src='{{member.memberIcon}}'></image>
-                            <text class="should_pay">{{member.memberName}}应付{{member.shouldPay}}元</text>
-                            <text class="really_pay" wx:if="{{member.paidIn>0}}">实付{{member.paidIn}}元</text>
+
+                        <view class='full_item' wx:for="{{account.members}}" wx:for-item="member" wx:key="{{index}}">
+
+                            <view class='item'>
+                                <image class='icon' src='{{member.memberIcon}}'></image>
+                                <text class="should_pay">{{member.memberName}}应付{{member.shouldPay}}元</text>
+                                <text class="really_pay" wx:if="{{member.paidIn>0}}">实付{{member.paidIn}}元</text>
+                            </view>
+
+                            <view class='childItem' wx:for="{{member.members}}" wx:for-item="childMember" wx:key="{{index}}">
+
+                                <image class='link_line' src='/img/link.png' wx:if="{{index<member.members.length-1}}"></image>
+                                <image class='link_line' src='/img/link_end.png' wx:if="{{member.members.length-1==index}}"></image>
+                                <image class='icon' src='{{childMember.memberIcon}}'></image>
+                                <text class="should_pay">{{childMember.memberName}}应付{{childMember.shouldPay}}元</text>
+                                <text class="really_pay" wx:if="{{childMember.paidIn>0}}">实付{{childMember.paidIn}}元</text>
+
                         </view>
+                        </view>
+
+
+                        
+
+
                     </view>
 
+
+                    <image class='pay_arrow' src='/img/arrow_up.png' wx:if="{{account.payResult}}"></image>
+                    <view class='pay' wx:for="{{account.payResult}}" wx:for-item="payResult" wx:key="{{index}}">
+
+                        <view class='full_item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}">
+
+                            <view class='item'>
+                                <image class='p1' src='{{target.paidIcon}}'></image>
+                                <image class='pay_to' src='/img/pay_to.png'></image>
+                                <image class='p2' src='{{target.receiptIcon}}'></image>
+                                <text>付{{target.money}}元</text>
+
+                                <button wx:if="{{target.value.showBtn}}" bindtap='onPayClick' data-targetid='{{target.id}}' data-accountid='{{account.id}}'>{{target.value.btnText}}</button>
+
+                            </view>
+
+
+                            <view class='childItem' wx:for="{{target.payTarget}}" wx:for-item="childTarget" wx:key="{{index}}">
+
+                                <image class='link_line' src='/img/link.png' wx:if="{{index<target.payTarget.length-1}}"></image>
+                                <image class='link_line' src='/img/link_end.png' wx:if="{{target.payTarget.length-1==index}}"></image>
+                                <image class='p1' src='{{childTarget.paidIcon}}'></image>
+                                <image class='pay_to' src='/img/pay_to.png'></image>
+                                <image class='p2' src='{{childTarget.receiptIcon}}'></image>
+                                <text>付{{childTarget.money}}元</text>
+
+                                <button wx:if="{{childTarget.value.showBtn}}">{{childTarget.value.btnText}}</button>
+
+                            </view>
+
+                        </view>
+
+                    </view>
+
+                    <text class='addr' wx:if="{{account.addrName!=null}}">{{account.addrName}}</text>
+                    <text class='time'>{{account.dateDis}}</text>
 
                 </view>
 
 
-                <image class='pay_arrow' src='/img/arrow_up.png' wx:if="{{account.payResult}}"></image>
-                <view class='pay' wx:for="{{account.payResult}}" wx:for-item="payResult" wx:key="{{index}}">
-
-                    <view class='full_item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}">
-
-                        <view class='item'>
-                            <image class='p1' src='{{target.paidIcon}}'></image>
-                            <image class='pay_to' src='/img/pay_to.png'></image>
-                            <image class='p2' src='{{target.receiptIcon}}'></image>
-                            <text>付{{target.money}}元</text>
-
-                            <button wx:if="{{target.value.showBtn}}">{{target.value.btnText}}</button>
-                        
-                        </view>
-                        
-
-                        <view class='childItem' wx:for="{{target.payTarget}}" wx:for-item="childTarget" wx:key="{{index}}">
-                            <image class='link_line' src='/img/link_end.png'></image>
-                            <image class='p1' src='{{childTarget.paidIcon}}'></image>
-                            <image class='pay_to' src='/img/pay_to.png'></image>
-                            <image class='p2' src='{{childTarget.receiptIcon}}'></image>
-                            <text>付{{childTarget.money}}元</text>
-
-                            <button wx:if="{{childTarget.value.showBtn}}">{{childTarget.value.btnText}}</button>
-
-                        </view>
-
-                    </view>
-
-                </view>
-
-                <text class='addr' wx:if="{{account.addrName!=null}}">{{account.addrName}}</text>
-                <text class='time'>{{account.dateDis}}</text>
 
             </view>
-
-
 
         </view>
 
     </view>
 
-</view>
 
 
 
@@ -149,17 +168,18 @@
 
 
 
+    <view class="dialog_container" style='{{dialogInfo.style.display}}{{dialogInfo.style.bgAnim}}'>
+        <form bindsubmit="formSubmit" report-submit="true" class="dialog" style='{{dialogInfo.style.dialogAnim}}{{dialogInfo.style.dialogWidth}}'>
 
-<view class="dialog_container" style='{{dialogInfo.style.display}}{{dialogInfo.style.bgAnim}}'>
-    <form bindsubmit="formSubmit" report-submit="true" class="dialog" style='{{dialogInfo.style.dialogAnim}}{{dialogInfo.style.dialogWidth}}'>
+            <text class='dialog_title'>{{dialogInfo.title}}</text>
+            <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged" value='{{dialogInfo.inputValue}}'></input>
+            <view class='dialog_buttons'>
+                <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
+                <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
+            </view>
 
-        <text class='dialog_title'>{{dialogInfo.title}}</text>
-        <text class='dialog_content' style='{{dialogInfo.contentDisplay}}'>{{dialogInfo.content}}</text>
-        <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged" value='{{dialogInfo.inputValue}}'></input>
-        <view class='dialog_buttons'>
-            <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
-            <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' form-type='submit'>确定</button>
-        </view>
+        </form>
+    </view>
 
-    </form>
 </view>
