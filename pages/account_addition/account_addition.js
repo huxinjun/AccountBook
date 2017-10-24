@@ -591,9 +591,12 @@ Page({
         this.slidersInfo.page = this
         slider.init(this.slidersInfo)
 
-        option.accountId ="m7xXSSEspLqggNunlityuw=="
-        option.groupId = "MvZOjzjjBzgBzwyn3ImUcA=="
-        this.initAccount(option)
+
+        this.data.accountId = decodeURI(option.accountId.decode())
+        this.data.memberId = decodeURI(option.memberId.decode())
+        this.data.targetId = decodeURI(option.targetId.decode())
+
+        this.initAccount()
 
         
         
@@ -617,13 +620,13 @@ Page({
     /**
      * 查询账单的基础信息
      */
-    initAccount: function (option) {
+    initAccount: function () {
         var that=this
         APP.ajax({
             url: APP.globalData.BaseUrl + '/account/get',
             data: {
                 token: wx.getStorageSync("token"),
-                accountId: option.accountId
+                accountId: this.data.accountId
             },
 
             success: function (res) {
@@ -637,7 +640,7 @@ Page({
                     account: account
                 })
 
-                this.initMembers(option.groupId)
+                this.initMembers()
                 
 
                 
@@ -658,7 +661,7 @@ Page({
             url: APP.globalData.BaseUrl + '/group/getMembers',
             data: {
                 token: wx.getStorageSync("token"),
-                groupId: groupId
+                groupId: this.data.memberId
             },
 
             success: function (res) {
@@ -684,13 +687,6 @@ Page({
      * 上传到服务器
      */
     uploadAccount: function (e) {
-        if (parseFloat(this.data.account.paidIn)==0){
-            wx.showToast({
-                title: "总金额大于0才可以记账哦"
-            })
-            return
-        }
-
         var clone = util.clone(this.data.account, {
             onCopyed: function (obj, attr) {
                 //服务器内部图片都是以XzBB结尾
@@ -698,38 +694,27 @@ Page({
                     obj[attr] = APP.getImageUri(obj[attr])
             }
         })
-        delete clone.style
-        delete clone.value
-        clone.members.forEach(function(v,i){
+        clone.members.forEach(function (v, i) {
             delete v.value
             delete v.style
         })
 
+        var memberJson = JSON.stringify(clone.members)
+        console.log(memberJson)
 
-        clone.user_id = this.data.userInfo.id
-        clone.book_id = ""
-        clone.imgs = JSON.stringify(clone.imgs).replace(/\[|\]|\"|\\/g,"")
-        var str = JSON.stringify(clone)
-        console.log(str)
+        // APP.ajax({
+        //     url: APP.globalData.BaseUrl + '/account/updateInnerAccount',
+        //     data: {
+        //         token: wx.getStorageSync("token"),
+        //         accountId: accountid,
+        //         memberId: memberid,
+        //         targetId: targetid,
+        //         memberJson: memberJson
+        //     },
+        //     success: function (res) {
+        //     }
 
-        APP.ajax({
-            url: APP.globalData.BaseUrl + '/account/add?token=' + wx.getStorageSync("token"),
-            method:"POST",
-            data: {
-                content:str
-            },
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function (res) {
-                wx.showToast({
-                    title:res.data.msg
-                })
-                this.data.account.value.uploaded = true
-                wx.navigateBack()
-            }
-
-        }, this)
+        // }, this)
 
     }
 })

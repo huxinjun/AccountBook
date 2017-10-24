@@ -71,20 +71,29 @@ Page({
 
 
     onPayClick:function(e){
-        var accountid = e.target.dataset.accountid
-        var targetid = e.target.dataset.targetid
+        var accountId = e.target.dataset.accountid
+        var targetId = e.target.dataset.targetid
 
-        APP.ajax({
-            url: APP.globalData.BaseUrl + '/account/updateInnerAccount',
-            data: {
-                token: wx.getStorageSync("token"),
-                accountId: accountid,
-                targetid: targetid
-            },
-            success: function (res) {
-            }
+        var account = this.data.accounts.findByAttr("id", accountId)
+        var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+        
+        var paidMember = account.members.findByAttr("memberId", target.paidId)
+        var receiptMember = account.members.findByAttr("memberId", target.receiptId)
+        var memberId
+        if (paidMember.isGroup && paidMember.isMember)
+            memberId = paidMember.memberId
+        else
+            memberId = receiptMember.memberId
 
-        }, this)
+        console.log("accountId:" + accountId)
+        console.log("memberId:" + memberId)
+        console.log("targetId:" + targetId)
+
+        wx.navigateTo({
+            url: '/pages/account_addition/account_addition?accountId=' + accountId.encode() + "&memberId=" + memberId.encode() + "&targetId=" + targetId.encode()
+        })
+
+        
     },
 
 

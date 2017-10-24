@@ -5,7 +5,7 @@
         "pages/friend/friend",
         "pages/msg_invite/msg_invite",
         "pages/new_account/new_account",
-        "pages/new_account_child/new_account_child",
+        "pages/account_addition/account_addition",
         "pages/group/group",
         "pages/group_edit/group_edit",
         "pages/qr_image/qr_image",

@@ -195,6 +195,17 @@ App({
             }
         }
 
+        String.prototype.replaceAll = function (FindText, RepText) {
+            regExp = new RegExp(FindText, "g");
+            return this.replace(regExp, RepText);
+        }
+
+        String.prototype.encode = function () {
+            return this.replaceAll("=", "!XJ!");
+        }
+        String.prototype.decode = function () {
+            return this.replaceAll("!XJ!", "=");
+        }
 
     },
 
