@@ -59,11 +59,11 @@
                                 <text class="should_pay">{{childMember.memberName}}应付{{childMember.shouldPay}}元</text>
                                 <text class="really_pay" wx:if="{{childMember.paidIn>0}}">实付{{childMember.paidIn}}元</text>
 
-                        </view>
+                            </view>
                         </view>
 
 
-                        
+
 
 
                     </view>
@@ -72,31 +72,14 @@
                     <image class='pay_arrow' src='/img/arrow_up.png' wx:if="{{account.payResult}}"></image>
                     <view class='pay' wx:for="{{account.payResult}}" wx:for-item="payResult" wx:key="{{index}}">
 
-                        <view class='full_item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}">
 
-                            <view class='item'>
-                                <image class='p1' src='{{target.paidIcon}}'></image>
-                                <image class='pay_to' src='/img/pay_to.png'></image>
-                                <image class='p2' src='{{target.receiptIcon}}'></image>
-                                <text>付{{target.money}}元</text>
+                        <view class='item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}">
+                            <image class='p1' src='{{target.paidIcon}}'></image>
+                            <image class='pay_to' src='/img/pay_to.png'></image>
+                            <image class='p2' src='{{target.receiptIcon}}'></image>
+                            <text>付{{target.money}}元</text>
 
-                                <button wx:if="{{target.value.showBtn}}" bindtap='onPayClick' data-targetid='{{target.id}}' data-accountid='{{account.id}}'>{{target.value.btnText}}</button>
-
-                            </view>
-
-
-                            <view class='childItem' wx:for="{{target.payTarget}}" wx:for-item="childTarget" wx:key="{{index}}">
-
-                                <image class='link_line' src='/img/link.png' wx:if="{{index<target.payTarget.length-1}}"></image>
-                                <image class='link_line' src='/img/link_end.png' wx:if="{{target.payTarget.length-1==index}}"></image>
-                                <image class='p1' src='{{childTarget.paidIcon}}'></image>
-                                <image class='pay_to' src='/img/pay_to.png'></image>
-                                <image class='p2' src='{{childTarget.receiptIcon}}'></image>
-                                <text>付{{childTarget.money}}元</text>
-
-                                <button wx:if="{{childTarget.value.showBtn}}">{{childTarget.value.btnText}}</button>
-
-                            </view>
+                            <button wx:if="{{target.value.showBtn}}" bindtap='onPayClick' data-targetid='{{target.id}}' data-accountid='{{account.id}}'>{{target.value.btnText}}</button>
 
                         </view>
 

@@ -169,11 +169,12 @@ Page({
 
 
                     v.membersLength = v.members.length
+                    v.originMembers=util.clone(v.members)
                     //子成员处理
                     for (var i = 0; i < v.members.length; i ++) {
                         var member = v.members[i]
                         if (member.parentMemberId != null) {
-                            var parentMember = v.members.findByAttr("id", member.parentMemberId)
+                            var parentMember = v.members.findByAttr("memberId", member.parentMemberId)
                             if (!parentMember.members)
                                 parentMember.members = []
                             parentMember.members.push(member)
@@ -190,8 +191,8 @@ Page({
                         targets.forEach(function (target, index) {
                             target.value={}
                             target.style={}
-                            var paidMember = v.members.findByAttr("memberId", target.paidId)
-                            var receiptMember = v.members.findByAttr("memberId", target.receiptId)
+                            var paidMember = v.originMembers.findByAttr("memberId", target.paidId)
+                            var receiptMember = v.originMembers.findByAttr("memberId", target.receiptId)
                             target.paidIcon = paidMember.memberIcon
                             target.receiptIcon = receiptMember.memberIcon
                             //确定是否显示操作按钮,及显示的文字
@@ -228,22 +229,6 @@ Page({
                             }
                                 
                         })
-
-
-                        //子支付处理
-                        for (var i = 0; i < targets.length; i++) {
-                            var target = targets[i]
-                            if (target.parentPayId != null) {
-                                var parentTarget = targets.findByAttr("id", target.parentPayId)
-                                if (!parentTarget.payTarget)
-                                    parentTarget.payTarget = []
-                                parentTarget.payTarget.push(target)
-                                targets.splice(i--, 1)
-                            }
-                        }
-
-
-
 
                     }
 

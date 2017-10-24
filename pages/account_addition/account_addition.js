@@ -445,14 +445,6 @@ Page({
                         item.style.paidIn_color ="color:red;"
                     else
                         item.style.paidIn_color = "color:#20B2AA;"
-
-                    //计算总支出
-                    var total=0
-                    this.data.account.members.forEach(function(v,i){
-                        total += parseFloat(v.paidIn)
-                    })    
-                    this.data.account.paidIn = total.toFixed(2)
-                    this.refreshSliderData()
                 }
             }
         }
@@ -699,22 +691,22 @@ Page({
             delete v.style
         })
 
-        var memberJson = JSON.stringify(clone.members)
-        console.log(memberJson)
+        var membersJson = JSON.stringify(clone.members)
+        console.log(membersJson)
 
-        // APP.ajax({
-        //     url: APP.globalData.BaseUrl + '/account/updateInnerAccount',
-        //     data: {
-        //         token: wx.getStorageSync("token"),
-        //         accountId: accountid,
-        //         memberId: memberid,
-        //         targetId: targetid,
-        //         memberJson: memberJson
-        //     },
-        //     success: function (res) {
-        //     }
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/account/updateInnerAccount',
+            data: {
+                token: wx.getStorageSync("token"),
+                accountId: this.data.accountId,
+                memberId: this.data.memberId,
+                targetId: this.data.targetId,
+                membersJson: membersJson
+            },
+            success: function (res) {
+            }
 
-        // }, this)
+        }, this)
 
     }
 })
