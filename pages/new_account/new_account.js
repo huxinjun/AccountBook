@@ -223,7 +223,14 @@ Page({
             item.value.isSelected = false
             item.style.selectVisible = "transform: scale(0, 0);"
         }
-        slider.deleteItem("memberId", id);
+        slider.deleteItem("memberId", id,{
+            onDeleted:function(){
+                //刷新总支出
+                this.calcAllPaidIn()
+            }
+        });
+        
+        
     },
 
     /**
@@ -519,13 +526,8 @@ Page({
                     else
                         item.style.paidIn_color = "color:#20B2AA;"
 
-                    //计算总支出
-                    var total=0
-                    this.data.account.members.forEach(function(v,i){
-                        total += parseFloat(v.paidIn)
-                    })    
-                    this.data.account.paidIn = total.toFixed(2)
-                    this.refreshSliderData()
+                    this.calcAllPaidIn()
+                    
                 }
             }
         }
@@ -533,6 +535,21 @@ Page({
         dialog.showDialog(dialogInfo)
 
     },
+
+    /**
+     * 计算总共支出
+     */
+    calcAllPaidIn:function(){
+        console.log("calcAllPaidIn")
+        //计算总支出
+        var total = 0
+        this.data.account.members.forEach(function (v, i) {
+            total += parseFloat(v.paidIn)
+        })
+        this.data.account.paidIn = total.toFixed(2)
+        this.refreshSliderData()
+    },
+
 
     /**
      * 抽屉拉开了
@@ -1144,13 +1161,15 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function (res) {
+                if (res.data.status == APP.globalData.resultcode.SUCCESS){
+                    this.data.account.value.uploaded = true
+                    setTimeout(function () {
+                        wx.navigateBack()
+                    }, 1000)
+                }
                 wx.showToast({
                     title:res.data.msg
                 })
-                this.data.account.value.uploaded = true
-                setTimeout(function(){
-                    wx.navigateBack()
-                },1500)
                 
             }
 

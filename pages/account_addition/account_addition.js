@@ -436,21 +436,48 @@ Page({
                         })
                         return false
                     }
+
                     var item = this.getSliderData(index)
+                    var oldItemPaidIn = item.paidIn
                     item.paidIn = parseFloat(value).toFixed(2)
                     item.paidIn = item.paidIn < 0 ? 0 : item.paidIn
+                    //检查输入值得有效性:各成员总支付不可以超过账单支出
+                    if (this.calcAllPaidIn() > parseFloat(this.data.account.paidIn)) {
+                        wx.showToast({
+                            image: "/img/error.png",
+                            title: '各成员支出额的和不能超过组的支出额',
+                        })
+                        //恢复为旧值
+                        item.paidIn = oldItemPaidIn
+                        return false
+                    }
                     
                     item.value.paidIn = "￥" + item.paidIn
                     if (item.paidIn>0)
                         item.style.paidIn_color ="color:red;"
                     else
                         item.style.paidIn_color = "color:#20B2AA;"
+
+
+                    this.refreshSliderData()
                 }
             }
         }
 
         dialog.showDialog(dialogInfo)
 
+    },
+
+    /**
+     * 计算总共支出
+     */
+    calcAllPaidIn: function () {
+        //计算总支出
+        var total = 0
+        this.data.account.members.forEach(function (v, i) {
+            total += parseFloat(v.paidIn)
+        })
+        return total
     },
 
     /**
@@ -586,7 +613,6 @@ Page({
 
         this.data.accountId = decodeURI(option.accountId.decode())
         this.data.memberId = decodeURI(option.memberId.decode())
-        this.data.targetId = decodeURI(option.targetId.decode())
 
         this.initAccount()
 
@@ -627,11 +653,24 @@ Page({
                 account.style={}
                 account.value.typeIcon = APP.globalData.typeList.findByAttr("id", account.type).icon
                 account.description = account.description ? account.description.substr(0, 16)+"...":null
+                var originMembers = account.members
                 account.members=[]
+
+                //计算完善账单的总支出
+                //1.计算当前member需要付钱还是需要收钱:(paidIn-shouldPay)>0时收款
+                //  如果需要付钱:各成员支付最大值为组的shouldPay
+                //  如果需要收钱:各成员支付最大值为组的paidIn
+                var currGroupMember = originMembers.findByAttr("memberId", this.data.memberId)
+                if (currGroupMember.paidIn - currGroupMember.shouldPay < 0)
+                    account.paidIn = String(currGroupMember.shouldPay)
+                else
+                    account.paidIn = String(currGroupMember.paidIn)
+
                 this.setData({
                     account: account
                 })
 
+                //查找组内的成员
                 this.initMembers()
                 
 
@@ -661,6 +700,7 @@ Page({
                 members.forEach(function (v, i) {
                     v.value = {}
                     v.style = {}
+                    v.paidIn = "0.00"
                     that.addMember(v)
                 })
                 this.data.account.members.onSizeChanged = function (size) {
@@ -679,6 +719,17 @@ Page({
      * 上传到服务器
      */
     uploadAccount: function (e) {
+        //检查输入值得有效性:各成员总支付必须与组的应付或实付相等
+        if (this.calcAllPaidIn() != parseFloat(this.data.account.paidIn)) {
+            wx.showToast({
+                image: "/img/error.png",
+                title: '各成员支出额的和需与组支付额相等!',
+            })
+            return false
+        }
+
+
+
         var clone = util.clone(this.data.account, {
             onCopyed: function (obj, attr) {
                 //服务器内部图片都是以XzBB结尾
@@ -700,10 +751,17 @@ Page({
                 token: wx.getStorageSync("token"),
                 accountId: this.data.accountId,
                 memberId: this.data.memberId,
-                targetId: this.data.targetId,
                 membersJson: membersJson
             },
             success: function (res) {
+                if (res.data.status == APP.globalData.resultcode.SUCCESS) {
+                    setTimeout(function () {
+                        wx.navigateBack()
+                    }, 1000)
+                }
+                wx.showToast({
+                    title: res.data.msg
+                })
             }
 
         }, this)

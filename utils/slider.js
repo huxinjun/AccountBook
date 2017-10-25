@@ -442,7 +442,7 @@ function cancel(e) {
 /**
  * 点击删除按钮事件:transition动画
  */
-function deleteItem(key,value) {
+function deleteItem(key,value,success) {
     var item = this.slidersInfo.page.getSliderData().findByAttr(key,value)
 
     //先是透明度动画
@@ -466,6 +466,9 @@ function deleteItem(key,value) {
             var datas = this.slidersInfo.page.getSliderData()
             //移除列表中下标为index的项
             datas.removeObject(key, value);
+            //通知监听
+            if(success)
+                success.onDeleted.call(this.slidersInfo.page)
             // 更新列表的状态
             this.slidersInfo.page.refreshSliderData()
         }.bind(this), 200)
