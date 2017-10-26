@@ -90,7 +90,7 @@ Page({
         console.log("targetId:" + targetId)
 
         wx.navigateTo({
-            url: '/pages/account_addition/account_addition?accountId=' + accountId.encode() + "&memberId=" + memberId.encode()
+            url: '/pages/account_addition/account_addition?accountId=' + accountId.encode() + "&memberId=" + memberId.encode() + "&targetId=" + targetId.encode()
         })
 
         
@@ -205,23 +205,23 @@ Page({
                              *      如果是付款:付款
                              *      如果是组并且没有完善子账单:完善账单
                              */
-                            if (that.data.userInfo.id == paidMember.memberId){
+                            if (that.data.userInfo.id == paidMember.memberId && !target.settled){
                                 target.value.showBtn=true
                                 target.value.btnText = "付款"
                                 return
                             }
-                            if (that.data.userInfo.id == receiptMember.memberId) {
+                            if (that.data.userInfo.id == receiptMember.memberId && !target.settled) {
                                 target.value.showBtn = true
                                 target.value.btnText = "收款"
                                 return
                             }
-                            if (paidMember.isGroup && paidMember.isMember && !target.settled){
+                            if (paidMember.isGroup && paidMember.isMember && target.paidStatus==1){
                                 //我在这个组内
                                 target.value.showBtn = true
                                 target.value.btnText = "完善账单"
                                 return
                             }
-                            if (receiptMember.isGroup && receiptMember.isMember && !target.settled) {
+                            if (receiptMember.isGroup && receiptMember.isMember && target.receiptStatus==1) {
                                 //我在这个组内
                                 target.value.showBtn = true
                                 target.value.btnText = "完善账单"

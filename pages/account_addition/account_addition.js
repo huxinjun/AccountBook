@@ -611,8 +611,9 @@ Page({
         slider.init(this.slidersInfo)
 
 
-        this.data.accountId = decodeURI(option.accountId.decode())
-        this.data.memberId = decodeURI(option.memberId.decode())
+        this.data.accountId = option.accountId.decode()
+        this.data.memberId = option.memberId.decode()
+        this.data.targetId = option.targetId.decode()
 
         this.initAccount()
 
@@ -661,10 +662,12 @@ Page({
                 //  如果需要付钱:各成员支付最大值为组的shouldPay
                 //  如果需要收钱:各成员支付最大值为组的paidIn
                 var currGroupMember = originMembers.findByAttr("memberId", this.data.memberId)
-                if (currGroupMember.paidIn - currGroupMember.shouldPay < 0)
-                    account.paidIn = String(currGroupMember.shouldPay)
+                var target = account.payResult[0].payTarget.findByAttr("id", this.data.targetId)
+                if(target.paidId==this.data.memberId)
+                    account.paidIn = String(target.money)
                 else
                     account.paidIn = String(currGroupMember.paidIn)
+
 
                 this.setData({
                     account: account
@@ -751,6 +754,7 @@ Page({
                 token: wx.getStorageSync("token"),
                 accountId: this.data.accountId,
                 memberId: this.data.memberId,
+                targetId: this.data.targetId,
                 membersJson: membersJson
             },
             success: function (res) {
