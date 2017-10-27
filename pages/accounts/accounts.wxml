@@ -1,5 +1,11 @@
 <view>
 
+    <view class='banner'>
+    
+        <image class='bg' src="{{banner}}" mode='aspectFill'></image>
+    
+    
+    </view>
 
 
     <view>
@@ -14,7 +20,7 @@
                     <image class='type_icon' src="{{account.icon}}"></image>
                     <text class='title'>{{account.name}}</text>
                     <text class='tag paid_in'>{{account.paidIn}}元</text>
-                    <text class='tag inner_group' wx:if="{{account.parentAccountId!=null}}">子账单</text>
+                    <text class='tag inner_group' wx:if="{{account.isPrivate}}">个人账单</text>
                     <text class='date'>{{account.date}}</text>
                 </view>
 
@@ -77,9 +83,14 @@
                             <image class='p1' src='{{target.paidIcon}}'></image>
                             <image class='pay_to' src='/img/pay_to.png'></image>
                             <image class='p2' src='{{target.receiptIcon}}'></image>
-                            <text>付{{target.money}}元</text>
+                            <text>支付</text>
+                            <text class='money'>{{target.money}}</text>
+                            <text>元</text>
 
-                            <button wx:if="{{target.value.showBtn}}" bindtap='onPayClick' data-targetid='{{target.id}}' data-accountid='{{account.id}}'>{{target.value.btnText}}</button>
+                            
+                            <image class='settled' src='/img/completed.png' wx:if="{{target.settled}}"></image>
+
+                            <button wx:if="{{target.value.showBtn}}" bindtap='onPayClick' style="{{target.style.bg}}" data-targetid='{{target.id}}' data-accountid='{{account.id}}'>{{target.value.btnText}}</button>
 
                         </view>
 

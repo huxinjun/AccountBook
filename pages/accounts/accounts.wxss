@@ -8,8 +8,26 @@
     justify-content: flex-start;
     font-family: "黑体";
     color: #272636;
+    background-color: snow;
+}
+
+.banner{
+    width: 100%;
+    height: 350rpx;
+    margin-bottom: 30rpx;
     
 }
+.banner .bg{
+    width: 100%;
+    height: 100%;
+    filter: blur(5rpx);
+}
+
+
+
+
+
+
 
 .accounts{
     display: flex;
@@ -307,6 +325,8 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
+    color: #6B6B6B;
+    font-size: 15rpx;
 
     padding: 0 15rpx ;
     
@@ -326,14 +346,28 @@
     width: 50rpx;
     height: 50rpx;
     border-radius: 50rpx;
+    margin-right: 10rpx;
     
+}
+.pay .item .money{
+    font-size: 25rpx;
+    color: black;
+    font-weight: 900;
+    margin-bottom: 3rpx;
+    margin-left: 3rpx;
+    margin-right: 3rpx;
 }
 .pay .item button{
     font-size: 15rpx;
     position: absolute;
-    background-color: salmon;
     right: 25rpx;
     color: white;
+}
+.pay .item .settled{
+    width: 30rpx;
+    height: 30rpx;
+    position: absolute;
+    right: 50rpx;
 }
 
 

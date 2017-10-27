@@ -3,7 +3,9 @@ var dialog = require("../../utils/dialog.js")
 var util = require('../../utils/util.js')
 Page({
     data: {
-        containerHeight: APP.systemInfo.windowHeight
+        containerHeight: APP.systemInfo.windowHeight,
+
+        banner:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509096167729&di=82f605348e2b14d2c6103619d9ec751b&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F50da81cb39dbb6fda2d331e50324ab18962b376d.jpg"
     },
 
 
@@ -151,6 +153,8 @@ Page({
                         //成员详情是否显示标记
                         showMemberDetail: false
                     }
+                    //私人账单处理
+                    v.isPrivate = v.members.length == 0
 
                     //类型图标处理
                     v.icon = APP.globalData.typeList.findByAttr("id", v.type).icon
@@ -208,23 +212,27 @@ Page({
                             if (that.data.userInfo.id == paidMember.memberId && !target.settled){
                                 target.value.showBtn=true
                                 target.value.btnText = "付款"
+                                target.style.bg ="background-color: salmon;"
                                 return
                             }
                             if (that.data.userInfo.id == receiptMember.memberId && !target.settled) {
                                 target.value.showBtn = true
                                 target.value.btnText = "收款"
+                                target.style.bg = "background-color: SeaGreen;"
                                 return
                             }
                             if (paidMember.isGroup && paidMember.isMember && target.paidStatus==1){
                                 //我在这个组内
                                 target.value.showBtn = true
                                 target.value.btnText = "完善账单"
+                                target.style.bg = "background-color: DarkCyan;"
                                 return
                             }
                             if (receiptMember.isGroup && receiptMember.isMember && target.receiptStatus==1) {
                                 //我在这个组内
                                 target.value.showBtn = true
                                 target.value.btnText = "完善账单"
+                                target.style.bg = "background-color: DarkCyan;"
                                 return
                             }
                                 
