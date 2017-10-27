@@ -3,8 +3,12 @@
     <view class='banner'>
     
         <image class='bg' src="{{banner}}" mode='aspectFill'></image>
-    
-    
+        <image class='icon' src="{{userInfo.icon}}" mode='aspectFill'></image>
+        <view class='summary'>
+            <text class='wait_paid'>待付:{{accountInfo.wait_paid}}元</text>
+            <text class='wait_receipt'>待收:{{accountInfo.wait_receipt}}元</text>
+            <text class='month_paidin'>月支出:{{accountInfo.month_paidin}}元</text>
+        </view>
     </view>
 
 

@@ -104,6 +104,7 @@ Page({
         var that = this
 
         this.onPullDownRefresh()
+        
 
     },
 
@@ -111,6 +112,7 @@ Page({
      * 下拉刷新
      */
     onPullDownRefresh:function(){
+        this.initAccountInfo()
         if (this.data.userInfo)
             this.initAccounts()
         else
@@ -127,8 +129,28 @@ Page({
                 token: wx.getStorageSync("token")
             },
             success: function (res) {
-                this.data.userInfo = res.data
+                this.setData({
+                    userInfo: res.data
+                })
                 this.initAccounts()
+            }
+
+        }, this)
+    },
+
+    /**
+     * 初始化账户统计信息
+     */
+    initAccountInfo: function () {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/account/getSummarySimpleInfo',
+            data: {
+                token: wx.getStorageSync("token")
+            },
+            success: function (res) {
+                this.setData({
+                    accountInfo: res.data
+                })
             }
 
         }, this)
@@ -243,7 +265,7 @@ Page({
                     accounts: res.data.accounts
                 })
 
-                console.log(res.data.accounts)
+                // console.log(res.data.accounts)
                 wx.stopPullDownRefresh()
             }
 

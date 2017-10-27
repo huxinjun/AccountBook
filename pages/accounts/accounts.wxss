@@ -14,13 +14,49 @@
 .banner{
     width: 100%;
     height: 350rpx;
-    margin-bottom: 30rpx;
+    margin-bottom: 80rpx;
+    position: relative;
     
 }
 .banner .bg{
     width: 100%;
     height: 100%;
-    filter: blur(5rpx);
+    /* filter: blur(5rpx); */
+}
+.banner .icon{
+    width: 150rpx;
+    height: 150rpx;
+    position: absolute;
+    right: 25rpx;
+    bottom:-30rpx;
+    border: 1rpx solid #DEDEDE;
+}
+.banner .summary{
+    width: 575rpx;
+    height: 120rpx;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    padding-right: 10rpx;
+    padding-bottom: 5rpx;
+
+    color: black;
+    text-shadow: 2rpx 2rpx 2rpx snow;
+    font-size: 25rpx;
+
+    position: absolute;
+    right: 175rpx;
+    bottom:0rpx;
+}
+
+.banner .summary .wait_paid{
+    color: Crimson;
+}
+.banner .summary .wait_receipt{
+    color: SeaGreen;
 }
 
 
