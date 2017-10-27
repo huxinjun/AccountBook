@@ -153,8 +153,6 @@ Page({
                         //成员详情是否显示标记
                         showMemberDetail: false
                     }
-                    //私人账单处理
-                    v.isPrivate = v.members.length == 0
 
                     //类型图标处理
                     v.icon = APP.globalData.typeList.findByAttr("id", v.type).icon
