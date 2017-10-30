@@ -358,10 +358,11 @@ App({
                     res.data.status == that.globalData.resultcode.INVALID_USERINFO) {
                     that.reLogin({
                         context: this,
-                        success: function () {
-                            obj.data.token = wx.getStorageSync("token")
-                            that.ajax(obj, context);
-                        }
+                        //为了避免无限请求,重写登录后不自动发起请求
+                        // success: function () {
+                        //     obj.data.token = wx.getStorageSync("token")
+                        //     that.ajax(obj, context);
+                        // }
                     });
                     return
                 }

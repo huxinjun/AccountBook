@@ -160,14 +160,16 @@ Page({
             tag1: "AA制",
             tag2: "自费10元",
             ruleType: 2,
-            paidIn: "￥0.00"
+            paidIn: "￥0.00",
+            isPaidPerson : false
         }
         member.style = {
             member: "height:0;opacity:0;",
             memberRule: "height:0;opacity:0;",
             tag0: "",
             tag1: "display:inherit;",
-            tag2: "display:none;"
+            tag2: "display:none;",
+            paidIn_color : "color:transparent;"
         }
 
         this.data.account.members.addToHead(member)
@@ -275,6 +277,9 @@ Page({
      * 根据索引配置抽屉需要显示的按钮
      */
     updateMemberSliderButton: function (index) {
+        if(this.data.account.type==9)
+            //借款账单不需要抽屉
+            return
         if (index == this.data.descSliderInfo.index) {
             slider.updateLayer(this.data.descSliderInfo.index, [])
             return
@@ -323,6 +328,41 @@ Page({
     refreshTags: function () {
         var datas = this.getSliderData()
         var that = this
+        //特殊处理借款时的标签
+        if(this.data.account.type==9){
+            var hasPaidPerson=false
+            for (var i = 0;datas && i<datas.length;i++) {
+                var member = datas[i]
+                if (member.value.isPaidPerson){
+                    hasPaidPerson=true
+                    break
+                }
+            }
+            
+
+            for (var i = 0; datas && i < datas.length; i++) {
+                var member=datas[i]
+                if (hasPaidPerson) {
+                    if (member.value.isPaidPerson) {
+                        member.style.tag0 = "display:inherit;"
+                        member.value.tag0 = "被借人"
+                    } else {
+                        member.style.tag0 = "display:inherit;"
+                        member.value.tag0 = "借款人"
+                    }
+                }else
+                    member.style.tag0 = "display:none;"
+                
+                member.style.tag1 = "display:none;"
+                member.style.tag2 = "display:none;"
+            }
+
+            this.refreshSliderData()
+            return
+        }
+
+
+
         if (datas.length > 1) {
             datas.forEach(function (v, i) {
 
@@ -498,12 +538,20 @@ Page({
             return
         }
 
-
+        var dialogContent = "请输入成员支付金额"
+        switch(this.data.account.type){
+            case 9://借款
+                dialogContent = "请输入被借款者借出的金额"
+                break;
+            case 10://收入
+                dialogContent = "请输入您的收入金额"
+                break;  
+        }
 
         var dialogInfo = {
             page: this,
             title: "输入",
-            content: "请输入成员支付数额",
+            content: dialogContent,
             inputType: "digit",
             maxLength: 10,
             callback: {
@@ -526,6 +574,20 @@ Page({
                     else
                         item.style.paidIn_color = "color:#20B2AA;"
 
+                    //对于借款需要特殊处理,只能有一个人付款
+                    if(this.data.account.type==9){
+                        var members = this.getSliderData()
+                        members.forEach(function (v, i) {
+                            if (v.memberId != item.memberId) {
+                                v.paidIn = "0.00"
+                                v.value.paidIn = "￥" + v.paidIn
+                                v.value.isPaidPerson = false
+                                v.style.paidIn_color = "color:transparent;"
+                            }else
+                                v.value.isPaidPerson=true
+                        })
+                        this.refreshTags()
+                    }
                     this.calcAllPaidIn()
                     
                 }
@@ -1128,6 +1190,15 @@ Page({
                 title: "个人账单的成员必须包含自己"
             })
             return
+        }
+        if(this.data.account.type==9){
+            //借款账单
+            if (this.data.account.members.length != 2){
+                wx.showToast({
+                    title: "借款账单的成员个数必须为两个"
+                })
+                return
+            }
         }
 
         var clone = util.clone(this.data.account, {
