@@ -169,7 +169,7 @@ Page({
             tag0: "",
             tag1: "display:inherit;",
             tag2: "display:none;",
-            paidIn_color : "color:transparent;"
+            paidIn_color : this.data.account.type==9?"color:transparent;":""
         }
 
         this.data.account.members.addToHead(member)

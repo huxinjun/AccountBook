@@ -72,12 +72,43 @@ Page({
     },
 
 
+    /**
+     * 点击付款收款或者完善账单按钮
+     */
     onPayClick:function(e){
         var accountId = e.target.dataset.accountid
         var targetId = e.target.dataset.targetid
 
         var account = this.data.accounts.findByAttr("id", accountId)
         var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+
+        //是付款或者收款按钮
+        if (target.value.canSettle == true){
+            APP.ajax({
+                url: APP.globalData.BaseUrl + '/account/settle',
+                data: {
+                    token: wx.getStorageSync("token"),
+                    targetId:targetId
+                },
+                success: function (res) {
+                    if(res.data.status==0){
+                        var account = this.data.accounts.findByAttr("id", accountId)
+                        var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+                        target.settled = true
+                        target.value.showBtn=false
+                        this.setData({
+                            accounts: this.data.accounts
+                        })
+                    }
+                    wx.showToast({
+                        title: res.data.msg
+                    })
+                    
+                }
+
+            }, this)
+            return
+        }
         
         var paidMember = account.members.findByAttr("memberId", target.paidId)
         var receiptMember = account.members.findByAttr("memberId", target.receiptId)
@@ -232,12 +263,14 @@ Page({
                             if (that.data.userInfo.id == paidMember.memberId && !target.settled){
                                 target.value.showBtn=true
                                 target.value.btnText = "付款"
+                                target.value.canSettle = true
                                 target.style.bg ="background-color: salmon;"
                                 return
                             }
                             if (that.data.userInfo.id == receiptMember.memberId && !target.settled) {
                                 target.value.showBtn = true
                                 target.value.btnText = "收款"
+                                target.value.canSettle = true
                                 target.style.bg = "background-color: SeaGreen;"
                                 return
                             }
