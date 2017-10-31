@@ -40,67 +40,12 @@
 .sample_item .group_icon{
     background-color: SeaGreen;
 }
+.sample_item .friend_icon{
+    padding: 0;
+}
 .border_bottom{
-    border-bottom: 0.5px solid #eee;
+    border-bottom: 1rpx solid #ccc;
 }
-
-
-
-
-.listitem {
-    width: 750rpx;
-    height: 200rpx;
-    position: relative;
-    overflow: hidden;
-    border-top: 10rpx solid white;
-}
-
-.item {
-    width: 750rpx;
-    display: flex;
-    height: 200rpx;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-
-    position: relative;
-    background-color: #eee;
-    
-}
-
-.icon {
-    width: 150rpx;
-    height: 150rpx;
-    border-radius: 20rpx;
-    margin: 20rpx;
-}
-
-.content {
-    width: 450rpx;
-    height: 200rpx;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-around;
-    align-items: flex-start;
-    
-    overflow: hidden;
-}
-
-
-.msg {
-    width: 450rpx;
-    font-size: 24rpx;
-    color: #006400;
-    text-overflow: ellipsis;
-     white-space:nowrap;
-     overflow:hidden;
-}
-.time {
-    font-size: 24rpx;
-    color: #000;
-}
-
-.status {
-    font-size: 20rpx;
-    color: #777;
+.border_bottom_dashed {
+    border-bottom: 1rpx dashed #ccc;
 }

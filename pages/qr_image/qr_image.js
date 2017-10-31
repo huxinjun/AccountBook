@@ -20,17 +20,20 @@ Page({
      */
     pullQrImage: function (option) {
         var urlPattener = "/" + (option.groupId ?"group":"user") +"/qr"
+        var data={}
+        if (option.groupId)
+            data.groupId = option.groupId.decode()
+        else
+            data.userId = option.userId.decode()
+        data.token = wx.getStorageSync("token")
         APP.ajax({
             url: APP.globalData.BaseUrl + urlPattener,
-            data: {
-                groupId: option.groupId,
-                token: wx.getStorageSync("token")
-            },
+            data: data,
 
             success: function (res) {
                 if (res.data.status == APP.globalData.resultcode.SUCCESS)
                     this.setData({
-                        qrImageUrl: APP.getImageUrl(res.data.msg)
+                        qrImageUrl: res.data.msg
                     })
             }
 

@@ -1,3 +1,4 @@
 {
-    "navigationBarTitleText": "所有分组"
+    "navigationBarTitleText": "所有分组",
+    "enablePullDownRefresh": true
 }

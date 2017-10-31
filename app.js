@@ -359,10 +359,10 @@ App({
                     that.reLogin({
                         context: this,
                         //为了避免无限请求,重写登录后不自动发起请求
-                        // success: function () {
-                        //     obj.data.token = wx.getStorageSync("token")
-                        //     that.ajax(obj, context);
-                        // }
+                        success: function () {
+                            // obj.data.token = wx.getStorageSync("token")
+                            // that.ajax(obj, context);
+                        }
                     });
                     return
                 }

@@ -1,3 +1,4 @@
 {
-    "navigationBarTitleText": "我的帐友"
+    "navigationBarTitleText": "我的帐友",
+    "enablePullDownRefresh": true
 }

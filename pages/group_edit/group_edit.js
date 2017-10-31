@@ -17,6 +17,7 @@ Page({
      * 获取分组信息
      */
     pullGroupInfo: function (groupId) {
+        
         APP.ajax({
             url: APP.globalData.BaseUrl + '/group/get',
             data: {
@@ -94,7 +95,7 @@ Page({
      */
     addMember: function (e) {
         wx.navigateTo({
-            url: '/pages/qr_image/qr_image?groupId=' + this.data.groupInfo.group.id,
+            url: '/pages/qr_image/qr_image?title=扫码进组&groupId=' + this.data.groupInfo.group.id.encode(),
         })
     },
 
@@ -167,14 +168,16 @@ Page({
         console.log('onLoad')
         var that = this
         this.setMemberVisible(false)
+
+        var groupId = option.groupId.decode()
         
-        if (!option.groupId) {
+        if (!groupId) {
             //添加分组
             this.changeButtonStatus("add_group_info_invalid")
             this.commitEnable(false)
         } else{
             //编辑分组
-            this.pullGroupInfo(option.groupId)
+            this.pullGroupInfo(groupId)
         }
     },
 
@@ -339,9 +342,11 @@ Page({
      */
     iconPreview:function(e){
         var page=this
+        if (!page.data.groupInfo.group.icon)
+            return
         wx.previewImage({
             urls: [
-                APP.getImageUrl(page.data.groupInfo.group.icon)
+                page.data.groupInfo.group.icon
             ],
         })
     }
