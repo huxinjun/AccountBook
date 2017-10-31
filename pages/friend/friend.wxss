@@ -30,7 +30,15 @@
     width: 70rpx;
     height: 70rpx;
     margin: 20rpx;
-    background-color: #006400;
+    padding: 15rpx;
+    box-sizing: border-box;
+    
+}
+.sample_item .new_friend_icon{
+    background-color: darkorange;
+}
+.sample_item .group_icon{
+    background-color: SeaGreen;
 }
 .border_bottom{
     border-bottom: 0.5px solid #eee;

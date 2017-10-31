@@ -12,7 +12,7 @@
 	"projectname": "%E5%B0%8F%E8%B4%A6%E6%9C%AC%E6%9C%AC",
 	"condition": {
 		"weapp": {
-			"current": -1,
+			"current": 9,
 			"list": [
 				{
 					"id": 0,
@@ -73,6 +73,12 @@
 					"name": "子账单",
 					"pathName": "pages/new_account_child/new_account_child",
 					"query": "account_id="
+				},
+				{
+					"id": -1,
+					"name": "好友列表",
+					"pathName": "pages/friend/friend",
+					"query": ""
 				}
 			]
 		},

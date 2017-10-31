@@ -2,12 +2,12 @@
 
 
     <view class="sample_item" hover-class='sample_item_hover' bindtap='gotoAddFriend'>
-        <image src="" ></image>
+        <image class='new_friend_icon' src="/img/friend_add.png" ></image>
         <text class="name">新的朋友</text>
     </view>
 
     <view class="sample_item border_bottom" hover-class='sample_item_hover' bindtap='gotoGroup'>
-        <image src=""></image>
+        <image class='group_icon' src="/img/group.png"></image>
         <text class="name">我的分组</text>
     </view>
 
