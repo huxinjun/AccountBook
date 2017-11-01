@@ -3,11 +3,25 @@
     <view class='banner'>
     
         <image class='bg' src="{{banner}}" mode='aspectFill'></image>
-        <image class='icon' src="{{userInfo.icon}}" mode='aspectFill'></image>
+        <view class="p2p_container">
+
+            <image class='p1' src='{{userInfo.icon}}' mode='aspectFill'></image>
+            <image class='pay_to' src='/img/pay_to2.png'></image>
+            <image class='p2' src='{{userInfo.icon}}' mode='aspectFill'></image> 
+
+            <text class='money'>1234.5元</text>
+        </view>
+        
         <view class='summary'>
             <text class='wait_paid'>待付:{{accountInfo.wait_paid}}元</text>
             <text class='wait_receipt'>待收:{{accountInfo.wait_receipt}}元</text>
             <text class='month_paidin'>月支出:{{accountInfo.month_paidin}}元</text>
+        </view>
+
+        <view class='summary_p2p'>
+            <text class='wait_paid'>待付:{{accountInfo.wait_paid}}元</text>
+            <text class='month_paidin'>月支出:{{accountInfo.month_paidin}}元</text>
+            <text class='all_paidin'>总支出:{{accountInfo.month_paidin}}元</text>
         </view>
     </view>
 
