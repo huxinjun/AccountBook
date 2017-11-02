@@ -134,6 +134,11 @@ Page({
 
         var that = this
 
+        // option.userId ="oCBrx0FreB-L8pIQM5_RYDGoWOJJ"
+        this.setData({
+            userId: option.userId
+        })
+
         this.onPullDownRefresh()
         
 
@@ -143,7 +148,7 @@ Page({
      * 下拉刷新
      */
     onPullDownRefresh:function(){
-        this.initAccountInfo()
+        this.initSummaryInfo()
         if (this.data.userInfo)
             this.initAccounts()
         else
@@ -172,15 +177,87 @@ Page({
     /**
      * 初始化账户统计信息
      */
-    initAccountInfo: function () {
+    initSummaryInfo: function () {
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/account/getSummarySimpleInfo',
+            url: APP.globalData.BaseUrl + '/account/getSummaryInfo',
             data: {
-                token: wx.getStorageSync("token")
+                token: wx.getStorageSync("token"),
+                userId: this.data.userId ? this.data.userId:""
             },
             success: function (res) {
+                var that=this
+                var summaryInfos=res.data.infos
+
+                if (this.data.userId){
+
+                    
+                    //两个人的账单统计信息处理
+                    summaryInfos.forEach(function(v,i){
+                        
+                        v.style={}
+                        v.value={}
+                        switch(v.name){
+                            case "wait_paid":
+                                
+                                if(v.number>=0){
+                                    that.data.isNeedPaid =true
+                                    that.setData({
+                                        needPaidNumber: v.number
+                                    })
+                                }
+                                else{
+                                    that.data.isNeedPaid = false
+                                    v.number = Math.abs(v.number)
+                                    that.setData({
+                                        needPaidNumber: v.number
+                                    })
+                                }
+                                v.style.visible="display:none;"
+                                break;
+                            case "month_paidin":
+                                v.value.name="月支出"
+                                v.value.unit="元"
+                                break;
+                            case "paidin":
+                                v.value.name = "总支出"
+                                v.value.unit = "元"
+                                break;
+                        }
+                    })
+
+
+                }else{
+                    //单人
+                    summaryInfos.forEach(function (v, i) {
+
+                        v.style = {}
+                        v.value = {}
+                        switch (v.name) {
+                            case "wait_paid":
+                                v.value.name = "待付"
+                                v.value.unit = "元"
+                                v.style.color = "color:Crimson;"
+                                break;
+                            case "wait_receipt":
+                                v.value.name = "待收"
+                                v.value.unit = "元"
+                                v.style.color = "color:SeaGreen;"
+                                break;
+                            case "month_paidin":
+                                v.value.name = "月支出"
+                                v.value.unit = "元"
+                                break;
+                            case "wait_edit":
+                                v.value.name = "待完善账单"
+                                v.value.unit = "笔"
+                                break;
+                        }
+                    })
+
+                }
+
                 this.setData({
-                    accountInfo: res.data
+                    summaryInfos: summaryInfos
                 })
             }
 
@@ -196,7 +273,10 @@ Page({
         APP.ajax({
             url: APP.globalData.BaseUrl + '/account/getAll',
             data: {
-                token: wx.getStorageSync("token")
+                token: wx.getStorageSync("token"),
+                userId: this.data.userId ? this.data.userId : "",
+                pageIndex:0,
+                pageSize:3
             },
 
             success: function (res) {

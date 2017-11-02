@@ -33,26 +33,60 @@
     position: absolute;
     left: 0;
     right: 0;
-    top:100rpx;
+    top:50rpx;
 }
-.banner .p2p_container image{
+.banner .p2p_container .p1{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner .p2p_container .p1 image{
     width: 100rpx;
     height: 100rpx;
     border-radius: 100rpx;
 }
+.banner .p2p_container .p1 text{
+    font-family: 'Tahoma';
+    font-weight: 700;
+}
+
+
 .banner .p2p_container .pay_to{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 20rpx;
+}
+.banner .p2p_container .pay_to image{
     width: 150rpx;
-    height: 43rpx;
-    margin-top: 20rpx;
-    border-radius: 0;
+    height: 66rpx;
 }
-.banner .p2p_container .money{
-    width: 750rpx;
+.banner .p2p_container .pay_to text{
+    font-family: 'Tahoma';
     font-size: 30rpx;
-    text-align: center;
-    position: absolute;
-    top:0;
 }
+
+
+.banner .p2p_container .p2{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100rpx;
+}
+.banner .p2p_container .p2 image{
+    width: 100rpx;
+    height: 100rpx;
+}
+.banner .p2p_container .p2 text{
+    font-family: 'Tahoma';
+    font-weight: 600;
+}
+
 .banner .summary{
     width: 575rpx;
 
@@ -71,36 +105,6 @@
     position: absolute;
     right: 0;
     bottom:0;
-}
-
-.banner .summary .wait_paid{
-    color: Crimson;
-}
-.banner .summary .wait_receipt{
-    color: SeaGreen;
-}
-
-.banner .summary_p2p{
-    width: 575rpx;
-
-    display: none;
-    flex-flow: column nowrap;
-    justify-content: flex-end;
-    align-items: flex-end;
-
-    padding-right: 10rpx;
-    padding-bottom: 5rpx;
-
-    color: black;
-    text-shadow: 2rpx 2rpx 2rpx snow;
-    font-size: 25rpx;
-
-    position: absolute;
-    right: 0;
-    bottom:0;
-}
-.banner .summary_p2p .wait_paid{
-    color: Crimson;
 }
 
 
