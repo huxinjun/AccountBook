@@ -88,6 +88,7 @@ Page({
                 url: APP.globalData.BaseUrl + '/account/settle',
                 data: {
                     token: wx.getStorageSync("token"),
+                    accountId: accountId,
                     targetId:targetId
                 },
                 success: function (res) {
