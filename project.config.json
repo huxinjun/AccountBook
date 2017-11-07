@@ -4,15 +4,38 @@
 		"urlCheck": false,
 		"es6": false,
 		"postcss": true,
-		"minified": true
+		"minified": true,
+		"newFeature": true
 	},
-	"compileType": "weapp",
+	"compileType": "miniprogram",
 	"libVersion": "1.5.4",
 	"appid": "wx9d9db1b5e01578f8",
 	"projectname": "%E5%B0%8F%E8%B4%A6%E6%9C%AC%E6%9C%AC",
 	"condition": {
-		"weapp": {
-			"current": 7,
+		"search": {
+			"current": -1,
+			"list": [
+				{
+					"name": "test",
+					"pathName": "",
+					"title": "",
+					"cacheKey": ""
+				}
+			]
+		},
+		"conversation": {
+			"current": 0,
+			"list": [
+				{
+					"name": "test",
+					"query": "",
+					"boxQI": "",
+					"service": {}
+				}
+			]
+		},
+		"miniprogram": {
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -79,28 +102,6 @@
 					"name": "好友列表",
 					"pathName": "pages/friend/friend",
 					"query": ""
-				}
-			]
-		},
-		"search": {
-			"current": -1,
-			"list": [
-				{
-					"name": "test",
-					"pathName": "",
-					"title": "",
-					"cacheKey": ""
-				}
-			]
-		},
-		"conversation": {
-			"current": 0,
-			"list": [
-				{
-					"name": "test",
-					"query": "",
-					"boxQI": "",
-					"service": {}
 				}
 			]
 		}

@@ -107,7 +107,7 @@
     </view>
 
 
-    <button bind:tap="uploadAccount">完善组内账单</button>
+    <button bindtap="uploadAccount">完善组内账单</button>
 </scroll-view>
 
 
