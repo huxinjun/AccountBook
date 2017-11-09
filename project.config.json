@@ -35,7 +35,7 @@
 			]
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 10,
 			"list": [
 				{
 					"id": 0,
@@ -102,6 +102,11 @@
 					"name": "好友列表",
 					"pathName": "pages/friend/friend",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "用户消息",
+					"pathName": "pages/msg_friend/msg_friend"
 				}
 			]
 		}

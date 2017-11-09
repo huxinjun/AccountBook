@@ -1,0 +1,111 @@
+@import "/global/dialog.wxss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: "黑体";
+    color: #272636;
+    background-color: snow;
+}
+
+
+.msg{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.msg .icon {
+    width: 80rpx;
+    height: 80rpx;
+    padding: 20rpx;
+}
+
+.account_card{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 20rpx;
+}
+
+.account_card .title_container{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.account_card .title_container .type_icon{
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.members{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.members image{
+    width: 50rpx;
+    height: 50rpx;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

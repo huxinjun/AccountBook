@@ -1,0 +1,27 @@
+<scorll-view class='container'>
+
+    <view class='msg' wx:for="{{msgs}}" wx:key="{{index}}" wx:for-item="msg">
+
+        <image class='icon' src="{{msg.icon}}"></image>
+
+        <view class='account_card'>
+
+            <text class='date'>{{msg.date}}</text>
+            <view class='title_container'>
+                <image class='type_icon' src="{{msg.icon}}"></image>
+                <text class='title'>{{msg.name}}</text>
+                <text class='tag paid_in'>{{msg.paidIn}}元</text>
+            </view>
+
+
+            <scroll-view class='members' scroll-x data-index='{{index}}'>
+                <image wx:for="{{msg.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}"></image>
+            </scroll-view>
+
+        </view>
+
+
+
+    </view>
+
+</scorll-view>
