@@ -154,11 +154,26 @@ App({
             this.unshift(v)
             this.onSizeChanged(this.length)
         }
+        //添加一个数组到当前数组顶端
+        Array.prototype.addAllToHead = function (arr) {
+            for (var i = arr.length-1;i>=0;i--)
+                this.unshift(arr[i])
+            this.onSizeChanged(this.length)
+        }
+
+
         //追加到末尾
         Array.prototype.append = function (v) {
             this.push(v)
             this.onSizeChanged(this.length)
         }
+        //追加数组到末尾
+        Array.prototype.appendAll = function (arr) {
+            for (var i = 0; i < arr.length; i++)
+                this.push(arr[i])
+            this.onSizeChanged(this.length)
+        }
+
         //移除某个索引的元素
         Array.prototype.remove = function (i) {
             this.splice(i, 1)

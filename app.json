@@ -33,7 +33,7 @@
                 "selectedIconPath": "img/tab/tab_home_select.png"
             },
             {
-                "pagePath": "pages/msg_invite/msg_invite",
+                "pagePath": "pages/msg_friend/msg_friend",
                 "text": "消息",
                 "iconPath": "img/tab/tab_message.png",
                 "selectedIconPath": "img/tab/tab_message_select.png"

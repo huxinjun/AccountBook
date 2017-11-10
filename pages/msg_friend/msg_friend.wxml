@@ -1,27 +1,84 @@
-<scorll-view class='container'>
+<view class='container' style='height:{{containerHeight}}px;'>
+    <scroll-view class='main' style='height:{{containerHeight}}px;' scroll-y bindscrolltoupper="initData" scroll-into-view="{{bottomMsgId}}">
 
-    <view class='msg' wx:for="{{msgs}}" wx:key="{{index}}" wx:for-item="msg">
+        <view class='msg' wx:for="{{msgs}}" wx:key="{{index}}" wx:for-item="msg" style='{{msg.style.align}}' id='_{{msg.id}}'>
 
-        <image class='icon' src="{{msg.icon}}"></image>
+            <image class='icon' src="{{msg.icon}}" wx:if="{{userInfo.id==msg.toId}}"></image>
 
-        <view class='account_card'>
+            <image class='arrow' src="/img/arrow_left.png" wx:if="{{userInfo.id==msg.toId}}"></image>
 
-            <text class='date'>{{msg.date}}</text>
-            <view class='title_container'>
-                <image class='type_icon' src="{{msg.icon}}"></image>
-                <text class='title'>{{msg.name}}</text>
-                <text class='tag paid_in'>{{msg.paidIn}}元</text>
+            <view class='content' wx:if="{{msg.msgType==31}}">
+
+                <view class='account_card'>
+                    <text class='date'>{{msg.date}}</text>
+                    <view class='title_container'>
+                        <image class='type_icon' src="{{msg.typeIcon}}"></image>
+                        <text>{{msg.name}}</text>
+                        <text style='margin-left:15rpx;'>花费</text>
+                        <text style='color:red;'>{{msg.paidIn}}</text>
+                        <text>元</text>
+                    </view>
+
+
+                    <scroll-view class='members' scroll-x data-index='{{index}}'>
+                        <image wx:for="{{msg.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}"></image>
+                    </scroll-view>
+
+                </view>
+
+                <text class="type">多人账单</text>
+
             </view>
 
 
-            <scroll-view class='members' scroll-x data-index='{{index}}'>
-                <image wx:for="{{msg.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}"></image>
-            </scroll-view>
+            <view class='content' wx:if="{{msg.msgType==32}}">
+
+                <view class='account_card'>
+
+                    <text class='date'>{{msg.date}}</text>
+                    <view class='title_container'>
+                        <image class='type_icon' src="{{msg.typeIcon}}"></image>
+                        <text>{{msg.name}}</text>
+                        <text style='margin-left:15rpx;'>应付</text>
+                        <text style='color:red;'>{{msg.shouldPay}}</text>
+                        <text>元</text>
+                    </view>
+
+
+                    <scroll-view class='members' scroll-x data-index='{{index}}'>
+                        <image wx:for="{{msg.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}"></image>
+                    </scroll-view>
+
+
+                </view>
+
+                <text class="type">组内账单</text>
+
+            </view>
+
+
+            <view class='content' wx:if="{{msg.msgType==33}}">
+
+                <view class='account_card'>
+
+                    <view class='title_container'>
+                        <text wx:if="{{userInfo.id==msg.paidId}}">支付了</text>
+                        <text wx:if="{{userInfo.id==msg.receiptId}}">收取了</text>
+                        <text style='color:red;'>{{msg.money}}</text>
+                        <text>元</text>
+                    </view>
+
+                </view>
+
+
+            </view>
+
+            <image class='arrow' src="/img/arrow_right.png" wx:if="{{userInfo.id==msg.fromId}}"></image>
+
+            <image class='icon' src="{{msg.icon}}" wx:if="{{userInfo.id==msg.fromId}}"></image>
+
 
         </view>
 
-
-
-    </view>
-
-</scorll-view>
+    </scroll-view>
+</view>

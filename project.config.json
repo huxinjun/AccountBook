@@ -106,7 +106,8 @@
 				{
 					"id": -1,
 					"name": "用户消息",
-					"pathName": "pages/msg_friend/msg_friend"
+					"pathName": "pages/msg_friend/msg_friend",
+					"query": ""
 				}
 			]
 		}

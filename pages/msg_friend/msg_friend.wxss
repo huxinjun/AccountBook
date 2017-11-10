@@ -1,22 +1,27 @@
 @import "/global/dialog.wxss";
 
 .container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: flex-start;
+    
     font-family: "黑体";
     color: #272636;
-    background-color: snow;
+    
+}
+.main{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #eaeaea;
 }
 
 
 .msg{
+    width: 750rpx;
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-start;
     justify-content: flex-start;
+    
 }
 
 .msg .icon {
@@ -25,35 +30,72 @@
     padding: 20rpx;
 }
 
-.account_card{
+.msg .arrow{
+    margin-top: 50rpx;
+    width: 20rpx;
+    height: 30rpx;
+}
+.msg .content{
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: column wrap;
     align-items: flex-start;
     justify-content: flex-start;
+    overflow: hidden;
+
+    background-color: snow;
+    border-radius: 10rpx;
     margin-top: 20rpx;
+    font-size: 25rpx;
 }
 
+.account_card{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+    
+    padding: 10rpx;
+    
+}
+.account_card .date{
+    
+    width: 200rpx;
+    font-weight: 700;
+    color: gray;
+}
 .account_card .title_container{
     display: flex;
     flex-flow: row nowrap;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
+    margin-top: 20rpx;
+    margin-bottom: 20rpx;
 }
 .account_card .title_container .type_icon{
-    width: 50rpx;
-    height: 50rpx;
+    width: 30rpx;
+    height: 30rpx;
 }
 
-.members{
+.account_card .members{
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-start;
     justify-content: flex-start;
 }
-.members image{
+.account_card .members image{
     width: 50rpx;
     height: 50rpx;
-    
+    border-radius: 50rpx;
+    margin-right: 10rpx;
+}
+.content .type{
+    width: 100%;
+    font-size: 20rpx;
+    border-top: 1rpx solid #cacaca;
+    padding: 5rpx;
+    padding-left: 10rpx;
+
 }
 
 
