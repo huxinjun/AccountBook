@@ -16,7 +16,8 @@ Page({
     },
 
     onShow: function () {
-
+        this.data.msgs=[]
+        this.data.nextPageIndex=0
         this.initSelfInfo()
 
     },

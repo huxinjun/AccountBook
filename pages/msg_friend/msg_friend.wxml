@@ -62,8 +62,8 @@
                 <view class='account_card'>
 
                     <view class='title_container'>
-                        <text wx:if="{{userInfo.id==msg.paidId}}">支付了</text>
-                        <text wx:if="{{userInfo.id==msg.receiptId}}">收取了</text>
+                        <text wx:if="{{userInfo.id==msg.paidId}}">向[{{msg.receiptName}}]支付了</text>
+                        <text wx:if="{{userInfo.id==msg.receiptId}}">收取了[{{msg.paidName}}]</text>
                         <text style='color:red;'>{{msg.money}}</text>
                         <text>元</text>
                     </view>

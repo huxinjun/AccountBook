@@ -108,6 +108,12 @@
 					"name": "用户消息",
 					"pathName": "pages/msg_friend/msg_friend",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "聊天列表",
+					"pathName": "pages/msg_chat/msg_chat",
+					"query": ""
 				}
 			]
 		}

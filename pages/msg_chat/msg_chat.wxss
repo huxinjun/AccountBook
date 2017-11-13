@@ -1,0 +1,65 @@
+
+
+.container {
+    display: flex;
+    box-sizing: border-box;
+    font-family: "微软雅黑";
+    position: absolute;
+    color: #272636;
+}
+
+.listitem {
+    width: 750rpx;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1rpx solid  #DEDEDE;
+}
+
+.item {
+    width: 750rpx;
+    height: 120rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    position: relative;
+    background-color: snow;
+}
+
+.icon {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 10rpx;
+    background-color: #f00;
+    margin-left: 10rpx;
+}
+
+.content {
+    width: 650rpx;
+    height: 80rpx;
+    margin-left: 10rpx;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    
+    overflow: hidden;
+}
+
+
+.msg {
+    font-size: 24rpx;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+
+    color: gray;
+}
+.time {
+    position: absolute;
+    right: 15rpx;
+    top:20rpx;
+    font-size: 24rpx;
+    color: gray;
+}

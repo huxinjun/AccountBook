@@ -3,6 +3,7 @@
         "pages/index/index",
         "pages/logs/logs",
         "pages/friend/friend",
+        "pages/msg_chat/msg_chat",
         "pages/msg_friend/msg_friend",
         "pages/msg_invite/msg_invite",
         "pages/new_account/new_account",
@@ -33,7 +34,7 @@
                 "selectedIconPath": "img/tab/tab_home_select.png"
             },
             {
-                "pagePath": "pages/msg_friend/msg_friend",
+                "pagePath": "pages/msg_chat/msg_chat",
                 "text": "消息",
                 "iconPath": "img/tab/tab_message.png",
                 "selectedIconPath": "img/tab/tab_message_select.png"

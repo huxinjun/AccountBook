@@ -1,0 +1,37 @@
+<scroll-view class="container" scroll-y bindscroll='outterScroll' style="height:{{containerHeight}}px;">
+
+    <!-- {{index}}: {{item.value}} -->
+    <view class="listitem" wx:for="{{datas}}" wx:key="{{index}}" style="{{item.style.height}}{{item.style.deleteTrans}}">
+
+        <view style="{{item.style.slider_container_pos}}{{item.style.slider_container_left}}">
+
+            <view class="item" style="{{item.style.sv_main}}" capture-bind:touchstart="eventCaptureStart" capture-bind:touchmove="eventCaptureMove" capture-bind:touchend="eventCaptureEnd" capture-bind:touchcancel="eventCaptureCancel" bind:tap="eventCaptureTap" catchtouchstart="{{eventStart}}"
+                catchtouchmove="{{eventMove}}" catchtouchend="{{eventEnd}}" catchtouchcancel="{{eventCancel}}" data-index="{{index}}">
+                <image class="icon" src="{{item.icon}}" mode='aspectFill' data-index="{{index}}"></image>
+
+                <view class="content" data-index="{{index}}">
+                    <text class="name" data-index="{{index}}">{{item.name}}</text>
+
+
+                    <text class="msg" data-index="{{index}}">{{item.content}}</text>
+                    
+
+                </view>
+
+                <text class="time" data-index="{{index}}">{{item.date}}</text>
+
+            </view>
+        </view>
+
+        <view style="{{item.style.slider}}">
+
+            <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
+            <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
+            <view style="{{item.style.layerStyle_1_0}}" bindtap="{{item.value.layerTap_1_0}}" data-index="{{index}}">{{item.value.layerText_1_0}}</view>
+        </view>
+
+
+    </view>
+
+
+</scroll-view>
