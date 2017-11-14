@@ -4,15 +4,51 @@ var util = require('../../utils/util.js')
 var isLoading = false
 Page({
     data: {
-        containerHeight: APP.systemInfo.windowHeight,
+        containerHeight: APP.systemInfo.screenHeight,
         msgs:[],
-        nextPageIndex:0
+        nextPageIndex:0,
+        userId:null
+    },
+
+    /**
+     * 点击用户头像
+     */
+    onUserIconClick:function(e){
+        var index = e.target.dataset.index
+        var msg = this.data.msgs[index]
+    },
+    /**
+     * 点击类型为[新账单]的消息
+     */
+    onNewAccountMsgClick: function (e) {
+        var index = e.target.dataset.index
+        var msg
+        if(index)
+            msg = this.data.msgs[index]
+        else
+            msg = this.data.msgs.findByAttr("accountId", e.target.dataset.acid)
+        wx.navigateTo({
+            url: '/pages/account/account?accountId=' + msg.accountId.encode()
+        })
+    },
+    /**
+     * 点击类型为[组内账单]的消息
+     */
+    onGroupAccountClick: function (e) {
+        var index = e.target.dataset.index
+        var msg = this.data.msgs[index]
+    },
+    /**
+     * 点击类型为[支付提醒]的消息
+     */
+    onPayMsgClick: function (e) {
+        var index = e.target.dataset.index
+        var msg = this.data.msgs[index]
     },
 
 
     onLoad: function (option) {
-        
-
+        this.data.userId=option.userId.decode()
     },
 
     onShow: function () {
@@ -66,7 +102,7 @@ Page({
             url: APP.globalData.BaseUrl + '/msg/user',
             data: {
                 token: wx.getStorageSync("token"),
-                userId:"oCBrx0FreB-L8pIQM5_RYDGoWOJJ",
+                userId: this.data.userId,
                 pageIndex: this.data.nextPageIndex
             },
             success: function (res) {
@@ -87,7 +123,11 @@ Page({
                 if (res.data.msgs.length>0)
                     this.setData({
                         msgs:this.data.msgs,
-                        bottomMsgId: "_"+this.data.msgs[this.data.msgs.length-1].id
+                        
+                    })
+                if (this.data.nextPageIndex==1)
+                    this.setData({
+                        bottomMsgId: "_" + this.data.msgs[this.data.msgs.length - 1].id
                     })
 
                 isLoading=false

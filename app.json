@@ -7,11 +7,12 @@
         "pages/msg_friend/msg_friend",
         "pages/msg_invite/msg_invite",
         "pages/new_account/new_account",
-        "pages/account_addition/account_addition",
+        "pages/account_group/account_group",
         "pages/group/group",
         "pages/group_edit/group_edit",
         "pages/qr_image/qr_image",
-        "pages/accounts/accounts"
+        "pages/accounts/accounts",
+        "pages/account/account"
     ],
     "window": {
         "navigationBarBackgroundColor": "#2BA245",

@@ -4,7 +4,7 @@ var slider
 var APP = getApp()
 Page({
     data: {
-        containerHeight: APP.systemInfo.windowHeight,
+        containerHeight: APP.systemInfo.windowHeight, 
         datas:null
 
     },
@@ -51,7 +51,19 @@ Page({
         })
     },
 
-
+    onItemClick:function(e){
+        var index = e.target.dataset.index
+        var item = this.data.datas[index]
+        if(item.type==3)
+            wx.navigateTo({
+                url: '/pages/msg_friend/msg_friend?userId='+item.userId.encode(),
+        })
+        else{
+            wx.showToast({
+                title: '待开发',
+            })
+        }
+    },
 
     //点击删除
     _delete: function (e) {
@@ -94,13 +106,14 @@ Page({
 
         this.slidersInfo.page = this
         slider = require('../../utils/slider.js').init(this.slidersInfo)
-        this.initData()
+        
     },
 
     onShow: function (options) {
         console.log('onShow')
         //切换页面时候需要重新初始化slider,因为require获取的是同一个对象
         slider.init(this.slidersInfo)
+        this.initData()
     },
 
     initData: function () {
@@ -112,6 +125,10 @@ Page({
             },
 
             success: function (res) {
+                this.data.datas = res.data.chats
+                res.data.chats.forEach(function(v,i){
+                    slider.setLayer(i, 0)
+                })
                 this.setData({
                     datas:res.data.chats
                 })

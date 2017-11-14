@@ -35,7 +35,7 @@
 			]
 		},
 		"miniprogram": {
-			"current": 10,
+			"current": 11,
 			"list": [
 				{
 					"id": 0,
@@ -113,6 +113,12 @@
 					"id": -1,
 					"name": "聊天列表",
 					"pathName": "pages/msg_chat/msg_chat",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "账单详情",
+					"pathName": "pages/account/account",
 					"query": ""
 				}
 			]

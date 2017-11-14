@@ -124,7 +124,7 @@ Page({
         console.log("targetId:" + targetId)
 
         wx.navigateTo({
-            url: '/pages/account_addition/account_addition?accountId=' + accountId.encode() + "&memberId=" + memberId.encode() + "&targetId=" + targetId.encode()
+            url: '/pages/account_group/account_group?accountId=' + accountId.encode() + "&memberId=" + memberId.encode() + "&targetId=" + targetId.encode()
         })
 
         
