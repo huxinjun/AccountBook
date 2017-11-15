@@ -1,0 +1,67 @@
+
+
+
+
+.banner{
+    width: 750rpx;
+    height: 200rpx;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+
+    color: snow;
+    background-color: #2BA245;
+
+    padding-left: 20rpx;
+    box-sizing: border-box;
+}
+
+.banner .todayPayTxt{
+    font-size: 36rpx;
+
+}
+.banner .todayPay{
+    font-size: 72rpx;
+    font-weight: 800;
+}
+
+
+
+
+.item{
+    width: 750rpx;
+    height: 100rpx;
+    background-color: #fff;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+.item_hover{
+    background-color: #dedede;
+    color: #000;
+}
+
+.item .flag{
+    width: 10rpx;
+    height: 20rpx;
+    background-color: green;
+    margin-left: 20rpx;
+    margin-right: 10rpx;
+}
+
+
+.item .name{
+    font-size: 25rpx;
+    color: #686868;
+
+}
+.item .arrow{
+  width: 30rpx;
+  height: 30rpx;
+  
+  position: absolute;
+  right: 30rpx;
+}

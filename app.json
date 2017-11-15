@@ -12,7 +12,8 @@
         "pages/group_edit/group_edit",
         "pages/qr_image/qr_image",
         "pages/accounts/accounts",
-        "pages/account/account"
+        "pages/account/account",
+        "pages/me/me"
     ],
     "window": {
         "navigationBarBackgroundColor": "#2BA245",
@@ -53,7 +54,7 @@
                 "selectedIconPath": "img/tab/tab_record_select.png"
             },
             {
-                "pagePath": "pages/logs/logs",
+                "pagePath": "pages/me/me",
                 "text": "俺的",
                 "iconPath": "img/tab/tab_me.png",
                 "selectedIconPath": "img/tab/tab_me_select.png"

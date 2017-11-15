@@ -35,7 +35,7 @@
 			]
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 13,
 			"list": [
 				{
 					"id": 0,
@@ -120,6 +120,11 @@
 					"name": "账单详情",
 					"pathName": "pages/account/account",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/me/me"
 				}
 			]
 		}
