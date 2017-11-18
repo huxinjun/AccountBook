@@ -35,7 +35,7 @@
 			]
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -124,7 +124,8 @@
 				{
 					"id": -1,
 					"name": "我的",
-					"pathName": "pages/me/me"
+					"pathName": "pages/me/me",
+					"query": ""
 				}
 			]
 		}

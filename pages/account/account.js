@@ -90,7 +90,6 @@ Page({
                     if (res.data.status == 0) {
                         var account = this.data.account
                         var target = account.payResult[0].payTarget.findByAttr("id", targetId)
-                        target.settled = true
                         target.value.showBtn = false
                         this.setData({
                             account: this.data.account
@@ -240,14 +239,14 @@ Page({
                          *      如果是付款:付款
                          *      如果是组并且没有完善子账单:完善账单
                          */
-                        if (that.data.userInfo.id == paidMember.memberId && !target.settled) {
+                        if (that.data.userInfo.id == paidMember.memberId && target.waitPaidMoney>0) {
                             target.value.showBtn = true
                             target.value.btnText = "付款"
                             target.value.canSettle = true
                             target.style.bg = "background-color: salmon;"
                             return
                         }
-                        if (that.data.userInfo.id == receiptMember.memberId && !target.settled) {
+                        if (that.data.userInfo.id == receiptMember.memberId && target.waitPaidMoney > 0) {
                             target.value.showBtn = true
                             target.value.btnText = "收款"
                             target.value.canSettle = true

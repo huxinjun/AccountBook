@@ -73,12 +73,17 @@
                         <image class='p1' src='{{target.paidIcon}}'></image>
                         <image class='pay_to' src='/img/pay_to.png'></image>
                         <image class='p2' src='{{target.receiptIcon}}'></image>
-                        <text>支付</text>
-                        <text class='money'>{{target.money}}</text>
-                        <text>元</text>
+                        <text >支付</text>
+                        <text class='money' wx:if="{{target.waitPaidMoney>0}}">{{target.waitPaidMoney}}</text>
+                        <text class='money' wx:if="{{target.waitPaidMoney==0}}">{{target.money}}</text>
+                        <text >元</text>
+
+                        <text wx:if="{{target.offsetCount>0}}">({{target.offsetCount}}笔账单</text>
+                        <text wx:if="{{target.offsetCount>0 && target.offsetMoney==target.money}}">完全抵扣)</text>
+                        <text wx:else>抵扣了{{target.offsetMoney}}元)</text>
 
 
-                        <image class='settled' src='/img/completed.png' wx:if="{{target.settled}}"></image>
+                        <image class='settled' src='/img/completed.png' wx:if="{{target.waitPaidMoney==0}}"></image>
 
                         <button wx:if="{{target.value.showBtn}}" bindtap='onPayClick' style="{{target.style.bg}}" data-targetid='{{target.id}}' data-accountid='{{account.id}}'>{{target.value.btnText}}</button>
 
