@@ -1,6 +1,7 @@
 var APP = getApp()
 var dialog = require("../../utils/dialog.js")
 var util = require('../../utils/util.js')
+var isLoading = false
 Page({
     data: {
         containerHeight: APP.systemInfo.windowHeight,
@@ -150,9 +151,27 @@ Page({
     onPullDownRefresh:function(){
         this.initSummaryInfo()
         if (this.data.userInfo)
-            this.initAccounts()
+            this.getAccounts()
         else
             this.initSelfInfo()
+    },
+
+    /**
+     * 到底部,加载更多
+     */
+    onReachBottom: function () {
+        if (isLoading)
+            return
+
+        if (!this.data.hasNextPage)
+            return
+        
+        isLoading = true
+
+        this.getAccounts(this.data.nextPageIndex)
+
+    },
+    onPageScroll: function () {
     },
 
     /**
@@ -168,7 +187,7 @@ Page({
                 this.setData({
                     userInfo: res.data
                 })
-                this.initAccounts()
+                this.getAccounts()
             }
 
         }, this)
@@ -268,18 +287,19 @@ Page({
     /**
      * 初始化账目列表数据
      */
-    initAccounts: function () {
+    getAccounts: function (pageIndex) {
         var that=this
         APP.ajax({
             url: APP.globalData.BaseUrl + '/account/getAll',
             data: {
                 token: wx.getStorageSync("token"),
                 userId: this.data.userId ? this.data.userId : "",
-                pageIndex:0,
-                pageSize:3
+                pageIndex: pageIndex!=undefined ? pageIndex:0,
+                pageSize:5
             },
 
             success: function (res) {
+
                 res.data.accounts.forEach(function (v, i) {
                     v.style = {}
                     v.value = {
@@ -374,12 +394,21 @@ Page({
                     }
 
                 })
+
+                this.data.hasNextPage = res.data.hasNextPage
+                this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : res.data.pageIndex
+
+                if (this.data.accounts==undefined)
+                    this.data.accounts=[]
+                this.data.accounts.appendAll(res.data.accounts)
+
                 this.setData({
-                    accounts: res.data.accounts
+                    accounts: this.data.accounts
                 })
 
-                // console.log(res.data.accounts)
+                console.log(this.data.accounts)
                 wx.stopPullDownRefresh()
+                isLoading = false
             }
 
         }, this)
