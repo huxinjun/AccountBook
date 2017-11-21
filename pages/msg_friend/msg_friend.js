@@ -92,7 +92,6 @@ Page({
         if (e)
             if (!this.data.hasNextPage)
                 return
-
             
         
         
@@ -117,7 +116,7 @@ Page({
                         v.typeIcon = APP.globalData.typeList.findByAttr("id", v.type).icon
                 })
                 this.data.hasNextPage = res.data.hasNextPage
-                this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : res.data.pageIndex
+                this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : 99999
                 this.data.msgs.addAllToHead(res.data.msgs)
 
                 if (res.data.msgs.length>0)

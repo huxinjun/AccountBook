@@ -295,7 +295,7 @@ Page({
                 token: wx.getStorageSync("token"),
                 userId: this.data.userId ? this.data.userId : "",
                 pageIndex: pageIndex!=undefined ? pageIndex:0,
-                pageSize:5
+                pageSize:3
             },
 
             success: function (res) {
@@ -396,7 +396,7 @@ Page({
                 })
 
                 this.data.hasNextPage = res.data.hasNextPage
-                this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : res.data.pageIndex
+                this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : 99999
 
                 if (this.data.accounts==undefined)
                     this.data.accounts=[]
