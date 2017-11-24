@@ -269,7 +269,7 @@
     width: 640rpx;
 
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: flex-start;
     font-size: 25rpx;
@@ -283,17 +283,61 @@
 
 
 .pay .item{
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    color: #6B6B6B;
+    font-size: 15rpx;
+    box-sizing: border-box;
+
+    padding: 0 15rpx ;
+    
+}
+.pay .item .main{
     height: 80rpx;
+    width: 100%;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
     color: #6B6B6B;
-    font-size: 15rpx;
+    box-sizing: border-box;
 
     padding: 0 15rpx ;
     
 }
+.pay .item .offsets{
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: yellow;
+
+    padding: 0 15rpx ;
+    
+}
+.pay .item .offsets .offset{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: greenyellow;
+    padding-top: 15rpx;
+    padding-bottom: 15rpx;
+}
+
+.offset .type_icon{
+    width: 35rpx;
+    height: 35rpx;
+    margin-right: 0;
+}
+
+
+
+
 .pay .item .p1{
     width: 50rpx;
     height: 50rpx;

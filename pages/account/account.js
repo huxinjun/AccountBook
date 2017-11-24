@@ -126,9 +126,11 @@ Page({
 
 
     onLoad: function (option) {
-        this.setData({
-            accountId: option.accountId.decode()
-        })
+        this.data.accountId ='KCWUOJDKxsVAopmbUf6E_A=='
+
+        // this.setData({
+        //     accountId: option.accountId.decode()
+        // })
 
         this.onPullDownRefresh()
 
@@ -229,6 +231,23 @@ Page({
                         var receiptMember = v.originMembers.findByAttr("memberId", target.receiptId)
                         target.paidIcon = paidMember.memberIcon
                         target.receiptIcon = receiptMember.memberIcon
+
+
+                        //处理抵消
+                        if (target.offsets) {
+                            target.offsets.forEach(function (v, i) {
+                                v.value = {}
+                                v.style = {}
+                                //类型图标
+                                v.value.typeIcon = APP.globalData.typeList.findByAttr("id", v.type).icon
+
+                                //名称
+                                if (v.name.length > 5)
+                                    v.value.name = v.name.substr(0, 5) + "..."
+                                else
+                                    v.value.name = v.name
+                            })
+                        }
                         //确定是否显示操作按钮,及显示的文字
                         /**
                          * 显示收款,付款,完善账单按钮逻辑:
@@ -267,6 +286,8 @@ Page({
                             target.style.bg = "background-color: DarkCyan;"
                             return
                         }
+
+                        
 
                     })
 
