@@ -410,12 +410,15 @@
 
 .pay .item{
     height: 80rpx;
+    width: 100%;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
     color: #6B6B6B;
     font-size: 15rpx;
+    position: relative;
+    box-sizing: border-box;
 
     padding: 0 15rpx ;
     
@@ -448,15 +451,22 @@
 }
 .pay .item button{
     font-size: 15rpx;
+    height: 30rpx;
     position: absolute;
     right: 25rpx;
+    top:25rpx;
     color: white;
+
+    line-height: 30rpx;
 }
 .pay .item .settled{
     width: 30rpx;
     height: 30rpx;
     position: absolute;
     right: 50rpx;
+    top:25rpx;
+    
+
 }
 
 

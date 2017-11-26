@@ -14,7 +14,7 @@
                     <image class="icon" src="{{item.icon}}" data-index="{{index}}"></image>
 
                     <view class="content" data-index="{{index}}">
-                        <text class="name" data-index="{{index}}">邀请人：{{item.nickname}}</text>
+                        <text class="name" data-index="{{index}}">{{item.nickname}}</text>
 
 
                         <text class="msg" data-index="{{index}}">{{item.msg}}</text>

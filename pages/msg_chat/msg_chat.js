@@ -59,8 +59,8 @@ Page({
                 url: '/pages/msg_friend/msg_friend?userId='+item.userId.encode(),
         })
         else{
-            wx.showToast({
-                title: '待开发',
+            wx.navigateTo({
+                url: '/pages/msg_invite/msg_invite'
             })
         }
     },

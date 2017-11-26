@@ -42,9 +42,8 @@
 }
 
 .title text {
-    align-self: center;
     color: #f00;
-    font-size: 50rpx;
+    font-size: 40rpx;
     margin-right: 20rpx;
 }
 
@@ -316,6 +315,7 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: flex-start;
+    position: relative;
 }
 
 /**成员规则和其他标签*/
@@ -346,6 +346,7 @@
 
     position: absolute;
     right: 0;
+    top: 45rpx;
     margin-right: 20rpx;
 
     z-index: 1;

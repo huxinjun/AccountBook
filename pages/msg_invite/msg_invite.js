@@ -15,10 +15,10 @@ Page({
             {
                 name: "状态一",
                 //条目高度
-                height: 200,
+                height: 100,
                 buttons: [
                     {
-                        text: "接受1",
+                        text: "接受",
                         color: "white",
                         colorBg: "#2ba245",
                         colorShadow: "black",
@@ -27,7 +27,7 @@ Page({
                         visible: true
                     },
                     {
-                        text: "拒绝2",
+                        text: "拒绝",
                         color: "white",
                         colorBg: "#cdcdcd",
                         colorShadow: "black",
@@ -40,10 +40,10 @@ Page({
             {
                 name: "状态二",
                 //条目高度
-                height: 200,
+                height: 100,
                 buttons: [
                     {
-                        text: "删除3",
+                        text: "删除",
                         color: "white",
                         colorBg: "#f00",
                         colorShadow: "black",

@@ -53,7 +53,7 @@
     flex-flow: column wrap;
     align-items: flex-start;
     justify-content: flex-start;
-    
+    box-sizing: border-box;
     
     padding: 10rpx;
     

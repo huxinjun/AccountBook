@@ -286,7 +286,7 @@
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-start;
     color: #6B6B6B;
     font-size: 15rpx;
@@ -309,14 +309,14 @@
     
 }
 .pay .item .offsets{
-    width: 100%;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     justify-content: flex-start;
-    background-color: yellow;
-
+    background-color: #d9d9d9;
+    border-radius: 10rpx;
     padding: 0 15rpx ;
+    margin-bottom: 10rpx;
     
 }
 .pay .item .offsets .offset{
@@ -324,7 +324,7 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
-    background-color: greenyellow;
+    
     padding-top: 15rpx;
     padding-bottom: 15rpx;
 }
@@ -333,6 +333,11 @@
     width: 35rpx;
     height: 35rpx;
     margin-right: 0;
+}
+.offset_arrow{
+    width: 30rpx;
+    height: 20rpx;
+    margin-right: 250rpx;
 }
 
 

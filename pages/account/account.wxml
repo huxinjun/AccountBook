@@ -90,6 +90,7 @@
                             <button wx:if="{{target.value.showBtn}}" bindtap='onPayClick' style="{{target.style.bg}}" data-targetid='{{target.id}}' data-accountid='{{account.id}}'>{{target.value.btnText}}</button>
                         </view>
 
+                        <image class='offset_arrow' src='/img/arrow_up_d9.png' wx:if="{{target.offsets && target.offsets.length>0}}"></image>
                         <view class='offsets'>
                             <view class='offset' wx:for="{{target.offsets}}" wx:for-item="offset" wx:key="{{index}}">
                                     <text>{{offset.date}}</text>

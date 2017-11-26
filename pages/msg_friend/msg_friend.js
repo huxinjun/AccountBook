@@ -23,7 +23,7 @@ Page({
     onNewAccountMsgClick: function (e) {
         var index = e.target.dataset.index
         var msg
-        if(index)
+        if(index!=undefined)
             msg = this.data.msgs[index]
         else
             msg = this.data.msgs.findByAttr("accountId", e.target.dataset.acid)

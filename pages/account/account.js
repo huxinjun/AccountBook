@@ -126,11 +126,11 @@ Page({
 
 
     onLoad: function (option) {
-        this.data.accountId ='KCWUOJDKxsVAopmbUf6E_A=='
+        // this.data.accountId ='KCWUOJDKxsVAopmbUf6E_A=='
 
-        // this.setData({
-        //     accountId: option.accountId.decode()
-        // })
+        this.setData({
+            accountId: option.accountId.decode()
+        })
 
         this.onPullDownRefresh()
 

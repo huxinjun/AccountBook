@@ -13,16 +13,15 @@
 
 .listitem {
     width: 750rpx;
-    height: 200rpx;
+    height: 100rpx;
     position: relative;
     overflow: hidden;
-    border-top: 10rpx solid white;
 }
 
 .item {
     width: 750rpx;
     display: flex;
-    height: 200rpx;
+    height: 100rpx;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
@@ -33,18 +32,18 @@
 }
 
 .icon {
-    width: 150rpx;
-    height: 150rpx;
+    width: 80rpx;
+    height: 80rpx;
     border-radius: 20rpx;
     margin: 20rpx;
 }
 
 .content {
-    width: 450rpx;
-    height: 200rpx;
+    height: 100rpx;
     display: flex;
+    flex-grow: 1;
     flex-flow: column nowrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
     
     overflow: hidden;
@@ -58,13 +57,16 @@
     text-overflow: ellipsis;
      white-space:nowrap;
      overflow:hidden;
+     display: none;
 }
 .time {
-    font-size: 24rpx;
-    color: #000;
+
+    font-size: 20rpx;
+    color: #888;
 }
 
 .state {
     font-size: 20rpx;
     color: #777;
+    margin-right: 10rpx;
 }
