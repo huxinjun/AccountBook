@@ -31,6 +31,10 @@ Page({
 
         var index = e.target.dataset.index
         var account = this.data.accounts[index]
+
+        if (index == undefined)
+            return
+
         account.value.showMemberDetail = !account.value.showMemberDetail
 
         if (account.value.showMemberDetail) {
@@ -152,10 +156,10 @@ Page({
         this.setData({
             userId: option.userId
         })
+    },
 
+    onShow: function (option) {
         this.onPullDownRefresh()
-
-
     },
 
     /**

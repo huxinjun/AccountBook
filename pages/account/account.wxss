@@ -414,6 +414,22 @@
 
 
 
+.delete{
+  width: 690rpx;
+  height: 80rpx;
+  margin-top: 30rpx;
+  background-color: #fa0000;
+  color: white;
+  line-height: 80rpx;
+  text-align: center;
+
+  display: none;
+}
+.delete_hover{
+  background-color: #f00;
+  text-shadow: 5rpx 5rpx 5rpx black;
+}
+
 
 
 

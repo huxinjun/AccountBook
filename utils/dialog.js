@@ -7,6 +7,7 @@ var tempTip = {
     page: this,
     title: "标题",
     content: "提示文字",
+    contentColor: "#f00",
     callback: {
         onConfirm: function (formId) {},
         onCancel: function () {}
@@ -17,6 +18,7 @@ var tempInput = {
     page: this,
     title: "标题",
     content: "提示文字",
+    contentColor: "#f00",
     //配置了inputType(只能选text,number,digit,idcard其中一个值)时才会显示输入框
     inputType: "number",
     //输入框最长输入字符个数
@@ -88,8 +90,6 @@ function showDialog(dialogInfo) {
         this.memberChooserDialogSetting()
     else
         this.tipDialogSetting()
-
-
 
     //内容模糊
     this.dialogInfo.value.blurClass = "blur"
@@ -174,6 +174,17 @@ function tipDialogSetting() {
     this.dialogInfo.style.contentDisplay = ""
     this.dialogInfo.style.inputDisplay = "display:none;"
     this.dialogInfo.style.membersDisplay = "display:none;"
+
+
+    var that = this
+    //点击确定
+    this.page.formSubmit = function (e) {
+        var callback = that.dialogInfo.callback
+        if (callback && callback.onConfirm){
+            callback.onConfirm.call(that.page, that.dialogInfo.inputValue, e.detail.formId)
+            that.dismissDialog();
+        }
+    }
     
 }
 

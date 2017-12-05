@@ -34,21 +34,21 @@
 
     <view>
 
-        <view class='account' wx:for="{{accounts}}" wx:key="{{index}}" wx:for-item="account" bindtap='onAccountItemClick'>
+        <view class='account' wx:for="{{accounts}}" wx:key="{{index}}" wx:for-item="account" bindtap='onAccountItemClick' data-index='{{index}}'>
 
-            <image class='account_icon' src="{{account.user_icon}}"></image>
+            <image class='account_icon' src="{{account.user_icon}}" data-index='{{index}}'></image>
 
-            <view class='account_main'>
+            <view class='account_main' data-index='{{index}}'>
 
-                <view class='title_container'>
-                    <image class='type_icon' src="{{account.icon}}"></image>
+                <view class='title_container' data-index='{{index}}'>
+                    <image class='type_icon' src="{{account.icon}}" data-index='{{index}}'></image>
                     <text class='title' data-index='{{index}}'>{{account.name}}</text>
-                    <text class='tag paid_in'>{{account.paidIn}}元</text>
-                    <text class='tag inner_group' wx:if="{{account.isPrivate}}">个人账单</text>
-                    <text class='date'>{{account.date}}</text>
+                    <text class='tag paid_in' data-index='{{index}}'>{{account.paidIn}}元</text>
+                    <text class='tag inner_group' wx:if="{{account.isPrivate}}" data-index='{{index}}'>个人账单</text>
+                    <text class='date' data-index='{{index}}'>{{account.date}}</text>
                 </view>
 
-                <text class='content'>{{account.description}}</text>
+                <text class='content' data-index='{{index}}'>{{account.description}}</text>
 
 
 
@@ -57,7 +57,7 @@
 
                 <view class="pics" wx:if="{{account.imgs!=null}}">
 
-                    <image class='pic' wx:for="{{account.imgs}}" wx:for-item="img" wx:key="{{index}}" src="{{img}}" mode="aspectFill" data-index="{{index}}" data-accountid="{{account.id}}" bindtap='iconPreview'></image>
+                    <image class='pic' wx:for="{{account.imgs}}" wx:for-item="img" wx:key="{{index}}" src="{{img}}" mode="aspectFill" data-index="{{index}}" bindtap='iconPreview'></image>
 
                 </view>
 
@@ -65,9 +65,9 @@
 
                 <view class='members' wx:if="{{account.members.length>1}}">
 
-                    <image class='pull_down' src='/img/pull_down.png' style='{{account.style.membersPullDownTrans}}' bindtap='onMembersPullDownClick' data-index='{{index}}'></image>
+                    <image class='pull_down' src='/img/pull_down.png' style='{{account.style.membersPullDownTrans}}' bindtap='onMembersPullDownClick'></image>
 
-                    <scroll-view class='simple' scroll-x style='{{account.style.membersSimpleOpacity}}' bindtap='onMembersPullDownClick' data-index='{{index}}'>
+                    <scroll-view class='simple' scroll-x style='{{account.style.membersSimpleOpacity}}' catchtap='onMembersPullDownClick' data-index='{{index}}'>
                         <image wx:for="{{account.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}"></image>
                     </scroll-view>
 

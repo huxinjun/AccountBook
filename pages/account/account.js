@@ -52,6 +52,42 @@ Page({
         })
     },
 
+
+    /**
+     * 点击删除按钮
+     */
+    onDeleteClick:function(e){
+        var that=this
+        var dialogInfo = {
+            page: this,
+            title: "提示",
+            content: "确定要删除这个账单吗?删除后将不可恢复!",
+            contentColor:"color:#f00;",
+            callback: {
+                onConfirm: function () {
+                    //请求服务器删除
+                    APP.ajax({
+                        url: APP.globalData.BaseUrl + '/account/delete',
+                        data: {
+                            token: wx.getStorageSync("token"),
+                            accountId: that.data.accountId
+                        },
+                        success: function (res) {
+                            wx.showToast({
+                                title: res.data.msg
+                            })
+                            wx.navigateBack()
+                        }
+
+                    }, this)
+
+                }
+            }
+        }
+
+        dialog.showDialog(dialogInfo)
+    },
+
     /**
      * 预览头像
      */
@@ -293,7 +329,10 @@ Page({
 
                 }
                 this.setData({
-                    account: res.data
+                    account: res.data,
+                    style:{
+                        deleteVisible: res.data.userId == this.data.userInfo.id ? "display:inherit;" :"display:none;"
+                    }
                 })
 
                 // console.log(this.data.account)

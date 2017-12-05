@@ -132,6 +132,9 @@
     border-bottom: 1rpx solid #DEDEDE;
     padding-bottom: 30rpx;
 }
+.account_hover{
+    background: #f1f1f1;
+}
 .account_icon{
     width: 60rpx;
     height: 60rpx;
