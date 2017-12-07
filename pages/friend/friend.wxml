@@ -12,9 +12,9 @@
     </view>
 
 
-    <view class="sample_item border_bottom_dashed" hover-class='sample_item_hover' wx:for="{{friends}}" bindtap=''>
-        <image class='friend_icon' src="{{item.icon}}"></image>
-        <text class="name">{{item.nickname}}</text>
+    <view class="sample_item border_bottom_dashed" hover-class='sample_item_hover' wx:for="{{friends}}" bindtap='onFriendClick' data-index='{{index}}'>
+        <image class='friend_icon' src="{{item.icon}}" data-index='{{index}}'></image>
+        <text class="name" data-index='{{index}}'>{{item.nickname}}</text>
     </view>
 
 

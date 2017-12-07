@@ -12,6 +12,7 @@
         "pages/group_edit/group_edit",
         "pages/qr_image/qr_image",
         "pages/accounts/accounts",
+        "pages/accounts_2p/accounts_2p",
         "pages/account/account",
         "pages/me/me"
     ],

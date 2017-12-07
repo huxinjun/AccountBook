@@ -36,7 +36,14 @@ Page({
      */
     onGroupAccountClick: function (e) {
         var index = e.target.dataset.index
-        var msg = this.data.msgs[index]
+        var msg
+        if (index != undefined)
+            msg = this.data.msgs[index]
+        else
+            msg = this.data.msgs.findByAttr("accountId", e.target.dataset.acid)
+        wx.navigateTo({
+            url: '/pages/account/account?accountId=' + msg.accountId.encode()
+        })
     },
     /**
      * 点击类型为[支付提醒]的消息
