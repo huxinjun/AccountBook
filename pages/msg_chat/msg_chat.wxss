@@ -63,3 +63,16 @@
     font-size: 24rpx;
     color: gray;
 }
+.unreadCount{
+    width: 30rpx;
+    height: 30rpx;
+    position: absolute;
+    right: 15rpx;
+    bottom:20rpx;
+    font-size: 20rpx;
+    background-color: #f00;
+    border-radius: 30rpx;
+    color: snow;
+    text-align: center;
+    line-height: 30rpx;
+}

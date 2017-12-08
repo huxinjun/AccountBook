@@ -304,7 +304,7 @@ function end(e) {
     var isOpen = Math.abs(item.value.slider_container_left) > 75 ? true : false
 
 
-
+    // console.log("slider.end.iOpen:"+isOpen)
     if (isOpen)
         this.open(index)
     else
@@ -412,7 +412,7 @@ function open(index) {
  */
 function isSliderOpen(index){
     var item = this.slidersInfo.page.getSliderData(index)
-    return item.value.isSliderOpen
+    return item.value.lastSliderOpen
 }
 
 /**

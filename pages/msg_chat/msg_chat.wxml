@@ -19,15 +19,15 @@
                 </view>
 
                 <text class="time" data-index="{{index}}">{{item.date}}</text>
+                <text class="unreadCount" data-index="{{index}}" wx:if="{{item.unreadCount>0}}" data-index="{{index}}">{{item.unreadCount}}</text>
 
             </view>
         </view>
 
         <view style="{{item.style.slider}}">
 
-            <view style="{{item.style.layerStyle_0_0}}" bindtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
-            <view style="{{item.style.layerStyle_0_1}}" bindtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
-            <view style="{{item.style.layerStyle_1_0}}" bindtap="{{item.value.layerTap_1_0}}" data-index="{{index}}">{{item.value.layerText_1_0}}</view>
+            <view style="{{item.style.layerStyle_0_0}}" catchtap="{{item.value.layerTap_0_0}}" data-index="{{index}}">{{item.value.layerText_0_0}}</view>
+            <view style="{{item.style.layerStyle_0_1}}" catchtap="{{item.value.layerTap_0_1}}" data-index="{{index}}">{{item.value.layerText_0_1}}</view>
         </view>
 
 

@@ -63,7 +63,8 @@
 }
 .banner .p2p_container .pay_to image{
     width: 150rpx;
-    height: 66rpx;
+    height: 30rpx;
+    display:none;
 }
 .banner .p2p_container .pay_to text{
     font-family: 'Tahoma';

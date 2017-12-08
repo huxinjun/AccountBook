@@ -11,7 +11,7 @@ Page({
     onFriendClick:function(e){
         var index = e.target.dataset.index
         var friend = this.data.friends[index]
-debugger
+
         wx.navigateTo({
             url: '/pages/accounts_2p/accounts_2p?userId=' + friend.id.encode()
         })

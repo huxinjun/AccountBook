@@ -9,6 +9,7 @@ Page({
 
     },
 
+
     slidersInfo : {
         //N种状态
         layers: [
@@ -22,7 +23,7 @@ Page({
                         color: "white",
                         colorBg: "red",
                         colorShadow: "black",
-                        onClick: "acceptInvite",
+                        onClick: "makeDeleted",
                         width: 150,
                         visible: true
                     },
@@ -31,7 +32,7 @@ Page({
                         color: "white",
                         colorBg: "#cdcdcd",
                         colorShadow: "black",
-                        onClick: "refuseInvite",
+                        onClick: "makeReaded",
                         width: 150,
                         visible: true
                     }
@@ -54,6 +55,12 @@ Page({
     onItemClick:function(e){
         var index = e.target.dataset.index
         var item = this.data.datas[index]
+
+        if (slider.isSliderOpen(index)) {
+            slider.close(index)
+            return
+        }
+
         if(item.type==3)
             wx.navigateTo({
                 url: '/pages/msg_friend/msg_friend?userId='+item.userId.encode(),
@@ -66,32 +73,41 @@ Page({
     },
 
     //点击删除
-    _delete: function (e) {
+    makeDeleted: function (e) {
+        console.log("makeDeleted")
+        var index = e.target.dataset.index
+        var chat = this.data.datas[index]
+
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/msg/invite/' + opt,
+            url: APP.globalData.BaseUrl + '/msg/deleteAll',
 
             data: {
-                token: wx.getStorageSync("token")
+                token: wx.getStorageSync("token"),
+                userId: chat.userId
             },
-
             success: function (res) {
-
+                this.initData()
             }
 
         }, this)
     },
 
     //点击标记为已读
-    makeReaded: function (e, opt) {
+    makeReaded: function (e) {
+        console.log("makeReaded")
+        var index = e.target.dataset.index
+        var chat = this.data.datas[index]
+
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/msg/invite/' + opt,
+            url: APP.globalData.BaseUrl + '/msg/readAll',
 
             data: {
-                token: wx.getStorageSync("token")
+                token: wx.getStorageSync("token"),
+                userId:chat.userId
             },
 
             success: function (res) {
-                
+                this.initData()
             }
 
         }, this)

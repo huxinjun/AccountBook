@@ -167,11 +167,12 @@ Page({
      */
     onPullDownRefresh: function () {
         this.data.accounts = []
-        this.initSummaryInfo()
+        
         if (this.data.userInfo)
             this.getAccounts()
         else
             this.initSelfInfo()
+        this.initOtherInfo()
     },
 
     /**
@@ -202,10 +203,31 @@ Page({
                 token: wx.getStorageSync("token")
             },
             success: function (res) {
+                res.data.style={}
                 this.setData({
                     userInfo: res.data
                 })
-                this.getAccounts()
+                this.getAccounts() 
+                this.initSummaryInfo()
+            }
+
+        }, this)
+    },
+
+    /**
+     * 初始化第二个人的信息:id,name,icon
+     */
+    initOtherInfo: function () {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/user/get',
+            data: {
+                token: wx.getStorageSync("token"),
+                userId: this.data.userId
+            },
+            success: function (res) {
+                this.setData({
+                    otherUserInfo: res.data
+                })
             }
 
         }, this)
@@ -238,15 +260,19 @@ Page({
 
                                 if (v.number >= 0) {
                                     that.data.isNeedPaid = true
+                                    that.data.userInfo.style.payToRotate="display:inherit;"
                                     that.setData({
-                                        needPaidNumber: v.number
+                                        needPaidNumber: v.number,
+                                        userInfo: that.data.userInfo
                                     })
                                 }
                                 else {
                                     that.data.isNeedPaid = false
                                     v.number = Math.abs(v.number)
+                                    that.data.userInfo.style.payToRotate = "display:inherit;transform:rotate(180deg);"
                                     that.setData({
-                                        needPaidNumber: v.number
+                                        needPaidNumber: v.number,
+                                        userInfo: that.data.userInfo
                                     })
                                 }
                                 v.style.visible = "display:none;"

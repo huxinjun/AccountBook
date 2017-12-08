@@ -12,11 +12,11 @@
 
             <view class='pay_to' wx:if="{{userId}}">
                 <text class='money' >{{needPaidNumber}}元</text>
-                <image class='pay_to' src='/img/pay_to2.png' wx:if="{{userId}}"></image>
+                <image class='pay_to' src='/img/pay_to2.png' wx:if="{{userId}}" style='{{userInfo.style.payToRotate}}'></image>
             </view>
 
             <view class='p2' wx:if="{{userId}}">
-                <image class='p2' src='{{userInfo.icon}}' mode='aspectFill'></image> 
+                <image class='p2' src='{{otherUserInfo.icon}}' mode='aspectFill'></image> 
                 <text >江江</text>
             </view>
             
