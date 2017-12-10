@@ -1,12 +1,14 @@
-
+var APP = getApp()
 //我的
 Page({
     data: {
+        formIds: [],
+        notifValidCount:'0条'
     },
 
-    gotoHandSpeed:function(e){
+    gotoNotificationSetting:function(e){
         wx.navigateTo({
-            url: '/pages/hand_speed/hand_speed',
+            url: '/pages/notification/notification',
         })
     },
 
@@ -21,7 +23,9 @@ Page({
      * 下拉刷新
      */
     onPullDownRefresh: function () {
+
         // this.initData()
+        this.initNotifValidCount()
     },
 
 
@@ -39,5 +43,33 @@ Page({
             }
 
         }, this)
+        
     },
+
+    /**
+     * 初始化数据
+     */
+    initNotifValidCount: function () {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/notif/getValidCount',
+            data: {
+                token: wx.getStorageSync("token")
+            },
+            success: function (res) {
+                var count=res.data.count
+                if (count==-1)
+                    this.setData({
+                        notifValidCount:"未开启"
+                    })
+                else
+                    this.setData({
+                        notifValidCount: count+"条"
+                    })
+
+                wx.stopPullDownRefresh()
+            }
+
+        }, this)
+
+    }
 })

@@ -9,7 +9,7 @@ var tempTip = {
     content: "提示文字",
     contentColor: "#f00",
     callback: {
-        onConfirm: function (formId) {},
+        onConfirm: function () {},
         onCancel: function () {}
     }
 }
@@ -25,7 +25,7 @@ var tempInput = {
     maxLength: 10,
     callback: {
         //表单id,输入内容
-        onConfirm: function (inputValue, formId) { },
+        onConfirm: function (inputValue) { },
         onCancel: function () { }
     }
 }
@@ -178,10 +178,10 @@ function tipDialogSetting() {
 
     var that = this
     //点击确定
-    this.page.formSubmit = function (e) {
+    this.page.ok = function (e) {
         var callback = that.dialogInfo.callback
         if (callback && callback.onConfirm){
-            callback.onConfirm.call(that.page,e.detail.formId)
+            callback.onConfirm.call(that.page)
             that.dismissDialog();
         }
     }
@@ -210,12 +210,12 @@ function inputDialogSetting(){
     this.dialogInfo.style.inputDisplay = ""
     this.dialogInfo.style.membersDisplay = "display:none;"
     //点击确定
-    this.page.formSubmit = function (e) {
+    this.page.ok = function (e) {
         var callback = that.dialogInfo.callback
         //回调中没有完成输入操作时会主动返回false,不返回则认为是完成
         var completed = true
         if (callback && callback.onConfirm)
-            completed=callback.onConfirm.call(that.page,that.dialogInfo.inputValue, e.detail.formId)
+            completed=callback.onConfirm.call(that.page,that.dialogInfo.inputValue)
         //false时是回调中主动返回的,undefined则是回调中未返回任何东西,那么默认需要关闭
         if (completed == true || completed==undefined)
             that.dismissDialog();
@@ -306,7 +306,7 @@ function memberChooserDialogSetting() {
 
 
     //点击确定,动画后执行成功回调
-    this.page.formSubmit = function () {
+    this.page.ok = function () {
         that.dismissDialog(function(){
             var callback = that.dialogInfo.callback
 

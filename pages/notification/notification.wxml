@@ -1,0 +1,18 @@
+<!--logs.wxml-->
+<form class="container" bindsubmit="onAddFormId" report-submit="true">
+
+    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' >
+        <view class='flag'></view>
+        <text class="name">是否开启</text>
+        <text class="desc">(关闭后,好友记账后将无法收到微信通知)</text>
+        <switch checked="{{isOpen}}" bindchange='onSwitchChanged'></switch>
+    </view>
+
+    <button class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' form-type='submit'>
+        <view class='flag'></view>
+        <text class="name">可用数量</text>
+        <text class="desc">(点击增加条数)</text>
+        <text class="count">{{notifValidCount}}</text>
+    </button>
+    
+</form>

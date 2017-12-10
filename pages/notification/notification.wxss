@@ -1,48 +1,27 @@
 
-
 button{
     border-radius: 0;
     line-height: 100rpx;
+    margin: 0;
+    padding: 0;
 }
 button::after{
     border: none;
 }
 
-.btn{
-    width: 300rpx;
-    height: 300rpx;
-    border-radius: 300rpx;
-    background: #ddd;
-    margin-top: 30rpx;
-}
-.btn_hover{
-    background: #ccc;
-}
-
-.speed{
-    font-size: 25rpx;
-    margin: 20rpx;
-    color: #686868;
-    display: block;
-}
-
-.desc{
-    font-size: 25rpx;
-    margin: 20rpx;
-    color: #ccc;
-    display: block;
-}
-
-
 .item{
     width: 750rpx;
-    height: 50rpx;
+    height: 100rpx;
     background-color: #fff;
 
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
+}
+.item_hover{
+    background-color: #dedede;
+    color: #000;
 }
 
 .item .flag{
@@ -57,5 +36,24 @@ button::after{
 .item .name{
     font-size: 25rpx;
     color: #686868;
+
+}
+.item .desc{
+    font-size: 18rpx;
+    color: #ccc;
+
+}
+
+.item switch{
+    position: absolute;
+    right: 10rpx;
+}
+
+
+.item .count{
+    font-size: 18rpx;
+    color: #ccc;
+    position: absolute;
+    right: 30rpx;
 
 }

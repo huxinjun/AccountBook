@@ -27,7 +27,7 @@ Page({
         this.setData({
             list: this.data.list
         })
-
+        // option.groupId ='MvZOjzjjBzgBzwyn3ImUcA=='
         console.log(option)
         if (option.friendId)
             this.showAddFriend(option.friendId)
@@ -55,9 +55,8 @@ Page({
                     title: "提示",
                     content: "确定加[" + res.data.nickname + "]为帐友吗?",
                     callback: {
-                        onConfirm: function (formId) {
-                            console.log("formId:"+formId)
-                            this.inviteUser(formId, friendId)
+                        onConfirm: function () {
+                            this.inviteUser(friendId)
                         },
                         onCancel: function () { }
                     }
@@ -89,8 +88,8 @@ Page({
                     title: "提示",
                     content: "确定加入[" + groupName + "]组吗?",
                     callback: {
-                        onConfirm: function (formId) {
-                            this.joinGroup(formId,groupId, groupName)
+                        onConfirm: function () {
+                            this.joinGroup(groupId, groupName)
                         },
                         onCancel: function () { }
                     }
@@ -111,17 +110,16 @@ Page({
     /**
      * 邀请用户
      */
-    inviteUser: function (formId, friendId) {
+    inviteUser: function (friendId) {
         var that = this
         wx.login({
             success: function (res) {
                 APP.ajax({
                     url: APP.globalData.BaseUrl + "/user/invite",
                     data: {
-                        formId: formId,
                         token: wx.getStorageSync('token'),
                         code: res.code,
-                        openid: friendId
+                        friendId: friendId
                     },
                     success: function (res) {
                         wx.showToast({
@@ -138,11 +136,10 @@ Page({
     /**
     * 加入分组
     */
-    joinGroup: function (formId,groupId, groupName) {
+    joinGroup: function (groupId, groupName) {
         APP.ajax({
             url: APP.globalData.BaseUrl + "/group/join",
             data: {
-                formId: formId,
                 groupId: groupId,
                 token: wx.getStorageSync("token")
             },

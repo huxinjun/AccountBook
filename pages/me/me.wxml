@@ -1,5 +1,5 @@
-<!--logs.wxml-->
-<view class="container">
+
+<view class="container" bindsubmit="onAddFormId" report-submit="true">
     <view class="banner">
         <text class='todayPayTxt'>今日支出:</text>
         <text class='todayPay'>88.88</text>
@@ -18,10 +18,10 @@
         <image class="arrow" src="/img/right_arrow_normal.png"></image>
     </view>
 
-    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' bindtap='gotoHandSpeed'>
+    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' bindtap='gotoNotificationSetting'>
         <view class='flag'></view>
-        <text class="name">测手速</text>
-        <image class="arrow" src="/img/right_arrow_normal.png"></image>
+        <text class="name">提醒消息</text>
+        <text class="count">{{notifValidCount}}</text>
     </view>
 
     

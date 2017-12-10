@@ -129,8 +129,8 @@
 				},
 				{
 					"id": 14,
-					"name": "测手速",
-					"pathName": "pages/hand_speed/hand_speed",
+					"name": "微信提醒消息设置",
+					"pathName": "pages/notification/notification",
 					"query": "",
 					"scene": 1044,
 					"shareInfo": {}

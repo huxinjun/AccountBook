@@ -1,4 +1,12 @@
-
+button{
+    border-radius: 0;
+    line-height: 100rpx;
+    margin: 0;
+    padding: 0;
+}
+button::after{
+    border: none;
+}
 
 
 
@@ -56,6 +64,18 @@
 .item .name{
     font-size: 25rpx;
     color: #686868;
+
+}
+.item .desc{
+    font-size: 18rpx;
+    color: #ccc;
+
+}
+.item .count{
+    font-size: 18rpx;
+    color: #ccc;
+    position: absolute;
+    right: 30rpx;
 
 }
 .item .arrow{

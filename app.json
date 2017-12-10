@@ -15,7 +15,7 @@
         "pages/accounts_2p/accounts_2p",
         "pages/account/account",
         "pages/me/me",
-        "pages/hand_speed/hand_speed"
+        "pages/notification/notification"
     ],
     "window": {
         "navigationBarBackgroundColor": "#2BA245",

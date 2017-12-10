@@ -88,16 +88,13 @@ Page({
     },
 
     acceptInvite: function (e) {
-        var formId = e.detail.formId
-        this.option(e, "accept", formId)
+        this.option(e, "accept")
     },
     refuseInvite: function (e) {
-        var formId = e.detail.formId
-        this.option(e, "refuse", formId)
+        this.option(e, "refuse")
     },
 
-    option: function (e, opt, formId) {
-        console.log("formId:"+formId)
+    option: function (e, opt) {
         console.log(e)
         APP.ajax({
             url: APP.globalData.BaseUrl + '/msg/invite/' + opt,
@@ -105,7 +102,6 @@ Page({
             data: {
                 token: wx.getStorageSync("token"),
                 msgId: this.data.datas[e.detail.target.dataset.index].id,
-                formId: formId
             },
 
             success: function (res) {
