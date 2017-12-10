@@ -56,6 +56,7 @@ Page({
                     content: "确定加[" + res.data.nickname + "]为帐友吗?",
                     callback: {
                         onConfirm: function (formId) {
+                            console.log("formId:"+formId)
                             this.inviteUser(formId, friendId)
                         },
                         onCancel: function () { }
@@ -89,7 +90,7 @@ Page({
                     content: "确定加入[" + groupName + "]组吗?",
                     callback: {
                         onConfirm: function (formId) {
-                            this.joinGroup(groupId, groupName)
+                            this.joinGroup(formId,groupId, groupName)
                         },
                         onCancel: function () { }
                     }
@@ -124,7 +125,7 @@ Page({
                     },
                     success: function (res) {
                         wx.showToast({
-                            title: '邀请已发出,请耐心等待接受',
+                            title: res.data.msg,
                         })
                     }
 
@@ -137,17 +138,18 @@ Page({
     /**
     * 加入分组
     */
-    joinGroup: function (groupId, groupName) {
+    joinGroup: function (formId,groupId, groupName) {
         APP.ajax({
             url: APP.globalData.BaseUrl + "/group/join",
             data: {
+                formId: formId,
                 groupId: groupId,
                 token: wx.getStorageSync("token")
             },
 
             success: function (res) {
                 wx.showToast({
-                    title: '已成功加入到' + groupName,
+                    title: res.data.msg,
                 })
             }
 

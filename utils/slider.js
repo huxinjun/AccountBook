@@ -21,6 +21,12 @@ function init(slidersInfo) {
         that.eventEnd = true
         that.calculated=true
     }
+    page.onPageScroll = function (e) {
+        // console.log("垂直滚动")
+        //垂直滚动不响应
+        that.eventEnd = true
+        that.calculated = true
+    }
     page.eventCaptureStart=function(e){
         that.captureStart.call(that,e)
     }
@@ -368,8 +374,18 @@ function close(index) {
 
     this.slidersInfo.page.refreshSliderData()
 
+    var backUpPage = this.slidersInfo.page
+
     //解决垂直滑动时右下角隐约可见slider的buttons
     setTimeout(function () {
+        if (backUpPage != this.slidersInfo.page){
+            //前一个页面有侧滑，点击后会执行close,然后200ms后执行这段代码
+            //如果下一个页面也有侧滑，那么this.slidersInfo.page.getSliderData(index)
+            //这段代码获取的是下一个页面的数据，但是下一个页面很可能没有数据，导致出现访问了undefined
+            console.log('！！！新页面了')
+            return
+        }
+
         var item = this.slidersInfo.page.getSliderData(index)
         item.style.slider = "display:none;"
         item.style.slider_container_left = 'left:0;'
@@ -379,7 +395,6 @@ function close(index) {
         if (this.slidersInfo.page.onSliderClose && item.value.lastSliderOpen)
             this.slidersInfo.page.onSliderClose(index)
 
-        
         
     }.bind(this), 200)
 }

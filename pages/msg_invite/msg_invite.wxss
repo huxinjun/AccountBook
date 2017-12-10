@@ -1,14 +1,18 @@
 /**index.wxss**/
 
 .container {
-    height: 750rpx;
-    /* display: flex; *//* flex-direction: column;
-  align-items: center;
-  justify-content: space-between; */
     box-sizing: border-box;
     font-family: "微软雅黑";
     position: absolute;
     color: #272636;
+}
+
+.container button{
+    border-radius: 0;
+    line-height: 100rpx;
+}
+.container button::after{
+    border: none;
 }
 
 .listitem {
@@ -16,6 +20,7 @@
     height: 100rpx;
     position: relative;
     overflow: hidden;
+    border-bottom: 1rpx solid #eee;
 }
 
 .item {
@@ -27,7 +32,7 @@
     align-items: center;
 
     position: relative;
-    background-color: #eee;
+     background-color: snow; 
     
 }
 
@@ -70,3 +75,5 @@
     color: #777;
     margin-right: 10rpx;
 }
+
+

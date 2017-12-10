@@ -1,12 +1,13 @@
 //app.js
 var util = require("/utils/util.js")
+var loging
 App({
     globalData: {
-        BaseUrl: 'http://xzbenben.cn/AccountBook',
+        // BaseUrl: 'http://xzbenben.cn/AccountBook',
         //BaseUrl: 'http://192.168.10.17:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
-        // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
+        BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         resultcode: {
             SUCCESS: 0,
             INVALID_TOKEN: 1,
@@ -127,7 +128,6 @@ App({
         wx.setStorageSync('logs', logs)
         // wx.removeStorageSync("token")
 
-
         var that = this
         wx.getSystemInfo({
             success: function (res) {
@@ -241,13 +241,19 @@ App({
 
 
     login: function (success) {
-
+        //避免几个请求同时发现未登录,都去登录了
+        if (loging)
+            return
+        loging=true
         var that = this
         wx.login({
             success: function (res) {
                 //首先拿到js_code
                 // console.log(res.code)
                 that.loginInMyServer(res.code, success)
+            },
+            complete:function(res){
+                loging=false
             }
         })
     },
@@ -285,6 +291,9 @@ App({
                 }
                 that.onLoginSuccess(success);
             },
+            complete:function(res){
+                loging=false
+            }
 
 
         })

@@ -3,6 +3,13 @@
 Page({
     data: {
     },
+
+    gotoHandSpeed:function(e){
+        wx.navigateTo({
+            url: '/pages/hand_speed/hand_speed',
+        })
+    },
+
     onLoad: function () {
 
     },
@@ -14,7 +21,7 @@ Page({
      * 下拉刷新
      */
     onPullDownRefresh: function () {
-        this.initData()
+        // this.initData()
     },
 
 

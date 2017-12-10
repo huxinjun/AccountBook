@@ -37,7 +37,24 @@ Page({
                         visible: true
                     }
                 ]
-            }
+            },
+            {
+                name: "邀请消息的侧滑菜单",
+                //条目高度
+                height: 120,
+                buttons: [
+                    {
+                        text: "删除",
+                        color: "white",
+                        colorBg: "red",
+                        colorShadow: "black",
+                        onClick: "makeDeleted",
+                        width: 150,
+                        visible: true
+                    }
+                ]
+            },
+            
         ]
     },
 
@@ -143,7 +160,10 @@ Page({
             success: function (res) {
                 this.data.datas = res.data.chats
                 res.data.chats.forEach(function(v,i){
-                    slider.setLayer(i, 0)
+                    if (v.name =='邀请消息')
+                        slider.setLayer(i, 1)
+                    else
+                        slider.setLayer(i, 0)
                 })
                 this.setData({
                     datas:res.data.chats

@@ -2,6 +2,7 @@
 //获取应用实例
 var slider
 var APP = getApp()
+var isLoading = false
 Page({
     data: {
         containerHeight: APP.systemInfo.windowHeight,
@@ -56,7 +57,7 @@ Page({
             {
                 name: "状态三",
                 //条目高度
-                height: 200
+                height: 100
             }
         ]
     },
@@ -80,34 +81,39 @@ Page({
         var index = e.target.dataset.index
         slider.updateLayer(index,[
             {
-                text:"成功!!!"
+                text:"删除成功"
             }
         ])
-        // this.option(e, "delete")
+        this.option(e, "delete")
     },
 
     acceptInvite: function (e) {
-        this.option(e, "accept")
+        var formId = e.detail.formId
+        this.option(e, "accept", formId)
     },
     refuseInvite: function (e) {
-        this.option(e, "refuse")
+        var formId = e.detail.formId
+        this.option(e, "refuse", formId)
     },
 
-    option: function (e, opt) {
+    option: function (e, opt, formId) {
+        console.log("formId:"+formId)
+        console.log(e)
         APP.ajax({
             url: APP.globalData.BaseUrl + '/msg/invite/' + opt,
 
             data: {
                 token: wx.getStorageSync("token"),
-                msgId: this.data.datas[e.target.dataset.index].id
+                msgId: this.data.datas[e.detail.target.dataset.index].id,
+                formId: formId
             },
 
             success: function (res) {
-                var index = e.target.dataset.index
+                var index = e.detail.target.dataset.index
                 switch (res.data.status) {
                     case APP.globalData.resultcode.SUCCESS:
                         var item = this.data.datas[index]
-                        slider.setLayer(item, 1)
+                        slider.setLayer(index, 1)
                         if (opt == "accept") {
                             item.state = 11
                             item.stateStr = "已接受"
@@ -140,7 +146,7 @@ Page({
         var that = this
 
         this.slidersInfo.page = this
-        slider = require('../../utils/slider.js').init(this.slidersInfo)
+        slider = require('../../utils/slider.js')
         this.initData()
     },
 
@@ -150,38 +156,70 @@ Page({
         slider.init(this.slidersInfo)
     },
 
-    initData: function () {
+
+    /**
+     * 到底部,加载更多
+     */
+    onReachBottom: function () {
+
+        if (isLoading)
+            return
+
+        if (!this.data.hasNextPage)
+            return
+
+        isLoading = true
+
+        this.initData(this.data.nextPageIndex)
+
+    },
+
+    initData: function (pageIndex) {
         APP.ajax({
             url: APP.globalData.BaseUrl + '/msg/invite',
 
             data: {
                 token: wx.getStorageSync("token"),
+                pageIndex: pageIndex != undefined ? pageIndex : 0,
+                pageSize: 15,
                 /**type必须:1帐友邀请,2加入组邀请*/
-                type:1
+                type: 1
             },
 
             success: function (res) {
                 if (res.data.status == APP.globalData.resultcode.SUCCESS) {
-                    this.data.datas = res.data.datas
-                    res.data.datas.forEach(function (v, i) {
-                      
+
+                    //添加到屁股后面
+                    if (this.data.datas == undefined)
+                        this.data.datas = []
+                    this.data.datas.appendAll(res.data.datas)
+                    
+                    this.data.datas.forEach(function (v, i) {
+                        v.style = v.style ? v.style:{}
+                        v.value = v.value ? v.value : {}
                         switch (v.state) {
                             case 0:
                             case 1:
-                                slider.setLayer(i,0)
+                                slider.setLayer(i, 0)
                                 break;
                             case 11:
                                 v.stateStr = "已接受"
-                                slider.setLayer(i,1)
+                                slider.setLayer(i, 1)
                                 break;
                             case 12:
                                 v.stateStr = "已拒绝"
-                                slider.setLayer(i,1)
+                                slider.setLayer(i, 1)
                                 break;
                         }
-
                     })
+
+                    
+
                     this.refreshSliderData()
+
+                    this.data.hasNextPage = res.data.hasNextPage
+                    this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : 99999
+                    isLoading = false
                 }
 
             }

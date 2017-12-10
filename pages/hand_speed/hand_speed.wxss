@@ -1,0 +1,61 @@
+
+
+button{
+    border-radius: 0;
+    line-height: 100rpx;
+}
+button::after{
+    border: none;
+}
+
+.btn{
+    width: 300rpx;
+    height: 300rpx;
+    border-radius: 300rpx;
+    background: #ddd;
+    margin-top: 30rpx;
+}
+.btn_hover{
+    background: #ccc;
+}
+
+.speed{
+    font-size: 25rpx;
+    margin: 20rpx;
+    color: #686868;
+    display: block;
+}
+
+.desc{
+    font-size: 25rpx;
+    margin: 20rpx;
+    color: #ccc;
+    display: block;
+}
+
+
+.item{
+    width: 750rpx;
+    height: 50rpx;
+    background-color: #fff;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.item .flag{
+    width: 10rpx;
+    height: 20rpx;
+    background-color: green;
+    margin-left: 20rpx;
+    margin-right: 10rpx;
+}
+
+
+.item .name{
+    font-size: 25rpx;
+    color: #686868;
+
+}

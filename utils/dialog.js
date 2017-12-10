@@ -181,7 +181,7 @@ function tipDialogSetting() {
     this.page.formSubmit = function (e) {
         var callback = that.dialogInfo.callback
         if (callback && callback.onConfirm){
-            callback.onConfirm.call(that.page, that.dialogInfo.inputValue, e.detail.formId)
+            callback.onConfirm.call(that.page,e.detail.formId)
             that.dismissDialog();
         }
     }

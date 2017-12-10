@@ -1,0 +1,19 @@
+<!--logs.wxml-->
+<form class="container" bindsubmit="onButtonClick" report-submit="true">
+
+    <text class='speed'>平均手速{{speed==undifined?0:speed}}次/秒</text>
+    <text class='speed'>{{timeleft==undifined?'剩余时间15s':timeleft==0?'结束了':'剩余时间'+timeleft+'s'}}</text>
+    <button class="btn" hover-class='btn_hover' form-type='submit'></button>
+    <text class='desc'>●程序猿鸽鸽有个特别的爱好(寻找手速最快的淫)</text>
+    <text class='desc'>●手速达标方可解锁软件的全部功能</text>
+    <text class='desc'>●成绩每周会重置一次</text>
+    <text class='desc'>●点击圆圈内开始计分,总时长15s</text>
+    <text class='desc'>●本软件完全免费</text>
+
+
+    <view class="item" style='border-bottom:1rpx solid #eee;' bindtap=''>
+        <view class='flag'></view>
+        <text class="name">全球排行榜</text>
+    </view>
+    
+</form>

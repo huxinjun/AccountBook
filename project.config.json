@@ -41,7 +41,7 @@
 					"id": 0,
 					"name": "主页好友邀请",
 					"pathName": "pages/index/index",
-					"query": "friendId=oCBrx0FreB-L8pIQM5_RYDGoWOKQ",
+					"query": "friendId=oCBrx0ExpR4J4DM1qM342xQ4HYWQ",
 					"scene": 1044,
 					"shareInfo": {}
 				},
@@ -126,6 +126,14 @@
 					"name": "我的",
 					"pathName": "pages/me/me",
 					"query": ""
+				},
+				{
+					"id": 14,
+					"name": "测手速",
+					"pathName": "pages/hand_speed/hand_speed",
+					"query": "",
+					"scene": 1044,
+					"shareInfo": {}
 				}
 			]
 		}

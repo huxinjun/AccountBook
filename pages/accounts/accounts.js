@@ -414,9 +414,7 @@ Page({
 
                 })
 
-                this.data.hasNextPage = res.data.hasNextPage
-                this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : 99999
-
+                
                 if (this.data.accounts == undefined)
                     this.data.accounts = []
                 this.data.accounts.appendAll(res.data.accounts)
@@ -427,6 +425,9 @@ Page({
 
                 console.log(this.data.accounts)
                 wx.stopPullDownRefresh()
+
+                this.data.hasNextPage = res.data.hasNextPage
+                this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : 99999
                 isLoading = false
             }
 
