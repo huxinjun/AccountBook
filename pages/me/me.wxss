@@ -46,6 +46,8 @@ button::after{
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
+
+    position: relative;
 }
 .item_hover{
     background-color: #dedede;
@@ -79,9 +81,34 @@ button::after{
 
 }
 .item .arrow{
-  width: 30rpx;
-  height: 30rpx;
-  
-  position: absolute;
-  right: 30rpx;
+    width: 30rpx;
+    height: 30rpx;
+    
+    position: absolute;
+    right: 30rpx;
+}
+
+.item .contact{
+    width: 750rpx;
+    height: 100rpx;
+    background-color: transparent;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    position: absolute;
+    left: 0;
+    top:0;
+
+    overflow: hidden;
+}
+.item .contact contact-button{
+    opacity: 0;
+}
+.item .contact .showCB{
+    opacity: 0.3;
+    position: absolute;
+    right: 20rpx;
 }

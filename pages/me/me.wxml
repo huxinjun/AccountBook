@@ -1,4 +1,3 @@
-
 <view class="container" bindsubmit="onAddFormId" report-submit="true">
     <view class="banner">
         <text class='todayPayTxt'>今日支出:</text>
@@ -24,5 +23,42 @@
         <text class="count">{{notifValidCount}}</text>
     </view>
 
-    
+    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;'>
+        <view class='flag'></view>
+        <text class="name">客服</text>
+
+        <view class="contact">
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button type='default-light' />
+            <contact-button class='showCB'/>
+        </view>
+
+    </view>
+
+    <!-- <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;'>
+        <view class='flag'></view>
+        <text class="name">客服</text>
+        <contact-button class="count"/>
+    </view> -->
+
+
+
+
 </view>

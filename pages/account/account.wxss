@@ -51,6 +51,10 @@
     font-weight: 600;
 }
 .tag{
+    height: 30rpx;
+    line-height: 30rpx;
+    vertical-align: middle;
+
     font-size: 20rpx;
     border-radius: 5rpx;
     padding-left: 5rpx;

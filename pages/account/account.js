@@ -178,7 +178,7 @@ Page({
      */
     onPullDownRefresh: function () {
         if (this.data.userInfo)
-            this.initAccounts()
+            this.initAccount()
         else
             this.initSelfInfo()
     },
@@ -217,6 +217,7 @@ Page({
             },
 
             success: function (res) {
+                
                 var v=res.data
                 v.style = {}
                 v.value = {

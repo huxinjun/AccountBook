@@ -101,11 +101,11 @@ Page({
 
             data: {
                 token: wx.getStorageSync("token"),
-                msgId: this.data.datas[e.detail.target.dataset.index].id,
+                msgId: this.data.datas[e.target.dataset.index].id,
             },
 
             success: function (res) {
-                var index = e.detail.target.dataset.index
+                var index = e.target.dataset.index
                 switch (res.data.status) {
                     case APP.globalData.resultcode.SUCCESS:
                         var item = this.data.datas[index]

@@ -4,7 +4,7 @@ var util = require('../../utils/util.js')
 var isLoading = false
 Page({
     data: {
-        containerHeight: APP.systemInfo.screenHeight,
+        containerHeight: APP.systemInfo.platform == 'android' ? APP.systemInfo.windowHeight:APP.systemInfo.screenHeight,
         msgs:[],
         nextPageIndex:0,
         userId:null
@@ -55,6 +55,7 @@ Page({
 
 
     onLoad: function (option) {
+        console.log(APP.systemInfo)
         this.data.userId=option.userId.decode()
     },
 
