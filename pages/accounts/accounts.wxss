@@ -151,10 +151,13 @@
     margin-left: 10rpx;
 }
 .paid_in{
-    background-color: #2BA245;
+    background-color:#D02090;
 }
-.inner_group{
-    background-color: deeppink;
+.in_come{
+    background-color:#2BA245;
+}
+.is_private{
+    background-color: #FF8C00;
 }
 .date{
     font-size: 25rpx;

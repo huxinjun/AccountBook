@@ -192,10 +192,7 @@
     margin-left: 10rpx;
 }
 .paid_in{
-    background-color: #2BA245;
-}
-.inner_group{
-    background-color: deeppink;
+    background-color: #D02090;
 }
 .date{
     font-size: 25rpx;

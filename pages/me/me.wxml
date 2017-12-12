@@ -1,7 +1,11 @@
 <view class="container" bindsubmit="onAddFormId" report-submit="true">
     <view class="banner">
-        <text class='todayPayTxt'>今日支出:</text>
-        <text class='todayPay'>88.88</text>
+        <view>
+            <text class='todayPayTxt'>今日支出</text>
+            <text class='todayPayCountTxt'>{{todayPaidCount>0?'('+todayPaidCount+'笔)':''}}</text>
+            <text class='todayPayTxt'> :</text>
+        </view>
+        <text class='todayPay'>{{todayPaidMoney}}</text>
     </view>
 
 

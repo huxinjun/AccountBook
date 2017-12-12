@@ -24,21 +24,26 @@ Page({
      */
     onPullDownRefresh: function () {
 
-        // this.initData()
+        this.initData()
         this.initNotifValidCount()
     },
 
 
     /**
-     * 初始化数据
+     * 初始化账本今日数据
      */
     initData: function () {
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/user/getSelfSimple',
+            url: APP.globalData.BaseUrl + '/account/getTodaySummaryInfo',
             data: {
                 token: wx.getStorageSync("token")
             },
             success: function (res) {
+                this.setData({
+                    todayPaidMoney:res.data.infos[0].number,
+                    todayPaidCount: res.data.infos[1].number,
+                })
+
                 wx.stopPullDownRefresh()
             }
 
@@ -47,7 +52,7 @@ Page({
     },
 
     /**
-     * 初始化数据
+     * 初始化提醒状态
      */
     initNotifValidCount: function () {
         APP.ajax({

@@ -4,7 +4,8 @@ var util = require('../../utils/util.js')
 Page({
     data: {
         containerHeight: APP.systemInfo.windowHeight,
-        accountId: null
+        accountId: null,
+        visible:"display:none;"
     },
 
 
@@ -126,6 +127,7 @@ Page({
                     if (res.data.status == 0) {
                         var account = this.data.account
                         var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+                        target.waitPaidMoney = 0
                         target.value.showBtn = false
                         this.setData({
                             account: this.data.account
@@ -163,8 +165,7 @@ Page({
 
     onLoad: function (option) {
         this.setData({
-            // accountId: option.accountId.decode()
-            accountId:"aaa"
+            accountId: option.accountId.decode()
         })
 
         this.onPullDownRefresh()
@@ -339,6 +340,7 @@ Page({
                 }
                 this.setData({
                     account: res.data,
+                    visible: "",
                     style:{
                         deleteVisible: res.data.userId == this.data.userInfo.id ? "display:inherit;" :"display:none;"
                     }

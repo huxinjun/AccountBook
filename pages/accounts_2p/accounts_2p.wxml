@@ -44,7 +44,6 @@
                     <image class='type_icon' src="{{account.icon}}" data-index='{{index}}'></image>
                     <text class='title' data-index='{{index}}'>{{account.name}}</text>
                     <text class='tag paid_in' data-index='{{index}}'>{{account.paidIn}}元</text>
-                    <text class='tag inner_group' wx:if="{{account.isPrivate}}" data-index='{{index}}'>个人账单</text>
                     <text class='date' data-index='{{index}}'>{{account.date}}</text>
                 </view>
 

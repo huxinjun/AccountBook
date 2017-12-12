@@ -27,8 +27,11 @@ button::after{
 
 .banner .todayPayTxt{
     font-size: 36rpx;
-
 }
+.banner .todayPayCountTxt{
+    font-size: 25rpx;
+}
+
 .banner .todayPay{
     font-size: 72rpx;
     font-weight: 800;

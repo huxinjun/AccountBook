@@ -113,6 +113,7 @@ Page({
                     if (res.data.status == 0) {
                         var account = this.data.accounts.findByAttr("id", accountId)
                         var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+                        target.waitPaidMoney = 0
                         target.value.showBtn = false
                         this.setData({
                             accounts: this.data.accounts

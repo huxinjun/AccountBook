@@ -1145,12 +1145,16 @@ Page({
 
             success: function (res) {
                 this.data.userInfo = res.data
-                var member={
-                    memberId:res.data.id,
-                    memberName: res.data.name,
-                    memberIcon: res.data.icon
+                //如果是还款账单,不用添加自己
+                if(this.data.account.type!='hk'){
+                    var member = {
+                        memberId: res.data.id,
+                        memberName: res.data.name,
+                        memberIcon: res.data.icon
+                    }
+                    this.addMember(member)
                 }
-                this.addMember(member)
+                
             }
 
         }, this)
@@ -1170,6 +1174,11 @@ Page({
                 this.setData({
                     members: res.data.members
                 })
+                if(this.data.account.type=='hk')
+                    setTimeout(function(){
+                        this.showSelectMembersDialog()
+                    }.bind(this),300)
+                
             }
 
         }, this)
@@ -1179,18 +1188,25 @@ Page({
      * 上传到服务器
      */
     uploadAccount: function (e) {
+        if(this.data.account.members.length==0){
+            wx.showToast({
+                title: "至少选择一个成员"
+            })
+            return
+        }
         if (parseFloat(this.data.account.paidIn)==0){
             wx.showToast({
                 title: "总金额大于0才可以记账哦"
             })
             return
         }
-        if (this.data.account.members.length == 1 && this.data.account.members[0].memberId != this.data.userInfo.id){
-            wx.showToast({
-                title: "个人账单的成员必须包含自己"
-            })
-            return
-        }
+        if (this.data.account.type != 'hk')
+            if (this.data.account.members.length == 1 && this.data.account.members[0].memberId != this.data.userInfo.id){
+                wx.showToast({
+                    title: "个人账单的成员必须包含自己"
+                })
+                return
+            }
         if(this.data.account.type=='jk'){
             //借款账单
             if (this.data.account.members.length != 2){

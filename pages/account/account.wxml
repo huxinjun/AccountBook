@@ -1,4 +1,4 @@
-<view>
+<view style='{{visible}}'>
 
     <view class='account'>
 
@@ -9,8 +9,9 @@
             <view class='title_container'>
                 <image class='type_icon' src="{{account.icon}}"></image>
                 <text class='title'>{{account.name}}</text>
-                <text class='tag paid_in' wx:if="{{account}}">{{account.paidIn}}元</text>
-                <text class='tag inner_group' wx:if="{{account.isPrivate}}">个人账单</text>
+                <text class='tag in_come' data-index='{{index}}' wx:if="{{account.type=='sr'}}">{{account.paidIn}}元</text>
+                    <text class='tag paid_in' data-index='{{index}}' wx:if="{{account.type!='sr'}}">{{account.paidIn}}元</text>
+                    <text class='tag is_private' wx:if="{{account.isPrivate}}" data-index='{{index}}'>个人账单</text>
                 <text class='date'>{{account.date}}</text>
             </view>
 
