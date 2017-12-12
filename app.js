@@ -10,68 +10,69 @@ App({
         // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
         resultcode: {
             SUCCESS: 0,
+            FAILD:99,
             INVALID_TOKEN: 1,
             INVALID_COMMAND: 2,
-            INVALID_USERINFO: 3
+            INVALID_USERINFO: 3,
         },
         typeList: [
             {
-                "id": 0,
+                "id": "cf",
                 "name": "吃饭",
                 "icon": "/img/type/type_food.png"
             },
             {
-                "id": 1,
+                "id": "zf",
                 "name": "租房",
                 "icon": "/img/type/type_home.png"
             },
             {
-                "id": 2,
+                "id": "jt",
                 "name": "交通",
                 "icon": "/img/type/type_traffic.png"
             },
             {
-                "id": 3,
+                "id": "gw",
                 "name": "购物",
                 "icon": "/img/type/type_shopping.png"
             },
             {
-                "id": 4,
+                "id": "sh",
                 "name": "生活",
                 "icon": "/img/type/type_vegetable.png"
             },
             {
-                "id": 5,
+                "id": "ls",
                 "name": "零食",
                 "icon": "/img/type/type_snack.png"
             },
             {
-                "id": 6,
+                "id": "qk",
                 "name": "请客",
                 "icon": "/img/type/type_gam.png"
             },
             {
-                "id": 7,
+                "id":"yl",
                 "name": "娱乐",
                 "icon": "/img/type/type_entertainment.png"
             },
             {
-                "id": 8,
-                "name": "书籍",
+                "id": "hk",
+                "name": "还款",
                 "icon": "/img/type/type_book.png"
             },
             {
-                "id": 9,
+                "id": "jk",
                 "name": "借款",
                 "icon": "/img/type/type_money_out.png"
             },
             {
-                "id": 10,
+                "id": "sr",
                 "name": "收入",
                 "icon": "/img/type/type_money_in.png"
             },
             {
-                "id": 11,
+                "id": "qt",
                 "name": "其他",
                 "icon": "/img/type/type_other.png"
             },

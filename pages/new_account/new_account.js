@@ -169,7 +169,7 @@ Page({
             tag0: "",
             tag1: "display:inherit;",
             tag2: "display:none;",
-            paidIn_color : this.data.account.type==9?"color:transparent;":""
+            paidIn_color : this.data.account.type=='jk'?"color:transparent;":""
         }
 
         this.data.account.members.addToHead(member)
@@ -277,7 +277,7 @@ Page({
      * 根据索引配置抽屉需要显示的按钮
      */
     updateMemberSliderButton: function (index) {
-        if(this.data.account.type==9)
+        if(this.data.account.type=='jk')
             //借款账单不需要抽屉
             return
         if (index == this.data.descSliderInfo.index) {
@@ -329,7 +329,7 @@ Page({
         var datas = this.getSliderData()
         var that = this
         //特殊处理借款时的标签
-        if(this.data.account.type==9){
+        if(this.data.account.type=='jk'){
             var hasPaidPerson=false
             for (var i = 0;datas && i<datas.length;i++) {
                 var member = datas[i]
@@ -540,10 +540,10 @@ Page({
 
         var dialogContent = "请输入成员支付金额"
         switch(this.data.account.type){
-            case 9://借款
+            case 'jk'://借款
                 dialogContent = "请输入被借款者借出的金额"
                 break;
-            case 10://收入
+            case 'sr'://收入
                 dialogContent = "请输入您的收入金额"
                 break;  
         }
@@ -575,7 +575,7 @@ Page({
                         item.style.paidIn_color = "color:#20B2AA;"
 
                     //对于借款需要特殊处理,只能有一个人付款
-                    if(this.data.account.type==9){
+                    if(this.data.account.type=='jk'){
                         var members = this.getSliderData()
                         members.forEach(function (v, i) {
                             if (v.memberId != item.memberId) {
@@ -958,8 +958,8 @@ Page({
      */
     showSelectMembersDialog: function (e) {
         //类型为请客,收入时不许添加成员
-        if (this.data.account.type == 6 || this.data.account.type == 10) {
-            var typeStr = (this.data.account.type == 6 ? "请客" : "收入")
+        if (this.data.account.type == 'qk' || this.data.account.type == 'sr') {
+            var typeStr = (this.data.account.type == 'qk' ? "请客" : "收入")
             wx.showToast({
                 image: "/img/error.png",
                 title: "类型是[" + typeStr + "]时不能有其他成员!",
@@ -970,7 +970,7 @@ Page({
         var dialogInfo = {
             page: this,
             title: "选择成员",
-            singleChoose: this.data.account.type == 9 ? true : false,//借款只允许选择一个其他成员
+            singleChoose: this.data.account.type == 'jk' ? true : false,//借款只允许选择一个其他成员
             members: this.data.members,
             callback: {
                 onConfirm: function () {
@@ -1116,7 +1116,7 @@ Page({
         console.log(option)
         this.data.account.value = {}
 
-        this.data.account.type = parseInt(option.type)
+        this.data.account.type = option.type
         this.data.account.name = option.name
         this.data.account.value.typeIcon = option.typeIcon
 
@@ -1191,7 +1191,7 @@ Page({
             })
             return
         }
-        if(this.data.account.type==9){
+        if(this.data.account.type=='jk'){
             //借款账单
             if (this.data.account.members.length != 2){
                 wx.showToast({

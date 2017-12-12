@@ -162,10 +162,9 @@ Page({
 
 
     onLoad: function (option) {
-        // this.data.accountId ='KCWUOJDKxsVAopmbUf6E_A=='
-
         this.setData({
-            accountId: option.accountId.decode()
+            // accountId: option.accountId.decode()
+            accountId:"aaa"
         })
 
         this.onPullDownRefresh()
@@ -217,6 +216,15 @@ Page({
             },
 
             success: function (res) {
+                if (res.data.status == APP.globalData.resultcode.FAILD){
+                    wx.showToast({
+                        title: res.data.msg,
+                    })
+                    setTimeout(function(){
+                        wx.navigateBack()
+                    },1000)
+                    return
+                }
                 
                 var v=res.data
                 v.style = {}
