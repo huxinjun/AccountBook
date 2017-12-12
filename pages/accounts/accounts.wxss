@@ -24,9 +24,10 @@
     background:-webkit-linear-gradient(45deg,#2BA245,#32CD32,#FFFF00);
      /* filter: blur(5rpx);  */
 }
-.banner .p2p_container{
+
+.banner .user{
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
 
@@ -35,54 +36,13 @@
     right: 0;
     top:50rpx;
 }
-.banner .p2p_container .p1{
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-}
 
-.banner .p2p_container .p1 image{
+.banner .user image{
     width: 100rpx;
     height: 100rpx;
     border-radius: 100rpx;
 }
-.banner .p2p_container .p1 text{
-    font-family: 'Tahoma';
-    font-weight: 700;
-}
-
-
-.banner .p2p_container .pay_to{
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-
-    margin: 0 20rpx;
-}
-.banner .p2p_container .pay_to image{
-    width: 150rpx;
-    height: 66rpx;
-}
-.banner .p2p_container .pay_to text{
-    font-family: 'Tahoma';
-    font-size: 30rpx;
-}
-
-
-.banner .p2p_container .p2{
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100rpx;
-}
-.banner .p2p_container .p2 image{
-    width: 100rpx;
-    height: 100rpx;
-}
-.banner .p2p_container .p2 text{
+.banner .user text{
     font-family: 'Tahoma';
     font-weight: 600;
 }

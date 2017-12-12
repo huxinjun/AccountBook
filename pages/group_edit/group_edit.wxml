@@ -26,7 +26,7 @@
     </view>
 
 
-    <view class="item" hover-class='item_hover' style='margin-top: 30rpx;border-bottom:1rpx solid #ccc;' bindtap='inputName'>
+    <view class="item" hover-class='item_hover' style='margin-top: 30rpx;border-bottom:1rpx solid #eee;' bindtap='inputName'>
         <text class="key">名称</text>
         <text class="point" style='{{namePointStyle}}'>●</text>
         <view class="value">
@@ -46,9 +46,9 @@
 
     </view>
 
-    <button class='{{commit_class}}' hover-class='{{commit_hover_class}}' bindtap='{{commit_click}}'>{{commit_text}}</button>
-    <button class='delete' hover-class='delete_hover' style='{{deleteStyle}}'>删除并解散该组</button>
-    <button class='delete' hover-class='delete_hover' style='{{quitStyle}}'>退出该组</button>
+    <button class='{{commit_class}}' hover-class='{{commit_hover_class}}' bindtap='{{commit_click}}' wx:if="{{groupInfo.isAdmin || opt=='new'}}">{{commit_text}}</button>
+    <button class='delete' hover-class='delete_hover' style='{{deleteStyle}}'  wx:if="{{groupInfo.isAdmin}}" bindtap='deleteGroup'>删除并解散该组</button>
+    <button class='delete' hover-class='delete_hover' style='{{quitStyle}}'  wx:if="{{groupInfo.isMember}}" bindtap='quitGroup'>退出该组</button>
 
 
 </view>

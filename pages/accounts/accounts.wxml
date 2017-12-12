@@ -3,27 +3,9 @@
     <view class='banner'>
     
         <image class='bg' src="{{banner}}" mode='aspectFill'></image>
-        <view class="p2p_container">
-
-            <view class='p1'>
-                <image src='{{userInfo.icon}}' mode='aspectFill' ></image>
+        <view class='user'>
+                <image src='{{userInfo.icon}}' mode='aspectFill' bindtap='updateUserIcon'></image>
                 <text >{{userInfo.name}}</text>
-            </view>
-
-            <view class='pay_to' wx:if="{{userId}}">
-                <text class='money' >{{needPaidNumber}}元</text>
-                <image class='pay_to' src='/img/pay_to2.png' wx:if="{{userId}}"></image>
-            </view>
-
-            <view class='p2' wx:if="{{userId}}">
-                <image class='p2' src='{{userInfo.icon}}' mode='aspectFill'></image> 
-                <text >江江</text>
-            </view>
-            
-            
-            
-
-            
         </view>
         
         <view class='summary'>

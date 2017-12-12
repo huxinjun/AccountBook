@@ -9,7 +9,9 @@ Page({
                 category: ""
             },
             users:[]
-        }
+        },
+        //opt:1.new,2.edit
+        opt:""
 
     },
 
@@ -27,8 +29,19 @@ Page({
             },
 
             success: function (res) {
+                if(res.data.group==null){
+                    wx.showToast({
+                        title: '不存在的组',
+                    })
+                    setTimeout(function () {
+                        wx.navigateBack()
+                    }, 1000)
+                    
+                    return
+                }
                 this.setData({
-                    groupInfo:res.data
+                    groupInfo:res.data,
+                    userInfo:this.data.userInfo
                 })
                 console.log(res.data.isAdmin + "............." + res.data.isMember)
                 if (res.data.isAdmin && res.data.isMember)
@@ -99,6 +112,56 @@ Page({
         })
     },
 
+    /**
+     * 退出分组
+     */
+    quitGroup: function (e) {
+        console.log("quitGroup")
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/group/quit',
+
+            data: {
+                token: wx.getStorageSync("token"),
+                groupId: this.data.groupInfo.group.id
+            },
+
+            success: function (res) {
+                wx.showToast({
+                    title: res.data.msg
+                })
+                setTimeout(function () {
+                    wx.navigateBack()
+                }, 1000)
+            }
+
+        }, this)
+    },
+
+    /**
+     * 解散并删除
+     */
+    deleteGroup: function (e) {
+        console.log("deleteGroup")
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/group/delete',
+
+            data: {
+                token: wx.getStorageSync("token"),
+                groupId: this.data.groupInfo.group.id
+            },
+
+            success: function (res) {
+                wx.showToast({
+                    title: res.data.msg
+                })
+                setTimeout(function () {
+                    wx.navigateBack()
+                }, 1000)
+            }
+
+        }, this)
+    },
+
 
 
 
@@ -165,21 +228,30 @@ Page({
 
 
     onLoad: function (option) {
-        console.log('onLoad')
+        console.log(option)
         var that = this
         this.setMemberVisible(false)
 
-        var groupId = option.groupId.decode()
+        var groupId = option.groupId
         
         if (!groupId) {
+            this.data.opt='new'
             //添加分组
             this.changeButtonStatus("add_group_info_invalid")
             this.commitEnable(false)
         } else{
+            this.data.opt = 'edit'
             //编辑分组
-            this.pullGroupInfo(groupId)
+            //获取分组信息
+            this.data.groupId = groupId.decode()
+            this.pullGroupInfo(this.data.groupId)
         }
+
+        this.setData({
+            opt: this.data.opt
+        })
     },
+
 
     /**
      * 提交按钮的开启关闭和对应的点击事件
@@ -194,45 +266,25 @@ Page({
     },
 
     /**
-     * 改变三个按钮的状态
+     * 改变提交的状态
      */
     changeButtonStatus: function (status) {
         switch (status) {
             case "add_group_info_invalid":
                 this.setData({
-                    commit_text: "新增分组(红点项必填）",
-                    deleteStyle: "display:none;",
-                    quitStyle: "display:none;",
+                    commit_text: "新增分组(红点项必填）"
                 })
                 break;
             case "add_group_info_valid":
                 this.setData({
-                    commit_text: "新增分组",
-                    deleteStyle: "display:none;",
-                    quitStyle: "display:none;",
+                    commit_text: "新增分组"
                 })
                 break;
             case "update_admin_member":
-                this.setData({
-                    commit_text: "提交更改",
-                    deleteStyle: "display:block;",
-                    quitStyle: "display:block;"
-                })
-                break;
             case "update_admin":
-                console.log("update_admin")
-                console.log(this)
-                this.setData({
-                    commit_text: "提交更改",
-                    deleteStyle: "display:block;",
-                    quitStyle: "display:none;",
-                })
-                break;
             case "update_member":
                 this.setData({
-                    commit_text: "提交更改",
-                    deleteStyle: "display:none;",
-                    quitStyle: "display:block;"
+                    commit_text: "提交更改"
                 })
                 break;
 
@@ -243,6 +295,10 @@ Page({
      * 点击名称条目
      */
     inputName: function (e) {
+        //只有当前用户是管理员,并且正在编辑分组时才可以打开输入弹窗
+        if (this.data.opt == 'edit')
+            if (!(this.data.groupInfo && this.data.groupInfo.isAdmin))
+                return
         var dialogInfo = {
             page: this,
             title: "输入",
@@ -274,6 +330,10 @@ Page({
      * 点击描述条目
      */
     inputCategory: function (e) {
+        //只有当前用户是管理员,并且正在编辑分组时才可以打开输入弹窗
+        if (this.data.opt == 'edit')
+            if (!(this.data.groupInfo && this.data.groupInfo.isAdmin))
+                return
         var dialogInfo = {
             page: this,
             title: "输入",

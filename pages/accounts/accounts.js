@@ -9,6 +9,27 @@ Page({
         banner: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509096167729&di=82f605348e2b14d2c6103619d9ec751b&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F50da81cb39dbb6fda2d331e50324ab18962b376d.jpg"
     },
 
+
+    /**
+     * 更新用户头像
+     */
+    updateUserIcon: function () {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/user/updateIcon',
+            data: {
+                token: wx.getStorageSync("token")
+            },
+            success: function (res) {
+                wx.showToast({
+                    title: res.data.msg,
+                })
+                this.data.userInfo=null
+                wx.startPullDownRefresh()
+            }
+
+        }, this)
+    },
+
     onAccountItemClick:function(e){
         console.log("onAccountItemClick")
 
@@ -156,10 +177,12 @@ Page({
         this.setData({
             userId: option.userId
         })
+
+        this.onPullDownRefresh()
     },
 
     onShow: function (option) {
-        this.onPullDownRefresh()
+        
     },
 
     /**
@@ -209,7 +232,7 @@ Page({
             }
 
         }, this)
-    },
+    }, 
 
     /**
      * 初始化账户统计信息

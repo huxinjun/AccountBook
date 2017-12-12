@@ -100,7 +100,7 @@
   
 }
 .item .value image{
-  background-color: #0f0;
+  /* background-color: #0f0; */
   width: 60rpx;
   height: 60rpx;
   margin-right: 30rpx;
@@ -121,6 +121,7 @@
   margin-top: 30rpx;
   background-color: #2BA245;
   color: white;
+  font-size: 30rpx;
   line-height: 80rpx;
 }
 .commit_hover{
@@ -143,10 +144,9 @@
   margin-top: 30rpx;
   background-color: #fa0000;
   color: white;
+  font-size: 30rpx;
   line-height: 80rpx;
   text-align: center;
-
-  display: none;
 }
 .delete_hover{
   background-color: #f00;
