@@ -52,6 +52,7 @@
     text-align: center;
     font-size: 24rpx;
     margin-bottom: 20rpx;
+    padding: 10rpx;
 }
 .dialog_input{
     font-size: 24rpx;

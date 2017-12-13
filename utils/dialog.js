@@ -8,6 +8,7 @@ var tempTip = {
     title: "标题",
     content: "提示文字",
     contentColor: "#f00",
+    isTipDialog:true,//没有取消按钮
     callback: {
         onConfirm: function () {},
         onCancel: function () {}
@@ -185,6 +186,16 @@ function tipDialogSetting() {
             that.dismissDialog();
         }
     }
+
+    if (this.dialogInfo.isTipDialog){
+        this.dialogInfo.style.cancelDisplay="display:none;"
+        this.page.ok = function (e) {
+            if (that.dialogInfo.callback)
+                callback.onConfirm.call(that.page)
+            that.dismissDialog();
+        }
+    }else
+        this.dialogInfo.style.cancelDisplay = ""
     
 }
 

@@ -13,7 +13,7 @@ App({
             FAILD:99,
             INVALID_TOKEN: 1,
             INVALID_COMMAND: 2,
-            INVALID_USERINFO: 3,
+            INVALID_USERINFO: 3
         },
         typeList: [
             {

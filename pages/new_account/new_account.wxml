@@ -167,7 +167,7 @@
 
 
         <view class='dialog_buttons'>
-            <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss'>取消</button>
+            <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss' style="{{dialogInfo.style.cancelDisplay}}">取消</button>
             <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' bindtap='ok'>确定</button>
         </view>
 

@@ -169,7 +169,7 @@ Page({
             tag0: "",
             tag1: "display:inherit;",
             tag2: "display:none;",
-            paidIn_color : this.data.account.type=='jk'?"color:transparent;":""
+            paidIn_color: this.data.account.type == 'jk' || this.data.account.type == 'hk'?"color:transparent;":""
         }
 
         this.data.account.members.addToHead(member)
@@ -277,8 +277,8 @@ Page({
      * 根据索引配置抽屉需要显示的按钮
      */
     updateMemberSliderButton: function (index) {
-        if(this.data.account.type=='jk')
-            //借款账单不需要抽屉
+        if (this.data.account.type == 'jk' || this.data.account.type == 'hk')
+            //借款还款账单不需要抽屉
             return
         if (index == this.data.descSliderInfo.index) {
             slider.updateLayer(this.data.descSliderInfo.index, [])
@@ -328,8 +328,8 @@ Page({
     refreshTags: function () {
         var datas = this.getSliderData()
         var that = this
-        //特殊处理借款时的标签
-        if(this.data.account.type=='jk'){
+        //特殊处理借款还款时的标签
+        if (this.data.account.type == 'jk' || this.data.account.type == 'hk'){
             var hasPaidPerson=false
             for (var i = 0;datas && i<datas.length;i++) {
                 var member = datas[i]
@@ -345,10 +345,10 @@ Page({
                 if (hasPaidPerson) {
                     if (member.value.isPaidPerson) {
                         member.style.tag0 = "display:inherit;"
-                        member.value.tag0 = "被借人"
+                        member.value.tag0 = this.data.account.type == 'jk' ?"被借人":"还款人"
                     } else {
                         member.style.tag0 = "display:inherit;"
-                        member.value.tag0 = "借款人"
+                        member.value.tag0 = this.data.account.type == 'jk' ?"借款人":"收款人"
                     }
                 }else
                     member.style.tag0 = "display:none;"
@@ -543,6 +543,9 @@ Page({
             case 'jk'://借款
                 dialogContent = "请输入被借款者借出的金额"
                 break;
+            case 'hk'://还款
+                dialogContent = "请输入还款人还款金额"
+                break;
             case 'sr'://收入
                 dialogContent = "请输入您的收入金额"
                 break;  
@@ -574,8 +577,8 @@ Page({
                     else
                         item.style.paidIn_color = "color:#20B2AA;"
 
-                    //对于借款需要特殊处理,只能有一个人付款
-                    if(this.data.account.type=='jk'){
+                    //对于借款还款需要特殊处理,只能有一个人付款
+                    if (this.data.account.type == 'jk' || this.data.account.type == 'hk'){
                         var members = this.getSliderData()
                         members.forEach(function (v, i) {
                             if (v.memberId != item.memberId) {
@@ -970,7 +973,7 @@ Page({
         var dialogInfo = {
             page: this,
             title: "选择成员",
-            singleChoose: this.data.account.type == 'jk' ? true : false,//借款只允许选择一个其他成员
+            singleChoose: this.data.account.type == 'jk' || this.data.account.type == 'hk'? true : false,//借款只允许选择一个其他成员
             members: this.data.members,
             callback: {
                 onConfirm: function () {
@@ -1145,15 +1148,12 @@ Page({
 
             success: function (res) {
                 this.data.userInfo = res.data
-                //如果是还款账单,不用添加自己
-                if(this.data.account.type!='hk'){
-                    var member = {
-                        memberId: res.data.id,
-                        memberName: res.data.name,
-                        memberIcon: res.data.icon
-                    }
-                    this.addMember(member)
+                var member = {
+                    memberId: res.data.id,
+                    memberName: res.data.name,
+                    memberIcon: res.data.icon
                 }
+                this.addMember(member)
                 
             }
 
@@ -1174,10 +1174,10 @@ Page({
                 this.setData({
                     members: res.data.members
                 })
-                if(this.data.account.type=='hk')
+                if (this.data.account.type == 'jk' || this.data.account.type=='hk')
                     setTimeout(function(){
                         this.showSelectMembersDialog()
-                    }.bind(this),300)
+                    }.bind(this),500)
                 
             }
 
@@ -1196,7 +1196,7 @@ Page({
         }
         if (parseFloat(this.data.account.paidIn)==0){
             wx.showToast({
-                title: "总金额大于0才可以记账哦"
+                title: "总金额大于0才可以记账"
             })
             return
         }
@@ -1207,11 +1207,11 @@ Page({
                 })
                 return
             }
-        if(this.data.account.type=='jk'){
+        if (this.data.account.type == 'jk' || this.data.account.type == 'hk'){
             //借款账单
             if (this.data.account.members.length != 2){
                 wx.showToast({
-                    title: "借款账单的成员个数必须为两个"
+                    title: (this.data.account.type == 'jk'?"借款":"还款")+"账单的成员个数必须为两个"
                 })
                 return
             }
@@ -1254,15 +1254,31 @@ Page({
                         wx.navigateBack()
                     }, 1000)
                 }
-                wx.showToast({
-                    title:res.data.msg
-                })
+                if(APP.globalData.resultcode.INVALID_COMMAND){
+                    this.showTipDialog('无法提交账单',res.data.msg)
+                }else
+                    wx.showToast({
+                        title:res.data.msg
+                    })
                 
             }
 
         }, this)
 
+    },
+
+    showTipDialog:function(title,msg){
+        var dialogInfo = {
+            page: this,
+            title: title,
+            content: msg,
+            isTipDialog:true
+        }
+        dialog.showDialog(dialogInfo)
     }
+
+
+
 })
 
 
