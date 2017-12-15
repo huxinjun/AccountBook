@@ -439,7 +439,7 @@ Page({
 
                     var item = this.getSliderData(index)
                     var oldItemPaidIn = item.paidIn
-                    item.paidIn = parseFloat(value).toFixed(2)
+                    item.paidIn = parseFloat(value)
                     item.paidIn = item.paidIn < 0 ? 0 : item.paidIn
                     //检查输入值得有效性:各成员总支付不可以超过账单支出
                     if (this.calcAllPaidIn() > parseFloat(this.data.account.paidIn)) {
@@ -477,6 +477,7 @@ Page({
         this.data.account.members.forEach(function (v, i) {
             total += parseFloat(v.paidIn)
         })
+        
         return total
     },
 

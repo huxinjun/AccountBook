@@ -57,9 +57,14 @@ App({
                 "icon": "/img/type/type_entertainment.png"
             },
             {
+                "id": "qt",
+                "name": "其他",
+                "icon": "/img/type/type_other.png"
+            },
+            {
                 "id": "hk",
                 "name": "还款",
-                "icon": "/img/type/type_book.png"
+                "icon": "/img/type/type_money_in.png"
             },
             {
                 "id": "jk",
@@ -69,13 +74,9 @@ App({
             {
                 "id": "sr",
                 "name": "收入",
-                "icon": "/img/type/type_money_in.png"
+                "icon": "/img/type/type_self_money_in.png"
             },
-            {
-                "id": "qt",
-                "name": "其他",
-                "icon": "/img/type/type_other.png"
-            },
+            
         ]
     },
 
