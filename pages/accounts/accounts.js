@@ -110,6 +110,65 @@ Page({
         })
     },
 
+    /**
+     * 标记为付款或者收款
+     */
+    settle: function (accountId, targetId){
+        var account = this.data.accounts.findByAttr("id", accountId)
+        var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+
+        var isPay=this.data.userInfo.id==target.paidId
+        var ohtherMember = account.originMembers.findByAttr("memberId", isPay?target.receiptId:target.paidId)
+        var content
+        if(isPay)
+            content="确定要付款给["+ohtherMember.memberName+"]"+target.waitPaidMoney+"元吗?此操作不可撤销!"
+        else
+            content = "确定要向[" + ohtherMember.memberName + "]收取" + target.waitPaidMoney + "元吗?此操作不可撤销!"
+
+        var that = this
+        var dialogInfo = {
+            page: this,
+            title: "提示",
+            content: content,
+            callback: {
+                onConfirm: function () {
+                    //请求服务器
+                    APP.ajax({
+                        url: APP.globalData.BaseUrl + '/account/settle',
+                        data: {
+                            token: wx.getStorageSync("token"),
+                            accountId: accountId,
+                            targetId: targetId
+                        },
+                        success: function (res) {
+                            if (res.data.status == 0) {
+                                var account = this.data.accounts.findByAttr("id", accountId)
+                                var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+                                target.waitPaidMoney = 0
+                                target.value.showBtn = false
+                                this.setData({
+                                    accounts: this.data.accounts
+                                })
+                                wx.showToast({
+                                    title: res.data.msg
+                                })
+                            } else {
+                                wx.showToast({
+                                    image: "/img/error.png",
+                                    title: res.data.msg
+                                })
+                            }
+
+                        }
+
+                    }, this)
+                    
+                }
+            }
+        }
+
+        dialog.showDialog(dialogInfo)
+    },
 
     /**
      * 点击付款收款或者完善账单按钮
@@ -123,39 +182,11 @@ Page({
 
         //是付款或者收款按钮
         if (target.value.canSettle == true) {
-            APP.ajax({
-                url: APP.globalData.BaseUrl + '/account/settle',
-                data: {
-                    token: wx.getStorageSync("token"),
-                    accountId: accountId,
-                    targetId: targetId
-                },
-                success: function (res) {
-                    if (res.data.status == 0) {
-                        var account = this.data.accounts.findByAttr("id", accountId)
-                        var target = account.payResult[0].payTarget.findByAttr("id", targetId)
-                        target.waitPaidMoney=0
-                        target.value.showBtn = false
-                        this.setData({
-                            accounts: this.data.accounts
-                        })
-                        wx.showToast({
-                            title: res.data.msg
-                        })
-                    }else{
-                        wx.showToast({
-                            image: "/img/error.png",
-                            title: res.data.msg
-                        })
-                    }
-                    
-
-                }
-
-            }, this)
+            this.settle(accountId, targetId)
             return
         }
 
+        //完善账单
         var paidMember = account.members.findByAttr("memberId", target.paidId)
         var receiptMember = account.members.findByAttr("memberId", target.receiptId)
         var memberId
@@ -371,9 +402,71 @@ Page({
                     } else
                         v.value.showAllContentBtn = false
 
-
                     v.membersLength = v.members.length
                     v.originMembers = util.clone(v.members)
+
+
+                    //借款与还款两种账单的特殊处理
+                    if (v.type == 'jk' || v.type == 'hk' || v.type == 'sr'){
+                        switch(v.type){
+                            case 'sr':
+                                v.value.state = 0
+                                v.value.bg = '/img/accounts/envelope_sr.png'
+                                v.value.desc = "收到红包(收入)"
+                                break;
+                            case 'jk':
+                                var target = v.payResult[0].payTarget[0]
+                                //如果自己是借款人,那就是收入
+                                if (that.data.userInfo.id == target.paidId) {
+                                    v.value.state = 1
+                                    v.value.bg = '/img/accounts/envelope_sk.png'
+                                    v.value.dollar = '/img/accounts/dollar_red.png'
+
+                                    var ohtherMember=v.originMembers.findByAttr("memberId", target.receiptId)
+                                    v.value.icon = ohtherMember.memberIcon
+                                    v.value.desc = "收到[" + ohtherMember.memberName +"]的红包(借款借入)"
+                                } else {
+                                    v.value.state = -1
+                                    v.value.bg = '/img/accounts/envelope_fk.png'
+                                    v.value.dollar = '/img/accounts/dollar_yellow.png'
+
+                                    var ohtherMember = v.originMembers.findByAttr("memberId", target.paidId)
+                                    v.value.icon = ohtherMember.memberIcon
+                                    v.value.desc = "向[" + ohtherMember.memberName + "]发的红包(借款借出)"
+                                }
+                                break;
+                            case 'hk':
+                                var target = v.payResult[0].payTarget[0]
+                                //如果自己是还款人,那就是支出
+                                if (that.data.userInfo.id == target.paidId) {
+                                    v.value.state = -1
+                                    v.value.bg = '/img/accounts/envelope_fk.png'
+                                    v.value.dollar = '/img/accounts/dollar_yellow.png'
+
+                                    var ohtherMember = v.originMembers.findByAttr("memberId", target.receiptId)
+                                    v.value.icon = ohtherMember.memberIcon
+                                    v.value.desc = "向[" + ohtherMember.memberName + "]发的红包(还款还出)"
+
+                                } else {
+                                    v.value.state = 1
+                                    v.value.bg = '/img/accounts/envelope_sk.png'
+                                    v.value.dollar = '/img/accounts/dollar_red.png'
+
+                                    var ohtherMember = v.originMembers.findByAttr("memberId", target.paidId)
+                                    v.value.icon = ohtherMember.memberIcon
+                                    v.value.desc = "收到[" + ohtherMember.memberName + "]的红包(还款收入)"
+                                }
+                                break;
+                        }
+                        return
+                    }
+
+                    v.value.state = 3
+                    
+
+
+
+                    
                     //子成员处理
                     for (var i = 0; i < v.members.length; i++) {
                         var member = v.members[i]

@@ -41,7 +41,7 @@ Page({
             success: function (res) {
                 this.setData({
                     todayPaidMoney:res.data.infos[0].number,
-                    todayPaidCount: res.data.infos[1].number,
+                    todayPaidCount: res.data.infos[0].count,
                 })
 
                 wx.stopPullDownRefresh()

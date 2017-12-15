@@ -25,8 +25,8 @@
                 <view class='title_container' data-index='{{index}}'>
                     <image class='type_icon' src="{{account.icon}}" data-index='{{index}}'></image>
                     <text class='title' data-index='{{index}}'>{{account.name}}</text>
-                    <text class='tag in_come' data-index='{{index}}' wx:if="{{account.type=='sr'}}">{{account.paidIn}}元</text>
-                    <text class='tag paid_in' data-index='{{index}}' wx:if="{{account.type!='sr'}}">{{account.paidIn}}元</text>
+                    <text class='tag in_come' data-index='{{index}}' wx:if="{{account.value.state==3 && account.type=='sr'}}">{{account.paidIn}}元</text>
+                    <text class='tag paid_in' data-index='{{index}}' wx:if="{{account.value.state==3 && account.type!='sr'}}">{{account.paidIn}}元</text>
                     <text class='tag is_private' wx:if="{{account.isPrivate}}" data-index='{{index}}'>个人账单</text>
                     <text class='date' data-index='{{index}}'>{{account.date}}</text>
                 </view>
@@ -45,8 +45,18 @@
                 </view>
 
 
+                <view class='envelope' wx:if="{{account.value.state!=3}}">
+                    <image class='bg' src='{{account.value.bg}}'></image>
+                    <image class='icon' src='{{account.value.icon}}'></image>
+                    <image class='dollar' src='{{account.value.dollar}}'></image>
+                    <text class="money">{{account.paidIn}}</text>
+                    <text class="desc">{{account.value.desc}}</text>
+                
+                </view>
 
-                <view class='members' wx:if="{{account.members.length>1}}">
+
+
+                <view class='members' wx:if="{{account.value.state==3 && account.members.length>1}}">
 
                     <image class='pull_down' src='/img/pull_down.png' style='{{account.style.membersPullDownTrans}}' bindtap='onMembersPullDownClick'></image>
 

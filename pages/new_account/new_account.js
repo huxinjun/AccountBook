@@ -345,10 +345,10 @@ Page({
                 if (hasPaidPerson) {
                     if (member.value.isPaidPerson) {
                         member.style.tag0 = "display:inherit;"
-                        member.value.tag0 = this.data.account.type == 'jk' ?"被借人":"还款人"
+                        member.value.tag0 = this.data.account.type == 'jk' ?"借款人":"还款人"
                     } else {
                         member.style.tag0 = "display:inherit;"
-                        member.value.tag0 = this.data.account.type == 'jk' ?"借款人":"收款人"
+                        member.value.tag0 = this.data.account.type == 'jk' ?"被借人":"收款人"
                     }
                 }else
                     member.style.tag0 = "display:none;"
@@ -541,7 +541,7 @@ Page({
         var dialogContent = "请输入成员支付金额"
         switch(this.data.account.type){
             case 'jk'://借款
-                dialogContent = "请输入被借款者借出的金额"
+                dialogContent = "请输入借款者要借的金额"
                 break;
             case 'hk'://还款
                 dialogContent = "请输入还款人还款金额"
@@ -1254,7 +1254,8 @@ Page({
                         wx.navigateBack()
                     }, 1000)
                 }
-                if(APP.globalData.resultcode.INVALID_COMMAND){
+                if (res.data.status == APP.globalData.resultcode.INVALID_COMMAND ||
+                    res.data.status == APP.globalData.resultcode.FAILD){
                     this.showTipDialog('无法提交账单',res.data.msg)
                 }else
                     wx.showToast({

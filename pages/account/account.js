@@ -103,6 +103,65 @@ Page({
         })
     },
 
+    /**
+     * 标记为付款或者收款
+     */
+    settle: function (accountId, targetId) {
+        var account = this.data.account
+        var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+
+        var isPay = this.data.userInfo.id == target.paidId
+        var ohtherMember = account.originMembers.findByAttr("memberId", isPay ? target.receiptId : target.paidId)
+        var content
+        if (isPay)
+            content = "确定要付款给[" + ohtherMember.memberName + "]" + target.waitPaidMoney + "元吗?此操作不可撤销!"
+        else
+            content = "确定要向[" + ohtherMember.memberName + "]收取" + target.waitPaidMoney + "元吗?此操作不可撤销!"
+
+        var that = this
+        var dialogInfo = {
+            page: this,
+            title: "提示",
+            content: content,
+            callback: {
+                onConfirm: function () {
+                    //请求服务器
+                    APP.ajax({
+                        url: APP.globalData.BaseUrl + '/account/settle',
+                        data: {
+                            token: wx.getStorageSync("token"),
+                            accountId: accountId,
+                            targetId: targetId
+                        },
+                        success: function (res) {
+                            if (res.data.status == 0) {
+                                var account = this.data.account
+                                var target = account.payResult[0].payTarget.findByAttr("id", targetId)
+                                target.waitPaidMoney = 0
+                                target.value.showBtn = false
+                                this.setData({
+                                    account: this.data.account
+                                })
+                                wx.showToast({
+                                    title: res.data.msg
+                                })
+                            } else {
+                                wx.showToast({
+                                    image: "/img/error.png",
+                                    title: res.data.msg
+                                })
+                            }
+
+                        }
+
+                    }, this)
+
+                }
+            }
+        }
+
+        dialog.showDialog(dialogInfo)
+    },
 
     /**
      * 点击付款收款或者完善账单按钮
@@ -116,30 +175,7 @@ Page({
 
         //是付款或者收款按钮
         if (target.value.canSettle == true) {
-            APP.ajax({
-                url: APP.globalData.BaseUrl + '/account/settle',
-                data: {
-                    token: wx.getStorageSync("token"),
-                    accountId: accountId,
-                    targetId: targetId
-                },
-                success: function (res) {
-                    if (res.data.status == 0) {
-                        var account = this.data.account
-                        var target = account.payResult[0].payTarget.findByAttr("id", targetId)
-                        target.waitPaidMoney = 0
-                        target.value.showBtn = false
-                        this.setData({
-                            account: this.data.account
-                        })
-                    }
-                    wx.showToast({
-                        title: res.data.msg
-                    })
-
-                }
-
-            }, this)
+            this.settle(accountId, targetId)
             return
         }
 
