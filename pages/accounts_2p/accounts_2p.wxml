@@ -54,20 +54,20 @@
                 <text class='all' wx:if="{{account.value.showAllContentBtn}}" bindtap='onShowAllContentClick' data-index='{{index}}'>{{account.value.allContentBtnText}}</text>
 
 
-                <view class="pics" wx:if="{{account.imgs!=null}}">
+                <view class="pics" wx:if="{{account.imgs!=null}}" data-index="{{index}}">
 
-                    <image class='pic' wx:for="{{account.imgs}}" wx:for-item="img" wx:key="{{index}}" src="{{img}}" mode="aspectFill" data-index="{{index}}" bindtap='iconPreview'></image>
+                    <image class='pic' wx:for="{{account.imgs}}" wx:for-item="img" wx:key="{{index}}" src="{{img}}" mode="aspectFill" data-index="{{index}}" data-accountid="{{account.id}}" catchtap='iconPreview'></image>
 
                 </view>
 
 
 
-                <view class='envelope' wx:if="{{account.value.state!=3}}">
-                    <image class='bg' src='{{account.value.bg}}'></image>
-                    <image class='icon' src='{{account.value.icon}}'></image>
-                    <image class='dollar' src='{{account.value.dollar}}'></image>
-                    <text class="money">{{account.paidIn}}</text>
-                    <text class="desc">{{account.value.desc}}</text>
+                <view class='envelope' wx:if="{{account.value.state!=3}}" data-index="{{index}}">
+                    <image class='bg' src='{{account.value.bg}}' data-index="{{index}}"></image>
+                    <image class='icon' src='{{account.value.icon}}' data-index="{{index}}"></image>
+                    <image class='dollar' src='{{account.value.dollar}}' data-index="{{index}}"></image>
+                    <text class="money" data-index="{{index}}">{{account.paidIn}}</text>
+                    <text class="desc" data-index="{{index}}">{{account.value.desc}}</text>
                 
                 </view>
 

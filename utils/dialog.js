@@ -331,19 +331,22 @@ function memberChooserDialogSetting() {
         var callback = that.dialogInfo.callback
         if (callback && callback.onCancel)
             callback.onCancel.call(that.page)
-        //恢复数据为打开dialog之前的状态
-        that.dialogInfo.members.forEach(function (v, i) {
-            var originItem = that.originMembers[i]
-            if (originItem.value)
-                v.value.isSelected = originItem.value.isSelected
-            else
-                delete v.value
-            if (originItem.style)
-                v.style.selectVisible = originItem.style.selectVisible
-            else
-                delete v.style
+        setTimeout(function(){
+            //恢复数据为打开dialog之前的状态
+            that.dialogInfo.members.forEach(function (v, i) {
+                var originItem = that.originMembers[i]
+                if (originItem.value)
+                    v.value.isSelected = originItem.value.isSelected
+                else
+                    delete v.value
+                if (originItem.style)
+                    v.style.selectVisible = originItem.style.selectVisible
+                else
+                    delete v.style
 
-        })
+            })
+        },500)
+        
         that.dismissDialog();
     }
 

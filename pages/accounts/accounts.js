@@ -121,9 +121,9 @@ Page({
         var ohtherMember = account.originMembers.findByAttr("memberId", isPay?target.receiptId:target.paidId)
         var content
         if(isPay)
-            content="确定要付款给["+ohtherMember.memberName+"]"+target.waitPaidMoney+"元吗?此操作不可撤销!"
+            content = "确定要付款给[" + ohtherMember.memberName + "]" + target.waitPaidMoney +"元吗?此操作不可回退!"
         else
-            content = "确定要向[" + ohtherMember.memberName + "]收取" + target.waitPaidMoney + "元吗?此操作不可撤销!"
+            content = "确定要向[" + ohtherMember.memberName + "]收取" + target.waitPaidMoney + "元吗?此操作不可回退!"
 
         var that = this
         var dialogInfo = {
@@ -424,7 +424,7 @@ Page({
 
                                     var ohtherMember=v.originMembers.findByAttr("memberId", target.receiptId)
                                     v.value.icon = ohtherMember.memberIcon
-                                    v.value.desc = "收到[" + ohtherMember.memberName +"]的红包(借款借入)"
+                                    v.value.desc = "["+that.data.userInfo.name+"]收到[" + ohtherMember.memberName +"]的借款"
                                 } else {
                                     v.value.state = -1
                                     v.value.bg = '/img/accounts/envelope_fk.png'
@@ -432,8 +432,10 @@ Page({
 
                                     var ohtherMember = v.originMembers.findByAttr("memberId", target.paidId)
                                     v.value.icon = ohtherMember.memberIcon
-                                    v.value.desc = "向[" + ohtherMember.memberName + "]发的红包(借款借出)"
+                                    v.value.desc = "[" + that.data.userInfo.name+"]向[" + ohtherMember.memberName + "]借款"
                                 }
+                                //这笔账已经抵消或者已收
+                                v.style.moneyColor=target.waitPaidMoney==0?"color:#000;opacity:0.1;":""
                                 break;
                             case 'hk':
                                 var target = v.payResult[0].payTarget[0]
@@ -445,7 +447,7 @@ Page({
 
                                     var ohtherMember = v.originMembers.findByAttr("memberId", target.receiptId)
                                     v.value.icon = ohtherMember.memberIcon
-                                    v.value.desc = "向[" + ohtherMember.memberName + "]发的红包(还款还出)"
+                                    v.value.desc = "[" + that.data.userInfo.name + "]向[" + ohtherMember.memberName + "]借款"
 
                                 } else {
                                     v.value.state = 1
@@ -454,8 +456,10 @@ Page({
 
                                     var ohtherMember = v.originMembers.findByAttr("memberId", target.paidId)
                                     v.value.icon = ohtherMember.memberIcon
-                                    v.value.desc = "收到[" + ohtherMember.memberName + "]的红包(还款收入)"
+                                    v.value.desc = "[" + that.data.userInfo.name + "]收到[" + ohtherMember.memberName + "]的借款"
                                 }
+                                //这笔账已经抵消或者已还，已收
+                                v.style.moneyColor = target.waitPaidMoney == 0 ? "color:#000;opacity:0.1;" : ""
                                 break;
                         }
                         return

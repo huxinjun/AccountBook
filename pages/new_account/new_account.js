@@ -572,6 +572,7 @@ Page({
                     item.paidIn = item.paidIn < 0 ? 0 : item.paidIn
                     
                     item.value.paidIn = "￥" + item.paidIn
+                    
                     if (item.paidIn>0)
                         item.style.paidIn_color ="color:red;"
                     else
@@ -960,9 +961,9 @@ Page({
      * 弹出选择成员的dialog
      */
     showSelectMembersDialog: function (e) {
-        //类型为请客,收入时不许添加成员
-        if (this.data.account.type == 'qk' || this.data.account.type == 'sr') {
-            var typeStr = (this.data.account.type == 'qk' ? "请客" : "收入")
+        //类型为收入时不许添加成员
+        if (this.data.account.type == 'sr') {
+            var typeStr = (this.data.account.type == 'sr' ? "收入" : "...")
             wx.showToast({
                 image: "/img/error.png",
                 title: "类型是[" + typeStr + "]时不能有其他成员!",

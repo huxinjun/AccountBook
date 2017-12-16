@@ -93,9 +93,8 @@ Page({
      * 预览头像
      */
     iconPreview: function (e) {
-
         var imgs = this.data.account.imgs
-
+        var index = e.target.dataset.index
 
         wx.previewImage({
             urls: imgs,
@@ -114,9 +113,9 @@ Page({
         var ohtherMember = account.originMembers.findByAttr("memberId", isPay ? target.receiptId : target.paidId)
         var content
         if (isPay)
-            content = "确定要付款给[" + ohtherMember.memberName + "]" + target.waitPaidMoney + "元吗?此操作不可撤销!"
+            content = "确定要付款给[" + ohtherMember.memberName + "]" + target.waitPaidMoney + "元吗?此操作不可回退!"
         else
-            content = "确定要向[" + ohtherMember.memberName + "]收取" + target.waitPaidMoney + "元吗?此操作不可撤销!"
+            content = "确定要向[" + ohtherMember.memberName + "]收取" + target.waitPaidMoney + "元吗?此操作不可回退!"
 
         var that = this
         var dialogInfo = {

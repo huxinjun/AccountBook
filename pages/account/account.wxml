@@ -22,9 +22,9 @@
             <text class='all' wx:if="{{account.value.showAllContentBtn}}" bindtap='onShowAllContentClick' data-index='{{index}}'>{{account.value.allContentBtnText}}</text>
 
 
-            <view class="pics" wx:if="{{account.imgs!=null}}">
+            <view class="pics" wx:if="{{account.imgs!=null}}" data-index="{{index}}">
 
-                <image class='pic' wx:for="{{account.imgs}}" wx:for-item="img" wx:key="{{index}}" src="{{img}}" mode="aspectFill" data-index="{{index}}" data-accountid="{{account.id}}" bindtap='iconPreview'></image>
+                <image class='pic' wx:for="{{account.imgs}}" wx:for-item="img" wx:key="{{index}}" src="{{img}}" mode="aspectFill" data-index="{{index}}" catchtap='iconPreview'></image>
 
             </view>
 
