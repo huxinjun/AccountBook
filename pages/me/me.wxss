@@ -81,6 +81,8 @@ button::after{
     color: #ccc;
     position: absolute;
     right: 30rpx;
+    vertical-align: middle;
+    line-height: 100rpx;
 
 }
 .item .arrow{

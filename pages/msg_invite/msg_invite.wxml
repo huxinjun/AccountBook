@@ -27,12 +27,12 @@
                 </view>
             </view>
 
-            <form style="{{item.style.slider}}" bindsubmit="acceptInvite" report-submit="true">
+            <view style="{{item.style.slider}}">
 
-                <button style="{{item.style.layerStyle_0_0}}" data-index="{{index}}" form-type='submit'>{{item.value.layerText_0_0}}</button>
-                <button style="{{item.style.layerStyle_0_1}}" data-index="{{index}}" form-type='submit'>{{item.value.layerText_0_1}}</button>
+                <button style="{{item.style.layerStyle_0_0}}" data-index="{{index}}" bindtap="{{item.value.layerTap_0_0}}">{{item.value.layerText_0_0}}</button>
+                <button style="{{item.style.layerStyle_0_1}}" data-index="{{index}}" bindtap="{{item.value.layerTap_0_1}}">{{item.value.layerText_0_1}}</button>
                 <view style="{{item.style.layerStyle_1_0}}" bindtap="{{item.value.layerTap_1_0}}" data-index="{{index}}">{{item.value.layerText_1_0}}</view>
-            </form>
+            </view>
 
 
         </view>

@@ -160,7 +160,7 @@ Page({
             tag1: "AA制",
             tag2: "自费10元",
             ruleType: 2,
-            paidIn: "￥0.00",
+            paidIn: "支付:0.00",
             isPaidPerson : false
         }
         member.style = {
@@ -571,7 +571,7 @@ Page({
                     item.paidIn = parseFloat(value).toFixed(2)
                     item.paidIn = item.paidIn < 0 ? 0 : item.paidIn
                     
-                    item.value.paidIn = "￥" + item.paidIn
+                    item.value.paidIn = "支付:" + item.paidIn
                     
                     if (item.paidIn>0)
                         item.style.paidIn_color ="color:red;"
@@ -584,7 +584,7 @@ Page({
                         members.forEach(function (v, i) {
                             if (v.memberId != item.memberId) {
                                 v.paidIn = "0.00"
-                                v.value.paidIn = "￥" + v.paidIn
+                                v.value.paidIn = "支付:" + v.paidIn
                                 v.value.isPaidPerson = false
                                 v.style.paidIn_color = "color:transparent;"
                             }else
