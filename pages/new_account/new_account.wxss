@@ -10,6 +10,14 @@
     color: #272636;
     
 }
+.help{
+   width: 100%;
+   height: 100%;
+   background-color:rgba(0, 0, 0, 0.85);
+   position: absolute;
+   left: 0;
+   top: 0;
+}
 
 .placeholder_class {
     color: #ccc;

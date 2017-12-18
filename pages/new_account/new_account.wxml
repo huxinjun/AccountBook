@@ -173,3 +173,8 @@
 
     </view>
 </view>
+
+
+<view class='help'>
+    <image src='http://localhost:8080/AccountBook/images/account_help.png' mode='scaleToFill' style="width:750rpx;height:882rpx;"></image>
+</view>
