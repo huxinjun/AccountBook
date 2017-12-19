@@ -177,5 +177,14 @@
 
 <view class='help' wx:if="{{showHelp}}">
     <image src='{{BaseUrl}}/images/account_help.png' mode='scaleToFill' style="width:750rpx;height:882rpx;"></image>
-    <button class='help_ok' bindtap='closeHelp'>知道啦，我会用</button>
+
+    
+    <text class='help_ok' bindtap='closeHelp'>关闭</text>
+
+    <view class='choose'>
+        <image class="cb_img" src="/img/account/cb_false.png" wx:if="{{nextShowHelp}}" bindtap='helpCheckBoxClick'></image>
+        <image class="cb_img" src="/img/account/cb_true.png" wx:if="{{!nextShowHelp}}" bindtap='helpCheckBoxClick'></image>
+        <text bindtap='helpCheckBoxClick'>下次不要提示了</text>
+    </view>
+    
 </view>

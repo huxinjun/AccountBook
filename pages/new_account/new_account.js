@@ -44,7 +44,9 @@ Page({
         style: {
             picsContainerHeight: "",
             picsPaddingBottom: ""
-        }
+        },
+
+        nextShowHelp:true
 
 
     },
@@ -1301,7 +1303,8 @@ Page({
      * 关闭帮助
      */
     closeHelp:function(e){
-        wx.setStorageSync("not_first_open_new_account",true)
+        if (!this.data.nextShowHelp)
+            wx.setStorageSync("not_first_open_new_account",true)
         this.setData({
             showHelp:false
         })
@@ -1309,6 +1312,15 @@ Page({
             setTimeout(function () {
                 this.showSelectMembersDialog()
             }.bind(this), 500)
+    },
+
+    /**
+     * 是否下次不显示帮助
+     */
+    helpCheckBoxClick:function(e){
+        this.setData({
+            nextShowHelp: !this.data.nextShowHelp
+        })
     }
 
 
