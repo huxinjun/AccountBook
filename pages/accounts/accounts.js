@@ -346,6 +346,10 @@ Page({
                                     v.value.name = "月支出"
                                     v.value.unit = "元"
                                     break;
+                                case "month_sr":
+                                    v.value.name = "月收入"
+                                    v.value.unit = "元"
+                                    break;
                                 case "wait_edit":
                                     v.value.name = "待完善账单"
                                     v.value.unit = "笔"
@@ -355,8 +359,13 @@ Page({
 
                 }
 
+                var summaryLInfos = [summaryInfos[0], summaryInfos[1]]
+                var summaryRInfos = [summaryInfos[2], summaryInfos[3], summaryInfos[4]]
+
                 this.setData({
-                    summaryInfos: summaryInfos
+                    summaryInfos: summaryInfos,
+                    summaryLInfos: summaryLInfos,
+                    summaryRInfos: summaryRInfos
                 })
             }
 
@@ -375,7 +384,7 @@ Page({
                 token: wx.getStorageSync("token"),
                 userId: this.data.userId ? this.data.userId : "",
                 pageIndex: pageIndex != undefined ? pageIndex : 0,
-                pageSize: 3
+                pageSize: 10
             },
 
             success: function (res) {

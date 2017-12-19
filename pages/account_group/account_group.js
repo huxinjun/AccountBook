@@ -423,7 +423,7 @@ Page({
         var dialogInfo = {
             page: this,
             title: "输入",
-            content: "请输入成员支付数额",
+            content: "请输入成员支付数额\n（各成员支出额的总和需要与改组应收或者应付的金额相等）",
             inputType: "digit",
             maxLength: 10,
             callback: {
@@ -445,7 +445,7 @@ Page({
                     if (this.calcAllPaidIn() > parseFloat(this.data.account.paidIn)) {
                         wx.showToast({
                             image: "/img/error.png",
-                            title: '各成员支出额的和不能超过组的支出额',
+                            title: '成员支付金额无效',
                         })
                         //恢复为旧值
                         item.paidIn = oldItemPaidIn
@@ -727,7 +727,7 @@ Page({
         if (this.calcAllPaidIn() != parseFloat(this.data.account.paidIn)) {
             wx.showToast({
                 image: "/img/error.png",
-                title: '各成员支出额的和需与组支付额相等!',
+                title: '成员支付额无效',
             })
             return false
         }

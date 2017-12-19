@@ -175,6 +175,7 @@
 </view>
 
 
-<view class='help'>
-    <image src='http://localhost:8080/AccountBook/images/account_help.png' mode='scaleToFill' style="width:750rpx;height:882rpx;"></image>
+<view class='help' wx:if="{{showHelp}}">
+    <image src='{{BaseUrl}}/images/account_help.png' mode='scaleToFill' style="width:750rpx;height:882rpx;"></image>
+    <button class='help_ok' bindtap='closeHelp'>知道啦，我会用</button>
 </view>

@@ -4,6 +4,7 @@ var dialog = require("../../utils/dialog.js")
 var util = require('../../utils/util.js')
 Page({
     data: {
+        BaseUrl: APP.globalData.BaseUrl,
 
         containerHeight: APP.systemInfo.windowHeight,
 
@@ -1032,6 +1033,7 @@ Page({
 
     onLoad: function (option) {
         var that = this
+        this.showHelp()
         this.data.account.members.onSizeChanged = function (size) {
             that.refreshTags()
         }
@@ -1175,6 +1177,10 @@ Page({
                 this.setData({
                     members: res.data.members
                 })
+                var notFirst = wx.getStorageSync("not_first_open_new_account")
+                if(!notFirst)
+                    return
+
                 if (this.data.account.type == 'jk' || this.data.account.type=='hk')
                     setTimeout(function(){
                         this.showSelectMembersDialog()
@@ -1277,6 +1283,32 @@ Page({
             isTipDialog:true
         }
         dialog.showDialog(dialogInfo)
+    },
+
+
+    /**
+     * 显示帮助（显示一次）
+     */
+    showHelp: function (e) {
+        var notFirst=wx.getStorageSync("not_first_open_new_account")
+        if (!notFirst)
+            this.setData({
+                showHelp: true
+            })
+    },
+
+    /**
+     * 关闭帮助
+     */
+    closeHelp:function(e){
+        wx.setStorageSync("not_first_open_new_account",true)
+        this.setData({
+            showHelp:false
+        })
+        if (this.data.account.type == 'jk' || this.data.account.type == 'hk')
+            setTimeout(function () {
+                this.showSelectMembersDialog()
+            }.bind(this), 500)
     }
 
 

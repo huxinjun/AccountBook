@@ -115,6 +115,22 @@
 }
 
 
+.join{
+  width: 690rpx;
+  height: 80rpx;
+  margin-top: 30rpx;
+  background-color:#008B8B;
+  color: white;
+  font-size: 30rpx;
+  line-height: 80rpx;
+  text-align: center;
+}
+.join_hover{
+  background-color: #00cdcd;
+  text-shadow: 5rpx 5rpx 5rpx black;
+}
+
+
 .commit{
   width: 690rpx;
   height: 80rpx;

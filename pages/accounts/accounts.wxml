@@ -8,8 +8,11 @@
                 <text >{{userInfo.name}}</text>
         </view>
         
-        <view class='summary'>
-            <text class='item' style="{{item.style.color}}{{item.style.visible}}" wx:for="{{summaryInfos}}" wx:key="{{index}}">{{item.value.name}}:{{item.number}}{{item.value.unit}}</text>
+        <view class='summary left'>
+            <text class='item' style="{{item.style.color}}{{item.style.visible}}" wx:for="{{summaryLInfos}}" wx:key="{{index}}">{{item.value.name}}:{{item.number}}{{item.value.unit}}</text>
+        </view>
+        <view class='summary right'>
+            <text class='item' style="{{item.style.color}}{{item.style.visible}}" wx:for="{{summaryRInfos}}" wx:key="{{index}}">{{item.value.name}}:{{item.number}}{{item.value.unit}}</text>
         </view>
     </view>
 

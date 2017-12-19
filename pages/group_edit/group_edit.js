@@ -162,6 +162,28 @@ Page({
     },
 
 
+    /**
+     * 管理员自己入组
+     */
+    selfJoinGroup:function(e){
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/group/join',
+
+            data: {
+                token: wx.getStorageSync("token"),
+                groupId: this.data.groupInfo.group.id
+            },
+
+            success: function (res) {
+                wx.showToast({
+                    title: res.data.msg
+                })
+                this.pullGroupInfo(this.data.groupInfo.group.id)
+            }
+
+        }, this)
+    },
+
 
 
 

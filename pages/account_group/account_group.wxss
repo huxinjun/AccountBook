@@ -43,7 +43,8 @@
 
 .title .paidin {
     align-self: center;
-    color: #f00;
+    color: #cdcdcd;
+    font-weight: 700;
     font-size: 50rpx;
     margin-right: 20rpx;
 }

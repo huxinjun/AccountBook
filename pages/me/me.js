@@ -11,6 +11,11 @@ Page({
             url: '/pages/notification/notification',
         })
     },
+    coding:function(e){
+        wx.showToast({
+            title: '开发中...',
+        })
+    },
 
     onLoad: function () {
 

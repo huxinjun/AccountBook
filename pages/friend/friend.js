@@ -27,7 +27,6 @@ Page({
      * 下拉刷新
      */
     onPullDownRefresh: function () {
-        this.initData()
         this.initSelfInfo()
     },
 
@@ -47,6 +46,7 @@ Page({
                 this.setData({
                     friends:res.data.friends
                 })
+                wx.stopPullDownRefresh()
             }
         }, this)
     },
@@ -63,7 +63,7 @@ Page({
                 this.setData({
                     userInfo: res.data
                 })
-                wx.stopPullDownRefresh()
+                this.initData()
             }
 
         }, this)

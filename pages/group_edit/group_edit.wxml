@@ -46,6 +46,8 @@
 
     </view>
 
+    <button class='join' hover-class='join_hover' wx:if="{{!groupInfo.isMember && groupInfo.isAdmin}}" bindtap='selfJoinGroup'>加入改组</button>
+
     <button class='{{commit_class}}' hover-class='{{commit_hover_class}}' bindtap='{{commit_click}}' wx:if="{{groupInfo.isAdmin || opt=='new'}}">{{commit_text}}</button>
     <button class='delete' hover-class='delete_hover' style='{{deleteStyle}}'  wx:if="{{groupInfo.isAdmin}}" bindtap='deleteGroup'>删除并解散该组</button>
     <button class='delete' hover-class='delete_hover' style='{{quitStyle}}'  wx:if="{{groupInfo.isMember}}" bindtap='quitGroup'>退出该组</button>

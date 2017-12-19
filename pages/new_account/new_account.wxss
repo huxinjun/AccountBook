@@ -10,14 +10,7 @@
     color: #272636;
     
 }
-.help{
-   width: 100%;
-   height: 100%;
-   background-color:rgba(0, 0, 0, 0.85);
-   position: absolute;
-   left: 0;
-   top: 0;
-}
+
 
 .placeholder_class {
     color: #ccc;
@@ -50,7 +43,8 @@
 }
 
 .title text {
-    color: #f00;
+    color: #cdcdcd;
+    font-weight: 700;
     font-size: 40rpx;
     margin-right: 20rpx;
 }
@@ -399,4 +393,31 @@
     margin-bottom: 20rpx;
 }
 
-/**支付方案---------------------------------------------------------------------------*/
+/**帮助提示---------------------------------------------------------------------------*/
+.help{
+   width: 100%;
+   height: 100%;
+   background-color:rgba(0, 0, 0, 0.85);
+   position: absolute;
+   left: 0;
+   top: 0;
+}
+.help button{
+    width: 300rpx;
+    font-size: 30rpx;
+    text-align: center;
+    line-height: 60rpx;
+    box-sizing: border-box;
+    color:snow;
+    background-color: transparent;
+    border: 2rpx snow dashed;
+    border-radius: 60rpx;
+    font-family: "宋体";
+}
+ 
+.help .help_ok{
+    position: absolute;
+    bottom: 100rpx;
+    left: 0;
+    right: 0;
+}

@@ -48,22 +48,34 @@
 }
 
 .banner .summary{
-    width: 575rpx;
+    width: 100%;
 
     display: flex;
     flex-flow: column nowrap;
-    justify-content: flex-end;
-    align-items: flex-end;
+    
 
-    padding-right: 10rpx;
+    
     padding-bottom: 5rpx;
 
     color: black;
     text-shadow: 2rpx 2rpx 2rpx snow;
     font-size: 25rpx;
 
+    
+}
+.banner  .left{
+    justify-content: flex-start;
+    align-items: flex-start;
     position: absolute;
-    right: 0;
+    left: 5rpx;
+    bottom:0;
+}
+.banner  .right{
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    position: absolute;
+    right: 5rpx;
     bottom:0;
 }
 
