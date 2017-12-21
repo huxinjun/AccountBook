@@ -3,8 +3,8 @@ var util = require("/utils/util.js")
 var loging
 App({
     globalData: {
-        BaseUrl: 'https://xzbenben.cn/AccountBook',
-        // BaseUrl: 'http://192.168.10.41:8080/AccountBook',
+        // BaseUrl: 'https://xzbenben.cn/AccountBook',
+        BaseUrl: 'http://192.168.10.41:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
         // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
@@ -125,9 +125,6 @@ App({
 
         this.checkLogin()
         //调用API从本地缓存中获取数据
-        var logs = wx.getStorageSync('logs') || []
-        logs.unshift(Date.now())
-        wx.setStorageSync('logs', logs)
         // wx.removeStorageSync("token")
 
         var that = this
@@ -230,13 +227,17 @@ App({
     //检查登录状态，为了防止token失效时进入页面同时请求两个以上接口，导致服务器不停刷新token,造成死循环
     checkLogin: function () {
         console.log('checkLogin')
+        var that = this
         this.ajax({
-
             url: this.globalData.BaseUrl + '/login/checkLogin',
             data: {
                 token: wx.getStorageSync("token")
             },
-            success: function (res) {
+            success:function(res){
+                if (res.data.status == that.globalData.resultcode.FAILD ||
+                    res.data.status == that.globalData.resultcode.INVALID_USERINFO)
+                    //没有这个用户，或者没有完善用户信息
+                    this.reLogin()
             }
         }, this)
     },
@@ -276,7 +277,6 @@ App({
                 console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 wx.setStorageSync("token", res.data.token)
                 console.log(res)
-                console.log(that.globalData.resultcode.INVALID_USERINFO)
                 if (res.data.status == that.globalData.resultcode.INVALID_USERINFO) {
                     //完善个人信息
                     wx.getUserInfo({
@@ -288,9 +288,9 @@ App({
                             })
                         },
                         fail:function(){
-                            wx.showToast({
-                                image: "/img/error.png",
-                                title: '无法创建用户',
+                            that.uploadUserInfo('', success);
+                            wx.showLoading({
+                                title: '以游客身份登录中...',
                             })
                         }
 
@@ -340,7 +340,7 @@ App({
         wx.showToast({
             title: '登陆成功!',
             icon: 'success',
-            duration: 2000
+            duration: 1000
         })
 
         if (success != undefined)
@@ -387,8 +387,7 @@ App({
                 console.log("")
                 console.log("")
                 console.log("")
-                if (res.data.status == that.globalData.resultcode.INVALID_TOKEN ||
-                    res.data.status == that.globalData.resultcode.INVALID_USERINFO) {
+                if (res.data.status == that.globalData.resultcode.INVALID_TOKEN) {
                     that.reLogin({
                         context: this,
                         //为了避免无限请求,重写登录后不自动发起请求
