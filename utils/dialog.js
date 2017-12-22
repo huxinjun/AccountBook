@@ -97,7 +97,7 @@ function showDialog(dialogInfo) {
     this.dialogInfo.style.display = "display:flex !important;"
 
     //animation init
-    var transition = "transition: all 0.5s ease;"
+    var transition = "transition:all 0.5s ease;"
     dialogInfo.style.bgAnim = transition + "background-color:rgba(0, 0, 0, 0);"
     dialogInfo.style.dialogAnim = transition + "transform: scale(0, 0);"
     this.page.setData({
