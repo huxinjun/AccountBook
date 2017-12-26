@@ -1,6 +1,7 @@
 @import "/global/dialog.wxss";
 
 .container {
+    width: 750rpx;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -9,6 +10,7 @@
     font-family: "黑体";
     color: #272636;
     background-color: snow;
+    overflow-x: hidden;
 }
 
 .banner{

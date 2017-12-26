@@ -1,7 +1,7 @@
 {
     "navigationBarBackgroundColor": "#2BA245",
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "消息",
+    "navigationBarTitleText": "新增账单",
     "backgroundColor": "#eeeeee",
     "backgroundTextStyle": "light",
     "enablePullDownRefresh": false

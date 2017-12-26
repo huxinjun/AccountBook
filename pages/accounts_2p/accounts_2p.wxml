@@ -17,7 +17,7 @@
 
             <view class='p2' wx:if="{{userId}}">
                 <image class='p2' src='{{otherUserInfo.icon}}' mode='aspectFill'></image> 
-                <text >江江</text>
+                <text >{{otherUserInfo.nickname}}</text>
             </view>
             
             
