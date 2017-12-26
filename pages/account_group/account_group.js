@@ -102,13 +102,14 @@ Page({
             tag1: "AA制",
             tag2: "自费10元",
             ruleType: 2,
-            paidIn: "￥0.00"
+            paidIn: "点此输入金额"
         }
         member.style = {
             member: "height:0;opacity:0;",
             memberRule: "height:0;opacity:0;",
             tag1: "display:inherit;",
-            tag2: "display:none;"
+            tag2: "display:none;",
+            paidIn_color : "color:red;"
         }
 
         this.data.account.members.addToHead(member)
@@ -454,9 +455,9 @@ Page({
                     
                     item.value.paidIn = "￥" + item.paidIn
                     if (item.paidIn>0)
-                        item.style.paidIn_color ="color:red;"
-                    else
                         item.style.paidIn_color = "color:#20B2AA;"
+                    else
+                        item.style.paidIn_color ="color:red;"
 
 
                     this.refreshSliderData()

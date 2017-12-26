@@ -427,7 +427,7 @@ function open(index) {
  */
 function isSliderOpen(index){
     var item = this.slidersInfo.page.getSliderData(index)
-    return item.value.lastSliderOpen
+    return item.value.lastSliderOpen || item.value.isSliderOpen
 }
 
 /**

@@ -51,7 +51,7 @@
 
 
 
-                <text class='all' wx:if="{{account.value.showAllContentBtn}}" bindtap='onShowAllContentClick' data-index='{{index}}'>{{account.value.allContentBtnText}}</text>
+                <text class='all' wx:if="{{account.value.showAllContentBtn}}" catchtap='onShowAllContentClick' data-index='{{index}}'>{{account.value.allContentBtnText}}</text>
 
 
                 <view class="pics" wx:if="{{account.imgs!=null}}" data-index="{{index}}">

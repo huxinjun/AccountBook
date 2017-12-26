@@ -1,6 +1,8 @@
 @import "/global/dialog.wxss";
 
 .container {
+    width: 750rpx;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -8,174 +10,34 @@
     justify-content: flex-start;
     font-family: "微软雅黑";
     color: #272636;
+    background-color: white;
+    font-size: 25rpx;
     
 }
+
 
 .placeholder_class {
     color: #ccc;
     font-size: 25rpx;
 }
 
-/**标题---------------------------------------------------------------------------*/
 
-.title {
+/**标签---------------------------------------------------------------------------*/
+
+.label{
     width: 750rpx;
-    height: 100rpx;
-    flex-flow: row nowrap;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 20rpx;
-    border-bottom: 1rpx dashed #ddd;
-    box-sizing: border-box;
+    height: 75rpx;
+    display: block;
+    font-size: 25rpx;
+    color: #666;
+    line-height: 75rpx;
+    padding-left: 10rpx;
+    background-color: #eeeef3;
+}
+.label_hover{
+    background-color: #eaeaea;
 }
 
-.title image {
-    width: 50rpx;
-    height: 50rpx;
-}
-
-.title .name {
-    flex-grow: 1;
-    text-align: start;
-    padding-left: 20rpx;
-}
-
-.title .paidin {
-    align-self: center;
-    color: #cdcdcd;
-    font-weight: 700;
-    font-size: 50rpx;
-    margin-right: 20rpx;
-}
-
-/**备注---------------------------------------------------------------------------*/
-.desc {
-    width: 750rpx;
-    height: 100rpx;
-    border-bottom: 1rpx dashed #ddd;
-    box-sizing: border-box;
-    
-    position: relative;
-    overflow: hidden;
-}
-
-.desc_main {
-    width: 750rpx;
-    height: 100rpx;
-    flex-flow: row wrap;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 20rpx;
-    box-sizing: border-box;
-    position: relative;
-    background-color: #fff;
-}
-
-.desc_icon {
-    width: 50rpx;
-    height: 50rpx;
-    margin-top: -7rpx;
-}
-
-.desc .content {
-    height: 50rpx;
-    overflow: hidden;
-    flex-grow: 1;
-    text-align: start;
-    padding-left: 20rpx;
-}
-
-
-.pics {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: flex-start;
-    border-bottom: 1rpx dashed #ddd;
-    background-color: #efefef;
-    padding-right: 20rpx;
-    padding-bottom: 20rpx;
-
-    overflow: hidden; 
-
-    transition: all 500ms ease;
-}
-
-.pic{
-    width: 223rpx;
-    height: 158rpx;
-    margin-left: 20rpx;
-    margin-top: 20rpx;
-    position: relative;
-}
-.pic .img{
-    width: 100%;
-    height: 100%;
-
-    position: absolute;
-    left: 0;
-    top: 0;
-    
-}
-
-
-/**日期---------------------------------------------------------------------------*/
-
-.date {
-    width: 750rpx;
-    height: 100rpx;
-    flex-flow: row wrap;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 20rpx;
-    border-bottom: 1rpx dashed #ddd;
-    box-sizing: border-box;
-}
-
-.date_icon {
-    width: 50rpx;
-    height: 50rpx;
-    margin-top: -7rpx;
-}
-
-.date_text {
-    flex-grow: 1;
-    text-align: start;
-    padding-left: 20rpx;
-}
-
-
-/**位置---------------------------------------------------------------------------*/
-
-.loc {
-    width: 750rpx;
-    height: 100rpx;
-    flex-flow: row wrap;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 20rpx;
-    box-sizing: border-box;
-}
-
-.loc_icon {
-    width: 55rpx;
-    height: 55rpx;
-    margin-top: -7rpx;
-}
-
-.loc_text {
-    flex-grow: 1;
-    padding-left: 20rpx;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-
-}
 
 /**成员---------------------------------------------------------------------------*/
 
@@ -187,33 +49,12 @@
     justify-content: space-between;
 }
 
-.members_title {
-    width: 750rpx;
-    height: 50rpx;
-    position: relative;
-    background-color: #2bc345;
-    text-align: center;
-    color: whitesmoke;
-    line-height: 50rpx;
-}
-
-.members_title_hover {
-    background-color: #2be245;
-}
-
-.members_title_txt {
-    position: absolute;
-    font-size: 25rpx;
-    margin-left: -35rpx;
-}
 
 /**成员条目*/
 
 .memeber {
     width: 750rpx;
-    border-bottom: 1rpx solid #999;
     box-sizing: border-box;
-    background-color: #eee;
     position: relative;
     overflow: hidden;
 }
@@ -227,11 +68,12 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    background-color: #efefef;
+    background-color: snow;
     padding-left: 20rpx;
     padding-right: 20rpx;
     box-sizing: border-box;
     position: relative;
+    
 }
 
 .member_icon {
@@ -250,6 +92,10 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: flex-start;
+    position: relative;
+}
+.member_name{
+    font-size: 40rpx;
 }
 
 /**成员规则和其他标签*/
@@ -280,6 +126,7 @@
 
     position: absolute;
     right: 0;
+    top: 45rpx;
     margin-right: 20rpx;
 
     z-index: 1;
@@ -299,6 +146,7 @@
     top: 140rpx;
     padding-left: 20rpx;
     padding-right: 20rpx;
+    background-color: snow;
 }
 
 .member_rule radio-group {
@@ -324,4 +172,261 @@
     margin-bottom: 20rpx;
 }
 
-/**支付方案---------------------------------------------------------------------------*/
+
+
+.paidin {
+    color: #cdcdcd;
+    display: block;
+    width: 730rpx;
+    font-weight: 700;
+    font-size: 40rpx;
+    margin-right: 20rpx;
+    text-align: right;
+    box-sizing: border-box;
+    margin: 10rpx;
+    background-color: white;
+}
+
+
+
+
+/**标题---------------------------------------------------------------------------*/
+
+.title {
+    width: 750rpx;
+    height: 100rpx;
+    flex-flow: row nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20rpx;
+    border-bottom: 1rpx dashed #ddd;
+    box-sizing: border-box;
+    background-color: snow;
+}
+
+.title image {
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.title input {
+    flex-grow: 1;
+    text-align: start;
+    padding-left: 20rpx;
+}
+
+
+
+/**备注---------------------------------------------------------------------------*/
+.desc {
+    width: 750rpx;
+    height: 100rpx;
+    border-bottom: 1rpx dashed #ddd;
+    box-sizing: border-box;
+    background-color: snow;
+    position: relative;
+    overflow: hidden;
+}
+
+.desc_main {
+    width: 750rpx;
+    height: 100rpx;
+    flex-flow: row nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20rpx;
+    box-sizing: border-box;
+    position: relative;
+    background-color: snow;
+    overflow: hidden;
+}
+
+.desc_icon {
+    width: 50rpx;
+    height: 50rpx;
+    margin-top: -7rpx;
+}
+
+.desc input {
+    height: 100rpx;
+    flex-grow: 1;
+    vertical-align: middle;
+    padding-left: 20rpx;
+}
+
+.desc_add_pic {
+    width: 45rpx;
+    height: 45rpx;
+    align-self: center;
+    margin-right: 20rpx;
+}
+
+
+.pics {
+    height: 0;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1rpx dashed #ddd;
+    padding-right: 20rpx;
+    background-color: snow;
+    overflow: hidden; 
+
+    transition: all 500ms ease;
+}
+
+.pic{
+    width: 223rpx;
+    height: 158rpx;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+    position: relative;
+}
+.pic .img{
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+}
+.pic .delete{
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    right: -10rpx;
+    top: -10rpx;
+}
+.pic .mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255, 0.85);
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    
+}
+.mask .loading{
+    width: 60rpx;
+    height: 60rpx;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -30rpx;
+    margin-top: -30rpx;
+    
+}
+.mask .progress{
+    width: 40rpx;
+    height: 40rpx;
+    position: absolute;
+    font-size: 20rpx;
+    left: 50%;
+    top: 50%;
+    margin-left: -20rpx;
+    margin-top: -20rpx;
+    text-align: center;
+    line-height: 40rpx;
+
+    color: gray;
+    
+}
+
+/**日期---------------------------------------------------------------------------*/
+
+.date {
+    width: 750rpx;
+    height: 100rpx;
+    flex-flow: row wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20rpx;
+    border-bottom: 1rpx dashed #ddd;
+    box-sizing: border-box;
+    background-color: snow;
+    
+}
+
+.date_icon {
+    width: 50rpx;
+    height: 50rpx;
+    margin-top: -7rpx;
+}
+
+.date picker {
+    flex-grow: 1;
+    text-align: start;
+    padding-left: 20rpx;
+}
+
+.date_today {
+    align-self: center;
+    margin-right: 20rpx;
+    font-size: 25rpx;
+    color: white;
+    border-radius: 5rpx;
+    padding: 5rpx 10rpx;
+}
+
+/**位置---------------------------------------------------------------------------*/
+
+.loc {
+    width: 750rpx;
+    height: 100rpx;
+    flex-flow: row wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20rpx;
+    box-sizing: border-box;
+    background-color: snow;
+}
+
+.loc_icon {
+    width: 55rpx;
+    height: 55rpx;
+    margin-top: -7rpx;
+}
+
+.loc_text {
+    flex-grow: 1;
+    padding-left: 20rpx;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.loc_get {
+    width: 40rpx;
+    height: 40rpx;
+    align-self: center;
+    margin-right: 20rpx;
+}
+
+
+.uploadBtn{
+    height: 75rpx;
+    background-color: #2BA245;
+    color: snow;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    line-height: 75rpx;
+    font-size: 30rpx;
+}
+.uploadBtn_hover{
+    background-color: 	#2E8B57;
+}
+.uploadBtn::after{
+    border: none;
+}
+
+

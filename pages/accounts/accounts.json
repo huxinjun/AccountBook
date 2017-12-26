@@ -1,7 +1,7 @@
 {
     "navigationBarBackgroundColor": "#2BA245",
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "账单列表",
+    "navigationBarTitleText": "我的账单",
     "backgroundColor": "#eeeeee",
     "backgroundTextStyle": "light",
     "enablePullDownRefresh": true

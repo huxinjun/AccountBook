@@ -163,7 +163,7 @@ Page({
             tag1: "AA制",
             tag2: "自费10元",
             ruleType: 2,
-            paidIn: (this.data.account.type=='sr'?'收入:':'支付:')+'0.00',
+            paidIn: '点此输入金额', 
             isPaidPerson : false
         }
         member.style = {
@@ -172,7 +172,7 @@ Page({
             tag0: "",
             tag1: "display:inherit;",
             tag2: "display:none;",
-            paidIn_color: this.data.account.type == 'jk' || this.data.account.type == 'hk'?"color:transparent;":""
+            paidIn_color : "color:red;"
         }
 
         this.data.account.members.addToHead(member)
@@ -544,7 +544,7 @@ Page({
         var dialogContent = "请输入成员支付金额"
         switch(this.data.account.type){
             case 'jk'://借款
-                dialogContent = "请输入借款者要借的金额"
+                dialogContent = "请输入借款者要借出的金额"
                 break;
             case 'hk'://还款
                 dialogContent = "请输入还款人还款金额"
@@ -574,24 +574,29 @@ Page({
                     item.paidIn = parseFloat(value).toFixed(2)
                     item.paidIn = item.paidIn < 0 ? 0 : item.paidIn
                     
-                    item.value.paidIn = (this.data.account.type == 'sr' ? '收入:' : '支付:') + item.paidIn
+                    item.value.paidIn = (this.data.account.type == 'sr' ? '收入了: ' : '支付了: ') + item.paidIn + '元'
                     
                     if (item.paidIn>0)
-                        item.style.paidIn_color ="color:red;"
-                    else
                         item.style.paidIn_color = "color:#20B2AA;"
+                    else
+                        item.style.paidIn_color ="color:red;"
 
                     //对于借款还款需要特殊处理,只能有一个人付款
                     if (this.data.account.type == 'jk' || this.data.account.type == 'hk'){
                         var members = this.getSliderData()
+                        var that =this
                         members.forEach(function (v, i) {
                             if (v.memberId != item.memberId) {
-                                v.paidIn = "0.00"
-                                v.value.paidIn = (this.data.account.type == 'sr' ? '收入:' : '支付:') + v.paidIn
+                                var txt = that.data.account.type == 'jk' ? '借出: ':"收取了: "
+                                v.value.paidIn = txt + item.paidIn +'元'
+                                v.style.paidIn_color = "color:red;"
                                 v.value.isPaidPerson = false
-                                v.style.paidIn_color = "color:transparent;"
-                            }else
+                            }else{
+                                var txt = that.data.account.type == 'jk' ? '借入: ' : "支付了: "
+                                v.value.paidIn = txt + item.paidIn + '元'
+                                v.style.paidIn_color = "color:#20B2AA;"
                                 v.value.isPaidPerson=true
+                            }
                         })
                         this.refreshTags()
                     }
@@ -1035,8 +1040,15 @@ Page({
 
     onLoad: function (option) {
         var that = this
-        this.showHelp()
+        
         this.data.account.members.onSizeChanged = function (size) {
+            //最后那个人不要底部的border
+            for (var i = 0; size > 1 && i<size;i++){
+                if(i==size-1)
+                    delete that.data.account.members[i].style.border
+                else
+                    that.data.account.members[i].style.border = "border-bottom: 1rpx solid #999;"
+            }
             that.refreshTags()
         }
         this.data.images.onSizeChanged = function (size) {
@@ -1128,6 +1140,9 @@ Page({
         this.data.account.name = option.name
         this.data.account.value.typeIcon = option.typeIcon
 
+        wx.setNavigationBarTitle({
+            title: '创建' + this.data.account.name+"账单",
+        })
         this.refreshSliderData()
     },
 
@@ -1285,46 +1300,7 @@ Page({
             isTipDialog:true
         }
         dialog.showDialog(dialogInfo)
-    },
-
-
-    /**
-     * 显示帮助（显示一次）
-     */
-    showHelp: function (e) {
-        var notFirst=wx.getStorageSync("not_first_open_new_account")
-        if (!notFirst)
-            this.setData({
-                showHelp: true
-            })
-    },
-
-    /**
-     * 关闭帮助
-     */
-    closeHelp:function(e){
-        if (!this.data.nextShowHelp)
-            wx.setStorageSync("not_first_open_new_account",true)
-        this.setData({
-            showHelp:false
-        })
-        if (this.data.account.type == 'jk' || this.data.account.type == 'hk')
-            setTimeout(function () {
-                this.showSelectMembersDialog()
-            }.bind(this), 500)
-    },
-
-    /**
-     * 是否下次不显示帮助
-     */
-    helpCheckBoxClick:function(e){
-        this.setData({
-            nextShowHelp: !this.data.nextShowHelp
-        })
     }
-
-
-
 })
 
 

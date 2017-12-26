@@ -266,6 +266,9 @@ Page({
                 this.setData({
                     otherUserInfo: res.data
                 })
+                wx.setNavigationBarTitle({
+                    title: '与'+res.data.nickname+'的账单',
+                })
             }
 
         }, this)
