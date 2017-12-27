@@ -287,6 +287,16 @@ Page({
 
                 v.membersLength = v.members.length
                 v.originMembers = util.clone(v.members)
+
+                //收入账单的特殊处理
+                if (v.type == 'sr') {
+                    v.value.state = 0
+                    v.value.bg = '/img/accounts/envelope_sr.png'
+                    v.value.desc = "收入"
+                }
+
+
+
                 //子成员处理
                 for (var i = 0; i < v.members.length; i++) {
                     var member = v.members[i]

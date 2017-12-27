@@ -474,7 +474,7 @@ Page({
                         return
                     }
 
-                    v.value.state = 3
+                    v.value.state = 3 
                     
 
 

@@ -28,7 +28,7 @@
                 <view class='title_container' data-index='{{index}}'>
                     <image class='type_icon' src="{{account.icon}}" data-index='{{index}}'></image>
                     <text class='title' data-index='{{index}}'>{{account.name}}</text>
-                    <text class='tag in_come' data-index='{{index}}' wx:if="{{account.value.state==3 && account.type=='sr'}}">{{account.paidIn}}元</text>
+                    <text class='tag in_come' data-index='{{index}}' wx:if="{{account.type=='sr'}}">{{account.paidIn}}元</text>
                     <text class='tag paid_in' data-index='{{index}}' wx:if="{{account.value.state==3 && account.type!='sr'}}">{{account.paidIn}}元</text>
                     <text class='tag is_private' wx:if="{{account.isPrivate}}" data-index='{{index}}'>个人账单</text>
                     <text class='date' data-index='{{index}}'>{{account.date}}</text>
@@ -120,11 +120,12 @@
 
                     </view>
 
-                    <text class='addr' wx:if="{{account.addrName!=null}}">{{account.addrName}}</text>
-                    <text class='time'>{{account.dateDis}}</text>
+                    
+                    
 
                 </view>
-
+                <text class='addr' wx:if="{{account.addrName!=null}}">{{account.addrName}}</text>
+                <text class='time'>{{account.dateDis}}</text>
 
 
             </view>

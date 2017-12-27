@@ -188,8 +188,12 @@
     width: 98%;
 }
 .all{
+    width: 750rpx;
     color: #5B6A92;
     font-size: 25rpx;
+    display: block;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
 }
 
 
@@ -229,6 +233,7 @@
     width: 335rpx;
     height: 300rpx;
     position: relative;
+    margin-top: 20rpx;
 }
 .envelope .bg{
     width: 100%;

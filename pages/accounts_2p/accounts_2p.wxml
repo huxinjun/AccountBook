@@ -134,11 +134,12 @@
 
                     </view>
 
-                    <text class='addr' wx:if="{{account.addrName!=null}}">{{account.addrName}}</text>
-                    <text class='time'>{{account.dateDis}}</text>
+                    
 
                 </view>
 
+                <text class='addr' wx:if="{{account.addrName!=null}}">{{account.addrName}}</text>
+                <text class='time'>{{account.dateDis}}</text>
 
 
             </view>
