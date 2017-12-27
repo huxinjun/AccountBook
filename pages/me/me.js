@@ -17,6 +17,15 @@ Page({
         })
     },
 
+    /**
+     * 统计数据
+     */
+    gotoSummary: function (e) {
+        wx.navigateTo({
+            url: '/pages/summary/summary',
+        })
+    },
+
     onLoad: function () {
 
     },
@@ -39,7 +48,7 @@ Page({
      */
     initData: function () {
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/account/getTodaySummaryInfo',
+            url: APP.globalData.BaseUrl + '/summary/getToday',
             data: {
                 token: wx.getStorageSync("token")
             },

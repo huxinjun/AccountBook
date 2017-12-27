@@ -134,6 +134,12 @@
 					"query": "",
 					"scene": 1044,
 					"shareInfo": {}
+				},
+				{
+					"id": -1,
+					"name": "统计数据",
+					"pathName": "pages/summary/summary",
+					"query": ""
 				}
 			]
 		}

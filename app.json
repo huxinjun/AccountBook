@@ -15,7 +15,9 @@
         "pages/accounts_2p/accounts_2p",
         "pages/account/account",
         "pages/me/me",
-        "pages/notification/notification"
+        "pages/notification/notification",
+        "pages/summary/summary"
+
     ],
     "window": {
         "navigationBarBackgroundColor": "#2BA245",

@@ -15,7 +15,7 @@
         <image class="arrow" src="/img/right_arrow_normal.png"></image>
     </view>
 
-    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' bindtap='coding'>
+    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' bindtap='gotoSummary'>
         <view class='flag'></view>
         <text class="name">数据统计</text>
         <image class="arrow" src="/img/right_arrow_normal.png"></image>

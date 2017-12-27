@@ -277,10 +277,9 @@ Page({
      */
     initSummaryInfo: function () {
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/account/getSummaryInfo',
+            url: APP.globalData.BaseUrl + '/summary/getSimple',
             data: {
-                token: wx.getStorageSync("token"),
-                userId: this.data.userId ? this.data.userId : ""
+                token: wx.getStorageSync("token")
             },
             success: function (res) {
                 var that = this
