@@ -1,1 +1,81 @@
-/* pages/summary/summary.wxss */
+
+.container {
+    width: 100%;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #eee;
+}
+.card{
+    width: 650rpx;
+    background: snow;
+    border-radius: 30rpx;
+    margin-top: 50rpx;
+    overflow: hidden;
+    background: #fff;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.card .info{
+    font-size: 22rpx;
+    display: block;
+}
+.card .desc{
+    font-size: 26rpx;
+    margin-top: 15rpx;
+}
+.card .txt{
+    font-size: 18rpx;
+    color: #ccc;
+    display: block;
+    margin-top: 20rpx;
+    margin-bottom: 10rpx;
+    
+}
+
+
+
+.titleContainer{
+    width: 100%;
+    height: 65rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+
+    
+    background-color: #dadada;
+}
+
+
+.titleContainer .pre{
+    font-size: 22rpx;
+    margin-left: 10rpx;
+}
+.titleContainer .date{
+    flex-grow: 1;
+    text-align: center;
+    font-size: 28rpx;
+    font-weight: 600;
+}
+.titleContainer .next{
+    font-size: 22rpx;
+    margin-right: 10rpx;
+    
+}
+.titleContainer .back{
+    width: 100%;
+    height: 100%;
+    display: block;
+    font-size: 22rpx;
+    text-align: center;
+    line-height: 65rpx;
+}
+

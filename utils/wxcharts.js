@@ -324,7 +324,7 @@ function dataCombine(series) {
 function getSeriesDataItem(series, index) {
     var data = [];
     series.forEach(function (item) {
-        if (item.data[index] !== null && typeof item.data[index] !== 'undefinded') {
+        if (item.data[index] !== null && typeof item.data[index] !== 'undefined') {
             var seriesItem = {};
             seriesItem.color = item.color;
             seriesItem.name = item.name;
@@ -372,7 +372,7 @@ function getToolTipData(seriesData, calPoints, index, categories) {
         y: 0
     };
     calPoints.forEach(function (points) {
-        if (typeof points[index] !== 'undefinded' && points[index] !== null) {
+        if (typeof points[index] !== 'undefined' && points[index] !== null) {
             validCalPoints.push(points[index]);
         }
     });
@@ -500,7 +500,7 @@ function calLegendData(series, opts, config) {
     var widthCount = 0;
     var currentRow = [];
     series.forEach(function (item) {
-        var itemWidth = 3 * padding + shapeWidth + measureText(item.name || 'undefinded');
+        var itemWidth = 3 * padding + shapeWidth + measureText(item.name || 'undefined');
         if (widthCount + itemWidth > opts.width) {
             legendList.push(currentRow);
             widthCount = itemWidth;
@@ -1960,12 +1960,16 @@ Charts.prototype.addEventListener = function (type, listener) {
 };
 
 Charts.prototype.getCurrentDataIndex = function (e) {
-    var touches = e.touches && e.touches.length ? e.touches : e.changedTouches;
+    var touches =  e.changedTouches;
     if (touches && touches.length) {
-        var _touches$ = touches[0],
-            x = _touches$.x,
-            y = _touches$.y;
-
+        var x,y
+        for(var i=0;i<touches.length;i++)
+            if(touches[i]!=null){
+                x=touches[i].x
+                y=touches[i].y
+                break
+            }
+        
         if (this.opts.type === 'pie' || this.opts.type === 'ring') {
             return findPieChartCurrentIndex({ x: x, y: y }, this.chartData.pieData);
         } else if (this.opts.type === 'radar') {
@@ -1990,9 +1994,7 @@ Charts.prototype.showToolTip = function (e) {
         });
         if (index > -1) {
             var seriesData = getSeriesDataItem(this.opts.series, index);
-            if (seriesData.length === 0) {
-                drawCharts.call(this, opts.type, opts, this.config, this.context);
-            } else {
+            if (seriesData.length !== 0) {
                 var _getToolTipData = getToolTipData(seriesData, this.chartData.calPoints, index, this.opts.categories, option),
                     textList = _getToolTipData.textList,
                     offset = _getToolTipData.offset;
@@ -2002,11 +2004,9 @@ Charts.prototype.showToolTip = function (e) {
                     offset: offset,
                     option: option
                 };
-                drawCharts.call(this, opts.type, opts, this.config, this.context);
             }
-        } else {
-            drawCharts.call(this, opts.type, opts, this.config, this.context);
         }
+        drawCharts.call(this, opts.type, opts, this.config, this.context);
     }
 };
 

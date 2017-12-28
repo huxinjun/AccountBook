@@ -1,3 +1,29 @@
 <view class="container">
-    <canvas canvas-id="pieCanvas" class="canvas" style="height:400px" bindtouchstart="touchHandler"></canvas>
+
+    <view class='card'>
+
+
+
+        <view class='titleContainer'>
+            <text class='pre' wx:if="{{monthPaid.value.dataType=='all'}}" bindtap='cardMonthPaidPre'>上一月</text>
+            <text class='back' wx:if="{{monthPaid.value.dataType=='other'}}" bindtap='cardMonthPaidBack'>点此返回查看全部数据</text>
+            <text class='date' wx:if="{{monthPaid.value.dataType=='all'}}">{{queryYear}}年{{queryMonth}}月</text>
+            <text class='next' wx:if="{{monthPaid.value.dataType=='all'}}" style="{{monthPaid.style.next}}" bindtap='cardMonthPaidNext'>下一月</text>
+        </view>
+
+        <text class='desc'>{{monthPaid.value.desc}}</text>
+
+        <text class='info' style="color:{{monthPaid.selectItem.color}};text-shadow: 1rpx 1rpx 1rpx #444;" style='{{monthPaid.style.info}}'>{{monthPaid.selectItem.name}}支出{{monthPaid.selectItem.data}}元,{{monthPaid.selectItem.count}}笔账单记录,占总支出的{{monthPaid.selectItem.monthPaidPercent}}%</text>
+
+        <canvas canvas-id="chartMonthPaidCanvas" style="height:{{ch}}px;width:{{cw}}px;" bindtouchstart="monthPaidTouch" wx:if="{{!monthPaid.value.nullData && monthPaid.value.dataType=='all'}}"></canvas>
+        <canvas canvas-id="chartMonthPaidOtherCanvas" style="height:{{ch}}px;width:{{cw}}px;" bindtouchstart="monthPaidOtherTouch" wx:if="{{!monthPaid.value.nullData && monthPaid.value.dataType=='other'}}"></canvas>
+        <text style="height:{{ch}}px;width:{{cw}}px;line-height:{{ch}}px;text-align:center;" wx:if="{{monthPaid.value.nullData}}">无统计数据</text>
+
+
+
+        <text class='txt'>☺点击扇形会显示具体数据</text>
+
+    </view>
+
+
 </view>
