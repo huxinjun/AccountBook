@@ -61,7 +61,7 @@
 
         <text class='desc'>{{yearMonthReceipt.value.desc}}</text>
 
-        <canvas canvas-id="chartYearMonthReceiptCanvas" style="height:{{ch}}px;width:{{cw}}px;" bindtap="yearMonthReceiptTouch" wx:if="{{!yearMonthPaid.value.nullData}}"></canvas>
+        <canvas canvas-id="chartYearMonthReceiptCanvas" style="height:{{ch}}px;width:{{cw}}px;" bindtap="yearMonthReceiptTouch" wx:if="{{!yearMonthReceipt.value.nullData}}"></canvas>
 
         <text style="height:{{ch}}px;width:{{cw}}px;line-height:{{ch}}px;text-align:center;" wx:if="{{yearMonthReceipt.value.nullData}}">无统计数据</text>
 

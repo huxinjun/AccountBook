@@ -271,6 +271,7 @@ Page({
             },
 
             success: function (res) {
+                //判断是否没有数据
                 if (res.data.infos.length==0){
                     this.data.monthPaid.value.nullData=true
                     this.data.monthPaid.value.desc = "该月无支出"
@@ -297,9 +298,6 @@ Page({
                 this.data.monthPaid.value.total=total
                 this.data.monthPaid.value.desc="月总支出" + total + "元"
                 this.refreshMonthPaid()
-            },
-            complete:function(){
-                wx.stopPullDownRefresh()
             }
 
 
@@ -358,26 +356,17 @@ Page({
             data: {
                 token: wx.getStorageSync("token")
             },
-            // var chartData = {
-            //     main: {
-            //         data: [15, 20, 45, 37],
-            //         categories: ['2012', '2013', '2014', '2015']
-            //     },
-            //     sub: [{
-            //         data: [70, 40, 65, 100, 34, 18],
-            //         categories: ['1', '2', '3', '4', '5', '6']
-            //     }, {
-            //         data: [55, 30, 45, 36, 56, 13],
-            //         categories: ['1', '2', '3', '4', '5', '6']
-            //     }, {
-            //         data: [76, 45, 32, 74, 54, 35],
-            //         categories: ['1', '2', '3', '4', '5', '6']
-            //     }, {
-            //         data: [76, 54, 23, 12, 45, 65],
-            //         categories: ['1', '2', '3', '4', '5', '6']
-            //     }]
-            // };
             success: function (res) {
+
+                //判断是否没有数据
+                if (util.isEmpty(res.data.map)) {
+                    this.data.yearMonthPaid.value.nullData = true
+                    this.refreshYearMonthPaid()
+                    return
+                }
+
+
+
                 var chartData={
                     main:{
                         data: [],
@@ -453,6 +442,15 @@ Page({
                 token: wx.getStorageSync("token")
             },
             success: function (res) {
+                //判断是否没有数据
+                if (util.isEmpty(res.data.map)) {
+                    this.data.yearMonthReceipt.value.nullData = true
+                    this.refreshYearMonthReceipt()
+                    return
+                }
+
+
+
                 var chartData = {
                     main: {
                         data: [],

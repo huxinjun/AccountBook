@@ -45,8 +45,15 @@ function px2rpx(px) {
 }
 
 
-
-
+/**
+ * 判断一个对象是否是{}
+ */
+function isEmpty(obj) {
+    var attr;
+    for (attr in obj)
+        return false;
+    return true
+}  
 
 
 
@@ -131,6 +138,7 @@ module.exports = {
   px2rpx: px2rpx,
 
   clone: clone,
+  isEmpty: isEmpty,
 
   calcTextWidth: calcTextWidth
 }
