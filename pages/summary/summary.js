@@ -341,6 +341,9 @@ Page({
                 this.data.monthPaid.value.otherTotal = total
                 this.data.monthPaid.value.desc = this.data.queryYear + "年" + this.data.queryMonth + "月其他类型支出" + total + "元"
                 this.refreshMonthPaid()
+            },
+            complete:function(){
+                wx.stopPullDownRefresh()
             }
 
 
@@ -424,7 +427,12 @@ Page({
                     width: this.data.cw,
                     height: this.data.ch,
                 });
+                
+            },
+            complete: function () {
+                wx.stopPullDownRefresh()
             }
+
 
 
         }, this)
@@ -506,7 +514,11 @@ Page({
                     width: this.data.cw,
                     height: this.data.ch,
                 });
+            },
+            complete: function () {
+                wx.stopPullDownRefresh()
             }
+
 
 
         }, this)
