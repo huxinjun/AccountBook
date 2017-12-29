@@ -4,6 +4,7 @@ var APP = getApp()
 var chartMonthPaid//月支出饼图
 var chartMonthPaidOther//月支出中其他类型的支出饼图
 var chartYearMonthPaid//年度支出柱状图
+var chartYearMonthReceipt//年度收入柱状图
 
 Page({
     data: {
@@ -22,6 +23,13 @@ Page({
             value: {
                 dataType: "year"
             }
+        },
+        yearMonthReceipt: {
+            chartData: null,
+            style: {},
+            value: {
+                dataType: "year"
+            }
         }
     },
 
@@ -33,6 +41,11 @@ Page({
     refreshYearMonthPaid: function () {
         this.setData({
             yearMonthPaid: this.data.yearMonthPaid
+        })
+    },
+    refreshYearMonthReceipt: function () {
+        this.setData({
+            yearMonthReceipt: this.data.yearMonthReceipt
         })
     },
     getMonthPaidItem: function (index) {
@@ -95,7 +108,7 @@ Page({
     
 
     /**
-     * 柱状图从月视图切换回年视图
+     * 柱状图从月视图切换回年视图(支出)
      */
     cardYearMonthPaidBack: function () {
         this.data.yearMonthPaid.value.dataType = 'year'
@@ -107,14 +120,14 @@ Page({
                 name: '支出额(元)',
                 data: this.data.yearMonthPaid.chartData.main.data,
                 format: function (val, name) {
-                    return val.toFixed(1) + '元';
+                    return val==0?0:val.toFixed(1);
                 }
             }]
         });
     },
 
     /**
-     * 柱状图年度支出小条点击了
+     * 柱状图年度支出小条点击了(支出)
      */
     yearMonthPaidTouch: function (e) {
         var index = chartYearMonthPaid.getCurrentDataIndex(e);
@@ -129,7 +142,55 @@ Page({
                     name: '支出额(元)',
                     data: this.data.yearMonthPaid.chartData.sub[index].data,
                     format: function (val, name) {
-                        return val.toFixed(1) + '元';
+                        return val == 0 ? 0 : val.toFixed(1);
+                    }
+                }]
+            });
+
+        }
+    },
+
+
+
+
+
+
+    /**
+     * 柱状图从月视图切换回年视图(收入)
+     */
+    cardYearMonthReceiptBack: function () {
+        this.data.yearMonthReceipt.value.dataType = 'year'
+        this.data.yearMonthReceipt.value.desc = ''
+        this.refreshYearMonthReceipt()
+        chartYearMonthReceipt.updateData({
+            categories: this.data.yearMonthReceipt.chartData.main.categories,
+            series: [{
+                name: '收入额(元)',
+                data: this.data.yearMonthReceipt.chartData.main.data,
+                format: function (val, name) {
+                    return val == 0 ? 0 : val.toFixed(1);
+                }
+            }]
+        });
+    },
+
+    /**
+     * 柱状图年度支出小条点击了(收入)
+     */
+    yearMonthReceiptTouch: function (e) {
+        var index = chartYearMonthReceipt.getCurrentDataIndex(e);
+        if (index > -1 && index < this.data.yearMonthReceipt.chartData.sub.length && this.data.yearMonthReceipt.value.dataType == 'year') {
+            this.data.yearMonthReceipt.value.dataType = 'month'
+            this.data.yearMonthReceipt.value.desc = this.data.yearMonthReceipt.chartData.main.categories[index] + "年度总收入"
+            this.refreshYearMonthReceipt()
+
+            chartYearMonthReceipt.updateData({
+                categories: this.data.yearMonthReceipt.chartData.sub[index].categories,
+                series: [{
+                    name: '收入额(元)',
+                    data: this.data.yearMonthReceipt.chartData.sub[index].data,
+                    format: function (val, name) {
+                        return val == 0 ? 0 : val.toFixed(1);
                     }
                 }]
             });
@@ -181,6 +242,7 @@ Page({
         })
         this.initMonthAll()
         this.initYearMonthPaid()
+        this.initYearMonthReceipt()
     },
 
     /**
@@ -323,19 +385,20 @@ Page({
                 for(var year in res.data.map){
                     var yearPaid=0
                     var chartDataMonth={
-                        data:[],
-                        categories:[]
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                     }
                     for (var month in res.data.map[year]) {
                         var monthPaid = parseFloat(res.data.map[year][month])
                         yearPaid+=monthPaid
-                        chartDataMonth.data.push(monthPaid)
-                        chartDataMonth.categories.push(month)
+                        chartDataMonth.data.splice(month-1,1,monthPaid)
                     }
+
                     chartData.main.data.push(yearPaid)
                     chartData.main.categories.push(year)
                     chartData.sub.push(chartDataMonth)
                 }
+                
                 this.data.yearMonthPaid.chartData = chartData
 
                 chartYearMonthPaid = new wxCharts({
@@ -347,12 +410,85 @@ Page({
                         name: '支出额(元)',
                         data: chartData.main.data,
                         format: function (val, name) {
-                            return val.toFixed(1) + '元';
+                            return val == 0 ? 0 : val.toFixed(1);
                         }
                     }],
                     yAxis: {
                         format: function (val) {
-                            return val + '元';
+                            return val;
+                        },
+                        min: 0
+                    },
+                    xAxis: {
+                        disableGrid: false,
+                        type: 'calibration'
+                    },
+                    extra: {
+                        column: {
+                            width: 15
+                        }
+                    },
+                    width: this.data.cw,
+                    height: this.data.ch,
+                });
+            }
+
+
+        }, this)
+    },
+
+
+    /**
+     * 年度收入柱状图
+     */
+    initYearMonthReceipt: function (option) {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/summary/getYearMonthReceipt',
+
+            data: {
+                token: wx.getStorageSync("token")
+            },
+            success: function (res) {
+                var chartData = {
+                    main: {
+                        data: [],
+                        categories: []
+                    },
+                    sub: []
+                }
+                //统计所有支出数据
+                for (var year in res.data.map) {
+                    var yearReceipt = 0
+                    var chartDataMonth = {
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                    }
+                    for (var month in res.data.map[year]) {
+                        var monthReceipt = parseFloat(res.data.map[year][month])
+                        yearReceipt += monthReceipt
+                        chartDataMonth.data.splice(month-1,1,monthReceipt)
+                    }
+                    chartData.main.data.push(yearReceipt)
+                    chartData.main.categories.push(year)
+                    chartData.sub.push(chartDataMonth)
+                }
+                this.data.yearMonthReceipt.chartData = chartData
+
+                chartYearMonthReceipt = new wxCharts({
+                    canvasId: 'chartYearMonthReceiptCanvas',
+                    type: 'column',
+                    animation: true,
+                    categories: chartData.main.categories,
+                    series: [{
+                        name: '收入额(元)',
+                        data: chartData.main.data,
+                        format: function (val, name) {
+                            return val == 0 ? 0 : val.toFixed(1);
+                        }
+                    }],
+                    yAxis: {
+                        format: function (val) {
+                            return val;
                         },
                         min: 0
                     },

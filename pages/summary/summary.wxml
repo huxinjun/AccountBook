@@ -1,9 +1,6 @@
 <view class="container">
 
     <view class='card'>
-
-
-
         <view class='titleContainer'>
             <text class='pre' wx:if="{{monthPaid.value.dataType=='all'}}" bindtap='cardMonthPaidPre'>上一月</text>
             <text class='back' wx:if="{{monthPaid.value.dataType=='other'}}" bindtap='cardMonthPaidBack'>点此返回查看全部数据</text>
@@ -26,12 +23,12 @@
     </view>
 
 
+
+
+
+
+
     <view class='card'>
-
-        
-
-
-
         <view class='titleContainer'>
             <text class='back' wx:if="{{yearMonthPaid.value.dataType=='month'}}" bindtap='cardYearMonthPaidBack'>点此返回查看全部数据</text>
             <text class='date' wx:if="{{yearMonthPaid.value.dataType=='year'}}">各年份支出柱状图</text>
@@ -45,7 +42,32 @@
 
 
 
-        <text class='txt'>☺点击扇形会显示具体数据</text>
+        <text class='txt'>☺点击年度柱子会显示该年份月收入数据</text>
+
+    </view>
+
+
+
+
+
+
+
+
+    <view class='card'>
+        <view class='titleContainer'>
+            <text class='back' wx:if="{{yearMonthReceipt.value.dataType=='month'}}" bindtap='cardYearMonthReceiptBack'>点此返回查看全部数据</text>
+            <text class='date' wx:if="{{yearMonthReceipt.value.dataType=='year'}}">各年份收入柱状图</text>
+        </view>
+
+        <text class='desc'>{{yearMonthReceipt.value.desc}}</text>
+
+        <canvas canvas-id="chartYearMonthReceiptCanvas" style="height:{{ch}}px;width:{{cw}}px;" bindtouchstart="yearMonthReceiptTouch" wx:if="{{!yearMonthPaid.value.nullData}}"></canvas>
+
+        <text style="height:{{ch}}px;width:{{cw}}px;line-height:{{ch}}px;text-align:center;" wx:if="{{yearMonthReceipt.value.nullData}}">无统计数据</text>
+
+
+
+        <text class='txt'>☺点击年度柱子会显示该年份月支出数据</text>
 
     </view>
 
