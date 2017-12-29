@@ -1960,25 +1960,27 @@ Charts.prototype.addEventListener = function (type, listener) {
 };
 
 Charts.prototype.getCurrentDataIndex = function (e) {
-    var touches =  e.changedTouches;
-    if (touches && touches.length) {
-        var x,y
-        for(var i=0;i<touches.length;i++)
-            if(touches[i]!=null){
-                x=touches[i].x
-                y=touches[i].y
-                break
-            }
-        
+    var index
+    if (e && e.detail) {
+        var x = e.detail.x - e.target.offsetLeft
+        var y = e.detail.y - e.target.offsetTop
+        // console.log("x:"+x+"---y:"+y)
+
         if (this.opts.type === 'pie' || this.opts.type === 'ring') {
-            return findPieChartCurrentIndex({ x: x, y: y }, this.chartData.pieData);
+            index=findPieChartCurrentIndex({ x: x, y: y }, this.chartData.pieData);
+            // console.log("pie index:" + index)
         } else if (this.opts.type === 'radar') {
-            return findRadarChartCurrentIndex({ x: x, y: y }, this.chartData.radarData, this.opts.categories.length);
+            index=findRadarChartCurrentIndex({ x: x, y: y }, this.chartData.radarData, this.opts.categories.length);
+            // console.log("radar index:" + index)
         } else {
-            return findCurrentIndex({ x: x, y: y }, this.chartData.xAxisPoints, this.opts, this.config, Math.abs(this.scrollOption.currentOffset));
+            
+            index=findCurrentIndex({ x: x, y: y }, this.chartData.xAxisPoints, this.opts, this.config, Math.abs(this.scrollOption.currentOffset));
+
+            // console.log("culumn index:" + index)
         }
-    }
-    return -1;
+    }else
+        index=-1
+    return index;
 };
 
 Charts.prototype.showToolTip = function (e) {

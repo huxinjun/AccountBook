@@ -57,6 +57,8 @@ Page({
      */
     monthPaidTouch: function (e) {
         var index=chartMonthPaid.getCurrentDataIndex(e)
+        if(index==-1)
+            return
         var item = this.getMonthPaidItem(index)
         item.monthPaidPercent = (item._proportion_ * 100).toFixed(1)
         this.data.monthPaid.selectItem=item
@@ -71,6 +73,8 @@ Page({
      */  
     monthPaidOtherTouch: function (e) {
         var index = chartMonthPaidOther.getCurrentDataIndex(e)
+        if (index == -1)
+            return
         var item = this.getMonthPaidItem(index)
         item.monthPaidPercent = (this.data.monthPaid.value.otherTotal / this.data.monthPaid.value.total * item._proportion_ * 100).toFixed(1)
         this.data.monthPaid.selectItem = item
