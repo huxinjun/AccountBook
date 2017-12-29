@@ -1,23 +1,38 @@
 var wxCharts = require('../../utils/wxcharts.js')
 var util = require('../../utils/util.js')
 var APP = getApp()
-var chartMonthPaid//月支出
-var chartMonthPaidOther//月支出中其他类型的支出
+var chartMonthPaid//月支出饼图
+var chartMonthPaidOther//月支出中其他类型的支出饼图
+var chartYearMonthPaid//年度支出柱状图
+
 Page({
     data: {
         monthPaid:{
-            dataType: "all",
             selectItem:null,
             style:{
                 info: "color:transparent;"
             },
-            value:{}
+            value:{
+                dataType: "all"
+            }
+        },
+        yearMonthPaid: {
+            chartData:null,
+            style: {},
+            value: {
+                dataType: "year"
+            }
         }
     },
 
-    refreshMonthPaid:function(e){
+    refreshMonthPaid:function(){
         this.setData({
             monthPaid: this.data.monthPaid
+        })
+    },
+    refreshYearMonthPaid: function () {
+        this.setData({
+            yearMonthPaid: this.data.yearMonthPaid
         })
     },
     getMonthPaidItem: function (index) {
@@ -30,7 +45,7 @@ Page({
     monthPaidTouch: function (e) {
         var index=chartMonthPaid.getCurrentDataIndex(e)
         var item = this.getMonthPaidItem(index)
-        item.monthPaidPercent = (item._proportion_ * 100).toFixed(2)
+        item.monthPaidPercent = (item._proportion_ * 100).toFixed(1)
         this.data.monthPaid.selectItem=item
         this.data.monthPaid.style.info = "color:" + item.color
         if(item.name=='其他')
@@ -44,7 +59,7 @@ Page({
     monthPaidOtherTouch: function (e) {
         var index = chartMonthPaidOther.getCurrentDataIndex(e)
         var item = this.getMonthPaidItem(index)
-        item.monthPaidPercent = (this.data.monthPaid.value.otherTotal / this.data.monthPaid.value.total * item._proportion_ * 100).toFixed(2)
+        item.monthPaidPercent = (this.data.monthPaid.value.otherTotal / this.data.monthPaid.value.total * item._proportion_ * 100).toFixed(1)
         this.data.monthPaid.selectItem = item
         this.data.monthPaid.style.info = "color:" + item.color
         this.refreshMonthPaid()
@@ -77,13 +92,80 @@ Page({
         this.initMonthAll()
     },
 
+    
+
+    /**
+     * 柱状图从月视图切换回年视图
+     */
+    cardYearMonthPaidBack: function () {
+        this.data.yearMonthPaid.value.dataType = 'year'
+        this.data.yearMonthPaid.value.desc = ''
+        this.refreshYearMonthPaid()
+        chartYearMonthPaid.updateData({
+            categories: this.data.yearMonthPaid.chartData.main.categories,
+            series: [{
+                name: '支出额(元)',
+                data: this.data.yearMonthPaid.chartData.main.data,
+                format: function (val, name) {
+                    return val.toFixed(1) + '元';
+                }
+            }]
+        });
+    },
+
+    /**
+     * 柱状图年度支出小条点击了
+     */
+    yearMonthPaidTouch: function (e) {
+        var index = chartYearMonthPaid.getCurrentDataIndex(e);
+        if (index > -1 && index < this.data.yearMonthPaid.chartData.sub.length && this.data.yearMonthPaid.value.dataType=='year') {
+            this.data.yearMonthPaid.value.dataType='month'
+            this.data.yearMonthPaid.value.desc = this.data.yearMonthPaid.chartData.main.categories[index] +"年度总支出"
+            this.refreshYearMonthPaid()
+
+            chartYearMonthPaid.updateData({
+                categories: this.data.yearMonthPaid.chartData.sub[index].categories,
+                series: [{
+                    name: '支出额(元)',
+                    data: this.data.yearMonthPaid.chartData.sub[index].data,
+                    format: function (val, name) {
+                        return val.toFixed(1) + '元';
+                    }
+                }]
+            });
+
+        }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     onLoad: function (e) {
-        var cardWidth=util.rpx2px(650)
+        var cardWidth = util.rpx2px(650)
         this.setData({
-            cw:cardWidth,
+            cw: cardWidth,
             ch: cardWidth
         })
         this.onPullDownRefresh()
+        
     },
 
     /**
@@ -98,6 +180,7 @@ Page({
             queryMonth:month
         })
         this.initMonthAll()
+        this.initYearMonthPaid()
     },
 
     /**
@@ -194,6 +277,97 @@ Page({
                 this.data.monthPaid.value.otherTotal = total
                 this.data.monthPaid.value.desc = this.data.queryYear + "年" + this.data.queryMonth + "月其他类型支出" + total + "元"
                 this.refreshMonthPaid()
+            }
+
+
+        }, this)
+    },
+    /**
+     * 年度支出柱状图
+     */
+    initYearMonthPaid: function (option) {
+        APP.ajax({
+            url: APP.globalData.BaseUrl + '/summary/getYearMonthPaid',
+
+            data: {
+                token: wx.getStorageSync("token")
+            },
+            // var chartData = {
+            //     main: {
+            //         data: [15, 20, 45, 37],
+            //         categories: ['2012', '2013', '2014', '2015']
+            //     },
+            //     sub: [{
+            //         data: [70, 40, 65, 100, 34, 18],
+            //         categories: ['1', '2', '3', '4', '5', '6']
+            //     }, {
+            //         data: [55, 30, 45, 36, 56, 13],
+            //         categories: ['1', '2', '3', '4', '5', '6']
+            //     }, {
+            //         data: [76, 45, 32, 74, 54, 35],
+            //         categories: ['1', '2', '3', '4', '5', '6']
+            //     }, {
+            //         data: [76, 54, 23, 12, 45, 65],
+            //         categories: ['1', '2', '3', '4', '5', '6']
+            //     }]
+            // };
+            success: function (res) {
+                var chartData={
+                    main:{
+                        data: [],
+                        categories: [] 
+                    },
+                    sub:[]
+                }
+                //统计所有支出数据
+                for(var year in res.data.map){
+                    var yearPaid=0
+                    var chartDataMonth={
+                        data:[],
+                        categories:[]
+                    }
+                    for (var month in res.data.map[year]) {
+                        var monthPaid = parseFloat(res.data.map[year][month])
+                        yearPaid+=monthPaid
+                        chartDataMonth.data.push(monthPaid)
+                        chartDataMonth.categories.push(month)
+                    }
+                    chartData.main.data.push(yearPaid)
+                    chartData.main.categories.push(year)
+                    chartData.sub.push(chartDataMonth)
+                }
+                this.data.yearMonthPaid.chartData = chartData
+
+                chartYearMonthPaid = new wxCharts({
+                    canvasId: 'chartYearMonthPaidCanvas',
+                    type: 'column',
+                    animation: true,
+                    categories: chartData.main.categories,
+                    series: [{
+                        name: '支出额(元)',
+                        data: chartData.main.data,
+                        format: function (val, name) {
+                            return val.toFixed(1) + '元';
+                        }
+                    }],
+                    yAxis: {
+                        format: function (val) {
+                            return val + '元';
+                        },
+                        min: 0
+                    },
+                    xAxis: {
+                        disableGrid: false,
+                        type: 'calibration'
+                    },
+                    extra: {
+                        column: {
+                            width: 15
+                        }
+                    },
+                    width: this.data.cw,
+                    height: this.data.ch,
+                });
             }
 
 

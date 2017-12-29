@@ -26,4 +26,28 @@
     </view>
 
 
+    <view class='card'>
+
+        
+
+
+
+        <view class='titleContainer'>
+            <text class='back' wx:if="{{yearMonthPaid.value.dataType=='month'}}" bindtap='cardYearMonthPaidBack'>点此返回查看全部数据</text>
+            <text class='date' wx:if="{{yearMonthPaid.value.dataType=='year'}}">各年份支出柱状图</text>
+        </view>
+
+        <text class='desc'>{{yearMonthPaid.value.desc}}</text>
+
+        <canvas canvas-id="chartYearMonthPaidCanvas" style="height:{{ch}}px;width:{{cw}}px;" bindtouchstart="yearMonthPaidTouch" wx:if="{{!yearMonthPaid.value.nullData}}"></canvas>
+
+        <text style="height:{{ch}}px;width:{{cw}}px;line-height:{{ch}}px;text-align:center;" wx:if="{{yearMonthPaid.value.nullData}}">无统计数据</text>
+
+
+
+        <text class='txt'>☺点击扇形会显示具体数据</text>
+
+    </view>
+
+
 </view>
