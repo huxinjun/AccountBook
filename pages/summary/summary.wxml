@@ -4,7 +4,7 @@
         <view class='titleContainer'>
             <text class='pre' wx:if="{{monthPaid.value.dataType=='all'}}" bindtap='cardMonthPaidPre'>上一月</text>
             <text class='back' wx:if="{{monthPaid.value.dataType=='other'}}" bindtap='cardMonthPaidBack'>点此返回查看全部数据</text>
-            <text class='date' wx:if="{{monthPaid.value.dataType=='all'}}">{{queryYear}}年{{queryMonth}}月</text>
+            <text class='date' wx:if="{{monthPaid.value.dataType=='all'}}">{{queryYear}}年{{queryMonth+1}}月</text>
             <text class='next' wx:if="{{monthPaid.value.dataType=='all'}}" style="{{monthPaid.style.next}}" bindtap='cardMonthPaidNext'>下一月</text>
         </view>
 

@@ -86,8 +86,8 @@ Page({
      */
     cardMonthPaidPre:function(e){
         this.setData({
-            queryYear: this.data.queryMonth == 1 ? this.data.queryYear - 1 : this.data.queryYear,
-            queryMonth: this.data.queryMonth == 1 ? 12 : this.data.queryMonth-1
+            queryYear: this.data.queryMonth == 0 ? this.data.queryYear - 1 : this.data.queryYear,
+            queryMonth: this.data.queryMonth == 0 ? 11 : this.data.queryMonth-1
         })
         this.initMonthAll()
     },
@@ -96,8 +96,8 @@ Page({
      */
     cardMonthPaidNext: function (e) {
         this.setData({
-            queryYear: this.data.queryMonth == 12 ? this.data.queryYear + 1 : this.data.queryYear,
-            queryMonth: this.data.queryMonth == 12 ? 1 : this.data.queryMonth + 1
+            queryYear: this.data.queryMonth == 11 ? this.data.queryYear + 1 : this.data.queryYear,
+            queryMonth: this.data.queryMonth == 11 ? 0 : this.data.queryMonth + 1
         })
         this.initMonthAll()
     },
@@ -239,7 +239,7 @@ Page({
     onPullDownRefresh: function () {
         var date = new Date()
         var year = date.getFullYear()
-        var month = date.getMonth()+1
+        var month = date.getMonth()
         this.setData({
             queryYear:year,
             queryMonth:month
@@ -255,7 +255,7 @@ Page({
     initMonthAll: function (option) {
         var date = new Date()
         var currYear = date.getFullYear()
-        var currMonth = date.getMonth() + 1
+        var currMonth = date.getMonth()
 
         this.data.monthPaid.style.next = (this.data.queryYear == currYear && this.data.queryMonth == currMonth) ? "visibility:hidden;" : ""
         this.data.monthPaid.selectItem = null
@@ -267,7 +267,7 @@ Page({
             data: {
                 token: wx.getStorageSync("token"),
                 year: this.data.queryYear,
-                month: this.data.queryMonth
+                month: this.data.queryMonth+1
             },
 
             success: function (res) {
@@ -316,7 +316,7 @@ Page({
             data: {
                 token: wx.getStorageSync("token"),
                 year: this.data.queryYear,
-                month: this.data.queryMonth
+                month: this.data.queryMonth+1
             },
 
             success: function (res) {
