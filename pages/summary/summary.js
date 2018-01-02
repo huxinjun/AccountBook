@@ -295,8 +295,8 @@ Page({
                 this.data.monthPaid.infos=res.data.infos
                 this.data.monthPaid.value.nullData = false
                 this.data.monthPaid.value.dataType= "all"
-                this.data.monthPaid.value.total=total
-                this.data.monthPaid.value.desc="月总支出" + total + "元"
+                this.data.monthPaid.value.total=total.toFixed(2)
+                this.data.monthPaid.value.desc = "月总支出" + this.data.monthPaid.value.total + "元"
                 this.refreshMonthPaid()
             }
 
@@ -338,8 +338,8 @@ Page({
                 this.data.monthPaid.otherInfos = res.data.infos
                 this.data.monthPaid.value.nullData = false
                 this.data.monthPaid.value.dataType = "other"
-                this.data.monthPaid.value.otherTotal = total
-                this.data.monthPaid.value.desc = this.data.queryYear + "年" + this.data.queryMonth + "月其他类型支出" + total + "元"
+                this.data.monthPaid.value.otherTotal = total.toFixed(2)
+                this.data.monthPaid.value.desc = this.data.queryYear + "年" + this.data.queryMonth + "月其他类型支出" + this.data.monthPaid.value.otherTotal + "元"
                 this.refreshMonthPaid()
             },
             complete:function(){
