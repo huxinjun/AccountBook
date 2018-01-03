@@ -1,0 +1,9 @@
+<view class="container">
+
+    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' bindtap='gotoDetail' wx:for="{{items}}" wx:key="{{index}}" data-index='{{index}}'>
+        <view class='flag'></view>
+        <text class="name">{{item.name}}</text>
+        <image class="arrow" src="/img/right_arrow_normal.png"></image>
+    </view>
+
+</view>

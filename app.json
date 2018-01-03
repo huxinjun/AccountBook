@@ -16,7 +16,9 @@
         "pages/account/account",
         "pages/me/me",
         "pages/notification/notification",
-        "pages/summary/summary"
+        "pages/summary/summary",
+        "pages/help/help",
+        "pages/help_detail/help_detail"
 
     ],
     "window": {

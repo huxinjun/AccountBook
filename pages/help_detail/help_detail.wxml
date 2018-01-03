@@ -1,0 +1,5 @@
+
+<view class="container">
+    <rich-text nodes="{{nodes}}" />
+
+</view>

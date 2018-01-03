@@ -1,0 +1,39 @@
+.item{
+    width: 750rpx;
+    height: 100rpx;
+    background-color: #fff;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    position: relative;
+}
+.item_hover{
+    background-color: #dedede;
+    color: #000;
+}
+
+.item .flag{
+    width: 10rpx;
+    height: 20rpx;
+    background-color: #2BA245;
+    margin-left: 20rpx;
+    margin-right: 10rpx;
+}
+
+
+.item .name{
+    font-size: 25rpx;
+    color: #686868;
+
+}
+.item .arrow{
+    width: 30rpx;
+    height: 30rpx;
+    
+    position: absolute;
+    right: 30rpx;
+    top:35rpx;
+}

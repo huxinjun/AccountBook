@@ -35,7 +35,7 @@
 			]
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 16,
 			"list": [
 				{
 					"id": 0,
@@ -139,6 +139,18 @@
 					"id": -1,
 					"name": "统计数据",
 					"pathName": "pages/summary/summary",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "帮助列表",
+					"pathName": "pages/help/help",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "帮助详情",
+					"pathName": "pages/help_detail/help_detail",
 					"query": ""
 				}
 			]
