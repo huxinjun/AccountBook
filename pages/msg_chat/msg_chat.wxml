@@ -1,4 +1,4 @@
-<scroll-view class="container" scroll-y bindscroll='outterScroll' style="height:{{containerHeight}}px;">
+<view class="container">
 
     <!-- {{index}}: {{item.value}} -->
     <view class="listitem" wx:for="{{datas}}" wx:key="{{index}}" style="{{item.style.height}}{{item.style.deleteTrans}}" bindtap='onItemClick' data-index="{{index}}">
@@ -35,4 +35,4 @@
     </view>
 
 
-</scroll-view>
+</view>

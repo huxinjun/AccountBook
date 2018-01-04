@@ -3,8 +3,8 @@ var util = require("/utils/util.js")
 var loging
 App({
     globalData: {
-        // BaseUrl: 'https://xzbenben.cn/AccountBook',
-        BaseUrl: 'http://192.168.10.41:8080/AccountBook',
+        BaseUrl: 'https://xzbenben.cn/AccountBook',
+        // BaseUrl: 'http://192.168.10.41:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
         // BaseUrl: 'http://192.168.1.103:8080/AccountBook',
@@ -131,15 +131,15 @@ App({
         wx.getSystemInfo({
             success: function (res) {
                 that.systemInfo = res
-                console.log(res.model)
-                console.log(res.pixelRatio)
-                console.log(res.screenWidth)
-                console.log(res.screenHeight)
-                console.log(res.windowWidth)
-                console.log(res.windowHeight)
-                console.log(res.language)
-                console.log(res.version)
-                console.log(res.platform)
+                console.log("model:"+res.model)
+                console.log("pixelRatio:" +res.pixelRatio)
+                console.log("screenWidth:" +res.screenWidth)
+                console.log("screenHeight:" +res.screenHeight)
+                console.log("windowWidth:" +res.windowWidth)
+                console.log("windowHeight:" +res.windowHeight)
+                console.log("language:" +res.language)
+                console.log("version:" +res.version)
+                console.log("platform:" +res.platform)
             }
         })
 

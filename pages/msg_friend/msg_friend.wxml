@@ -1,88 +1,87 @@
 <view class='container'>
-    <scroll-view class='main' style='height:{{containerHeight}}px;' scroll-y bindscrolltoupper="initData" scroll-into-view="{{bottomMsgId}}" scroll-with-animation="true">
-
-        <view class='msg' wx:for="{{msgs}}" wx:key="{{index}}" wx:for-item="msg" style='{{msg.style.align}}' id='_{{msg.id}}' data-index='{{index}}'>
-
-            <image class='icon' src="{{msg.icon}}" wx:if="{{userInfo.id==msg.toId}}" data-index='{{index}}' bindtap='onUserIconClick'></image>
-
-            <image class='arrow' src="/img/arrow_left.png" wx:if="{{userInfo.id==msg.toId}}" data-index='{{index}}'></image>
-
-            <view class='content' wx:if="{{msg.msgType==31}}" data-index='{{index}}' bindtap='onNewAccountMsgClick'>
-
-                <view class='account_card' data-index='{{index}}'>
-                    <text class='date' data-index='{{index}}'>{{msg.date}}</text>
-                    <view class='title_container' data-index='{{index}}'>
-                        <image class='type_icon' src="{{msg.typeIcon}}" data-index='{{index}}'></image>
-                        <text data-index='{{index}}'>{{msg.name}}</text>
-                        <text style='margin-left:15rpx;' data-index='{{index}}'>花费</text>
-                        <text style='color:red;' data-index='{{index}}'>{{msg.paidIn}}</text>
-                        <text>元</text>
-                    </view>
 
 
-                    <scroll-view class='members' scroll-x data-index='{{index}}' data-index='{{index}}'>
-                        <image wx:for="{{msg.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}" data-acid='{{msg.accountId}}'></image>
-                    </scroll-view>
+    <view class='msg' wx:for="{{msgs}}" wx:key="{{msg.id}}" wx:for-item="msg" style='{{msg.style.align}}' id='_{{msg.id}}' data-index='{{index}}'>
 
+        <image class='icon' src="{{msg.icon}}" wx:if="{{userInfo.id==msg.toId}}" data-index='{{index}}' bindtap='onUserIconClick'></image>
+
+        <image class='arrow' src="/img/arrow_left.png" wx:if="{{userInfo.id==msg.toId}}" data-index='{{index}}'></image>
+
+        <view class='content' wx:if="{{msg.msgType==31}}" data-index='{{index}}' bindtap='onNewAccountMsgClick'>
+
+            <view class='account_card' data-index='{{index}}'>
+                <text class='date' data-index='{{index}}'>{{msg.date}}</text>
+                <view class='title_container' data-index='{{index}}'>
+                    <image class='type_icon' src="{{msg.typeIcon}}" data-index='{{index}}'></image>
+                    <text data-index='{{index}}'>{{msg.name}}</text>
+                    <text style='margin-left:15rpx;' data-index='{{index}}'>花费</text>
+                    <text style='color:red;' data-index='{{index}}'>{{msg.paidIn}}</text>
+                    <text>元</text>
                 </view>
 
-                <text class="type" data-index='{{index}}'>多人账单</text>
+
+                <scroll-view class='members' scroll-x data-index='{{index}}' data-index='{{index}}'>
+                    <image wx:for="{{msg.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}" data-acid='{{msg.accountId}}'></image>
+                </scroll-view>
 
             </view>
 
+            <text class="type" data-index='{{index}}'>多人账单</text>
 
-            <view class='content' wx:if="{{msg.msgType==32}}" data-index='{{index}}' bindtap='onGroupAccountClick'>
-
-                <view class='account_card' data-index='{{index}}'>
-
-                    <text class='date' data-index='{{index}}'>{{msg.date}}</text>
-                    <view class='title_container' data-index='{{index}}'>
-                        <image class='type_icon' src="{{msg.typeIcon}}" data-index='{{index}}'></image>
-                        <text data-index='{{index}}'>{{msg.name}}</text>
-                        <text style='margin-left:15rpx;' data-index='{{index}}'>应付</text>
-                        <text style='color:red;' data-index='{{index}}'>{{msg.shouldPay}}</text>
-                        <text>元</text>
-                    </view>
+        </view>
 
 
-                    <scroll-view class='members' scroll-x data-index='{{index}}' data-index='{{index}}'>
-                        <image wx:for="{{msg.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}" data-acid='{{msg.accountId}}'></image>
-                    </scroll-view>
+        <view class='content' wx:if="{{msg.msgType==32}}" data-index='{{index}}' bindtap='onGroupAccountClick'>
 
+            <view class='account_card' data-index='{{index}}'>
 
+                <text class='date' data-index='{{index}}'>{{msg.date}}</text>
+                <view class='title_container' data-index='{{index}}'>
+                    <image class='type_icon' src="{{msg.typeIcon}}" data-index='{{index}}'></image>
+                    <text data-index='{{index}}'>{{msg.name}}</text>
+                    <text style='margin-left:15rpx;' data-index='{{index}}'>应付</text>
+                    <text style='color:red;' data-index='{{index}}'>{{msg.shouldPay}}</text>
+                    <text>元</text>
                 </view>
 
-                <text class="type" data-index='{{index}}'>组内账单</text>
 
-            </view>
-
-
-            <view class='content' wx:if="{{msg.msgType==33}}" data-index='{{index}}' bindtap='onPayMsgClick'>
-
-                <view class='account_card' data-index='{{index}}'>
-
-                    <view class='title_container' data-index='{{index}}'>
-                        <text wx:if="{{userInfo.id==msg.fromId && userInfo.id==msg.paidId}}" data-index='{{index}}'>向[{{msg.receiptName}}]支付了</text>
-                        <text wx:if="{{userInfo.id==msg.fromId && userInfo.id==msg.receiptId}}" data-index='{{index}}'>收取了[{{msg.paidName}}]</text>
-                        <text wx:if="{{userInfo.id==msg.toId && userInfo.id==msg.paidId}}" data-index='{{index}}'>收取了[{{msg.paidName}}]</text>
-                        <text wx:if="{{userInfo.id==msg.toId && userInfo.id==msg.receiptId}}" data-index='{{index}}'>向[{{msg.receiptName}}]支付了</text>
-
-
-                        <text style='color:red;' data-index='{{index}}'>{{msg.money}}</text>
-                        <text data-index='{{index}}'>元</text>
-                    </view>
-
-                </view>
+                <scroll-view class='members' scroll-x data-index='{{index}}' data-index='{{index}}'>
+                    <image wx:for="{{msg.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}" data-acid='{{msg.accountId}}'></image>
+                </scroll-view>
 
 
             </view>
 
-            <image class='arrow' src="/img/arrow_right.png" wx:if="{{userInfo.id==msg.fromId}}"></image>
+            <text class="type" data-index='{{index}}'>组内账单</text>
 
-            <image class='icon' src="{{msg.icon}}" wx:if="{{userInfo.id==msg.fromId}}" data-index='{{index}}' bindtap='onUserIconClick'></image>
+        </view>
+
+
+        <view class='content' wx:if="{{msg.msgType==33}}" data-index='{{index}}' bindtap='onPayMsgClick'>
+
+            <view class='account_card' data-index='{{index}}'>
+
+                <view class='title_container' data-index='{{index}}'>
+                    <text wx:if="{{userInfo.id==msg.fromId && userInfo.id==msg.paidId}}" data-index='{{index}}'>向[{{msg.receiptName}}]支付了</text>
+                    <text wx:if="{{userInfo.id==msg.fromId && userInfo.id==msg.receiptId}}" data-index='{{index}}'>收取了[{{msg.paidName}}]</text>
+                    <text wx:if="{{userInfo.id==msg.toId && userInfo.id==msg.paidId}}" data-index='{{index}}'>收取了[{{msg.paidName}}]</text>
+                    <text wx:if="{{userInfo.id==msg.toId && userInfo.id==msg.receiptId}}" data-index='{{index}}'>向[{{msg.receiptName}}]支付了</text>
+
+
+                    <text style='color:red;' data-index='{{index}}'>{{msg.money}}</text>
+                    <text data-index='{{index}}'>元</text>
+                </view>
+
+            </view>
 
 
         </view>
 
-    </scroll-view>
+        <image class='arrow' src="/img/arrow_right.png" wx:if="{{userInfo.id==msg.fromId}}"></image>
+
+        <image class='icon' src="{{msg.icon}}" wx:if="{{userInfo.id==msg.fromId}}" data-index='{{index}}' bindtap='onUserIconClick'></image>
+
+
+    </view>
+
 </view>

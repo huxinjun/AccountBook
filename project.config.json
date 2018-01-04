@@ -35,7 +35,7 @@
 			]
 		},
 		"miniprogram": {
-			"current": 16,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -65,10 +65,10 @@
 					"query": "title=帐友二维码&groupId=n8Y5qSAmisgEjG_BQdRiiA"
 				},
 				{
-					"id": -1,
+					"id": 4,
 					"name": "扫码添加好友",
 					"pathName": "pages/index/index",
-					"query": "friendId=oCBrx0FreB-L8pIQM5_RYDGoWOKQ"
+					"query": "friendId=oCBrx0ExpR4J4DM1qM342xQ4HYWQ"
 				},
 				{
 					"id": -1,
@@ -151,6 +151,12 @@
 					"id": -1,
 					"name": "帮助详情",
 					"pathName": "pages/help_detail/help_detail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "测试",
+					"pathName": "pages/logs/logs",
 					"query": ""
 				}
 			]

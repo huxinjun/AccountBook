@@ -81,7 +81,7 @@ Page({
         var index = e.target.dataset.index
         slider.updateLayer(index,[
             {
-                text:"删除成功"
+                text:"正在删除"
             }
         ])
         this.option(e, "delete")
@@ -117,7 +117,12 @@ Page({
                             item.state = 12
                             item.stateStr = "已拒绝"
                         }else{
-                            slider.deleteItem(index)
+                            slider.updateLayer(index, [
+                                {
+                                    text: "已删除"
+                                }
+                            ])
+                            slider.deleteItem("id",item.id)
                             return
                         }
                         slider.close(index)
@@ -129,6 +134,15 @@ Page({
                 }
 
 
+            },
+            faild: function (){
+                if(opt=='delet'){
+                    slider.updateLayer(index, [
+                        {
+                            text: "删除失败"
+                        }
+                    ])
+                }
             }
 
         }, this)

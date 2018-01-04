@@ -149,6 +149,13 @@ Page({
         this.initData()
     },
 
+    /**
+     * 下拉刷新
+     */
+    onPullDownRefresh: function () {
+        this.initData()
+    },
+
     initData: function () {
         APP.ajax({
             url: APP.globalData.BaseUrl + '/msg/chat',
@@ -168,6 +175,8 @@ Page({
                 this.setData({
                     datas:res.data.chats
                 })
+
+                wx.stopPullDownRefresh()
 
             }
         }, this)

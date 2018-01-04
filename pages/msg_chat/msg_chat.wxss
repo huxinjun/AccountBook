@@ -1,11 +1,15 @@
 
 
 .container {
-    display: flex;
     box-sizing: border-box;
     font-family: "微软雅黑";
     position: absolute;
     color: #272636;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .listitem {

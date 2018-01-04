@@ -4,7 +4,7 @@ var util = require('../../utils/util.js')
 var isLoading = false
 Page({
     data: {
-        containerHeight: APP.systemInfo.platform == 'android' ? APP.systemInfo.windowHeight:APP.systemInfo.screenHeight,
+        containerHeight: APP.systemInfo.screenHeight,
         msgs:[],
         nextPageIndex:0,
         userId:null
@@ -66,6 +66,12 @@ Page({
 
     },
 
+    onPageScroll:function(e){
+        if (e.scrollTop==0){
+            this.initData(false)
+        }
+    },
+
     /**
      * 初始化和自己的信息:id,name,icon
      */
@@ -79,7 +85,7 @@ Page({
                 this.setData({
                     userInfo: res.data
                 })
-                this.initData()
+                this.initData(true)
             }
 
         }, this)
@@ -89,7 +95,7 @@ Page({
     /**
      * 初始化消息列表
      */
-    initData: function (e) {
+    initData: function (isFrist) {
         var that = this
         
         console.log("initData")
@@ -97,7 +103,7 @@ Page({
         if (isLoading)
             return
 
-        if (e)
+        if (!isFrist)
             if (!this.data.hasNextPage)
                 return
             
@@ -123,25 +129,59 @@ Page({
                     if(v.msgType==31 || v.msgType==32)
                         v.typeIcon = APP.globalData.typeList.findByAttr("id", v.type).icon
                 })
+                var topId = isFrist ? null : "_" + this.data.msgs[0].id
+                console.log("topId:" + topId)
+
                 this.data.hasNextPage = res.data.hasNextPage
                 this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : 99999
                 this.data.msgs.addAllToHead(res.data.msgs)
-
+ 
                 if (res.data.msgs.length>0)
                     this.setData({
                         msgs:this.data.msgs,
                         
                     })
-                if (this.data.nextPageIndex==1)
-                    this.setData({
-                        bottomMsgId: "_" + this.data.msgs[this.data.msgs.length - 1].id
-                    })
 
-                isLoading=false
-                
+                //初次滚动到底部
+                if (isFrist){
+                    var bottomMsgId = "_" + this.data.msgs[this.data.msgs.length - 1].id
+                    this.execAfterViewAttached(bottomMsgId,function(){
+                        this.pageScrollToPosition(bottomMsgId, 'bottom')
+                        isLoading = false
+                    })
+                }else{
+                    this.execAfterViewAttached(topId, function () {
+                        this.pageScrollToPosition(topId, 'top')
+                        isLoading = false
+                    })
+                }
             }
 
         }, this)
+    },
+
+    execAfterViewAttached:function(id,success){
+        var that = this
+        wx.createSelectorQuery().select('#' + id).boundingClientRect(function (rect) {
+            console.log(rect)
+            if (rect==null) {
+                that.execAfterViewAttached(id, success)
+                return
+            }
+            success.call(that)
+            
+
+        }).exec()
+    },
+
+    // 获取容器高度，使页面滚动到容器底部
+    pageScrollToPosition: function (id,pos) {
+        wx.createSelectorQuery().select('#' + id).boundingClientRect(function (rect) {
+            // 使页面滚动到底部
+            wx.pageScrollTo({
+                scrollTop: pos =='bottom'?rect.bottom:rect.top
+            })
+        }).exec()
     }
 
 })

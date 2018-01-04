@@ -1,17 +1,18 @@
 @import "/global/dialog.wxss";
-
+page{
+    background-color: #eaeaea;
+}
 .container {
-    
     font-family: "黑体";
     color: #272636;
     
-}
-.main{
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: flex-start;
-    background-color: #eaeaea;
+
+    
+    
 }
 
 
@@ -42,9 +43,9 @@
     justify-content: flex-start;
     overflow: hidden;
 
-    background-color: snow;
+    background-color: white;
     border-radius: 10rpx;
-    margin-top: 20rpx;
+    margin: 20rpx 0;
     font-size: 25rpx;
 }
 
