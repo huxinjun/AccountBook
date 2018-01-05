@@ -100,7 +100,8 @@ Page({
 
             data: {
                 token: wx.getStorageSync("token"),
-                userId: chat.userId
+                userId: chat.userId,
+                type:chat.type
             },
             success: function (res) {
                 this.initData()
@@ -120,7 +121,8 @@ Page({
 
             data: {
                 token: wx.getStorageSync("token"),
-                userId:chat.userId
+                userId: chat.userId,
+                type: chat.type
             },
 
             success: function (res) {
