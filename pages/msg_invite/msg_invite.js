@@ -105,6 +105,9 @@ Page({
             },
 
             success: function (res) {
+                wx.showToast({
+                    title: res.data.msg,
+                })
                 var index = e.target.dataset.index
                 switch (res.data.status) {
                     case APP.globalData.resultcode.SUCCESS:
@@ -117,7 +120,7 @@ Page({
                             item.state = 12
                             item.stateStr = "已拒绝"
                         }else{
-                            slider.updateLayer(index, [
+                            slider.updateLayer(index, [ 
                                 {
                                     text: "已删除"
                                 }

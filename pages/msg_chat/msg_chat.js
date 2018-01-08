@@ -178,6 +178,7 @@ Page({
                     datas:res.data.chats
                 })
 
+
                 wx.stopPullDownRefresh()
 
             }
