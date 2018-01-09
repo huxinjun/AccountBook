@@ -116,10 +116,10 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 12,
 					"name": "账单详情",
 					"pathName": "pages/account/account",
-					"query": ""
+					"query": "accountId=m+iPxChEVLGweuMD4qTu9w!XJ!!XJ!"
 				},
 				{
 					"id": -1,

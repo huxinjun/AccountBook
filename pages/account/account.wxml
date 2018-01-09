@@ -78,7 +78,7 @@
                 <view class='pay' wx:for="{{account.payResult}}" wx:for-item="payResult" wx:key="{{index}}">
 
 
-                    <view class='item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}">
+                    <view class='item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}" >
 
                         <view class='main'>
 
@@ -100,18 +100,18 @@
                         </view>
 
                         <image class='offset_arrow' src='/img/arrow_up_d9.png' wx:if="{{target.offsets && target.offsets.length>0}}"></image>
-                        <view class='offsets'>
-                            <view class='offset' wx:for="{{target.offsets}}" wx:for-item="offset" wx:key="{{index}}">
-                                    <text>{{offset.date}}</text>
-                                    <image class='type_icon' src='{{offset.value.typeIcon}}'></image>
-                                    <text>{{offset.value.name}}</text>
-                                    <text>{{offset.paidIn}}</text>
-                                    <text>元:</text>
-                                    <image class='p1' src='{{offset.paidIcon}}' style='margin-left:10rpx;'></image>
-                                    <text>向</text>
-                                    <image class='p2' src='{{offset.receiptIcon}}'></image>
-                                    <text>支付</text>
-                                    <text>{{offset.money}}</text>
+                        <view class='offsets' >
+                            <view class='offset' wx:for="{{target.offsets}}" wx:for-item="offset" wx:key="{{index}}" catchtap='onPayOffsetClick' data-accid='{{offset.accountId}}'>
+                                    <text data-accid='{{offset.accountId}}'>{{offset.date}}</text>
+                                    <image class='type_icon' src='{{offset.value.typeIcon}}' data-accid='{{offset.accountId}}'></image>
+                                    <text data-accid='{{offset.accountId}}'>{{offset.value.name}}</text>
+                                    <text data-accid='{{offset.accountId}}'>{{offset.paidIn}}</text>
+                                    <text data-accid='{{offset.accountId}}'>元:</text>
+                                    <image class='p1' src='{{offset.paidIcon}}' style='margin-left:10rpx;' data-accid='{{offset.accountId}}'></image>
+                                    <text data-accid='{{offset.accountId}}'>向</text>
+                                    <image class='p2' src='{{offset.receiptIcon}}' data-accid='{{offset.accountId}}'></image>
+                                    <text data-accid='{{offset.accountId}}'>支付</text>
+                                    <text data-accid='{{offset.accountId}}'>{{offset.money}}</text>
                             </view>
 
                         </view>

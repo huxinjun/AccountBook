@@ -38,6 +38,7 @@
     margin-left: 10rpx;
 }
 
+
 .content {
     width: 650rpx;
     height: 80rpx;
@@ -78,4 +79,19 @@
     color: snow;
     text-align: center;
     line-height: 30rpx;
+}
+
+
+
+
+
+
+
+
+.empty_icon{
+    width: 120rpx;
+    height: 120rpx;
+    position: absolute;
+    left:315rpx;
+    top:200px;
 }

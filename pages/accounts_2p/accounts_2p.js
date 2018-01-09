@@ -431,7 +431,8 @@ Page({
 
                                     var ohtherMember = v.originMembers.findByAttr("memberId", target.receiptId)
                                     v.value.icon = ohtherMember.memberIcon
-                                    v.value.desc = "收到[" + ohtherMember.memberName + "]的红包(借款借入)"
+                                    v.value.desc = "[" + that.data.userInfo.name + "]收到[" + ohtherMember.memberName + "]的借款(借入)"
+                                    v.name = "收到借款"
                                 } else {
                                     v.value.state = -1
                                     v.value.bg = '/img/accounts/envelope_fk.png'
@@ -439,8 +440,11 @@ Page({
 
                                     var ohtherMember = v.originMembers.findByAttr("memberId", target.paidId)
                                     v.value.icon = ohtherMember.memberIcon
-                                    v.value.desc = "向[" + ohtherMember.memberName + "]发的红包(借款借出)"
+                                    v.value.desc = "[" + that.data.userInfo.name + "]向[" + ohtherMember.memberName + "]借款(借出)"
+                                    v.name = "借款借出"
                                 }
+                                //这笔账已经抵消或者已收
+                                v.style.moneyColor = target.waitPaidMoney == 0 ? "color:#000;opacity:0.1;" : ""
                                 break;
                             case 'hk':
                                 var target = v.payResult[0].payTarget[0]
@@ -452,8 +456,8 @@ Page({
 
                                     var ohtherMember = v.originMembers.findByAttr("memberId", target.receiptId)
                                     v.value.icon = ohtherMember.memberIcon
-                                    v.value.desc = "向[" + ohtherMember.memberName + "]发的红包(还款还出)"
-
+                                    v.value.desc = "[" + that.data.userInfo.name + "]向[" + ohtherMember.memberName + "]还款(支出)"
+                                    v.name = "还款支出"
                                 } else {
                                     v.value.state = 1
                                     v.value.bg = '/img/accounts/envelope_sk.png'
@@ -461,8 +465,11 @@ Page({
 
                                     var ohtherMember = v.originMembers.findByAttr("memberId", target.paidId)
                                     v.value.icon = ohtherMember.memberIcon
-                                    v.value.desc = "收到[" + ohtherMember.memberName + "]的红包(还款收入)"
+                                    v.value.desc = "[" + that.data.userInfo.name + "]收到[" + ohtherMember.memberName + "]的还款(收入)"
+                                    v.name = "收到还款"
                                 }
+                                //这笔账已经抵消或者已还，已收
+                                v.style.moneyColor = target.waitPaidMoney == 0 ? "color:#000;opacity:0.1;" : ""
                                 break;
                         }
                         return

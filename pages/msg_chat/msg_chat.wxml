@@ -1,6 +1,7 @@
 <view class="container">
 
-    <text wx:if="{{datas==null || datas.length==0}}">空列表</text>
+    <image class="empty_icon" src="/img/msg/empty.png" wx:if="{{datas==null || datas.length==0}}"></image>
+
 
     <!-- {{index}}: {{item.value}} -->
     <view class="listitem" wx:for="{{datas}}" wx:key="{{index}}" style="{{item.style.height}}{{item.style.deleteTrans}}" bindtap='onItemClick' data-index="{{index}}">

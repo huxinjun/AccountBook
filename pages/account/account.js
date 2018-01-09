@@ -8,6 +8,17 @@ Page({
         visible:"display:none;"
     },
 
+    onPayOffsetClick:function(e){
+        var accountId = e.target.dataset.accid
+        console.log("onPayTargetClick.accountId:" + accountId)
+        if (accountId == this.data.fromAccountId)
+            wx.navigateBack()
+        else
+            wx.navigateTo({
+                url: '/pages/account/account?accountId=' + accountId.encode() + "&fromAccountId=" + this.data.accountId.encode()
+            })
+    },
+
 
     /**
      * 点击展开或合上成员付款详情的按钮
@@ -199,10 +210,14 @@ Page({
 
 
     onLoad: function (option) {
+        //为了防止从账单详情的抵消记录点击事件中无限开启新的详情页
+        if (option.fromAccountId!=undefined)
+            this.data.fromAccountId = option.fromAccountId.decode()
+        console.log("fromAccount:" + this.data.fromAccountId)
         this.setData({
             accountId: option.accountId.decode()
         })
-
+        
         this.onPullDownRefresh()
 
 
@@ -288,11 +303,32 @@ Page({
                 v.membersLength = v.members.length
                 v.originMembers = util.clone(v.members)
 
-                //收入账单的特殊处理
-                if (v.type == 'sr') {
-                    v.value.state = 0
-                    v.value.bg = '/img/accounts/envelope_sr.png'
-                    v.value.desc = "收入"
+                //借款，还款，收入账单账单的特殊处理
+                if (v.type == 'jk' || v.type == 'hk' || v.type == 'sr') {
+                    switch (v.type) {
+                        case 'sr':
+                            v.value.state = 0
+                            v.value.bg = '/img/accounts/envelope_sr.png'
+                            v.value.desc = "收入"
+                            break;
+                        case 'jk':
+                            var target = v.payResult[0].payTarget[0]
+                            //如果自己是借款人,那就是收入
+                            if (that.data.userInfo.id == target.paidId)
+                                v.name = "收到借款"
+                            else 
+                                v.name = "借款借出"
+                            break;
+                        case 'hk':
+                            var target = v.payResult[0].payTarget[0]
+                            //如果自己是还款人,那就是支出
+                            if (that.data.userInfo.id == target.paidId)
+                                v.name = "还款支出"
+                            else
+                                v.name = "收到还款"
+                            //这笔账已经抵消或者已还，已收
+                            break;
+                    }
                 }
 
 
