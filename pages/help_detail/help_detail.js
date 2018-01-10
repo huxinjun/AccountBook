@@ -24,6 +24,7 @@ Page({
             data:{
                 fileName: fileName
             },
+        
 
             success: function (res) {
                 this.setData({
