@@ -16,7 +16,7 @@
                     <text class="name" data-index="{{index}}">{{item.name}}</text>
 
 
-                    <text class="msg" data-index="{{index}}">{{item.content}}</text>
+                    <text class="msg" data-index="{{index}}" wx:if="{{item.name!='邀请消息'}}">{{item.content}}</text>
                     
 
                 </view>

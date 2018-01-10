@@ -63,6 +63,13 @@
     </view> -->
 
 
+    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' bindtap='gotoHelp'>
+        <view class='flag'></view>
+        <text class="name">使用帮助</text>
+        <image class="arrow" src="/img/right_arrow_normal.png"></image>
+    </view>
+
+
 
 
 </view>

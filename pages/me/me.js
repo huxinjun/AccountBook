@@ -20,6 +20,15 @@ Page({
     /**
      * 统计数据
      */
+    gotoHelp: function (e) {
+        wx.navigateTo({
+            url: '/pages/help/help',
+        })
+    },
+
+    /**
+     * 统计数据
+     */
     gotoSummary: function (e) {
         wx.navigateTo({
             url: '/pages/summary/summary',
