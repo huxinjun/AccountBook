@@ -141,20 +141,21 @@ Page({
                         msgs:this.data.msgs,
                         
                     })
+                isLoading = false
 
                 //初次滚动到底部
-                if (isFrist){
-                    var bottomMsgId = "_" + this.data.msgs[this.data.msgs.length - 1].id
-                    this.execAfterViewAttached(bottomMsgId,function(){
-                        this.pageScrollToPosition(bottomMsgId, 'bottom')
-                        isLoading = false
-                    })
-                }else{
-                    this.execAfterViewAttached(topId, function () {
-                        this.pageScrollToPosition(topId, 'top')
-                        isLoading = false
-                    })
-                }
+                // if (isFrist){
+                //     var bottomMsgId = "_" + this.data.msgs[this.data.msgs.length - 1].id
+                //     this.execAfterViewAttached(bottomMsgId,function(){
+                //         this.pageScrollToPosition(bottomMsgId, 'bottom')
+                //         isLoading = false
+                //     })
+                // }else{
+                //     this.execAfterViewAttached(topId, function () {
+                //         this.pageScrollToPosition(topId, 'top')
+                //         isLoading = false
+                //     })
+                // }
             }
 
         }, this)
@@ -163,7 +164,7 @@ Page({
     execAfterViewAttached:function(id,success){
         var that = this
         wx.createSelectorQuery().select('#' + id).boundingClientRect(function (rect) {
-            console.log(rect)
+            console.log(id+"-----------"+rect)
             if (rect==null) {
                 that.execAfterViewAttached(id, success)
                 return

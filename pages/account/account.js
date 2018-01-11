@@ -189,8 +189,8 @@ Page({
             return
         }
 
-        var paidMember = account.members.findByAttr("memberId", target.paidId)
-        var receiptMember = account.members.findByAttr("memberId", target.receiptId)
+        var paidMember = account.originMembers.findByAttr("memberId", target.paidId)
+        var receiptMember = account.originMembers.findByAttr("memberId", target.receiptId)
         var memberId
         if (paidMember.isGroup && paidMember.isMember)
             memberId = paidMember.memberId
@@ -337,7 +337,7 @@ Page({
                 for (var i = 0; i < v.members.length; i++) {
                     var member = v.members[i]
                     if (member.parentMemberId != null) {
-                        var parentMember = v.members.findByAttr("memberId", member.parentMemberId)
+                        var parentMember = v.originMembers.findByAttr("memberId", member.parentMemberId)
                         if (!parentMember.members)
                             parentMember.members = []
                         parentMember.members.push(member)
@@ -356,6 +356,8 @@ Page({
                         target.style = {}
                         var paidMember = v.originMembers.findByAttr("memberId", target.paidId)
                         var receiptMember = v.originMembers.findByAttr("memberId", target.receiptId)
+                        if (paidMember == undefined || receiptMember == undefined)
+                            return
                         target.paidIcon = paidMember.memberIcon
                         target.receiptIcon = receiptMember.memberIcon
 

@@ -75,7 +75,7 @@
 
                 <view class='members' wx:if="{{account.value.state==3 && account.members.length>1}}">
 
-                    <image class='pull_down' src='/img/pull_down.png' style='{{account.style.membersPullDownTrans}}' bindtap='onMembersPullDownClick'></image>
+                    <image class='pull_down' src='/img/pull_down.png' style='{{account.style.membersPullDownTrans}}' catchtap='onMembersPullDownClick' data-index='{{index}}'></image>
 
                     <scroll-view class='simple' scroll-x style='{{account.style.membersSimpleOpacity}}' catchtap='onMembersPullDownClick' data-index='{{index}}'>
                         <image wx:for="{{account.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}"></image>
