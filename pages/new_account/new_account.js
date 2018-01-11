@@ -8,7 +8,7 @@ Page({
 
         containerHeight: APP.systemInfo.windowHeight,
 
-        tip1: "请输入固定比例(此成员将只付款总金额的百分比值,范围1-99)",
+        tip1: "请输入固定比例(此成员将只付款总金额的百分比值,范围0-100)",
         tip2: "请输入固定数额(此成员将只按此金额付款)",
         tip3: "请输入自费数额(其他成员将不会为这笔数额买单哦！)",
 
@@ -676,10 +676,10 @@ Page({
             switch (item.ruleType) {
                 case 1:
                     //检查输入的有效性
-                    if (inputValue.isvalue < 1 || inputValue > 99) {
+                    if (inputValue.isvalue < 0 || inputValue > 100) {
                         wx.showToast({
                             image: "/img/error.png",
-                            title: '请输入1-99之间的数字！',
+                            title: '请输入0-100之间的数字！',
                         })
                         this.refreshRuleInputPlaceHolder(index)
                         return

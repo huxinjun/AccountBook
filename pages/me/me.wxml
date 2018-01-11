@@ -27,9 +27,15 @@
         <text class="count">{{notifValidCount}}</text>
     </view>
 
+    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' bindtap='gotoHelp'>
+        <view class='flag'></view>
+        <text class="name">使用帮助</text>
+        <image class="arrow" src="/img/right_arrow_normal.png"></image>
+    </view>
+
     <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;'>
         <view class='flag'></view>
-        <text class="name">客服</text>
+        <text class="name">联系客服</text>
 
         <view class="contact">
             <contact-button type='default-light' />
@@ -63,11 +69,7 @@
     </view> -->
 
 
-    <view class="item" hover-class='item_hover' style='border-bottom:1rpx solid #ccc;' bindtap='gotoHelp'>
-        <view class='flag'></view>
-        <text class="name">使用帮助</text>
-        <image class="arrow" src="/img/right_arrow_normal.png"></image>
-    </view>
+    
 
 
 

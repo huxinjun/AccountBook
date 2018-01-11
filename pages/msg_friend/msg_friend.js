@@ -57,13 +57,9 @@ Page({
     onLoad: function (option) {
         console.log(APP.systemInfo)
         this.data.userId=option.userId.decode()
-    },
-
-    onShow: function () {
-        this.data.msgs=[]
-        this.data.nextPageIndex=0
+        this.data.msgs = []
+        this.data.nextPageIndex = 0
         this.initSelfInfo()
-
     },
 
     onPageScroll:function(e){
@@ -125,12 +121,13 @@ Page({
                         align:"justify-content:" + (that.data.userInfo.id == v.toId ? "flex-start" :"flex-end")+";"
                     }
                     v.value = {}
+                    v.originId=v.id
+                    v.id = v.originId.replaceAll("=", "");
                     //类型图标处理
                     if(v.msgType==31 || v.msgType==32)
                         v.typeIcon = APP.globalData.typeList.findByAttr("id", v.type).icon
                 })
                 var topId = isFrist ? null : "_" + this.data.msgs[0].id
-                console.log("topId:" + topId)
 
                 this.data.hasNextPage = res.data.hasNextPage
                 this.data.nextPageIndex = res.data.hasNextPage ? res.data.pageIndex + 1 : 99999
@@ -143,19 +140,20 @@ Page({
                     })
                 isLoading = false
 
+
                 //初次滚动到底部
-                // if (isFrist){
-                //     var bottomMsgId = "_" + this.data.msgs[this.data.msgs.length - 1].id
-                //     this.execAfterViewAttached(bottomMsgId,function(){
-                //         this.pageScrollToPosition(bottomMsgId, 'bottom')
-                //         isLoading = false
-                //     })
-                // }else{
-                //     this.execAfterViewAttached(topId, function () {
-                //         this.pageScrollToPosition(topId, 'top')
-                //         isLoading = false
-                //     })
-                // }
+                if (isFrist){
+                    var bottomMsgId = "_" + this.data.msgs[this.data.msgs.length - 1].id
+                    this.execAfterViewAttached(bottomMsgId,function(){
+                        this.pageScrollToPosition(bottomMsgId, 'bottom')
+                        isLoading = false
+                    })
+                }else{
+                    this.execAfterViewAttached(topId, function () {
+                        this.pageScrollToPosition(topId, 'top')
+                        isLoading = false
+                    })
+                }
             }
 
         }, this)
@@ -164,7 +162,7 @@ Page({
     execAfterViewAttached:function(id,success){
         var that = this
         wx.createSelectorQuery().select('#' + id).boundingClientRect(function (rect) {
-            console.log(id+"-----------"+rect)
+            // console.log(id+"-----------"+rect)
             if (rect==null) {
                 that.execAfterViewAttached(id, success)
                 return

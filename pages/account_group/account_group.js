@@ -424,7 +424,7 @@ Page({
         var dialogInfo = {
             page: this,
             title: "输入",
-            content: "请输入成员支付数额\n（各成员支出额的总和需要与改组应收或者应付的金额相等）",
+            content: "请输入成员支付数额\n（各成员支出额的总和需要与该组应收或者应付的金额相等）",
             inputType: "digit",
             maxLength: 10,
             callback: {

@@ -486,7 +486,7 @@ Page({
                     for (var i = 0; i < v.members.length; i++) {
                         var member = v.members[i]
                         if (member.parentMemberId != null) {
-                            var parentMember = v.originMembers.findByAttr("memberId", member.parentMemberId)
+                            var parentMember = v.members.findByAttr("memberId", member.parentMemberId)
                             if (!parentMember.members)
                                 parentMember.members = []
                             parentMember.members.push(member)
