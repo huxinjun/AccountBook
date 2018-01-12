@@ -33,11 +33,6 @@
     background-color:rgba(245, 245, 245, 1);
     border-radius: 10rpx;
 
- 
-    /* position: relative;
-    top:-100rpx;  */
-
-    
 }
 
 .dialog_title{

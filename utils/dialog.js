@@ -220,6 +220,7 @@ function inputDialogSetting(){
     this.dialogInfo.style.contentDisplay = ""
     this.dialogInfo.style.inputDisplay = ""
     this.dialogInfo.style.membersDisplay = "display:none;"
+    this.dialogInfo.style.dialogPosition = "position:relative;top: -200rpx; "
     //点击确定
     this.page.ok = function (e) {
         var callback = that.dialogInfo.callback

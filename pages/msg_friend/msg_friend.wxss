@@ -1,4 +1,4 @@
-@import "/global/dialog.wxss";
+@import "/dialog/dialog.wxss";
 page{
     background-color: #eaeaea;
 }

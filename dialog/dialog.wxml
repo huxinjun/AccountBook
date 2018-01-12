@@ -1,0 +1,35 @@
+<template name="dialog">
+    <view class="dialog_container" style='{{dialogInfo.style.display}}{{dialogInfo.style.bgAnim}}'>
+        <view class="dialog" style='{{dialogInfo.style.dialogAnim}}{{dialogInfo.style.dialogWidth}}{{dialogInfo.style.dialogPosition}}'>
+
+            <text class='dialog_title'>{{dialogInfo.title}}</text>
+            <text class='dialog_content' style='{{dialogInfo.contentDisplay}}{{dialogInfo.contentColor}}'>{{dialogInfo.content}}</text>
+            <input class='dialog_input' placeholder='{{dialogInfo.placeholder}}' focus='{{dialogInfo.value.focus}}' maxlength='{{dialogInfo.maxLength}}' type='{{dialogInfo.inputType}}' style='{{dialogInfo.style.inputDisplay}}' bindinput="inputValueChanged" value='{{dialogInfo.inputValue}}'></input>
+
+
+
+            <scroll-view class='dialog_members' style='{{dialogInfo.style.membersDisplay}}{{dialogInfo.style.membersHeight}}'>
+                <view class='dialog_member' wx:for="{{dialogInfo.members}}" wx:key="{{index}}" bindtap='selectMember' data-index='{{index}}'>
+                    <image class="icon" src="{{item.memberIcon}}" data-index='{{index}}'></image>
+                    <image class="select" src="/img/account/true_select.png" style='{{item.style.selectVisible}}' data-index='{{index}}'></image>
+                    <view class="name" data-index='{{index}}'>
+                        <image src="/img/group.png" data-index='{{index}}' style='{{item.style.groupFlagVisible}}'></image>
+                        <text data-index='{{index}}'>{{item.memberName}}</text>
+                    </view>
+
+                </view>
+
+
+            </scroll-view>
+
+
+
+
+            <view class='dialog_buttons'>
+                <button class='dialog_button_cancel' hover-class='dialog_button_cancel_hover' bindtap='dissmiss' style="{{dialogInfo.style.cancelDisplay}}">取消</button>
+                <button class='dialog_button_ok' hover-class='dialog_button_ok_hover' bindtap='ok'>确定</button>
+            </view>
+
+        </view>
+    </view>
+</template>
