@@ -369,10 +369,11 @@
 .date_today {
     align-self: center;
     margin-right: 20rpx;
-    font-size: 25rpx;
+    font-size: 20rpx;
     color: white;
     border-radius: 5rpx;
     padding: 5rpx 10rpx;
+    background-color: #2BA245;
 }
 
 /**位置---------------------------------------------------------------------------*/
