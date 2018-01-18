@@ -122,7 +122,7 @@ Page({
                     }
                     v.value = {}
                     v.originId=v.id
-                    v.id = v.originId.replaceAll("=", "");
+                    v.id = v.originId.replaceAll("=", "").replaceAll("\\+", "");
                     //类型图标处理
                     if(v.msgType==31 || v.msgType==32)
                         v.typeIcon = APP.globalData.typeList.findByAttr("id", v.type).icon
