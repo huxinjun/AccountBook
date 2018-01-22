@@ -100,17 +100,32 @@
 
 
                         <view class='item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}">
-                            <image class='p1' src='{{target.paidIcon}}'></image>
-                            <image class='pay_to' src='/img/pay_to.png'></image>
-                            <image class='p2' src='{{target.receiptIcon}}'></image>
-                            <text >支付</text>
-                            <text class='money' wx:if="{{target.waitPaidMoney>0}}">{{target.waitPaidMoney}}</text>
-                            <text class='money' wx:if="{{target.waitPaidMoney==0}}">{{target.money}}</text>
-                            <text >元</text>
+                            <view class='payIcon'>
+                                <image class='p1' src='{{target.paidIcon}}'></image>
+                                <image class='pay_to' src='/img/pay_to.png'></image>
+                                <image class='p2' src='{{target.receiptIcon}}'></image>
+                            </view>
 
-                            <text wx:if="{{target.offsetCount>0}}">({{target.offsetCount}}笔账单</text>
-                            <text wx:if="{{target.offsetCount>0 && target.offsetMoney==target.money}}">完全抵扣)</text>
-                            <text wx:if="{{target.offsetCount>0 && target.offsetMoney!=target.money}}">抵扣了{{target.offsetMoney}}元)</text>
+                            
+                            <view class='payText' wx:if="{{target.waitPaidMoney>0}}">
+                                <text>需支付</text>
+                                <text class='money' >{{target.money}}</text>
+                                <text >元,待付</text>
+                                <text class='waitPaidMoney' >{{target.waitPaidMoney}}</text>
+                                <text>元</text>
+
+                                <text wx:if="{{target.offsetCount>0}}">({{target.offsetCount}}笔账单</text>
+                                <text wx:if="{{target.offsetCount>0 && target.offsetMoney==target.money}}">完全抵扣)</text>
+                                <text wx:if="{{target.offsetCount>0 && target.offsetMoney!=target.money}}">抵扣了{{target.offsetMoney}}元)</text>
+                            </view>
+
+                            <view class='payText' wx:else style='text-decoration:line-through'>
+                                <text>支付</text>
+                                <text class='money' >{{target.money}}</text>
+                                <text wx:if="{{target.offsetCount>0}}">({{target.offsetCount}}笔账单</text>
+                                <text wx:if="{{target.offsetCount>0 && target.offsetMoney==target.money}}">完全抵扣)</text>
+                                <text wx:if="{{target.offsetCount>0 && target.offsetMoney!=target.money}}">抵扣了{{target.offsetMoney}}元)</text>
+                            </view>
                             
                             <image class='settled' src='/img/account/target_state1.png' wx:if="{{target.waitPaidMoney==0}}"></image>
 

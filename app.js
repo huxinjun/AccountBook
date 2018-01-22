@@ -4,7 +4,7 @@ var loging
 App({
     globalData: {
         BaseUrl: 'https://xzbenben.cn/AccountBook',
-        // BaseUrl: 'http://192.168.10.41:8080/AccountBook',
+        // BaseUrl: 'http://192.168.10.57:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
         // BaseUrl: 'http://192.168.1.103:8080/AccountBook',

@@ -367,10 +367,12 @@
     padding: 0 15rpx ;
     
 }
+
+
 .pay .item .offsets{
     display: flex;
     flex-flow: column nowrap;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-start;
     background-color: #d9d9d9;
     border-radius: 10rpx;
@@ -386,13 +388,28 @@
     
     padding-top: 15rpx;
     padding-bottom: 15rpx;
+
+    
 }
 
-.offset .type_icon{
+.pay .item .offset .type_icon{
+    width: 25rpx;
+    height: 25rpx;
+    margin-left:5rpx;
+    margin-right:5rpx;
+}
+.pay .item .offset .p1{
     width: 35rpx;
     height: 35rpx;
-    margin-right: 0;
+    border-radius: 35rpx;
 }
+.pay .item .offset .p2{
+    width: 35rpx;
+    height: 35rpx;
+    border-radius: 35rpx;
+}
+
+
 .offset_arrow{
     width: 30rpx;
     height: 20rpx;
@@ -401,7 +418,12 @@
 
 
 
-
+.pay .item .payIcon{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+}
 .pay .item .p1{
     width: 50rpx;
     height: 50rpx;
@@ -420,7 +442,22 @@
     margin-right: 10rpx;
     
 }
+
+.pay .item .payText{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding-right: 85rpx;
+    flex-grow: 1;
+    vertical-align: middle;
+}
 .pay .item .money{
+    color: black;
+    margin-left: 3rpx;
+    margin-right: 3rpx;
+}
+.pay .item .waitPaidMoney{
     font-size: 25rpx;
     color: black;
     font-weight: 900;
@@ -428,6 +465,7 @@
     margin-left: 3rpx;
     margin-right: 3rpx;
 }
+
 .pay .item button{
     font-size: 15rpx;
     position: absolute;

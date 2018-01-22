@@ -455,6 +455,13 @@
     padding: 0 15rpx ;
     
 }
+.pay .item .payIcon{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 .pay .item .p1{
     width: 50rpx;
     height: 50rpx;
@@ -473,7 +480,21 @@
     margin-right: 10rpx;
     
 }
+.pay .item .payText{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding-right: 85rpx;
+    flex-grow: 1;
+    vertical-align: middle;
+}
 .pay .item .money{
+    color: black;
+    margin-left: 3rpx;
+    margin-right: 3rpx;
+}
+.pay .item .waitPaidMoney{
     font-size: 25rpx;
     color: black;
     font-weight: 900;

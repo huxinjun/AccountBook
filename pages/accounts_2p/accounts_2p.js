@@ -194,11 +194,9 @@ Page({
         this.setData({
             userId: option.userId
         })
-    },
-
-    onShow: function (option) {
         this.onPullDownRefresh()
     },
+
 
     /**
      * 下拉刷新
