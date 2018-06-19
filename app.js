@@ -3,7 +3,7 @@ var util = require("/utils/util.js")
 var loging
 App({
     globalData: {
-        BaseUrl: 'https://xzbenben.cn/AccountBook',
+        BaseUrl: 'https://www.xzbenben.cn/AccountBook',
         // BaseUrl: 'http://192.168.10.57:8080/AccountBook',
         // BaseUrl: 'http://127.0.0.1:8080/AccountBook',
         // BaseUrl: 'http://oceanboss.tech/AccountBook',
@@ -269,7 +269,7 @@ App({
             title: '正在登陆中请稍后...',
         })
         wx.request({
-            url: that.globalData.BaseUrl + '/login/fromWX',
+            url: 'https://xzbenben.cn/AccountBook/login/fromWX',
             data: {
                 code: code
             },
