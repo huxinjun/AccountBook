@@ -9,13 +9,13 @@ Page({
         banner: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509096167729&di=82f605348e2b14d2c6103619d9ec751b&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F50da81cb39dbb6fda2d331e50324ab18962b376d.jpg"
     },
 
-    onAccountItemClick:function(e){
+    onAccountItemClick: function (e) {
         console.log("onAccountItemClick")
 
         var index = e.target.dataset.index
         var account = this.data.accounts[index]
 
-        if(index!=undefined){
+        if (index != undefined) {
             wx.navigateTo({
                 url: '/pages/account/account?accountId=' + account.id.encode()
             })
@@ -203,7 +203,7 @@ Page({
      */
     onPullDownRefresh: function () {
         this.data.accounts = []
-        
+
         if (this.data.userInfo)
             this.getAccounts()
         else
@@ -239,11 +239,11 @@ Page({
                 token: wx.getStorageSync("token")
             },
             success: function (res) {
-                res.data.style={}
+                res.data.style = {}
                 this.setData({
                     userInfo: res.data
                 })
-                this.getAccounts() 
+                this.getAccounts()
                 this.initSummaryInfo()
             }
 
@@ -265,7 +265,7 @@ Page({
                     otherUserInfo: res.data
                 })
                 wx.setNavigationBarTitle({
-                    title: '与'+res.data.nickname+'的账单',
+                    title: '与' + res.data.nickname + '的账单',
                 })
             }
 
@@ -286,78 +286,43 @@ Page({
                 var that = this
                 var summaryInfos = res.data.infos
 
-                if (this.data.userId) {
+                //两个人的账单统计信息处理
+                summaryInfos.forEach(function (v, i) {
 
+                    v.style = {}
+                    v.value = {}
+                    switch (v.name) {
+                        case "wait_paid":
 
-                    //两个人的账单统计信息处理
-                    summaryInfos.forEach(function (v, i) {
-
-                        v.style = {}
-                        v.value = {}
-                        switch (v.name) {
-                            case "wait_paid":
-
-                                if (v.number >= 0) {
-                                    that.data.isNeedPaid = true
-                                    that.data.userInfo.style.payToRotate="display:inherit;"
-                                    that.setData({
-                                        needPaidNumber: v.number,
-                                        userInfo: that.data.userInfo
-                                    })
-                                }
-                                else {
-                                    that.data.isNeedPaid = false
-                                    v.number = Math.abs(v.number)
-                                    that.data.userInfo.style.payToRotate = "display:inherit;transform:rotate(180deg);"
-                                    that.setData({
-                                        needPaidNumber: v.number,
-                                        userInfo: that.data.userInfo
-                                    })
-                                }
-                                v.style.visible = "display:none;"
-                                break;
-                            case "month_paidin":
-                                v.value.name = "月支出"
-                                v.value.unit = "元"
-                                break;
-                            case "paidin":
-                                v.value.name = "总支出"
-                                v.value.unit = "元"
-                                break;
-                        }
-                    })
-
-
-                } else {
-                    if (summaryInfos)
-                        //单人
-                        summaryInfos.forEach(function (v, i) {
-
-                            v.style = {}
-                            v.value = {}
-                            switch (v.name) {
-                                case "wait_paid":
-                                    v.value.name = "待付"
-                                    v.value.unit = "元"
-                                    v.style.color = "color:Crimson;"
-                                    break;
-                                case "wait_receipt":
-                                    v.value.name = "待收"
-                                    v.value.unit = "元"
-                                    v.style.color = "color:SeaGreen;"
-                                    break;
-                                case "month_paidin":
-                                    v.value.name = "月支出"
-                                    v.value.unit = "元"
-                                    break;
-                                case "wait_edit":
-                                    v.value.name = "待完善账单"
-                                    v.value.unit = "笔"
-                                    break;
+                            if (v.number >= 0) {
+                                that.data.isNeedPaid = true
+                                that.data.userInfo.style.payToRotate = "display:inherit;"
+                                that.setData({
+                                    needPaidNumber: v.number,
+                                    userInfo: that.data.userInfo
+                                })
                             }
-                        })
-
-                }
+                            else {
+                                that.data.isNeedPaid = false
+                                v.number = Math.abs(v.number)
+                                that.data.userInfo.style.payToRotate = "display:inherit;transform:rotate(180deg);"
+                                that.setData({
+                                    needPaidNumber: v.number,
+                                    userInfo: that.data.userInfo
+                                })
+                            }
+                            v.style.visible = "display:none;"
+                            break;
+                        case "month_paidin":
+                            v.value.name = "月支出"
+                            v.value.unit = "元"
+                            break;
+                        case "paidin":
+                            v.value.name = "总支出"
+                            v.value.unit = "元"
+                            break;
+                    }
+                })
 
                 this.setData({
                     summaryInfos: summaryInfos
@@ -474,7 +439,7 @@ Page({
                     }
 
                     v.value.state = 3
-                    
+
                     //子成员处理
                     for (var i = 0; i < v.members.length; i++) {
                         var member = v.members[i]

@@ -8,17 +8,17 @@ var chartYearMonthReceipt//年度收入柱状图
 
 Page({
     data: {
-        monthPaid:{
-            selectItem:null,
-            style:{
+        monthPaid: {
+            selectItem: null,
+            style: {
                 info: "color:transparent;"
             },
-            value:{
+            value: {
                 dataType: "all"
             }
         },
         yearMonthPaid: {
-            chartData:null,
+            chartData: null,
             style: {},
             value: {
                 dataType: "year"
@@ -33,7 +33,7 @@ Page({
         }
     },
 
-    refreshMonthPaid:function(){
+    refreshMonthPaid: function () {
         this.setData({
             monthPaid: this.data.monthPaid
         })
@@ -50,27 +50,28 @@ Page({
     },
     getMonthPaidItem: function (index) {
         var isOther = this.data.monthPaid.value.dataType == "other"
-        return isOther ? this.data.monthPaid.otherInfos[index]:this.data.monthPaid.infos[index]
+        return isOther ? this.data.monthPaid.otherInfos[index] : this.data.monthPaid.infos[index]
     },
     /**
      * 点击月支出饼图中的扇形 
      */
     monthPaidTouch: function (e) {
-        var index=chartMonthPaid.getCurrentDataIndex(e)
-        if(index==-1)
+        console.log(e)
+        var index = chartMonthPaid.getCurrentDataIndex(e)
+        if (index == -1)
             return
         var item = this.getMonthPaidItem(index)
         item.monthPaidPercent = (item._proportion_ * 100).toFixed(1)
-        this.data.monthPaid.selectItem=item
+        this.data.monthPaid.selectItem = item
         this.data.monthPaid.style.info = "color:" + item.color
-        if(item.name=='其他')
+        if (item.name == '其他')
             this.initMonthForOther()
         else
             this.refreshMonthPaid()
-    }, 
+    },
     /**
      * 点击月支出其他类型消费饼图中的扇形 
-     */  
+     */
     monthPaidOtherTouch: function (e) {
         var index = chartMonthPaidOther.getCurrentDataIndex(e)
         if (index == -1)
@@ -80,14 +81,14 @@ Page({
         this.data.monthPaid.selectItem = item
         this.data.monthPaid.style.info = "color:" + item.color
         this.refreshMonthPaid()
-    },   
+    },
     /**
      * 上一月支出
      */
-    cardMonthPaidPre:function(e){
+    cardMonthPaidPre: function (e) {
         this.setData({
             queryYear: this.data.queryMonth == 0 ? this.data.queryYear - 1 : this.data.queryYear,
-            queryMonth: this.data.queryMonth == 0 ? 11 : this.data.queryMonth-1
+            queryMonth: this.data.queryMonth == 0 ? 11 : this.data.queryMonth - 1
         })
         this.initMonthAll()
     },
@@ -105,11 +106,32 @@ Page({
     /**
      * 月支出从其他返回到全部
      */
-    cardMonthPaidBack:function(){
+    cardMonthPaidBack: function () {
         this.initMonthAll()
     },
 
-    
+
+
+    /**
+     * 点击扇形分类描述信息
+     */
+    onCategoryInfoClicked: function (e) {
+        //去查看这个分类下的所有账单
+        console.log("查看账单")
+        console.log(this.data.queryYear + "" + this.data.queryMonth)
+
+        console.log(this.data.monthPaid.selectItem)
+
+
+        wx.navigateTo({
+            url: '/pages/accounts_sub/accounts_sub?year=' + this.data.queryYear + "&month=" + (this.data.queryMonth + 1) + "&type=" + this.data.monthPaid.selectItem.type + "&name=" + this.data.monthPaid.selectItem.name
+        })
+
+
+
+    },
+
+
 
     /**
      * 柱状图从月视图切换回年视图(支出)
@@ -124,7 +146,7 @@ Page({
                 name: '支出额(元)',
                 data: this.data.yearMonthPaid.chartData.main.data,
                 format: function (val, name) {
-                    return val==0?0:val.toFixed(1);
+                    return val == 0 ? 0 : val.toFixed(1);
                 }
             }]
         });
@@ -135,9 +157,9 @@ Page({
      */
     yearMonthPaidTouch: function (e) {
         var index = chartYearMonthPaid.getCurrentDataIndex(e);
-        if (index > -1 && index < this.data.yearMonthPaid.chartData.sub.length && this.data.yearMonthPaid.value.dataType=='year') {
-            this.data.yearMonthPaid.value.dataType='month'
-            this.data.yearMonthPaid.value.desc = this.data.yearMonthPaid.chartData.main.categories[index] +"年度总支出"
+        if (index > -1 && index < this.data.yearMonthPaid.chartData.sub.length && this.data.yearMonthPaid.value.dataType == 'year') {
+            this.data.yearMonthPaid.value.dataType = 'month'
+            this.data.yearMonthPaid.value.desc = this.data.yearMonthPaid.chartData.main.categories[index] + "年度总支出"
             this.refreshYearMonthPaid()
 
             chartYearMonthPaid.updateData({
@@ -230,7 +252,7 @@ Page({
             ch: cardWidth
         })
         this.onPullDownRefresh()
-        
+
     },
 
     /**
@@ -241,8 +263,8 @@ Page({
         var year = date.getFullYear()
         var month = date.getMonth()
         this.setData({
-            queryYear:year,
-            queryMonth:month
+            queryYear: year,
+            queryMonth: month
         })
         this.initMonthAll()
         this.initYearMonthPaid()
@@ -260,20 +282,20 @@ Page({
         this.data.monthPaid.style.next = (this.data.queryYear == currYear && this.data.queryMonth == currMonth) ? "visibility:hidden;" : ""
         this.data.monthPaid.selectItem = null
         this.data.monthPaid.style.info = "color:transparent;",
-        this.refreshMonthPaid()
+            this.refreshMonthPaid()
         APP.ajax({
             url: APP.globalData.BaseUrl + '/summary/getMonthPaid',
 
             data: {
                 token: wx.getStorageSync("token"),
                 year: this.data.queryYear,
-                month: this.data.queryMonth+1
+                month: this.data.queryMonth + 1
             },
 
             success: function (res) {
                 //判断是否没有数据
-                if (res.data.infos.length==0){
-                    this.data.monthPaid.value.nullData=true
+                if (res.data.infos.length == 0) {
+                    this.data.monthPaid.value.nullData = true
                     this.data.monthPaid.value.desc = "该月无支出"
                     this.refreshMonthPaid()
                     return
@@ -288,14 +310,14 @@ Page({
                     dataLabel: true,
                 });
                 //计算月总支出
-                var total=0
-                res.data.infos.forEach(function(v,i){
-                    total+=v.data
+                var total = 0
+                res.data.infos.forEach(function (v, i) {
+                    total += v.data
                 })
-                this.data.monthPaid.infos=res.data.infos
+                this.data.monthPaid.infos = res.data.infos
                 this.data.monthPaid.value.nullData = false
-                this.data.monthPaid.value.dataType= "all"
-                this.data.monthPaid.value.total=total.toFixed(2)
+                this.data.monthPaid.value.dataType = "all"
+                this.data.monthPaid.value.total = total.toFixed(2)
                 this.data.monthPaid.value.desc = "月总支出" + this.data.monthPaid.value.total + "元"
                 this.refreshMonthPaid()
             }
@@ -309,18 +331,18 @@ Page({
     initMonthForOther: function (option) {
         this.data.monthPaid.selectItem = null
         this.data.monthPaid.style.info = "color:transparent;",
-        this.refreshMonthPaid()
+            this.refreshMonthPaid()
         APP.ajax({
             url: APP.globalData.BaseUrl + '/summary/getMonthPaidForOther',
 
             data: {
                 token: wx.getStorageSync("token"),
                 year: this.data.queryYear,
-                month: this.data.queryMonth+1
+                month: this.data.queryMonth + 1
             },
 
             success: function (res) {
-                
+
                 chartMonthPaidOther = new wxCharts({
                     animation: true,
                     canvasId: 'chartMonthPaidOtherCanvas',
@@ -339,10 +361,10 @@ Page({
                 this.data.monthPaid.value.nullData = false
                 this.data.monthPaid.value.dataType = "other"
                 this.data.monthPaid.value.otherTotal = total.toFixed(2)
-                this.data.monthPaid.value.desc = this.data.queryYear + "年" + this.data.queryMonth + "月其他类型支出" + this.data.monthPaid.value.otherTotal + "元"
+                this.data.monthPaid.value.desc = this.data.queryYear + "年" + (this.data.queryMonth + 1) + "月其他类型支出" + this.data.monthPaid.value.otherTotal + "元"
                 this.refreshMonthPaid()
             },
-            complete:function(){
+            complete: function () {
                 wx.stopPullDownRefresh()
             }
 
@@ -370,31 +392,31 @@ Page({
 
 
 
-                var chartData={
-                    main:{
+                var chartData = {
+                    main: {
                         data: [],
-                        categories: [] 
+                        categories: []
                     },
-                    sub:[]
+                    sub: []
                 }
                 //统计所有支出数据
-                for(var year in res.data.map){
-                    var yearPaid=0
-                    var chartDataMonth={
+                for (var year in res.data.map) {
+                    var yearPaid = 0
+                    var chartDataMonth = {
                         data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                         categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                     }
                     for (var month in res.data.map[year]) {
                         var monthPaid = parseFloat(res.data.map[year][month])
-                        yearPaid+=monthPaid
-                        chartDataMonth.data.splice(month-1,1,monthPaid)
+                        yearPaid += monthPaid
+                        chartDataMonth.data.splice(month - 1, 1, monthPaid)
                     }
 
                     chartData.main.data.push(yearPaid)
                     chartData.main.categories.push(year)
                     chartData.sub.push(chartDataMonth)
                 }
-                
+
                 this.data.yearMonthPaid.chartData = chartData
 
                 chartYearMonthPaid = new wxCharts({
@@ -427,7 +449,7 @@ Page({
                     width: this.data.cw,
                     height: this.data.ch,
                 });
-                
+
             },
             complete: function () {
                 wx.stopPullDownRefresh()
@@ -476,7 +498,7 @@ Page({
                     for (var month in res.data.map[year]) {
                         var monthReceipt = parseFloat(res.data.map[year][month])
                         yearReceipt += monthReceipt
-                        chartDataMonth.data.splice(month-1,1,monthReceipt)
+                        chartDataMonth.data.splice(month - 1, 1, monthReceipt)
                     }
                     chartData.main.data.push(yearReceipt)
                     chartData.main.categories.push(year)

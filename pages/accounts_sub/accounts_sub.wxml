@@ -1,0 +1,140 @@
+<view class='container'>
+
+
+    <view>
+
+        <view class='account' wx:for="{{accounts}}" wx:key="{{index}}" wx:for-item="account" bindtap='onAccountItemClick' data-index='{{index}}'>
+
+            <image class='account_icon' src="{{account.user_icon}}" data-index='{{index}}'></image>
+
+            <view class='account_main' data-index='{{index}}'>
+
+                <view class='title_container' data-index='{{index}}'>
+                    <image class='type_icon' src="{{account.icon}}" data-index='{{index}}'></image>
+                    <text class='title' data-index='{{index}}'>{{account.name}}</text>
+                    <text class='tag in_come' data-index='{{index}}' wx:if="{{account.type=='sr'}}">{{account.paidIn}}元</text>
+                    <text class='tag paid_in' data-index='{{index}}' wx:if="{{account.value.state==3 && account.type!='sr'}}">{{account.paidIn}}元</text>
+                    <text class='tag is_private' wx:if="{{account.isPrivate}}" data-index='{{index}}'>个人账单</text>
+                    <text class='date' data-index='{{index}}'>{{account.date}}</text>
+                </view>
+
+                <text class='content' data-index='{{index}}'>{{account.description}}</text>
+
+
+
+                <text class='all' wx:if="{{account.value.showAllContentBtn}}" catchtap='onShowAllContentClick' data-index='{{index}}'>{{account.value.allContentBtnText}}</text>
+
+
+                <view class="pics" wx:if="{{account.imgs!=null}}" data-index="{{index}}">
+
+                    <image class='pic' wx:for="{{account.imgs}}" wx:for-item="img" wx:key="{{index}}" src="{{img}}" mode="aspectFill" data-index="{{index}}" data-accountid="{{account.id}}" catchtap='iconPreview'></image>
+
+                </view>
+
+
+                <view class='envelope' wx:if="{{account.value.state!=3}}" data-index="{{index}}">
+                    <image class='bg' src='{{account.value.bg}}' data-index="{{index}}"></image>
+                    <image class='icon' src='{{account.value.icon}}' data-index="{{index}}"></image>
+                    <image class='dollar' src='{{account.value.dollar}}' data-index="{{index}}"></image>
+                    <text class="money" style="{{account.style.moneyColor}}" data-index="{{index}}">{{account.paidIn}}</text>
+                    <text class="desc" data-index="{{index}}">{{account.value.desc}}</text>
+
+                </view>
+
+
+
+                <view class='members' wx:if="{{account.value.state==3 && account.members.length>1}}">
+
+                    <image class='pull_down' src='/img/pull_down.png' style='{{account.style.membersPullDownTrans}}' catchtap='onMembersPullDownClick' data-index='{{index}}'></image>
+
+                    <scroll-view class='simple' scroll-x style='{{account.style.membersSimpleOpacity}}' catchtap='onMembersPullDownClick' data-index='{{index}}'>
+                        <image wx:for="{{account.members}}" wx:for-item="member" wx:key="{{index}}" src="{{member.memberIcon}}"></image>
+                    </scroll-view>
+
+                    <view class='detail' style='{{account.style.membersDetailHeight}}'>
+
+                        <view class='full_item' wx:for="{{account.members}}" wx:for-item="member" wx:key="{{index}}">
+
+                            <view class='item'>
+                                <image class='icon' src='{{member.memberIcon}}'></image>
+                                <text class="should_pay">{{member.memberName}}应付{{member.shouldPay}}元</text>
+                                <text class="really_pay" wx:if="{{member.paidIn>0}}">实付{{member.paidIn}}元</text>
+                            </view>
+
+                            <view class='childItem' wx:for="{{member.members}}" wx:for-item="childMember" wx:key="{{index}}">
+
+                                <image class='link_line' src='/img/link.png' wx:if="{{index<member.members.length-1}}"></image>
+                                <image class='link_line' src='/img/link_end.png' wx:if="{{member.members.length-1==index}}"></image>
+                                <image class='icon' src='{{childMember.memberIcon}}'></image>
+                                <text class="should_pay">{{childMember.memberName}}应付{{childMember.shouldPay}}元</text>
+                                <text class="really_pay" wx:if="{{childMember.paidIn>0}}">实付{{childMember.paidIn}}元</text>
+
+                            </view>
+                        </view>
+
+
+
+
+
+                    </view>
+
+
+                    <image class='pay_arrow' src='/img/arrow_up.png' wx:if="{{account.payResult}}"></image>
+                    <view class='pay' wx:for="{{account.payResult}}" wx:for-item="payResult" wx:key="{{index}}">
+
+
+                        <view class='item' wx:for="{{payResult.payTarget}}" wx:for-item="target" wx:key="{{index}}">
+                            <view class='payIcon'>
+                                <image class='p1' src='{{target.paidIcon}}'></image>
+                                <image class='pay_to' src='/img/pay_to.png'></image>
+                                <image class='p2' src='{{target.receiptIcon}}'></image>
+                            </view>
+
+
+                            <view class='payText' wx:if="{{target.waitPaidMoney>0}}">
+                                <text>需支付</text>
+                                <text class='money'>{{target.money}}</text>
+                                <text>元,待付</text>
+                                <text class='waitPaidMoney'>{{target.waitPaidMoney}}</text>
+                                <text>元</text>
+
+                                <text wx:if="{{target.offsetCount>0}}">({{target.offsetCount}}笔账单</text>
+                                <text wx:if="{{target.offsetCount>0 && target.offsetMoney==target.money}}">完全抵扣)</text>
+                                <text wx:if="{{target.offsetCount>0 && target.offsetMoney!=target.money}}">抵扣了{{target.offsetMoney}}元)</text>
+                            </view>
+
+                            <view class='payText' wx:else style='text-decoration:line-through'>
+                                <text>支付</text>
+                                <text class='money'>{{target.money}}</text>
+                                <text wx:if="{{target.offsetCount>0}}">({{target.offsetCount}}笔账单</text>
+                                <text wx:if="{{target.offsetCount>0 && target.offsetMoney==target.money}}">完全抵扣)</text>
+                                <text wx:if="{{target.offsetCount>0 && target.offsetMoney!=target.money}}">抵扣了{{target.offsetMoney}}元)</text>
+                            </view>
+
+                            <image class='settled' src='/img/account/target_state1.png' wx:if="{{target.waitPaidMoney==0}}"></image>
+
+                            <button wx:if="{{target.value.showBtn}}" bindtap='onPayClick' style="{{target.style.bg}}" data-targetid='{{target.id}}' data-accountid='{{account.id}}'>{{target.value.btnText}}</button>
+
+                        </view>
+
+                    </view>
+
+
+
+
+                </view>
+                <text class='addr' wx:if="{{account.addrName!=null}}">{{account.addrName}}</text>
+                <text class='time'>{{account.dateDis}}</text>
+
+
+            </view>
+
+        </view>
+
+    </view>
+
+
+</view>
+
+<import src="/dialog/dialog.wxml" />
+<template is="dialog" data="{{dialogInfo}}" />

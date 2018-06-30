@@ -458,6 +458,20 @@ function findPieChartCurrentIndex(currentPoints, pieData) {
             }
         }
     }
+    //扇形中没找到,找底部分类
+    if (currentIndex == -1) {
+        for (var i = 0, len = pieData.series.length; i < len; i++) {
+            var item = pieData.series[i];
+            if (currentPoints.x > item.sx && currentPoints.x < item.ex)
+                if (currentPoints.y > item.sy && currentPoints.y < item.ey) {
+                    //点击在分类文字区域
+                    currentIndex = i;
+                    break;
+                }
+
+        }
+
+    }
 
     return currentIndex;
 }
@@ -766,6 +780,7 @@ function drawPointShape(points, color, shape, context) {
 }
 
 function drawRingTitle(opts, config, context) {
+
     var titlefontSize = opts.title.fontSize || config.titleFontSize;
     var subtitlefontSize = opts.subtitle.fontSize || config.subtitleFontSize;
     var title = opts.title.name || '';
@@ -848,6 +863,7 @@ function drawRadarLabel(angleList, radius, centerPosition, opts, config, context
 }
 
 function drawPieText(series, opts, config, context, radius, center) {
+
     var lineRadius = radius + config.pieChartLinePadding;
     var textObjectCollection = [];
     var lastTextObject = null;
@@ -1444,19 +1460,30 @@ function drawLegend(series, opts, config, context) {
         legendList = _calLegendData.legendList;
 
     var padding = 5;
-    var marginTop = 8;
+    var marginTop = 12;
     var shapeWidth = 15;
     legendList.forEach(function (itemList, listIndex) {
+
         var width = 0;
         itemList.forEach(function (item) {
             item.name = item.name || 'undefined';
             width += 3 * padding + measureText(item.name) + shapeWidth;
+
         });
+
+
+
         var startX = (opts.width - width) / 2 + padding;
         var startY = opts.height - config.padding - config.legendHeight + listIndex * (config.fontSize + marginTop) + padding + marginTop;
 
+
+
         context.setFontSize(config.fontSize);
         itemList.forEach(function (item) {
+
+            //为了解决扇形图点击分类事件,记录分类文字和圆圈绘制区域的起始坐标
+            item.sx = startX;
+            item.sy = startY - 5;
             switch (opts.type) {
                 case 'line':
                     context.beginPath();
@@ -1499,8 +1526,43 @@ function drawLegend(series, opts, config, context) {
             context.fillText(item.name, startX, startY + 9);
             context.closePath();
             context.stroke();
+
+
             startX += measureText(item.name) + 2 * padding;
+
+
+            //为了解决扇形图点击分类事件,记录分类文字和圆圈绘制区域的结束坐标
+            item.ex = startX
+            item.ey = startY + config.fontSize + marginTop - 5
         });
+
+
+
+
+        //为了解决扇形图分类不能点击的测试代码
+        if (false)
+            itemList.forEach(function (item) {
+                console.log(item)
+                switch (opts.type) {
+                    case 'pie':
+                        context.beginPath();
+                        var color = item.color.replace("#", "")
+                        var r = color.substring(0, 2)
+                        var g = color.substring(2, 4)
+                        var b = color.substring(4, 6)
+                        var rgba = "rgba(" + parseInt(r, 16) + "," + parseInt(g, 16) + "," + parseInt(b, 16) + ", 0.5)"
+                        // console.log(r)
+                        // console.log(g)
+                        // console.log(b)
+                        // console.log(rgba)
+                        context.setFillStyle(rgba);
+                        context.moveTo(item.sx, item.sy);
+                        context.rect(item.sx, item.sy, item.ex - item.sx, item.ey - item.sy);
+                        context.closePath();
+                        context.fill();
+                        break;
+                }
+            });
     });
 }
 function drawPieDataPoints(series, opts, config, context) {
@@ -1884,30 +1946,30 @@ function drawCharts(type, opts, config, context) {
 // simple event implement
 
 function Event() {
-	this.events = {};
+    this.events = {};
 }
 
 Event.prototype.addEventListener = function (type, listener) {
-	this.events[type] = this.events[type] || [];
-	this.events[type].push(listener);
+    this.events[type] = this.events[type] || [];
+    this.events[type].push(listener);
 };
 
 Event.prototype.trigger = function () {
-	for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-		args[_key] = arguments[_key];
-	}
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+    }
 
-	var type = args[0];
-	var params = args.slice(1);
-	if (!!this.events[type]) {
-		this.events[type].forEach(function (listener) {
-			try {
-				listener.apply(null, params);
-			} catch (e) {
-				console.error(e);
-			}
-		});
-	}
+    var type = args[0];
+    var params = args.slice(1);
+    if (!!this.events[type]) {
+        this.events[type].forEach(function (listener) {
+            try {
+                listener.apply(null, params);
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    }
 };
 
 var Charts = function Charts(opts) {
@@ -1964,22 +2026,22 @@ Charts.prototype.getCurrentDataIndex = function (e) {
     if (e && e.detail) {
         var x = e.detail.x - e.target.offsetLeft
         var y = e.detail.y - e.target.offsetTop
-        // console.log("x:"+x+"---y:"+y)
+        console.log("x:" + x + "---y:" + y)
 
         if (this.opts.type === 'pie' || this.opts.type === 'ring') {
-            index=findPieChartCurrentIndex({ x: x, y: y }, this.chartData.pieData);
+            index = findPieChartCurrentIndex({ x: x, y: y }, this.chartData.pieData);
             // console.log("pie index:" + index)
         } else if (this.opts.type === 'radar') {
-            index=findRadarChartCurrentIndex({ x: x, y: y }, this.chartData.radarData, this.opts.categories.length);
+            index = findRadarChartCurrentIndex({ x: x, y: y }, this.chartData.radarData, this.opts.categories.length);
             // console.log("radar index:" + index)
         } else {
-            
-            index=findCurrentIndex({ x: x, y: y }, this.chartData.xAxisPoints, this.opts, this.config, Math.abs(this.scrollOption.currentOffset));
+
+            index = findCurrentIndex({ x: x, y: y }, this.chartData.xAxisPoints, this.opts, this.config, Math.abs(this.scrollOption.currentOffset));
 
             // console.log("culumn index:" + index)
         }
-    }else
-        index=-1
+    } else
+        index = -1
     return index;
 };
 

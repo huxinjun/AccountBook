@@ -10,7 +10,7 @@
 
         <text class='desc'>{{monthPaid.value.desc}}</text>
 
-        <text class='info' style="color:{{monthPaid.selectItem.color}};text-shadow: 1rpx 1rpx 1rpx #444;" style='{{monthPaid.style.info}}'>{{monthPaid.selectItem.name}}支出{{monthPaid.selectItem.data}}元,{{monthPaid.selectItem.count}}笔账单记录,占总支出的{{monthPaid.selectItem.monthPaidPercent}}%</text>
+        <text class='info' style="color:{{monthPaid.selectItem.color}};text-shadow: 1rpx 1rpx 1rpx #444;" style='{{monthPaid.style.info}}' bindtap='onCategoryInfoClicked'>{{monthPaid.selectItem.name}}支出{{monthPaid.selectItem.data}}元,{{monthPaid.selectItem.count}}笔账单记录,占总支出的{{monthPaid.selectItem.monthPaidPercent}}%,点击查看账单</text>
 
         <canvas canvas-id="chartMonthPaidCanvas" style="height:{{ch}}px;width:{{cw}}px;" bindtap="monthPaidTouch" wx:if="{{!monthPaid.value.nullData && monthPaid.value.dataType=='all'}}"></canvas>
         <canvas canvas-id="chartMonthPaidOtherCanvas" style="height:{{ch}}px;width:{{cw}}px;" bindtap="monthPaidOtherTouch" wx:if="{{!monthPaid.value.nullData && monthPaid.value.dataType=='other'}}"></canvas>

@@ -13,6 +13,7 @@
         "pages/qr_image/qr_image",
         "pages/accounts/accounts",
         "pages/accounts_2p/accounts_2p",
+        "pages/accounts_sub/accounts_sub",
         "pages/account/account",
         "pages/me/me",
         "pages/notification/notification",

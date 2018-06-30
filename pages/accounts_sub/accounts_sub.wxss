@@ -1,0 +1,531 @@
+@import "/dialog/dialog.wxss";
+
+.container {
+    width: 750rpx;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: "黑体";
+    color: #272636;
+    background-color: snow;
+    overflow-x: hidden;
+}
+
+
+
+
+.accounts{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.account{
+    
+    /* background: gold; */
+    position: relative;
+    border-bottom: 1rpx solid #DEDEDE;
+    padding-bottom: 30rpx;
+}
+.account_hover{
+    background: #f1f1f1;
+}
+.account_icon{
+    width: 60rpx;
+    height: 60rpx;
+    position: absolute;
+    left: 20rpx;
+    top: 20rpx;
+
+    
+    
+}
+.account_main{
+    width: 650rpx;
+
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    margin-left: 100rpx;
+    padding-top: 20rpx;
+
+    position: relative;
+    
+}
+.title_container{
+    width: 100%;
+    height: 60rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    position: relative;
+    
+}
+.type_icon{
+    width: 35rpx;
+    height: 35rpx;
+    margin-right: 10rpx;
+}
+.title{
+    color: #5B6A92;
+    font-weight: 600;
+}
+.tag{
+    font-size: 20rpx;
+    border-radius: 5rpx;
+    padding-left: 5rpx;
+    padding-right: 5rpx;
+    padding-top: 2rpx;
+    padding-bottom: 2rpx;
+    text-align: center;
+    color: white;
+    margin-left: 10rpx;
+}
+.paid_in{
+    background-color:#D02090;
+}
+.in_come{
+    background-color:#2BA245;
+}
+.is_private{
+    background-color: #FF8C00;
+}
+.date{
+    font-size: 25rpx;
+    width: 200rpx;
+    text-align: right;
+    position: absolute;
+    right: 20rpx;
+    top: 0;
+    line-height: 60rpx;
+    font-weight: 700;
+    color: gray;
+}
+.content{
+    width: 98%;
+}
+.all{
+    width: 750rpx;
+    color: #5B6A92;
+    font-size: 25rpx;
+    display: block;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
+}
+
+
+
+
+
+
+
+
+
+.pics {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding-right: 20rpx;
+    margin-left: -20rpx;
+
+    overflow: hidden; 
+
+    transition: all 500ms ease;
+}
+
+.pic{
+    width: 176rpx;
+    height: 132rpx;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+    position: relative;
+}
+
+
+
+
+.envelope{
+    width: 335rpx;
+    height: 300rpx;
+    position: relative;
+    margin-top: 20rpx;
+}
+.envelope .bg{
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+.envelope .icon{
+    width: 118rpx;
+    height: 118rpx;
+    border-radius: 118rpx;
+    position: absolute;
+    left: 111rpx;
+    top:113rpx;
+}
+.envelope .dollar{
+    width: 118rpx;
+    height: 118rpx;
+    border-radius: 118rpx;
+    position: absolute;
+    left: 111rpx;
+    top:113rpx;
+}
+.envelope .money{
+    width: 100%;
+    font-size: 50rpx;
+    font-weight: 700;
+    color: snow;
+    display: block;
+    text-align: center;
+    position: absolute;
+    top: 20rpx;
+    left: 0;
+}
+.envelope .desc{
+    width: 100%;
+    font-size: 18rpx;
+    color: #000000;
+    opacity: 0.5;
+    display: block;
+    text-align: center;
+    position: absolute;
+    bottom: 20rpx;
+    left: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.members{
+    width: 100%;
+
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    position: relative;
+}
+.members .pull_down{
+    width: 30rpx;
+    height: 30rpx;
+    position: absolute;
+    right: 20rpx;
+    top: 20rpx;
+    transition: all 300ms ease;
+    z-index: 1;
+}
+.members .simple{
+    width: 580rpx;
+    overflow: hidden;
+
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    transition: all 300ms ease;
+    margin-top: 20rpx;
+}
+.simple image{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+    margin-right: 12rpx;
+}
+
+
+/*成员详情*/
+.detail{
+    width: 100%;
+    height: 0;
+    opacity:0;
+    overflow: hidden;
+    transition: all 300ms ease;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-size: 25rpx;
+
+    position: relative;
+}
+.detail .full_item{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.detail .item{
+    height: 80rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0 15rpx ;
+}
+.detail .item .icon{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+}
+.detail .item .should_pay{
+    margin-left: 20rpx;
+    
+}
+.detail .item .really_pay{
+    position: absolute;
+    right: 20rpx;
+    
+}
+.detail .childItem{
+    height: 80rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start; 
+}
+.detail .childItem .link_line{
+    width: 80rpx;
+    height: 95rpx;
+    /* background: pink;  */
+
+    align-self: flex-end;
+}
+.detail .childItem .icon{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+}
+.detail .childItem .should_pay{
+    margin-left: 20rpx;
+    
+}
+.detail .childItem .really_pay{
+    position: absolute;
+    right: 20rpx;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.pay_arrow{
+    margin-top: 20rpx;
+    width: 30rpx;
+    height: 20rpx;
+    margin-left: 50rpx;
+}
+.pay{
+    width: 640rpx;
+
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-size: 25rpx;
+
+    
+    margin-right: 20rpx;
+
+    background-color: #f3f3f5;
+    border-radius: 10rpx;
+}
+
+
+.pay .item{
+    height: 80rpx;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    color: #6B6B6B;
+    font-size: 15rpx;
+    position: relative;
+    box-sizing: border-box;
+
+    padding: 0 15rpx ;
+    
+}
+.pay .item .payIcon{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.pay .item .p1{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+}
+.pay .item .pay_to{
+    width: 50rpx;
+    height: 22rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+}
+.pay .item .p2{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+    margin-right: 10rpx;
+    
+}
+.pay .item .payText{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding-right: 85rpx;
+    flex-grow: 1;
+    vertical-align: middle;
+}
+.pay .item .money{
+    color: black;
+    margin-left: 3rpx;
+    margin-right: 3rpx;
+}
+.pay .item .waitPaidMoney{
+    font-size: 25rpx;
+    color: black;
+    font-weight: 900;
+    margin-bottom: 3rpx;
+    margin-left: 3rpx;
+    margin-right: 3rpx;
+}
+.pay .item button{
+    font-size: 15rpx;
+    height: 30rpx;
+    position: absolute;
+    right: 25rpx;
+    top:25rpx;
+    color: white;
+
+    line-height: 30rpx;
+}
+.pay .item .settled{
+    width: 30rpx;
+    height: 30rpx;
+    position: absolute;
+    right: 50rpx;
+    top:25rpx;
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.addr{
+    margin-top: 20rpx;
+    font-size: 25rpx;
+    color: #6B6B6B;
+}
+.time{
+    color: #6B6B6B;
+    margin-top: 10rpx;
+    font-size: 25rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,31 +4,9 @@ var util = require('../../utils/util.js')
 var isLoading = false
 Page({
     data: {
-        containerHeight: APP.systemInfo.windowHeight,
-
-        banner: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509096167729&di=82f605348e2b14d2c6103619d9ec751b&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F50da81cb39dbb6fda2d331e50324ab18962b376d.jpg"
+        containerHeight: APP.systemInfo.windowHeight
     },
 
-
-    /**
-     * 更新用户头像
-     */
-    updateUserIcon: function () {
-        APP.ajax({
-            url: APP.globalData.BaseUrl + '/user/updateIcon',
-            data: {
-                token: wx.getStorageSync("token")
-            },
-            success: function (res) {
-                wx.showToast({
-                    title: res.data.msg,
-                })
-                this.data.userInfo = null
-                wx.startPullDownRefresh()
-            }
-
-        }, this)
-    },
 
     onAccountItemClick: function (e) {
         console.log("onAccountItemClick")
@@ -211,6 +189,13 @@ Page({
 
         var that = this
 
+        this.setData({
+            year: option.year,
+            month: option.month,
+            type: option.type,
+            name: option.name
+        })
+
         this.onPullDownRefresh()
     },
 
@@ -223,7 +208,6 @@ Page({
      */
     onPullDownRefresh: function () {
         this.data.accounts = []
-        this.initSummaryInfo()
         if (this.data.userInfo)
             this.getAccounts()
         else
@@ -267,62 +251,7 @@ Page({
         }, this)
     },
 
-    /**
-     * 初始化账户统计信息
-     */
-    initSummaryInfo: function () {
-        APP.ajax({
-            url: APP.globalData.BaseUrl + '/summary/getSimple',
-            data: {
-                token: wx.getStorageSync("token")
-            },
-            success: function (res) {
-                var that = this
-                var summaryInfos = res.data.infos
 
-                if (summaryInfos)
-                    //单人
-                    summaryInfos.forEach(function (v, i) {
-
-                        v.style = {}
-                        v.value = {}
-                        switch (v.name) {
-                            case "wait_paid":
-                                v.value.name = "待付"
-                                v.value.unit = "元"
-                                v.style.color = "color:Crimson;"
-                                break;
-                            case "wait_receipt":
-                                v.value.name = "待收"
-                                v.value.unit = "元"
-                                v.style.color = "color:SeaGreen;"
-                                break;
-                            case "month_paidin":
-                                v.value.name = "月支出"
-                                v.value.unit = "元"
-                                break;
-                            case "month_sr":
-                                v.value.name = "月收入"
-                                v.value.unit = "元"
-                                break;
-                            case "wait_edit":
-                                v.value.name = "待完善账单"
-                                v.value.unit = "笔"
-                                break;
-                        }
-                    })
-                var summaryLInfos = [summaryInfos[0], summaryInfos[1]]
-                var summaryRInfos = [summaryInfos[2], summaryInfos[3], summaryInfos[4]]
-
-                this.setData({
-                    summaryInfos: summaryInfos,
-                    summaryLInfos: summaryLInfos,
-                    summaryRInfos: summaryRInfos
-                })
-            }
-
-        }, this)
-    },
 
 
     /**
@@ -331,9 +260,13 @@ Page({
     getAccounts: function (pageIndex) {
         var that = this
         APP.ajax({
-            url: APP.globalData.BaseUrl + '/account/getAll',
+            url: APP.globalData.BaseUrl + '/account/getByMonthType',
             data: {
                 token: wx.getStorageSync("token"),
+                year: this.data.year,
+                month: this.data.month,
+                type: this.data.type,
+                name: this.data.name,
                 pageIndex: pageIndex != undefined ? pageIndex : 0,
                 pageSize: 10
             },
