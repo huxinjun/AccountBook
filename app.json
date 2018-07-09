@@ -50,7 +50,7 @@
             },
             {
                 "pagePath": "pages/friend/friend",
-                "text": "基友",
+                "text": "帐账",
                 "iconPath": "img/tab/tab_friend.png",
                 "selectedIconPath": "img/tab/tab_friend_select.png"
             },

@@ -269,7 +269,7 @@ App({
             title: '正在登陆中请稍后...',
         })
         wx.request({
-            url: 'https://xzbenben.cn/AccountBook/login/fromWX',
+            url: 'https://www.xzbenben.cn/AccountBook/login/fromWX',
             data: {
                 code: code
             },
